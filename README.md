@@ -5,7 +5,7 @@
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td align="center" valign="middle" style="padding-right: 30px;">
-      <img src="docs-site/static/img/logo.svg" alt="YiGraph Logo" width="180" />
+      <img src="figure/logo.png" alt="YiGraph Logo" width="180" />
     </td>
     <td align="left" valign="middle">
       <h2 style="margin: 0; font-size: 24px; font-weight: 600; color: #2c3e50;">基于 AAG 框架的端到端<br/>图数据分析智能体系统</h2>
@@ -338,7 +338,7 @@ python web/frontend/run.py
 
 ##### Web 界面使用说明
 
-![易图 Web 界面](docs-site/static/img/chat.png)
+![易图 Web 界面](figure/chat.png)
 
 使用易图 Web 界面进行分析的基本步骤如下：
 
@@ -358,7 +358,7 @@ python web/frontend/run.py
 
 ##### 数据集管理
 
-![数据集管理界面](docs-site/static/img/dataset.png)
+![数据集管理界面](figure/dataset.png)
 
 在 Web 界面中，您可以方便地管理数据集：
 
@@ -374,7 +374,7 @@ python web/frontend/run.py
 
 ##### 文件管理
 
-![文件管理界面](docs-site/static/img/file.png)
+![文件管理界面](figure/file.png)
 
 在文件管理界面中，您可以对数据集中的文件进行管理和可视化：
 
@@ -396,7 +396,7 @@ python aag/main.py
 
 启动后，系统将进入终端交互模式。用户可按照终端提示输入问题，易图将在命令行中完成分析并输出结果。
 
-![终端交互模式](docs-site/static/img/zhongduan.png)
+![终端交互模式](figure/zhongduan.png)
 
 ##### 终端交互使用说明
 
