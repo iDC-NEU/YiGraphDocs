@@ -5,7 +5,7 @@
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td align="center" valign="middle" style="padding-right: 30px;">
-      <img src="figure/logo.png" alt="YiGraph Logo" width="180" />
+      <img src="docs-site/static/img/logo.svg" alt="YiGraph Logo" width="180" />
     </td>
     <td align="left" valign="middle">
       <h2 style="margin: 0; font-size: 24px; font-weight: 600; color: #2c3e50;">End-to-End Intelligent Graph Data<br/>Analysis Agent System Based on AAG Framework</h2>
@@ -338,7 +338,7 @@ In the Web interface, users can input business questions in natural language, an
 
 ##### Web Interface Usage Guide
 
-![YiGraph Web Interface](figure/chat_en.png)
+![YiGraph Web Interface](docs-site/static/img/chat_en.png)
 
 Basic steps for using the YiGraph web interface for analysis:
 
@@ -358,7 +358,7 @@ Basic steps for using the YiGraph web interface for analysis:
 
 ##### Dataset Management
 
-![Dataset Management Interface](figure/dataset_en.png)
+![Dataset Management Interface](docs-site/static/img/dataset_en.png)
 
 In the web interface, you can conveniently manage datasets:
 
@@ -374,7 +374,7 @@ In the web interface, you can conveniently manage datasets:
 
 ##### File Management
 
-![File Management Interface](figure/file_en.png)
+![File Management Interface](docs-site/static/img/file_en.png)
 
 In the file management interface, you can manage and visualize files in datasets:
 
@@ -396,7 +396,7 @@ python aag/main.py
 
 After startup, the system will enter terminal interactive mode. Users can input questions according to terminal prompts, and YiGraph will complete the analysis and output results in the command line.
 
-![Terminal Interactive Mode](figure/zhongduan.png)
+![Terminal Interactive Mode](docs-site/static/img/zhongduan.png)
 
 ##### Terminal Interactive Usage Guide
 
