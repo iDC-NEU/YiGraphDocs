@@ -16,6 +16,7 @@
 <p style="margin-top: 20px;">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
   <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.11+-blue.svg" alt="Python"></a>
+  <a href="http://superccy.github.io/YiGraphDocs/"><img src="https://img.shields.io/badge/📚-Docs-purple.svg" alt="Docs"></a>
   <a href="#-contact-us"><img src="https://img.shields.io/badge/📞-Contact_Us-green.svg" alt="Contact"></a>
 </p>
 
@@ -94,17 +95,16 @@ Built-in **100+ graph algorithms** covering 11 major categories, providing profe
 ### 5. Flexible Data Support
 
 Supports multiple data source inputs:
-- **Graph Data**: GML, GraphML, edge list formats, etc.
-- **Tabular Data**: CSV, Excel, and other structured data
+- **Graph Data**
 - **Text Data**: Documents, logs, reports, and other unstructured data
 
 The system will automatically extract entities and relationships from raw data to build structured graph data.
 
 ### 6. Multiple Operating Modes
 
-- **Interactive Mode**: Complete graph analysis tasks through natural language dialogue
-- **Batch Processing Mode**: Process multiple analysis tasks in batches
-- **API Mode**: Integrate into existing systems through RESTful API
+- **Normal Mode**: Users only need to submit their business questions. YiGraph will automatically parse the problem, select appropriate graph algorithms, execute the computation, and generate an analysis report. This mode is suitable for non-technical or general business users.
+- **Interactive Mode**: Users collaborate with YiGraph to analyze business problems. For a given question, YiGraph interacts with the LLM to determine the computation workflow and graph algorithms, then executes the plan and returns an analysis report. This mode is suitable for advanced users who are familiar with both the business and graph algorithms.
+- **Expert Mode**: Users directly specify the business problem along with the solution approach, computation steps, and graph algorithms. YiGraph then executes the provided plan and returns an analysis report. This mode is intended for expert users with deep knowledge of the business and graph algorithms.
 
 ---
 
@@ -116,19 +116,14 @@ The system will automatically extract entities and relationships from raw data t
 - ✅ Complete graph computing engine (based on NetworkX and  Neo4j)
 - ✅ Intelligent task planning and execution
 - ✅ 100+ graph algorithms support, covering 11 major categories
-- ✅ Multi-data source support (graph/table/text)
+- ✅ Multi-data source support (graph/text)
 - ✅ Interactive dialogue interface
-
-**Known Limitations**
-- Performance optimization needed for large-scale graphs (millions of nodes and above)
-- Some advanced graph algorithms are still under development
-- Documentation and examples are still being improved
 
 ### Roadmap
 
 **v0.2.0 (Planned)**
-- 🔄 More graph deep learning algorithms
-- 🔄 More data source connectors
+- 🔄 Expand the graph algorithm library to 200–300 algorithms
+- 🔄 Add an integrated graph learning module (training/inference)
 
 
 ---
@@ -428,72 +423,23 @@ For more advanced features, parameter descriptions, and usage examples, please r
 - **Port conflict**: Check if graph database and vector database services have been started
 - **Model cannot be loaded**: Confirm that API Key and model name are valid
 
----
 
-## 📂 Project Structure
+## 📖 Documentation & Resources
 
-```
-AAG/
-├── aag/                          # Core code directory
-│   ├── main.py                   # Main entry file
-│   ├── engine/                   # YiGraph engine (based on AAG framework)
-│   │   ├── aag_engine.py         # Engine core
-│   │   ├── scheduler.py          # Task scheduler
-│   │   ├── router.py             # Task router
-│   │   └── dependency_resolver.py # Dependency resolver
-│   ├── computing_engine/         # Graph computing engine
-│   │   ├── graph_processor.py    # Graph processor
-│   │   ├── computing_engine.py   # Computing engine core
-│   │   ├── networkx_server/      # NetworkX service
-│   │   └── pyg_server/           # PyTorch Geometric service
-│   ├── rag_engine/               # RAG retrieval engine
-│   │   ├── graph_rag.py          # Graph retrieval
-│   │   ├── vector_rag.py         # Vector retrieval
-│   │   └── rag.py                # Hybrid retrieval
-│   ├── expert_search_engine/     # Expert search engine
-│   │   ├── search.py             # Search core
-│   │   ├── database/             # Database interface
-│   │   │   ├── nebulagraph.py    # NebulaGraph interface
-│   │   │   └── milvus.py         # Milvus interface
-│   │   └── data_process/         # Data processing
-│   ├── data_pipeline/            # Data processing pipeline
-│   │   ├── data_transformer/     # Data transformer
-│   │   │   ├── graph_loader.py   # Graph data loader
-│   │   │   ├── table_loader.py   # Table data loader
-│   │   │   └── text_loader.py    # Text data loader
-│   │   └── knowledge_ingestion/  # Knowledge extraction
-│   ├── reasoner/                 # Reasoning module
-│   │   ├── model_deployment.py   # LLM deployment
-│   │   └── prompt_template/      # Prompt templates
-│   ├── knowledge_base/           # Knowledge base
-│   │   ├── algorithms.yaml       # Algorithm definitions
-│   │   ├── knowledge.yaml        # Knowledge definitions
-│   │   └── task_types.yaml       # Task types
-│   ├── models/                   # Model definitions
-│   │   ├── graph_workflow_dag.py # Workflow DAG
-│   │   └── task_types.py         # Task type definitions
-│   ├── error_recovery/           # Error recovery
-│   │   ├── error_manager.py      # Error manager
-│   │   └── policies.py           # Recovery policies
-│   ├── api/                      # API interface
-│   │   ├── chat_api.py           # Chat API
-│   │   └── services/             # Service layer
-│   └── utils/                    # Utility functions
-├── config/                       # Configuration files
-│   ├── engine_config.yaml        # Engine configuration
-│   └── data_upload_config.yaml   # Data configuration
-├── datasets/                     # Dataset directory
-│   ├── graphs/                   # Graph datasets
-│   ├── data/                     # Raw data
-│   └── dataset_schemas/          # Dataset schemas
-├── docs-site/                    # Documentation site
-│   └── docs/                     # Documentation content
-├── test/                         # Test files
-├── requirements.txt              # Dependency list
-└── README.md                     # This document
-```
+### 📚 Online Documentation
 
----
+Access the complete user manual and developer guide:
+
+**[http://superccy.github.io/YiGraphDocs/](http://superccy.github.io/YiGraphDocs/)**
+
+Documentation includes:
+- **Quick Start**: System installation, configuration, and basic usage
+- **Core Concepts**: AAG framework principles and architecture design
+- **Algorithm Documentation**: Detailed descriptions and usage examples of 100+ graph algorithms
+- **API Reference**: Complete API interface documentation
+- **Best Practices**: Analysis cases and experience summaries for typical scenarios
+
+
 
 ## 📞 Contact Us
 
@@ -530,11 +476,11 @@ We welcome all forms of contributions:
 If you use YiGraph or the AAG framework in your research, please cite our paper:
 
 ```bibtex
-@article{aag2024,
-  title={YiGraph: Analytics-Augmented Generation for Graph Data Analysis},
-  author={Your Name and Others},
-  journal={arXiv preprint arXiv:xxxx.xxxxx},
-  year={2024}
+@article{YiGraph2026,
+  title={Towards Autonomous Graph Data Analytics with Analytics-Augmented Generation},
+  author={Qiange Wang, Chaoyi Chen, Jingqi Gao, Zihan Wang, Yanfeng Zhang, Ge Yu},
+  journal={arXiv preprint arXiv:2602.21604},
+  year={2026}
 }
 ```
 
@@ -574,20 +520,6 @@ If this project helps you, please Star ⭐ to support us!
 
 ---
 
-## 📖 Documentation & Resources
-
-### 📚 Online Documentation
-
-Access the complete user manual and developer guide:
-
-**[https://superccy.github.io/AAG/en/docs/intro](https://superccy.github.io/AAG/en/docs/intro)**
-
-Documentation includes:
-- **Quick Start**: System installation, configuration, and basic usage
-- **Core Concepts**: AAG framework principles and architecture design
-- **Algorithm Documentation**: Detailed descriptions and usage examples of 100+ graph algorithms
-- **API Reference**: Complete API interface documentation
-- **Best Practices**: Analysis cases and experience summaries for typical scenarios
 
 
 
