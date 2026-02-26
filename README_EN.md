@@ -89,7 +89,7 @@ Built-in **100+ graph algorithms** covering 11 major categories, providing profe
 | [**Distance & Measures**](docs-site/docs/tutorial-algorithm/distance.md) | 8 | Eccentricity, Diameter, Radius, Center/Periphery, Wiener Index, Assortativity Coefficient | Network health check, topology comparison, structural preference analysis |
 | [**Graph Query**](docs-site/docs/tutorial-algorithm/graph_query.md) | 8 | Node Query, Relationship Filtering, Neighbor Query, Path Query, Common Neighbors, Subgraph Extraction, Aggregation Statistics | Data retrieval and filtering, interactive exploration, risk control investigation |
 
-> For detailed algorithm descriptions and usage guides, please refer to **[📚 Online Documentation](https://superccy.github.io/AAG/en/docs/intro)**
+> For detailed algorithm descriptions and usage guides, please refer to **[📚 Online Documentation](http://superccy.github.io/YiGraphDocs/)**
 
 
 ### 5. Flexible Data Support
