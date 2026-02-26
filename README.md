@@ -89,7 +89,7 @@
 | [**Distance & Measures（距离与结构度量）**](docs-site/docs/tutorial-algorithm/distance.md) | 8 个 | 离心率、直径、半径、中心/边缘、维纳指数、同配系数 | 网络体检、拓扑对比、结构偏好分析 |
 | [**Graph Query（图查询）**](docs-site/docs/tutorial-algorithm/graph_query.md) | 8 个 | 节点查询、关系过滤、邻居查询、路径查询、共同邻居、子图抽取、聚合统计 | 数据获取与筛选、交互式探索、风控排查 |
 
-> 详细的算法说明和使用指南请参考 **[📚 在线文档](https://superccy.github.io/AAG/docs/intro)**
+> 详细的算法说明和使用指南请参考 **[📚 在线文档](http://superccy.github.io/YiGraphDocs/)**
 
 
 ### 5. 灵活的数据支持
