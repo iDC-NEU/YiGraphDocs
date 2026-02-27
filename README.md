@@ -16,6 +16,7 @@
 <p style="margin-top: 20px;">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
   <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.11+-blue.svg" alt="Python"></a>
+  <a href="http://superccy.github.io/YiGraphDocs/"><img src="https://img.shields.io/badge/📚-用户文档-purple.svg" alt="Docs"></a>
   <a href="#-联系我们"><img src="https://img.shields.io/badge/📞-联系我们-green.svg" alt="Contact"></a>
 </p>
 
@@ -88,23 +89,22 @@
 | [**Distance & Measures（距离与结构度量）**](docs-site/docs/tutorial-algorithm/distance.md) | 8 个 | 离心率、直径、半径、中心/边缘、维纳指数、同配系数 | 网络体检、拓扑对比、结构偏好分析 |
 | [**Graph Query（图查询）**](docs-site/docs/tutorial-algorithm/graph_query.md) | 8 个 | 节点查询、关系过滤、邻居查询、路径查询、共同邻居、子图抽取、聚合统计 | 数据获取与筛选、交互式探索、风控排查 |
 
-> 详细的算法说明和使用指南请参考 **[📚 在线文档](https://superccy.github.io/AAG/docs/intro)**
+> 详细的算法说明和使用指南请参考 **[📚 在线文档](http://superccy.github.io/YiGraphDocs/)**
 
 
 ### 5. 灵活的数据支持
 
 支持多种数据源输入：
-- **图数据**：GML、GraphML、边列表等格式
-- **表格数据**：CSV、Excel 等结构化数据
+- **图数据**
 - **文本数据**：文档、日志、报告等非结构化数据
 
 系统会自动从原始数据中抽取实体与关系，构建结构化的图数据。
 
 ### 6. 多种运行模式
 
-- **交互式模式**：通过自然语言对话完成图分析任务
-- **批处理模式**：批量处理多个分析任务
-- **API 模式**：通过 RESTful API 集成到现有系统
+- **普通模式**：用户只需提交业务问题，易图会自动完成问题解析、选择合适的图算法并执行计算，最终生成分析报告，适合非技术背景或一般业务用户使用。
+- **交互模式**：用户与易图协同完成业务问题分析。对于给定问题，易图会与大模型交互共同确定计算流程与图算法，再依据确定好的方案完成计算并反馈分析报告，适合对业务和图算法都有一定了解的进阶用户。
+- **专家模式**：用户直接给出业务问题以及解决思路、计算步骤与图算法，易图根据用户提供的方案执行计算并输出分析报告，适合深度掌握业务与图算法的专家用户。
 
 ---
 
@@ -116,19 +116,15 @@
 - ✅ 完整的图计算引擎（基于 NetworkX 和 Neo4j）
 - ✅ 智能任务规划与执行
 - ✅ 100+ 种图算法支持，覆盖 11 大类别
-- ✅ 多数据源支持（图/表格/文本）
+- ✅ 多数据源支持（图/文本）
 - ✅ 交互式对话界面
 
-**已知限制**
-- 大规模图（百万节点以上）性能有待优化
-- 部分高级图算法仍在开发中
-- 文档和示例仍在完善
 
 ### 路线图
 
 **v0.2.0（计划中）**
-- 🔄 更多图深度学习算法
-- 🔄 更多数据源连接器
+- 🔄 图算法扩展至200-300个
+- 🔄 新增图学习模块
 
 
 ---
@@ -428,75 +424,23 @@ python aag/main.py
 - **端口冲突**：检查图数据库与向量数据库服务是否已启动
 - **模型无法加载**：确认 API Key 与模型名称是否有效
 
----
 
-## 📂 项目结构
+## 📖 文档与资源
 
-```
-AAG/
-├── aag/                          # 核心代码目录
-│   ├── main.py                   # 主入口文件
-│   ├── engine/                   # 易图引擎（基于 AAG 框架）
-│   │   ├── aag_engine.py         # 引擎核心
-│   │   ├── scheduler.py          # 任务调度器
-│   │   ├── router.py             # 任务路由
-│   │   └── dependency_resolver.py # 依赖解析
-│   ├── computing_engine/         # 图计算引擎
-│   │   ├── graph_processor.py    # 图处理器
-│   │   ├── computing_engine.py   # 计算引擎核心
-│   │   ├── networkx_server/      # NetworkX 服务
-│   │   └── pyg_server/           # PyTorch Geometric 服务
-│   ├── rag_engine/               # RAG 检索引擎
-│   │   ├── graph_rag.py          # 图检索
-│   │   ├── vector_rag.py         # 向量检索
-│   │   └── rag.py                # 混合检索
-│   ├── expert_search_engine/     # 专家搜索引擎
-│   │   ├── search.py             # 搜索核心
-│   │   ├── database/             # 数据库接口
-│   │   │   ├── nebulagraph.py    # NebulaGraph 接口
-│   │   │   └── milvus.py         # Milvus 接口
-│   │   └── data_process/         # 数据处理
-│   ├── data_pipeline/            # 数据处理管道
-│   │   ├── data_transformer/     # 数据转换器
-│   │   │   ├── graph_loader.py   # 图数据加载
-│   │   │   ├── table_loader.py   # 表格数据加载
-│   │   │   └── text_loader.py    # 文本数据加载
-│   │   └── knowledge_ingestion/  # 知识抽取
-│   ├── reasoner/                 # 推理模块
-│   │   ├── model_deployment.py   # LLM 部署
-│   │   └── prompt_template/      # 提示词模板
-│   ├── knowledge_base/           # 知识库
-│   │   ├── algorithms.yaml       # 算法定义
-│   │   ├── knowledge.yaml        # 知识定义
-│   │   └── task_types.yaml       # 任务类型
-│   ├── models/                   # 模型定义
-│   │   ├── graph_workflow_dag.py # 工作流 DAG
-│   │   └── task_types.py         # 任务类型定义
-│   ├── error_recovery/           # 错误恢复
-│   │   ├── error_manager.py      # 错误管理
-│   │   └── policies.py           # 恢复策略
-│   ├── api/                      # API 接口
-│   │   ├── chat_api.py           # 对话 API
-│   │   └── services/             # 服务层
-│   └── utils/                    # 工具函数
-├── config/                       # 配置文件
-│   ├── engine_config.yaml        # 引擎配置
-│   └── data_upload_config.yaml   # 数据配置
-├── datasets/                     # 数据集目录
-│   ├── graphs/                   # 图数据集
-│   ├── data/                     # 原始数据
-│   └── dataset_schemas/          # 数据集模式
-├── docs-site/                    # 文档站点
-│   └── docs/                     # 文档内容
-├── test/                         # 测试文件
-├── requirements.txt              # 依赖列表
-└── README.md                     # 本文档
-```
+### 📚 在线文档
 
----
+访问完整的用户手册和开发者指南：
+
+**[http://superccy.github.io/YiGraphDocs/](http://superccy.github.io/YiGraphDocs/)**
+
+文档内容包括：
+- **快速入门**：系统安装、配置和基本使用
+- **核心概念**：AAG 框架原理和架构设计
+- **算法文档**：100+ 种图算法的详细说明和使用示例
+- **API 参考**：完整的 API 接口文档
+- **最佳实践**：典型场景的分析案例和经验总结
 
 ## 📞 联系我们
-
 
 
 ### 贡献指南
@@ -530,11 +474,11 @@ AAG/
 如果您在研究中使用了易图（YiGraph）或 AAG 框架，请引用我们的论文：
 
 ```bibtex
-@article{aag2024,
-  title={YiGraph: Analytics-Augmented Generation for Graph Data Analysis},
-  author={Your Name and Others},
-  journal={arXiv preprint arXiv:xxxx.xxxxx},
-  year={2024}
+@article{YiGraph2026,
+  title={Towards Autonomous Graph Data Analytics with Analytics-Augmented Generation},
+  author={Qiange Wang, Chaoyi Chen, Jingqi Gao, Zihan Wang, Yanfeng Zhang, Ge Yu},
+  journal={arXiv preprint arXiv:2602.21604},
+  year={2026}
 }
 ```
 
@@ -574,20 +518,6 @@ AAG/
 
 ---
 
-## 📖 文档与资源
-
-### 📚 在线文档
-
-访问完整的用户手册和开发者指南：
-
-**[https://superccy.github.io/AAG/docs/intro](https://superccy.github.io/AAG/docs/intro)**
-
-文档内容包括：
-- **快速入门**：系统安装、配置和基本使用
-- **核心概念**：AAG 框架原理和架构设计
-- **算法文档**：100+ 种图算法的详细说明和使用示例
-- **API 参考**：完整的 API 接口文档
-- **最佳实践**：典型场景的分析案例和经验总结
 
 
 
