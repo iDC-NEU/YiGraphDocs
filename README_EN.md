@@ -16,7 +16,7 @@
 <p style="margin-top: 20px;">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
   <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.11+-blue.svg" alt="Python"></a>
-  <a href="http://superccy.github.io/YiGraphDocs/"><img src="https://img.shields.io/badge/📚-Docs-purple.svg" alt="Docs"></a>
+  <a href="http://iDC-NEU.github.io/YiGraphDocs/"><img src="https://img.shields.io/badge/📚-Docs-purple.svg" alt="Docs"></a>
   <a href="#-contact-us"><img src="https://img.shields.io/badge/📞-Contact_Us-green.svg" alt="Contact"></a>
 </p>
 
@@ -221,8 +221,8 @@ After starting Neo4j, you can access the web interface at `http://localhost:7474
 #### 2.1 Download Source Code
 
 ```bash
-git clone https://github.com/superccy/AAG.git
-cd AAG
+git clone https://github.com/iDC-NEU/YiGraph.git
+cd YiGraph
 ```
 
 #### 2.2 Install Dependencies
@@ -508,7 +508,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 If this project helps you, please Star ⭐ to support us!
 
-[![Star History Chart](https://api.star-history.com/svg?repos=your-org/AAG&type=Date)](https://star-history.com/#your-org/AAG&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=iDC-NEU/YiGraph&type=Date)](https://star-history.com/#iDC-NEU/YiGraph&Date)
 
 ---
 

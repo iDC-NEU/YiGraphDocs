@@ -140,11 +140,6 @@ To facilitate different users, YiGraph can provide multiple interaction and cont
 
 ---
 
-(Here you can place: product demo link / documentation entry / contact information)
-
-
-📽 **Product Demo Video**
-(Demo link can be placed here)
 
 ⭐️ **Welcome to Star / Follow AAG for the latest product progress and capability updates**
 
@@ -161,7 +156,7 @@ Welcome to connect with us through the following channels:
       <img src={require('@site/static/img/wechat.png').default} alt="WeChat" width="180"/>
     </td>
     <td style={{textAlign: 'center', border: 'none', padding: '20px'}}>
-      <h4>Xiaohongshu</h4>
+      <h4>rednote</h4>
       <img src={require('@site/static/img/redbook.png').default} alt="Xiaohongshu" width="180"/>
     </td>
     <td style={{textAlign: 'center', border: 'none', padding: '20px'}}>

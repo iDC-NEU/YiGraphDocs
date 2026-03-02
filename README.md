@@ -16,7 +16,7 @@
 <p style="margin-top: 20px;">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
   <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.11+-blue.svg" alt="Python"></a>
-  <a href="http://superccy.github.io/YiGraphDocs/"><img src="https://img.shields.io/badge/📚-用户文档-purple.svg" alt="Docs"></a>
+  <a href="http://iDC-NEU.github.io/YiGraphDocs/"><img src="https://img.shields.io/badge/📚-用户文档-purple.svg" alt="Docs"></a>
   <a href="#-联系我们"><img src="https://img.shields.io/badge/📞-联系我们-green.svg" alt="Contact"></a>
 </p>
 
@@ -222,8 +222,8 @@ cd bin
 #### 2.1 下载源码
 
 ```bash
-git clone https://github.com/superccy/AAG.git
-cd AAG
+git clone https://github.com/iDC-NEU/YiGraph.git
+cd YiGraph
 ```
 
 #### 2.2 安装依赖
@@ -506,7 +506,7 @@ python aag/main.py
 
 如果这个项目对您有帮助，欢迎 Star ⭐ 支持我们！
 
-[![Star History Chart](https://api.star-history.com/svg?repos=your-org/AAG&type=Date)](https://star-history.com/#your-org/AAG&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=iDC-NEU/YiGraph&type=Date)](https://star-history.com/#iDC-NEU/YiGraph&Date)
 
 ---
 

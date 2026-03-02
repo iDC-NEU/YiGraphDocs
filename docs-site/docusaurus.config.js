@@ -12,10 +12,10 @@ const config = {
   },
 
   // GitHub Pages（用你自己的仓库）
-  url: 'https://superccy.github.io',
+  url: 'https://iDC-NEU.github.io',
   baseUrl: '/YiGraphDocs/',
 
-  organizationName: 'superccy',
+  organizationName: 'iDC-NEU',
   projectName: 'YiGraphDocs',
 
   onBrokenLinks: 'throw',
@@ -47,7 +47,7 @@ const config = {
           sidebarPath: './sidebars.js',
 
           // 👉 指向你要提交文档的“上游仓库”
-          editUrl: 'https://github.com/superccy/YiGraphDocs/tree/main/docs-site/',
+          editUrl: 'https://github.com/iDC-NEU/YiGraphDocs/tree/main/docs-site/',
         },
 
         // ❌ 不需要 Blog，关掉更干净
@@ -69,7 +69,7 @@ const config = {
         type: 'localeDropdown',
         position: 'right',
       },
-      { href: 'https://github.com/superccy/YiGraphDocs', label: 'GitHub', position: 'right' },
+      { href: 'https://github.com/iDC-NEU/YiGraph', label: 'GitHub', position: 'right' },
     ],
     },
     
