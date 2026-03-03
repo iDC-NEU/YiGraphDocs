@@ -17,6 +17,10 @@ const config = {
 
   organizationName: 'iDC-NEU',
   projectName: 'YiGraphDocs',
+  
+  // 部署配置
+  deploymentBranch: 'gh-pages',
+  trailingSlash: false,
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
