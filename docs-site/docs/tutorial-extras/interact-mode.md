@@ -2,27 +2,29 @@
 sidebar_position: 2
 ---
 
-# Case 2. Interact Mode
+# 案例2.interact-mode
 
-## Input Question
-Example Question:
+## 输入问题
+示例问题：
 ```
-Recommend potential accounts in the graph that are most likely to have transactions with Hodges Mitchell.
-```
-
-## Collaborative Planning
-After you input the question, EtuGraph will generate an executable DAG and show you the plan. You can provide modification suggestions to refine the DAG.
-
-Modification methods:
-- **Web Interface**: Directly type your modification suggestions in the chat input box.
-- **Terminal Interaction Mode**: Use the following command.
-```
-modify [your modification suggestions]
+推荐图中与 Hodges Mitchell 最有可能产生交易往来的潜在账户。
 ```
 
-**Example Modification Suggestion**:
+## 协同规划
+输入问题后，易图会规划出可执行DAG，将计划展示给你，可以给出修改建议完善DAG，修改方式为：
+
+- **Web 界面**：在聊天界面聊天框中直接输入修改建议。
+- **终端交互模式（Terminal）**：使用以下指令。
 ```
-modify Change step 1 to find the closely connected account group of Hodges Mitchell. Then identify the most active accounts in this group.
+modify 修改建议
 ```
 
-After confirming the plan is correct, start the analysis and wait for EtuGraph to generate the analysis report.
+**修改建议示例**：
+```
+modify 修改节点1为找出与 Hodges Mitchell 联系紧密的账户群组。再在该群组中识别交易最活跃账户。
+```
+
+确认计划无误后，开始分析，等待易图产生分析报告
+
+
+
