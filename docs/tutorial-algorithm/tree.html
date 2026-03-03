@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-CN" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-tutorial-algorithm/tree" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Tree &amp; Spanning Tree 树与生成树算子集 | YiGraph Documentation</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/tree"><meta data-rh="true" property="og:locale" content="zh_CN"><meta data-rh="true" property="og:locale:alternate" content="en_US"><meta data-rh="true" name="docusaurus_locale" content="zh-CN"><meta data-rh="true" name="docsearch:language" content="zh-CN"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Tree &amp; Spanning Tree 树与生成树算子集 | YiGraph Documentation"><meta data-rh="true" name="description" content="算子类别：Tree &amp; Spanning Tree（最小/最大/随机生成树）"><meta data-rh="true" property="og:description" content="算子类别：Tree &amp; Spanning Tree（最小/最大/随机生成树）"><link data-rh="true" rel="icon" href="/YiGraphDocs/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/tree"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/tree" hreflang="zh-CN"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/tree" hreflang="en-US"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/tree" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tree & Spanning Tree 树与生成树算子集","item":"https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/tree"}]}</script><link rel="stylesheet" href="/YiGraphDocs/assets/css/styles.0b46e163.css">
+<script src="/YiGraphDocs/assets/js/runtime~main.050761d3.js" defer="defer"></script>
+<script src="/YiGraphDocs/assets/js/main.c12e10ab.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="跳到主要内容"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/YiGraphDocs/"><b class="navbar__title text--truncate">YiGraph中文文档</b></a><a class="navbar__item navbar__link" href="/YiGraphDocs/docs/intro">开发者指南</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" class="iconLanguage_nlXk"><path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>简体中文</a><ul class="dropdown__menu"><li><a href="/YiGraphDocs/docs/tutorial-algorithm/tree" target="_self" rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang="zh-CN">简体中文</a></li><li><a href="/YiGraphDocs/en/docs/tutorial-algorithm/tree" target="_self" rel="noopener noreferrer" class="dropdown__link" lang="en-US">English</a></li></ul></div><a href="https://github.com/iDC-NEU/YiGraph" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/docs/intro"><span title="基本信息" class="categoryLinkLabel_W154">基本信息</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/intro"><span title="简介" class="linkLabel_WmDU">简介</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/docs/tutorial-basics/create-a-page"><span title="从这里开始" class="categoryLinkLabel_W154">从这里开始</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-basics/create-a-page"><span title="YiGraph 安装与使用指南" class="linkLabel_WmDU">YiGraph 安装与使用指南</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/docs/tutorial-extras/getting-started-cases"><span title="上手案例" class="categoryLinkLabel_W154">上手案例</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/getting-started-cases"><span title="用户上手案例" class="linkLabel_WmDU">用户上手案例</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/normal-mode"><span title="案例1.normal-mode" class="linkLabel_WmDU">案例1.normal-mode</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/interact-mode"><span title="案例2.interact-mode" class="linkLabel_WmDU">案例2.interact-mode</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/expert-mode"><span title="案例3.expert-mode" class="linkLabel_WmDU">案例3.expert-mode</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/YiGraphDocs/docs/tutorial-algorithm/basic"><span title="专用算子" class="categoryLinkLabel_W154">专用算子</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/basic"><span title="Basics 基础算子集" class="linkLabel_WmDU">Basics 基础算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/path"><span title="Path 路径算子集" class="linkLabel_WmDU">Path 路径算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/centrality"><span title="Centrality 中心性与关键性算子集" class="linkLabel_WmDU">Centrality 中心性与关键性算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/Connectivity_Components"><span title="Connectivity &amp; Components 连通性与组件算子集" class="linkLabel_WmDU">Connectivity &amp; Components 连通性与组件算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community"><span title="Clustering &amp; Community 聚类与社区算子集" class="linkLabel_WmDU">Clustering &amp; Community 聚类与社区算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/tree"><span title="Tree &amp; Spanning Tree 树与生成树算子集" class="linkLabel_WmDU">Tree &amp; Spanning Tree 树与生成树算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/flow"><span title="Flow &amp; Cut 流与割算子集" class="linkLabel_WmDU">Flow &amp; Cut 流与割算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/link_prediction"><span title="Link Prediction 链接预测算子集" class="linkLabel_WmDU">Link Prediction 链接预测算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/matching_coloring"><span title="Matching &amp; Coloring 匹配与着色算子集" class="linkLabel_WmDU">Matching &amp; Coloring 匹配与着色算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/cliques_cores"><span title="Cliques &amp; Cores 团与核算子集" class="linkLabel_WmDU">Cliques &amp; Cores 团与核算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/distance"><span title="Distance &amp; Measures 距离与结构度量算子集" class="linkLabel_WmDU">Distance &amp; Measures 距离与结构度量算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/graph_query"><span title="Graph Query 图查询算子集" class="linkLabel_WmDU">Graph Query 图查询算子集</span></a></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="页面路径"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/YiGraphDocs/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">专用算子</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Tree &amp; Spanning Tree 树与生成树算子集</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>Tree &amp; Spanning Tree 树与生成树算子集</h1></header>
+<p><strong>算子类别</strong>：Tree &amp; Spanning Tree（最小/最大/随机生成树）<br>
+<strong>描述</strong>：面向无向图的生成树相关算法，用于构建“覆盖所有节点且无环”的骨架结构，并在不同目标（最小成本 / 最大收益 / 随机采样）下输出生成树或生成森林。</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="一算子集概述">一、算子集概述<a href="#一算子集概述" class="hash-link" aria-label="一、算子集概述的直接链接" title="一、算子集概述的直接链接" translate="no">​</a></h2>
+<p>在图分析与网络工程里，经常需要把复杂网络“抽骨架”：</p>
+<ul>
+<li class=""><strong>最小生成树（MST）</strong>：在保证连通覆盖的前提下，使总成本/距离/时延最小。</li>
+<li class=""><strong>最大生成树（MaxST）</strong>：在保证连通覆盖的前提下，使总收益/带宽/相似度最大。</li>
+<li class=""><strong>随机生成树（Random ST）</strong>：按权重定义的分布随机采样生成树，用于仿真、压力测试、随机化策略或生成式内容（如迷宫）。</li>
+</ul>
+<blockquote>
+<p>说明：当输入图 <code>G</code> <strong>不连通</strong> 时，NetworkX 会返回 <strong>生成森林（spanning forest）</strong>，即每个连通分量各自一棵树。</p>
+</blockquote>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="二算子列表">二、算子列表<a href="#二算子列表" class="hash-link" aria-label="二、算子列表的直接链接" title="二、算子列表的直接链接" translate="no">​</a></h2>
+<ul>
+<li class=""><code>minimum_spanning_tree</code></li>
+<li class=""><code>maximum_spanning_tree</code></li>
+<li class=""><code>random_spanning_tree</code></li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="三通用输入输出约定">三、通用输入输出约定<a href="#三通用输入输出约定" class="hash-link" aria-label="三、通用输入输出约定的直接链接" title="三、通用输入输出约定的直接链接" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="31-输入input">3.1 输入（Input）<a href="#31-输入input" class="hash-link" aria-label="3.1 输入（Input）的直接链接" title="3.1 输入（Input）的直接链接" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>G</strong>：无向图（undirected graph），支持 <code>multigraph</code>（多重边）。</li>
+<li class=""><strong>weight</strong>：边权属性名（默认 <code>&quot;weight&quot;</code>，随机生成树可为 <code>None</code> 表示无权/等权）。</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="32-输出output">3.2 输出（Output）<a href="#32-输出output" class="hash-link" aria-label="3.2 输出（Output）的直接链接" title="3.2 输出（Output）的直接链接" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>minimum_spanning_tree / maximum_spanning_tree</strong>：<code>NetworkX Graph</code>（生成树或生成森林）</li>
+<li class=""><strong>random_spanning_tree</strong>：<code>nx.Graph</code>（按权重分布采样到的一棵生成树）</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="四算子详细说明">四、算子详细说明<a href="#四算子详细说明" class="hash-link" aria-label="四、算子详细说明的直接链接" title="四、算子详细说明的直接链接" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="41-minimum_spanning_tree--最小生成树mst">4.1 minimum_spanning_tree —— 最小生成树（MST）<a href="#41-minimum_spanning_tree--最小生成树mst" class="hash-link" aria-label="4.1 minimum_spanning_tree —— 最小生成树（MST）的直接链接" title="4.1 minimum_spanning_tree —— 最小生成树（MST）的直接链接" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="功能说明">功能说明<a href="#功能说明" class="hash-link" aria-label="功能说明的直接链接" title="功能说明的直接链接" translate="no">​</a></h3>
+<p>在无向加权图中选择一组边，使得：</p>
+<ol>
+<li class="">覆盖所有节点（连通时为树，不连通时为森林）；</li>
+<li class="">不包含环；</li>
+<li class=""><strong>总边权之和最小</strong>。</li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="适用场景application-scenario">适用场景（Application scenario）<a href="#适用场景application-scenario" class="hash-link" aria-label="适用场景（Application scenario）的直接链接" title="适用场景（Application scenario）的直接链接" translate="no">​</a></h3>
+<ul>
+<li class="">网络设计：以最低建设成本/最短线缆长度连接所有站点（光纤铺设、供水管网、配电线缆）。</li>
+<li class="">线路规划：以最低总时延/最短总距离形成覆盖骨架。</li>
+<li class="">资源最省的“全覆盖连接方案”。</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="参数与调优tuning-mechanisms">参数与调优（Tuning Mechanisms）<a href="#参数与调优tuning-mechanisms" class="hash-link" aria-label="参数与调优（Tuning Mechanisms）的直接链接" title="参数与调优（Tuning Mechanisms）的直接链接" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>weight (str)</strong>：指定使用哪一个边属性作为权重（如 <code>cost</code> / <code>distance</code> / <code>latency</code>）。<!-- -->
+<ul>
+<li class="">改它会改变“最小”的评价口径，从而改变输出树结构。</li>
+</ul>
+</li>
+<li class=""><strong>algorithm (str)</strong>：<code>&#x27;kruskal&#x27; | &#x27;prim&#x27; | &#x27;boruvka&#x27;</code>（默认 <code>kruskal</code>）<!-- -->
+<ul>
+<li class=""><strong>Kruskal</strong>：按边权排序逐步选边，适合稀疏图；</li>
+<li class=""><strong>Prim</strong>：从某点扩展，适合连通图与邻接结构；</li>
+<li class=""><strong>Boruvka</strong>：并行式合并组件，某些大图/工程实现中常用。</li>
+</ul>
+</li>
+<li class=""><strong>ignore_nan (bool)</strong>：遇到 NaN 权重时的处理<!-- -->
+<ul>
+<li class=""><code>False</code>：默认抛异常</li>
+<li class=""><code>True</code>：忽略该边（相当于不可用）</li>
+</ul>
+</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="原理principles">原理（Principles）<a href="#原理principles" class="hash-link" aria-label="原理（Principles）的直接链接" title="原理（Principles）的直接链接" translate="no">​</a></h3>
+<p>算法通过不断挑选“不会成环且尽量便宜”的边把多个连通块合并，直到覆盖全部节点。<br>
+<strong>典型复杂度</strong>：<code>O(E log V)</code>（Kruskal/Prim 常见实现）</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="可回答问题solvable_questions">可回答问题（solvable_questions）<a href="#可回答问题solvable_questions" class="hash-link" aria-label="可回答问题（solvable_questions）的直接链接" title="可回答问题（solvable_questions）的直接链接" translate="no">​</a></h3>
+<ul>
+<li class="">计算该加权无向图的 MST，输出总权重与所有边。</li>
+<li class="">输出 MST 的完整边表，并按权重从小到大排序。</li>
+<li class="">城市供水/园区光纤/物流骨架：如何以最低总成本覆盖全部节点？</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="42-maximum_spanning_tree--最大生成树maxst">4.2 maximum_spanning_tree —— 最大生成树（MaxST）<a href="#42-maximum_spanning_tree--最大生成树maxst" class="hash-link" aria-label="4.2 maximum_spanning_tree —— 最大生成树（MaxST）的直接链接" title="4.2 maximum_spanning_tree —— 最大生成树（MaxST）的直接链接" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="功能说明-1">功能说明<a href="#功能说明-1" class="hash-link" aria-label="功能说明的直接链接" title="功能说明的直接链接" translate="no">​</a></h3>
+<p>与 MST 相反：在无向加权图中选择一组边，使得覆盖所有节点且无环，并且 <strong>总边权之和最大</strong>。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="适用场景application-scenario-1">适用场景（Application scenario）<a href="#适用场景application-scenario-1" class="hash-link" aria-label="适用场景（Application scenario）的直接链接" title="适用场景（Application scenario）的直接链接" translate="no">​</a></h3>
+<ul>
+<li class="">通信/骨干网络：边权表示带宽或吞吐，目标是最大化总体容量骨架。</li>
+<li class="">相关性/相似度网络：边权是相似度，输出“最大相似度骨架”（常用于可视化与结构抽取）。</li>
+<li class="">信任/影响传播：边权表示信任强度，抽取最大可信传播骨架。</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="参数与调优tuning-mechanisms-1">参数与调优（Tuning Mechanisms）<a href="#参数与调优tuning-mechanisms-1" class="hash-link" aria-label="参数与调优（Tuning Mechanisms）的直接链接" title="参数与调优（Tuning Mechanisms）的直接链接" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>weight (str)</strong>：边权属性名（默认 <code>&quot;weight&quot;</code>），决定“最大化”的指标口径。</li>
+<li class=""><strong>algorithm (str)</strong>：<code>&#x27;kruskal&#x27; | &#x27;prim&#x27; | &#x27;boruvka&#x27;</code>（默认 <code>kruskal</code>）<br>
+<!-- -->不同算法主要影响性能与实现路径，结果应在同权重定义下等价（可能因同权边导致多解）。</li>
+<li class=""><strong>ignore_nan (bool)</strong>：是否忽略 NaN 权重边（同 MST 逻辑）。</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="原理principles-1">原理（Principles）<a href="#原理principles-1" class="hash-link" aria-label="原理（Principles）的直接链接" title="原理（Principles）的直接链接" translate="no">​</a></h3>
+<p>本质上是对“最大化”目标的生成树构造，可视为把边权取负后做 MST，或直接使用对应最大生成树版本。<br>
+<strong>典型复杂度</strong>：<code>O(E log V)</code>。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="可回答问题solvable_questions-1">可回答问题（solvable_questions）<a href="#可回答问题solvable_questions-1" class="hash-link" aria-label="可回答问题（solvable_questions）的直接链接" title="可回答问题（solvable_questions）的直接链接" translate="no">​</a></h3>
+<ul>
+<li class="">计算 MaxST，输出所有边与权重。</li>
+<li class="">在“带宽/信任/相似度”网络中，选择哪些边组成最大化骨架？</li>
+<li class="">输出 MaxST 的连接关系矩阵，按边权从大到小排序。</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="43-random_spanning_tree--随机生成树采样">4.3 random_spanning_tree —— 随机生成树采样<a href="#43-random_spanning_tree--随机生成树采样" class="hash-link" aria-label="4.3 random_spanning_tree —— 随机生成树采样的直接链接" title="4.3 random_spanning_tree —— 随机生成树采样的直接链接" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="功能说明-2">功能说明<a href="#功能说明-2" class="hash-link" aria-label="功能说明的直接链接" title="功能说明的直接链接" translate="no">​</a></h3>
+<p>从给定无向（可加权）图中，按指定的概率分布 <strong>随机采样</strong> 一棵生成树。</p>
+<ul>
+<li class="">当指定 <code>weight</code> 时，生成树的概率与边权相关；</li>
+<li class="">适用于生成式结构、仿真测试、随机化策略、避免固定模式等。</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="适用场景application-scenario-2">适用场景（Application scenario）<a href="#适用场景application-scenario-2" class="hash-link" aria-label="适用场景（Application scenario）的直接链接" title="适用场景（Application scenario）的直接链接" translate="no">​</a></h3>
+<ul>
+<li class="">迷宫/地图生成：生成“无环、全连通”的随机通路骨架。</li>
+<li class="">网络压力测试：从真实拓扑中随机抽取临时骨干结构。</li>
+<li class="">韧性仿真：随机采样多棵备选骨架，评估关键边出现频率。</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="参数与调优tuning-mechanisms-2">参数与调优（Tuning Mechanisms）<a href="#参数与调优tuning-mechanisms-2" class="hash-link" aria-label="参数与调优（Tuning Mechanisms）的直接链接" title="参数与调优（Tuning Mechanisms）的直接链接" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>weight (str | None)</strong>：用于决定采样分布的边权属性<!-- -->
+<ul>
+<li class=""><code>None</code>：等权采样（更接近均匀随机生成树）</li>
+</ul>
+</li>
+<li class=""><strong>multiplicative (bool, default=True)</strong>：概率计算方式<!-- -->
+<ul>
+<li class=""><code>True</code>：树概率与“边权乘积”成比例（偏向每条边都强的树）</li>
+<li class=""><code>False</code>：树概率与“边权求和”成比例（偏向整体更大但允许局部弱边）</li>
+</ul>
+</li>
+<li class=""><strong>seed</strong>：随机种子，用于可复现性</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="原理principles-2">原理（Principles）<a href="#原理principles-2" class="hash-link" aria-label="原理（Principles）的直接链接" title="原理（Principles）的直接链接" translate="no">​</a></h3>
+<p>核心思想是基于随机过程（NetworkX 实现通常与 Wilson’s algorithm 等随机游走/生成树采样思想相关）按分布采样生成树。<br>
+<strong>复杂度</strong>：多项式时间（Polynomial，具体随实现与图规模变化）。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="可回答问题solvable_questions-2">可回答问题（solvable_questions）<a href="#可回答问题solvable_questions-2" class="hash-link" aria-label="可回答问题（solvable_questions）的直接链接" title="可回答问题（solvable_questions）的直接链接" translate="no">​</a></h3>
+<ul>
+<li class="">随机生成一棵生成树并输出边列表。</li>
+<li class="">随机采样 5 棵不同的生成树，分别输出连接关系。</li>
+<li class="">迷宫设计：随机生成连接所有房间且不成环的通路结构。</li>
+<li class="">为避免被识别固定模式，生成随机的备选连接骨架。</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="五选型指南快速怎么选">五、选型指南（快速怎么选）<a href="#五选型指南快速怎么选" class="hash-link" aria-label="五、选型指南（快速怎么选）的直接链接" title="五、选型指南（快速怎么选）的直接链接" translate="no">​</a></h2>
+<ul>
+<li class=""><strong>目标是最低成本/最短距离/最小延迟</strong>：用 <code>minimum_spanning_tree</code></li>
+<li class=""><strong>目标是最大带宽/最大信任/最大相似度骨架</strong>：用 <code>maximum_spanning_tree</code></li>
+<li class=""><strong>目标是随机化、仿真、采样、多方案备选</strong>：用 <code>random_spanning_tree</code></li>
+<li class=""><strong>输入图可能不连通</strong>：三者都将输出 <strong>生成森林</strong>（每个连通分量一棵树）</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="六实践建议常见坑位">六、实践建议（常见坑位）<a href="#六实践建议常见坑位" class="hash-link" aria-label="六、实践建议（常见坑位）的直接链接" title="六、实践建议（常见坑位）的直接链接" translate="no">​</a></h2>
+<ol>
+<li class=""><strong>边权口径要对齐</strong>：<!-- -->
+<ul>
+<li class="">成本类用 MST；收益/强度类用 MaxST；别把含义搞反。</li>
+</ul>
+</li>
+<li class=""><strong>多重边（multigraph）注意 key</strong>：<!-- -->
+<ul>
+<li class="">NetworkX 会在多重边情况下保留多条候选边，结果可能选中不同 key 的边。</li>
+</ul>
+</li>
+<li class=""><strong>NaN 权重要提前处理或开启 ignore_nan</strong>：<!-- -->
+<ul>
+<li class="">否则 MST/MaxST 可能直接报错。</li>
+</ul>
+</li>
+<li class=""><strong>同权重导致多解</strong>：<!-- -->
+<ul>
+<li class="">生成树并不唯一，尤其当权重重复很多时，不同算法或遍历顺序可能给出不同但等价的树。</li>
+</ul>
+</li>
+</ol>
+<hr></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/iDC-NEU/YiGraphDocs/tree/main/docs-site/docs/tutorial-algorithm/tree.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">Clustering &amp; Community 聚类与社区算子集</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/YiGraphDocs/docs/tutorial-algorithm/flow"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">Flow &amp; Cut 流与割算子集</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#一算子集概述" class="table-of-contents__link toc-highlight">一、算子集概述</a></li><li><a href="#二算子列表" class="table-of-contents__link toc-highlight">二、算子列表</a></li><li><a href="#三通用输入输出约定" class="table-of-contents__link toc-highlight">三、通用输入输出约定</a><ul><li><a href="#31-输入input" class="table-of-contents__link toc-highlight">3.1 输入（Input）</a></li><li><a href="#32-输出output" class="table-of-contents__link toc-highlight">3.2 输出（Output）</a></li></ul></li><li><a href="#四算子详细说明" class="table-of-contents__link toc-highlight">四、算子详细说明</a></li><li><a href="#41-minimum_spanning_tree--最小生成树mst" class="table-of-contents__link toc-highlight">4.1 minimum_spanning_tree —— 最小生成树（MST）</a><ul><li><a href="#功能说明" class="table-of-contents__link toc-highlight">功能说明</a></li><li><a href="#适用场景application-scenario" class="table-of-contents__link toc-highlight">适用场景（Application scenario）</a></li><li><a href="#参数与调优tuning-mechanisms" class="table-of-contents__link toc-highlight">参数与调优（Tuning Mechanisms）</a></li><li><a href="#原理principles" class="table-of-contents__link toc-highlight">原理（Principles）</a></li><li><a href="#可回答问题solvable_questions" class="table-of-contents__link toc-highlight">可回答问题（solvable_questions）</a></li></ul></li><li><a href="#42-maximum_spanning_tree--最大生成树maxst" class="table-of-contents__link toc-highlight">4.2 maximum_spanning_tree —— 最大生成树（MaxST）</a><ul><li><a href="#功能说明-1" class="table-of-contents__link toc-highlight">功能说明</a></li><li><a href="#适用场景application-scenario-1" class="table-of-contents__link toc-highlight">适用场景（Application scenario）</a></li><li><a href="#参数与调优tuning-mechanisms-1" class="table-of-contents__link toc-highlight">参数与调优（Tuning Mechanisms）</a></li><li><a href="#原理principles-1" class="table-of-contents__link toc-highlight">原理（Principles）</a></li><li><a href="#可回答问题solvable_questions-1" class="table-of-contents__link toc-highlight">可回答问题（solvable_questions）</a></li></ul></li><li><a href="#43-random_spanning_tree--随机生成树采样" class="table-of-contents__link toc-highlight">4.3 random_spanning_tree —— 随机生成树采样</a><ul><li><a href="#功能说明-2" class="table-of-contents__link toc-highlight">功能说明</a></li><li><a href="#适用场景application-scenario-2" class="table-of-contents__link toc-highlight">适用场景（Application scenario）</a></li><li><a href="#参数与调优tuning-mechanisms-2" class="table-of-contents__link toc-highlight">参数与调优（Tuning Mechanisms）</a></li><li><a href="#原理principles-2" class="table-of-contents__link toc-highlight">原理（Principles）</a></li><li><a href="#可回答问题solvable_questions-2" class="table-of-contents__link toc-highlight">可回答问题（solvable_questions）</a></li></ul></li><li><a href="#五选型指南快速怎么选" class="table-of-contents__link toc-highlight">五、选型指南（快速怎么选）</a></li><li><a href="#六实践建议常见坑位" class="table-of-contents__link toc-highlight">六、实践建议（常见坑位）</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">版权所有 © 2026 AAG</div></div></div></footer></div>
+</body>
+</html>

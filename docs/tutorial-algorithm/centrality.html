@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="zh-CN" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-tutorial-algorithm/centrality" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Centrality 中心性与关键性算子集 | YiGraph Documentation</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/centrality"><meta data-rh="true" property="og:locale" content="zh_CN"><meta data-rh="true" property="og:locale:alternate" content="en_US"><meta data-rh="true" name="docusaurus_locale" content="zh-CN"><meta data-rh="true" name="docsearch:language" content="zh-CN"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Centrality 中心性与关键性算子集 | YiGraph Documentation"><meta data-rh="true" name="description" content="算子类别：Centrality（节点/边重要性度量）"><meta data-rh="true" property="og:description" content="算子类别：Centrality（节点/边重要性度量）"><link data-rh="true" rel="icon" href="/YiGraphDocs/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/centrality"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/centrality" hreflang="zh-CN"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/centrality" hreflang="en-US"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/centrality" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Centrality 中心性与关键性算子集","item":"https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/centrality"}]}</script><link rel="stylesheet" href="/YiGraphDocs/assets/css/styles.0b46e163.css">
+<script src="/YiGraphDocs/assets/js/runtime~main.050761d3.js" defer="defer"></script>
+<script src="/YiGraphDocs/assets/js/main.c12e10ab.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="跳到主要内容"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/YiGraphDocs/"><b class="navbar__title text--truncate">YiGraph中文文档</b></a><a class="navbar__item navbar__link" href="/YiGraphDocs/docs/intro">开发者指南</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" class="iconLanguage_nlXk"><path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>简体中文</a><ul class="dropdown__menu"><li><a href="/YiGraphDocs/docs/tutorial-algorithm/centrality" target="_self" rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang="zh-CN">简体中文</a></li><li><a href="/YiGraphDocs/en/docs/tutorial-algorithm/centrality" target="_self" rel="noopener noreferrer" class="dropdown__link" lang="en-US">English</a></li></ul></div><a href="https://github.com/iDC-NEU/YiGraph" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/docs/intro"><span title="基本信息" class="categoryLinkLabel_W154">基本信息</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/intro"><span title="简介" class="linkLabel_WmDU">简介</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/docs/tutorial-basics/create-a-page"><span title="从这里开始" class="categoryLinkLabel_W154">从这里开始</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-basics/create-a-page"><span title="YiGraph 安装与使用指南" class="linkLabel_WmDU">YiGraph 安装与使用指南</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/docs/tutorial-extras/getting-started-cases"><span title="上手案例" class="categoryLinkLabel_W154">上手案例</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/getting-started-cases"><span title="用户上手案例" class="linkLabel_WmDU">用户上手案例</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/normal-mode"><span title="案例1.normal-mode" class="linkLabel_WmDU">案例1.normal-mode</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/interact-mode"><span title="案例2.interact-mode" class="linkLabel_WmDU">案例2.interact-mode</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/expert-mode"><span title="案例3.expert-mode" class="linkLabel_WmDU">案例3.expert-mode</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/YiGraphDocs/docs/tutorial-algorithm/basic"><span title="专用算子" class="categoryLinkLabel_W154">专用算子</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/basic"><span title="Basics 基础算子集" class="linkLabel_WmDU">Basics 基础算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/path"><span title="Path 路径算子集" class="linkLabel_WmDU">Path 路径算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/centrality"><span title="Centrality 中心性与关键性算子集" class="linkLabel_WmDU">Centrality 中心性与关键性算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/Connectivity_Components"><span title="Connectivity &amp; Components 连通性与组件算子集" class="linkLabel_WmDU">Connectivity &amp; Components 连通性与组件算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community"><span title="Clustering &amp; Community 聚类与社区算子集" class="linkLabel_WmDU">Clustering &amp; Community 聚类与社区算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/tree"><span title="Tree &amp; Spanning Tree 树与生成树算子集" class="linkLabel_WmDU">Tree &amp; Spanning Tree 树与生成树算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/flow"><span title="Flow &amp; Cut 流与割算子集" class="linkLabel_WmDU">Flow &amp; Cut 流与割算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/link_prediction"><span title="Link Prediction 链接预测算子集" class="linkLabel_WmDU">Link Prediction 链接预测算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/matching_coloring"><span title="Matching &amp; Coloring 匹配与着色算子集" class="linkLabel_WmDU">Matching &amp; Coloring 匹配与着色算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/cliques_cores"><span title="Cliques &amp; Cores 团与核算子集" class="linkLabel_WmDU">Cliques &amp; Cores 团与核算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/distance"><span title="Distance &amp; Measures 距离与结构度量算子集" class="linkLabel_WmDU">Distance &amp; Measures 距离与结构度量算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/graph_query"><span title="Graph Query 图查询算子集" class="linkLabel_WmDU">Graph Query 图查询算子集</span></a></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="页面路径"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/YiGraphDocs/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">专用算子</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Centrality 中心性与关键性算子集</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>Centrality 中心性与关键性算子集</h1></header>
+<p><strong>算子类别</strong>：Centrality（节点/边重要性度量）</p>
+<p><strong>适用阶段</strong>：关键节点识别、影响力评估、瓶颈/桥梁定位、网络稳健性分析</p>
+<p><strong>产品定位</strong>：为“谁最重要 / 谁是关键中介 / 哪条边最关键 / 信息如何扩散更快”提供统一的中心性能力底座</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="一算子集概述">一、算子集概述<a href="#一算子集概述" class="hash-link" aria-label="一、算子集概述的直接链接" title="一、算子集概述的直接链接" translate="no">​</a></h2>
+<p>Centrality 算子集面向各类关系网络（社交网络、交易网络、引用网络、通信网络、交通路网、依赖网络等），提供对<strong>节点与边重要性</strong>的系统化刻画能力，主要覆盖三类问题：</p>
+<ol>
+<li class=""><strong>连接规模型影响力</strong>：谁连接最多、谁的直接交互最频繁（如度中心性、入/出度中心性）</li>
+<li class=""><strong>最短路桥梁/中介</strong>：谁/哪条边最常出现在最短路径上，是网络“桥梁”和“枢纽”（如介数中心性、边介数、负载中心性）</li>
+<li class=""><strong>全局结构型权威</strong>：谁连接的“人也重要”，谁在随机游走/链接投票下更权威（如特征向量中心性、Katz、PageRank、HITS）</li>
+<li class=""><strong>距离可达型效率</strong>：谁到其他人平均距离更近、触达效率更高（如接近中心性、调和中心性）</li>
+<li class=""><strong>局部团结构贡献</strong>：谁参与更多紧密子结构（如子图中心性）</li>
+<li class=""><strong>传播种子选择</strong>：哪些节点更适合做扩散种子（如 VoteRank）</li>
+</ol>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="二算子能力分类">二、算子能力分类<a href="#二算子能力分类" class="hash-link" aria-label="二、算子能力分类的直接链接" title="二、算子能力分类的直接链接" translate="no">​</a></h2>
+<table><thead><tr><th>能力类型</th><th>对应算子</th><th>功能描述</th></tr></thead><tbody><tr><td>连接规模（无权）</td><td><code>degree_centrality</code></td><td>以连接数衡量节点影响力（有向/无向）</td></tr><tr><td>连接规模（有向）</td><td><code>in_degree_centrality</code>, <code>out_degree_centrality</code></td><td>分别衡量“被指向/主动指向”的影响力</td></tr><tr><td>距离效率</td><td><code>closeness_centrality</code>, <code>harmonic_centrality</code></td><td>基于到其他节点的距离刻画触达效率；调和中心性对不可达更稳健</td></tr><tr><td>最短路桥梁（节点）</td><td><code>betweenness_centrality</code>, <code>load_centrality</code></td><td>衡量节点作为中介/承载流量的程度</td></tr><tr><td>最短路桥梁（边）</td><td><code>edge_betweenness_centrality</code></td><td>衡量关键连接边对全网联通的贡献</td></tr><tr><td>全局权威/影响力（谱/迭代）</td><td><code>eigenvector_centrality</code>, <code>katz_centrality</code>, <code>pagerank</code>, <code>hits</code></td><td>“连接到重要节点更重要”；或随机游走/Hub-Authority 视角</td></tr><tr><td>团结构贡献（谱）</td><td><code>subgraph_centrality</code></td><td>节点参与小团/子结构的程度</td></tr><tr><td>传播种子选择</td><td><code>voterank</code></td><td>以“投票-抑制”机制选择扩散种子，避免种子过于聚集</td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="三通用输入输出约定">三、通用输入输出约定<a href="#三通用输入输出约定" class="hash-link" aria-label="三、通用输入输出约定的直接链接" title="三、通用输入输出约定的直接链接" translate="no">​</a></h2>
+<ul>
+<li class=""><strong>输入 <code>G</code></strong>：NetworkX 图对象（有向/无向；部分算法支持权重、部分不支持）</li>
+<li class=""><strong>输出</strong>：<!-- -->
+<ul>
+<li class="">节点中心性：<code>{node: score}</code> 字典</li>
+<li class="">边中心性：<code>{(u,v): score}</code> 字典</li>
+<li class="">HITS：<code>(hubs_dict, authorities_dict)</code></li>
+<li class="">VoteRank：按影响力排序的节点列表</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>说明：加权算法通常将权重解释为<strong>距离</strong>（用于最短路），或解释为<strong>连接强度</strong>（用于谱/投票类）；以具体算子参数 <code>weight</code>/<code>distance</code> 定义为准。</p>
+</blockquote>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="四算子详细说明">四、算子详细说明<a href="#四算子详细说明" class="hash-link" aria-label="四、算子详细说明的直接链接" title="四、算子详细说明的直接链接" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-degree_centrality--度中心性连接规模">1. degree_centrality —— 度中心性（连接规模）<a href="#1-degree_centrality--度中心性连接规模" class="hash-link" aria-label="1. degree_centrality —— 度中心性（连接规模）的直接链接" title="1. degree_centrality —— 度中心性（连接规模）的直接链接" translate="no">​</a></h3>
+<p><strong>功能说明</strong><br>
+<!-- -->计算每个节点的度中心性：节点连接数在全网规模下的归一化结果，用于衡量“直接关系覆盖面”。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">直观、计算快，适合大图做快速筛查</li>
+<li class="">识别“高连接账户/高互动用户/高依赖组件”等</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">社交网络：找“好友最多/互动最多”的用户</li>
+<li class="">交易网络：找“交易对手最多”的账户</li>
+<li class="">依赖网络：找“依赖/被依赖最多”的服务模块</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：有向/无向（对有向图等价于总度）</li>
+<li class="">权重：不支持（视为无权）</li>
+<li class="">复杂度：<code>O(V + E)</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-in_degree_centrality--入度中心性被关注被调用">2. in_degree_centrality —— 入度中心性（被关注/被调用）<a href="#2-in_degree_centrality--入度中心性被关注被调用" class="hash-link" aria-label="2. in_degree_centrality —— 入度中心性（被关注/被调用）的直接链接" title="2. in_degree_centrality —— 入度中心性（被关注/被调用）的直接链接" translate="no">​</a></h3>
+<p><strong>功能说明</strong><br>
+<!-- -->在有向图中计算每个节点被指向的程度，反映“被引用/被关注/被调用”的受欢迎度或权威性（连接层面的）。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">适合刻画“被动影响力”：谁被很多人指向</li>
+<li class="">对引用/关注/调用方向敏感</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">引用网络：被引用最多的论文</li>
+<li class="">关注网络：粉丝最多的账号</li>
+<li class="">调用依赖：被调用最多的核心服务</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：仅有向图</li>
+<li class="">权重：不支持</li>
+<li class="">复杂度：<code>O(V + E)</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-out_degree_centrality--出度中心性主动扩散主动调用">3. out_degree_centrality —— 出度中心性（主动扩散/主动调用）<a href="#3-out_degree_centrality--出度中心性主动扩散主动调用" class="hash-link" aria-label="3. out_degree_centrality —— 出度中心性（主动扩散/主动调用）的直接链接" title="3. out_degree_centrality —— 出度中心性（主动扩散/主动调用）的直接链接" translate="no">​</a></h3>
+<p><strong>功能说明</strong><br>
+<!-- -->在有向图中计算每个节点主动指向他人的程度，反映“主动连接/主动传播/主动调用”的活跃度或外向性。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">识别“广播者/主动触达者”</li>
+<li class="">与入度中心性互补，便于区分“受欢迎 vs 活跃”</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">社交网络：关注很多人的活跃账号</li>
+<li class="">引用网络：引用很多文献的综述型论文</li>
+<li class="">依赖网络：调用很多下游模块的上游入口服务</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：仅有向图</li>
+<li class="">权重：不支持</li>
+<li class="">复杂度：<code>O(V + E)</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-closeness_centrality--接近中心性平均距离最短">4. closeness_centrality —— 接近中心性（平均距离最短）<a href="#4-closeness_centrality--接近中心性平均距离最短" class="hash-link" aria-label="4. closeness_centrality —— 接近中心性（平均距离最短）的直接链接" title="4. closeness_centrality —— 接近中心性（平均距离最短）的直接链接" translate="no">​</a></h3>
+<p><strong>功能说明</strong><br>
+<!-- -->对每个节点计算其到其他节点的最短路径距离之和的倒数（可选 Wasserman-Faust 改进），距离越小越“接近网络中心”。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">识别“触达全网更快”的节点：适合信息分发、资源调度</li>
+<li class="">可结合边距离（<code>distance</code>）表示路网里程/时延</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">交通路网：平均到达时间最短的枢纽站点</li>
+<li class="">通信网络：平均跳数/时延最小的中继节点</li>
+<li class="">组织网络：能最快触达大多数人的团队成员</li>
+</ul>
+<p><strong>关键参数（调优）</strong></p>
+<ul>
+<li class=""><code>u</code>：只计算单节点（用于在线查询/局部分析）</li>
+<li class=""><code>distance</code>：边距离属性键（加权最短路）</li>
+<li class=""><code>wf_improved</code>：是否按可达比例缩放（对非连通图更友好）</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：有向/无向（有向图按方向计算可达距离）</li>
+<li class="">权重：支持（作为距离）</li>
+<li class="">复杂度：<code>O(V*(V+E))</code>（通常为对每个节点做一次最短路）</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="5-harmonic_centrality--调和中心性不可达更稳健">5. harmonic_centrality —— 调和中心性（不可达更稳健）<a href="#5-harmonic_centrality--调和中心性不可达更稳健" class="hash-link" aria-label="5. harmonic_centrality —— 调和中心性（不可达更稳健）的直接链接" title="5. harmonic_centrality —— 调和中心性（不可达更稳健）的直接链接" translate="no">​</a></h3>
+<p><strong>功能说明</strong><br>
+<!-- -->以到其他节点距离的倒数求和：<code>Σ 1/d(u,v)</code>。对不可达节点（距离为无穷）贡献为 0，因此在非连通图中比接近中心性更稳定。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">在存在孤岛/弱连通的网络中仍能给出可用排名</li>
+<li class="">兼顾全局与局部触达效率</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">知识图谱/引用网：存在多个社群时识别跨社群高触达节点</li>
+<li class="">交通/通信网络：局部断连或故障场景下评估关键节点</li>
+</ul>
+<p><strong>关键参数（调优）</strong></p>
+<ul>
+<li class=""><code>nbunch</code>：仅计算部分节点（提升性能）</li>
+<li class=""><code>sources</code>：指定计算距离倒数的来源集合（做“相对某群体的中心性”）</li>
+<li class=""><code>distance</code>：边距离属性键</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：有向/无向</li>
+<li class="">权重：支持（作为距离）</li>
+<li class="">复杂度：<code>O(V*(V+E))</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="6-betweenness_centrality--介数中心性关键中介桥梁">6. betweenness_centrality —— 介数中心性（关键中介/桥梁）<a href="#6-betweenness_centrality--介数中心性关键中介桥梁" class="hash-link" aria-label="6. betweenness_centrality —— 介数中心性（关键中介/桥梁）的直接链接" title="6. betweenness_centrality —— 介数中心性（关键中介/桥梁）的直接链接" translate="no">​</a></h3>
+<p><strong>功能说明</strong><br>
+<!-- -->衡量节点位于其他节点对的最短路径上的程度：越多最短路经过该节点，该节点越像“桥梁/关口/中介”。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">定位结构洞与跨社群连接者</li>
+<li class="">识别“单点故障风险”：删除此节点网络可能显著碎裂</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">社交网络：跨圈层“关系中介”</li>
+<li class="">交易网络：资金/交易链上的关键过渡账户</li>
+<li class="">交通路网：关键枢纽/必经路口（按距离/时长加权）</li>
+</ul>
+<p><strong>关键参数（调优）</strong></p>
+<ul>
+<li class=""><code>k</code>：抽样近似（<code>k</code> 越大越准，越小越快），适合大图</li>
+<li class=""><code>weight</code>：边权重属性键（作为距离）</li>
+<li class=""><code>normalized</code>：是否归一化（便于跨图比较）</li>
+<li class=""><code>endpoints</code>：是否将端点计入最短路径计数</li>
+<li class=""><code>seed</code>：抽样随机种子（复现实验）</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：有向/无向</li>
+<li class="">权重：支持（作为距离）</li>
+<li class="">复杂度：精确通常约 <code>O(V*E)</code>（NetworkX 实现基于 Brandes）；近似依赖 <code>k</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="7-edge_betweenness_centrality--边介数中心性关键连接边">7. edge_betweenness_centrality —— 边介数中心性（关键连接边）<a href="#7-edge_betweenness_centrality--边介数中心性关键连接边" class="hash-link" aria-label="7. edge_betweenness_centrality —— 边介数中心性（关键连接边）的直接链接" title="7. edge_betweenness_centrality —— 边介数中心性（关键连接边）的直接链接" translate="no">​</a></h3>
+<p><strong>功能说明</strong><br>
+<!-- -->衡量边处于多少对节点的最短路径上。高边介数的边往往是跨社区“桥边”、网络割边附近的关键连接。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">找到“断哪条边影响最大”的关键链路</li>
+<li class="">常用于社群划分、脆弱性分析与网络加固</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">交通路网：最关键路段/桥梁</li>
+<li class="">通信网络：最关键链路/光纤段</li>
+<li class="">供应链：跨区域的关键运输/供给连接</li>
+</ul>
+<p><strong>关键参数（调优）</strong></p>
+<ul>
+<li class=""><code>k</code>：抽样近似（大图提速）</li>
+<li class=""><code>weight</code>：边权重属性键（作为距离）</li>
+<li class=""><code>normalized</code>：是否归一化</li>
+<li class=""><code>seed</code>：抽样随机种子</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：有向/无向</li>
+<li class="">权重：支持（作为距离）</li>
+<li class="">复杂度：通常约 <code>O(V*E)</code>（近似依赖 <code>k</code>）</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="8-load_centrality--负载中心性流量承载型中介">8. load_centrality —— 负载中心性（流量承载型中介）<a href="#8-load_centrality--负载中心性流量承载型中介" class="hash-link" aria-label="8. load_centrality —— 负载中心性（流量承载型中介）的直接链接" title="8. load_centrality —— 负载中心性（流量承载型中介）的直接链接" translate="no">​</a></h3>
+<p><strong>功能说明</strong><br>
+<!-- -->与介数中心性类似，衡量节点在最短路径“负载/流量分摊”意义下的承载程度，可用于更贴近“流经量”的关键节点分析。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">更偏向“网络流经承载”的解释，适用于运输/通信负载评估</li>
+<li class="">可限制路径长度（<code>cutoff</code>）聚焦本地影响</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">通信网络：承担最多中继负载的节点</li>
+<li class="">交通网络：承载最多通勤流的枢纽</li>
+<li class="">系统依赖：调用链中承担最多转发/聚合的网关模块</li>
+</ul>
+<p><strong>关键参数（调优）</strong></p>
+<ul>
+<li class=""><code>cutoff</code>：只考虑长度不超过 cutoff 的路径（减少计算并聚焦本地）</li>
+<li class=""><code>weight</code>：边权重属性键（作为距离）</li>
+<li class=""><code>normalized</code>：是否归一化</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：有向/无向</li>
+<li class="">权重：支持（作为距离）</li>
+<li class="">复杂度：通常约 <code>O(V*E)</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="9-eigenvector_centrality--特征向量中心性连接到重要者更重要">9. eigenvector_centrality —— 特征向量中心性（连接到重要者更重要）<a href="#9-eigenvector_centrality--特征向量中心性连接到重要者更重要" class="hash-link" aria-label="9. eigenvector_centrality —— 特征向量中心性（连接到重要者更重要）的直接链接" title="9. eigenvector_centrality —— 特征向量中心性（连接到重要者更重要）的直接链接" translate="no">​</a></h3>
+<p><strong>功能说明</strong><br>
+<!-- -->基于邻接矩阵的主特征向量，为节点打分：与高分节点相连会提高自身得分，体现“权威互相加持”。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">比度中心性更能体现“高质量连接”</li>
+<li class="">适合找核心圈层中的核心节点</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">社交网络：核心社群中的关键影响者</li>
+<li class="">引用网络：被高影响论文连接/引用的论文</li>
+<li class="">组织网络：与关键岗位紧密协作的成员</li>
+</ul>
+<p><strong>关键参数（调优）</strong></p>
+<ul>
+<li class=""><code>max_iter</code>：最大迭代次数（不收敛时可提高）</li>
+<li class=""><code>tol</code>：收敛误差阈值（越小越精确但更慢）</li>
+<li class=""><code>nstart</code>：初始向量（默认全 1 通常安全）</li>
+<li class=""><code>weight</code>：边权重（在该算法中通常解释为连接强度）</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：有向/无向（有向需注意解释方向）</li>
+<li class="">权重：支持（连接强度）</li>
+<li class="">复杂度：<code>O(k*(V+E))</code>（k 为迭代次数）</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="10-katz_centrality--katz-中心性考虑多跳影响的衰减累积">10. katz_centrality —— Katz 中心性（考虑多跳影响的衰减累积）<a href="#10-katz_centrality--katz-中心性考虑多跳影响的衰减累积" class="hash-link" aria-label="10. katz_centrality —— Katz 中心性（考虑多跳影响的衰减累积）的直接链接" title="10. katz_centrality —— Katz 中心性（考虑多跳影响的衰减累积）的直接链接" translate="no">​</a></h3>
+<p><strong>功能说明</strong><br>
+<!-- -->在特征向量中心性的基础上，考虑所有长度路径的贡献，并按衰减因子 <code>alpha</code> 递减；同时用 <code>beta</code> 引入基线影响。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">兼顾直接与间接影响，适合“影响沿链路衰减传播”的业务</li>
+<li class="">对入度为 0 的节点也能给出非零基线（取决于 beta）</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">风控传导：风险沿交易链衰减传播的影响力评估</li>
+<li class="">引用网络：多跳引用的间接影响</li>
+<li class="">组织网络：跨层级协作的间接影响力</li>
+</ul>
+<p><strong>关键参数（调优）</strong></p>
+<ul>
+<li class=""><code>alpha</code>：衰减系数（越大越重视远距连接；需满足收敛条件）</li>
+<li class=""><code>beta</code>：邻域基线（可为常数或按节点定制）</li>
+<li class=""><code>max_iter</code>, <code>tol</code>, <code>nstart</code>：迭代求解控制</li>
+<li class=""><code>normalized</code>：是否归一化</li>
+<li class=""><code>weight</code>：连接强度权重</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：有向/无向</li>
+<li class="">权重：支持（连接强度）</li>
+<li class="">复杂度：<code>O(k*(V+E))</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="11-pagerank--pagerank随机游走的全局重要性">11. pagerank —— PageRank（随机游走的全局重要性）<a href="#11-pagerank--pagerank随机游走的全局重要性" class="hash-link" aria-label="11. pagerank —— PageRank（随机游走的全局重要性）的直接链接" title="11. pagerank —— PageRank（随机游走的全局重要性）的直接链接" translate="no">​</a></h3>
+<p><strong>功能说明</strong><br>
+<!-- -->将图视为随机游走过程：节点的重要性由“来自重要节点的指向”累积而来，并通过阻尼系数 <code>alpha</code> 控制随机跳转。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">适合大规模网络的稳定排名：网页、引用、交易关系等</li>
+<li class="">支持个性化（<code>personalization</code>）实现“以某群体为中心”的影响力</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">链接网络：页面/资源权威度排序</li>
+<li class="">引用网络：论文/专利影响力排序</li>
+<li class="">邮件/沟通网络：关键联系人优先级</li>
+</ul>
+<p><strong>关键参数（调优）</strong></p>
+<ul>
+<li class=""><code>alpha</code>：阻尼系数（常用 0.85）；越大越依赖链接结构</li>
+<li class=""><code>personalization</code>：个性化向量（偏置到特定节点集合）</li>
+<li class=""><code>dangling</code>：悬挂节点出边分配策略（无出边节点）</li>
+<li class=""><code>max_iter</code>, <code>tol</code>, <code>nstart</code>：迭代求解控制</li>
+<li class=""><code>weight</code>：边权重（在 PageRank 中通常表示转移权重）</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：有向为主；无向会转换为双向有向图</li>
+<li class="">权重：支持（转移权重）</li>
+<li class="">复杂度：<code>O(k*(V+E))</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="12-hits--hitshubauthority-双角色">12. hits —— HITS（Hub/Authority 双角色）<a href="#12-hits--hitshubauthority-双角色" class="hash-link" aria-label="12. hits —— HITS（Hub/Authority 双角色）的直接链接" title="12. hits —— HITS（Hub/Authority 双角色）的直接链接" translate="no">​</a></h3>
+<p><strong>功能说明</strong><br>
+<!-- -->为每个节点计算两类分数：</p>
+<ul>
+<li class=""><strong>Authority</strong>：被高 Hub 指向的程度（内容权威）</li>
+<li class=""><strong>Hub</strong>：指向高 Authority 的程度（信息枢纽）</li>
+</ul>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">在“引用/链接”场景中区分“资源权威”与“聚合入口”</li>
+<li class="">更适合解释“目录/导航站（Hub）”与“内容站（Authority）”</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">站点链接：导航站（Hub）与内容站（Authority）识别</li>
+<li class="">引用网络：综述（Hub）与被广泛认可的关键论文（Authority）</li>
+<li class="">依赖网络：调用聚合入口（Hub）与核心底座模块（Authority）</li>
+</ul>
+<p><strong>关键参数（调优）</strong></p>
+<ul>
+<li class=""><code>max_iter</code>, <code>tol</code>, <code>nstart</code>：迭代求解控制</li>
+<li class=""><code>normalized</code>：是否按总和归一化</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：有向为主（无向也可但解释弱）</li>
+<li class="">权重：不支持（NetworkX HITS 版本通常为无权）</li>
+<li class="">复杂度：<code>O(k*(V+E))</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="13-subgraph_centrality--子图中心性小团结构参与度">13. subgraph_centrality —— 子图中心性（小团结构参与度）<a href="#13-subgraph_centrality--子图中心性小团结构参与度" class="hash-link" aria-label="13. subgraph_centrality —— 子图中心性（小团结构参与度）的直接链接" title="13. subgraph_centrality —— 子图中心性（小团结构参与度）的直接链接" translate="no">​</a></h3>
+<p><strong>功能说明</strong><br>
+<!-- -->通过谱方法度量节点参与各类闭环/子结构（如三角形、四元环等）的程度，强调“处于紧密团结构中心”的节点。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">识别“核心小团体”的关键节点</li>
+<li class="">对“协同/团伙/紧密合作”结构更敏感</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">社交网络：紧密朋友圈中的核心人物</li>
+<li class="">生物网络：参与关键功能模块的基因/蛋白</li>
+<li class="">合作网络：参与密集协作组的作者/团队</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：通常用于无向图</li>
+<li class="">权重：不支持</li>
+<li class="">复杂度：谱分解相关，常见为 <code>O(V^3)</code>（中小规模更适合）</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="14-voterank--voterank扩散种子选择">14. voterank —— VoteRank（扩散种子选择）<a href="#14-voterank--voterank扩散种子选择" class="hash-link" aria-label="14. voterank —— VoteRank（扩散种子选择）的直接链接" title="14. voterank —— VoteRank（扩散种子选择）的直接链接" translate="no">​</a></h3>
+<p><strong>功能说明</strong><br>
+<!-- -->通过“节点投票 + 选中后抑制邻居投票能力”的机制，迭代选择一组影响力种子节点，使种子在图上更分散、覆盖面更大。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">比单纯选度最高更不易扎堆，适合影响力最大化的种子挑选</li>
+<li class="">可输出前 K 个候选种子（<code>number_of_nodes</code>）</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">营销传播：选择更分散的种子用户做裂变</li>
+<li class="">安全告警：选择关键节点做优先监控点位</li>
+<li class="">缓存/内容分发：选择代表性节点做内容投放</li>
+</ul>
+<p><strong>关键参数（调优）</strong></p>
+<ul>
+<li class=""><code>number_of_nodes</code>：返回的种子节点数量（默认尽可能多但只保留正票节点）</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：有向/无向</li>
+<li class="">权重：不支持</li>
+<li class="">复杂度：通常近线性 <code>O(k*(V+E))</code>（k 为输出节点数）</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="五推荐使用指南实践建议">五、推荐使用指南（实践建议）<a href="#五推荐使用指南实践建议" class="hash-link" aria-label="五、推荐使用指南（实践建议）的直接链接" title="五、推荐使用指南（实践建议）的直接链接" translate="no">​</a></h2>
+<ul>
+<li class=""><strong>快速找大户/活跃节点</strong>：<code>degree_centrality</code> / <code>in_degree_centrality</code> / <code>out_degree_centrality</code></li>
+<li class=""><strong>找桥梁与结构洞</strong>：<code>betweenness_centrality</code>（节点） + <code>edge_betweenness_centrality</code>（边）</li>
+<li class=""><strong>找“离大家都近”的节点</strong>：<code>closeness_centrality</code>；若图不连通优先用 <code>harmonic_centrality</code></li>
+<li class=""><strong>找权威与核心圈层</strong>：<code>pagerank</code>（全局权威） / <code>eigenvector_centrality</code>（谱权威） / <code>katz_centrality</code>（多跳衰减）</li>
+<li class=""><strong>区分入口与权威内容</strong>：<code>hits</code>（Hub vs Authority）</li>
+<li class=""><strong>找紧密团体核心</strong>：<code>subgraph_centrality</code></li>
+<li class=""><strong>选扩散种子</strong>：<code>voterank</code></li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="六可直接回答的典型问题示例">六、可直接回答的典型问题（示例）<a href="#六可直接回答的典型问题示例" class="hash-link" aria-label="六、可直接回答的典型问题（示例）的直接链接" title="六、可直接回答的典型问题（示例）的直接链接" translate="no">​</a></h2>
+<ul>
+<li class="">“输出 Top-20 介数中心性最高的节点，用于识别关键中介。”</li>
+<li class="">“计算所有边的边介数中心性并按降序输出 Top-50 关键边。”</li>
+<li class="">“在当前邮件通信网络中，PageRank 最高的联系人是谁？”</li>
+<li class="">“在不连通的社交图中，调和中心性 Top-20 用户名单是什么？”</li>
+<li class="">“用 VoteRank 选出 30 个扩散种子节点用于营销触达。”</li>
+</ul></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/iDC-NEU/YiGraphDocs/tree/main/docs-site/docs/tutorial-algorithm/centrality.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/YiGraphDocs/docs/tutorial-algorithm/path"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">Path 路径算子集</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/YiGraphDocs/docs/tutorial-algorithm/Connectivity_Components"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">Connectivity &amp; Components 连通性与组件算子集</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#一算子集概述" class="table-of-contents__link toc-highlight">一、算子集概述</a></li><li><a href="#二算子能力分类" class="table-of-contents__link toc-highlight">二、算子能力分类</a></li><li><a href="#三通用输入输出约定" class="table-of-contents__link toc-highlight">三、通用输入输出约定</a></li><li><a href="#四算子详细说明" class="table-of-contents__link toc-highlight">四、算子详细说明</a><ul><li><a href="#1-degree_centrality--度中心性连接规模" class="table-of-contents__link toc-highlight">1. degree_centrality —— 度中心性（连接规模）</a></li><li><a href="#2-in_degree_centrality--入度中心性被关注被调用" class="table-of-contents__link toc-highlight">2. in_degree_centrality —— 入度中心性（被关注/被调用）</a></li><li><a href="#3-out_degree_centrality--出度中心性主动扩散主动调用" class="table-of-contents__link toc-highlight">3. out_degree_centrality —— 出度中心性（主动扩散/主动调用）</a></li><li><a href="#4-closeness_centrality--接近中心性平均距离最短" class="table-of-contents__link toc-highlight">4. closeness_centrality —— 接近中心性（平均距离最短）</a></li><li><a href="#5-harmonic_centrality--调和中心性不可达更稳健" class="table-of-contents__link toc-highlight">5. harmonic_centrality —— 调和中心性（不可达更稳健）</a></li><li><a href="#6-betweenness_centrality--介数中心性关键中介桥梁" class="table-of-contents__link toc-highlight">6. betweenness_centrality —— 介数中心性（关键中介/桥梁）</a></li><li><a href="#7-edge_betweenness_centrality--边介数中心性关键连接边" class="table-of-contents__link toc-highlight">7. edge_betweenness_centrality —— 边介数中心性（关键连接边）</a></li><li><a href="#8-load_centrality--负载中心性流量承载型中介" class="table-of-contents__link toc-highlight">8. load_centrality —— 负载中心性（流量承载型中介）</a></li><li><a href="#9-eigenvector_centrality--特征向量中心性连接到重要者更重要" class="table-of-contents__link toc-highlight">9. eigenvector_centrality —— 特征向量中心性（连接到重要者更重要）</a></li><li><a href="#10-katz_centrality--katz-中心性考虑多跳影响的衰减累积" class="table-of-contents__link toc-highlight">10. katz_centrality —— Katz 中心性（考虑多跳影响的衰减累积）</a></li><li><a href="#11-pagerank--pagerank随机游走的全局重要性" class="table-of-contents__link toc-highlight">11. pagerank —— PageRank（随机游走的全局重要性）</a></li><li><a href="#12-hits--hitshubauthority-双角色" class="table-of-contents__link toc-highlight">12. hits —— HITS（Hub/Authority 双角色）</a></li><li><a href="#13-subgraph_centrality--子图中心性小团结构参与度" class="table-of-contents__link toc-highlight">13. subgraph_centrality —— 子图中心性（小团结构参与度）</a></li><li><a href="#14-voterank--voterank扩散种子选择" class="table-of-contents__link toc-highlight">14. voterank —— VoteRank（扩散种子选择）</a></li></ul></li><li><a href="#五推荐使用指南实践建议" class="table-of-contents__link toc-highlight">五、推荐使用指南（实践建议）</a></li><li><a href="#六可直接回答的典型问题示例" class="table-of-contents__link toc-highlight">六、可直接回答的典型问题（示例）</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">版权所有 © 2026 AAG</div></div></div></footer></div>
+</body>
+</html>

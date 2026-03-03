@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en-US" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-tutorial-algorithm/Connectivity_Components" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Connectivity &amp; Components Operator Set | YiGraph Documentation</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/Connectivity_Components"><meta data-rh="true" property="og:locale" content="en_US"><meta data-rh="true" property="og:locale:alternate" content="zh_CN"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Connectivity &amp; Components Operator Set | YiGraph Documentation"><meta data-rh="true" name="description" content="Operator Category: Connectivity &amp; Components (Connectivity, Connected Components and Cut Analysis)"><meta data-rh="true" property="og:description" content="Operator Category: Connectivity &amp; Components (Connectivity, Connected Components and Cut Analysis)"><link data-rh="true" rel="icon" href="/YiGraphDocs/en/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/Connectivity_Components"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/Connectivity_Components" hreflang="zh-CN"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/Connectivity_Components" hreflang="en-US"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/Connectivity_Components" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Connectivity & Components Operator Set","item":"https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/Connectivity_Components"}]}</script><link rel="stylesheet" href="/YiGraphDocs/en/assets/css/styles.0b46e163.css">
+<script src="/YiGraphDocs/en/assets/js/runtime~main.08935d49.js" defer="defer"></script>
+<script src="/YiGraphDocs/en/assets/js/main.256e2209.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/YiGraphDocs/en/"><b class="navbar__title text--truncate">YiGraph Documentation</b></a><a class="navbar__item navbar__link" href="/YiGraphDocs/en/docs/intro">开发者指南</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" class="iconLanguage_nlXk"><path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>English</a><ul class="dropdown__menu"><li><a href="/YiGraphDocs/docs/tutorial-algorithm/Connectivity_Components" target="_self" rel="noopener noreferrer" class="dropdown__link" lang="zh-CN">简体中文</a></li><li><a href="/YiGraphDocs/en/docs/tutorial-algorithm/Connectivity_Components" target="_self" rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang="en-US">English</a></li></ul></div><a href="https://github.com/iDC-NEU/YiGraph" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/en/docs/intro"><span title="Basic Information" class="categoryLinkLabel_W154">Basic Information</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/intro"><span title="Introduction" class="linkLabel_WmDU">Introduction</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/en/docs/tutorial-basics/create-a-page"><span title="Getting Started" class="categoryLinkLabel_W154">Getting Started</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-basics/create-a-page"><span title="YiGraph Installation and Usage Guide" class="linkLabel_WmDU">YiGraph Installation and Usage Guide</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/en/docs/tutorial-extras/getting-started-cases"><span title="Tutorials" class="categoryLinkLabel_W154">Tutorials</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-extras/getting-started-cases"><span title="User Onboarding Guide" class="linkLabel_WmDU">User Onboarding Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-extras/normal-mode"><span title="Case 1. Normal Mode" class="linkLabel_WmDU">Case 1. Normal Mode</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-extras/interact-mode"><span title="Case 2. Interact Mode" class="linkLabel_WmDU">Case 2. Interact Mode</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-extras/expert-mode"><span title="Case 3. Expert Mode" class="linkLabel_WmDU">Case 3. Expert Mode</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/YiGraphDocs/en/docs/tutorial-algorithm/basic"><span title="Algorithms" class="categoryLinkLabel_W154">Algorithms</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/basic"><span title="Basics Operator Set" class="linkLabel_WmDU">Basics Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/path"><span title="Path Operator Set" class="linkLabel_WmDU">Path Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/centrality"><span title="Centrality and Key Operator Set" class="linkLabel_WmDU">Centrality and Key Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/Connectivity_Components"><span title="Connectivity &amp; Components Operator Set" class="linkLabel_WmDU">Connectivity &amp; Components Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/Clustering_Community"><span title="Clustering &amp; Community Operator Set" class="linkLabel_WmDU">Clustering &amp; Community Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/tree"><span title="Tree &amp; Spanning Tree Operator Set" class="linkLabel_WmDU">Tree &amp; Spanning Tree Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/flow"><span title="Flow &amp; Cut Operator Set" class="linkLabel_WmDU">Flow &amp; Cut Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/link_prediction"><span title="Link Prediction Operator Set" class="linkLabel_WmDU">Link Prediction Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/matching_coloring"><span title="Matching &amp; Coloring Operator Set" class="linkLabel_WmDU">Matching &amp; Coloring Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/cliques_cores"><span title="Cliques &amp; Cores Operator Set" class="linkLabel_WmDU">Cliques &amp; Cores Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/distance"><span title="Distance &amp; Measures Operator Set" class="linkLabel_WmDU">Distance &amp; Measures Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/graph_query"><span title="Graph Query Operator Set" class="linkLabel_WmDU">Graph Query Operator Set</span></a></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/YiGraphDocs/en/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Algorithms</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Connectivity &amp; Components Operator Set</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Connectivity &amp; Components Operator Set</h1></header>
+<p><strong>Operator Category</strong>: Connectivity &amp; Components (Connectivity, Connected Components and Cut Analysis)</p>
+<p><strong>Applicable Stages</strong>: Network structure health check, isolated island/partition identification, robustness assessment, key node/edge localization, fault/attack surface analysis</p>
+<p><strong>Product Positioning</strong>: Provides a unified capability base for answering &quot;whether the network is connected / how many partitions it has / which nodes or edges will split the network when removed / the minimum number of cuts required to disconnect the network&quot;</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-operator-set-overview">1. Operator Set Overview<a href="#1-operator-set-overview" class="hash-link" aria-label="Direct link to 1. Operator Set Overview" title="Direct link to 1. Operator Set Overview" translate="no">​</a></h2>
+<p>The Connectivity &amp; Components operator set focuses on connectivity analysis for <strong>undirected and directed graphs</strong>, covering three core types of problems:</p>
+<ol>
+<li class=""><strong>Connectivity and Connected Components</strong>
+<ul>
+<li class="">Is an undirected graph fully connected? How many connected components does it have? (is_connected / connected_components / number_connected_components)</li>
+<li class="">Is a directed graph strongly connected or weakly connected in a directional sense? (is_strongly_connected / strongly_connected_components / is_weakly_connected / weakly_connected_components)</li>
+</ul>
+</li>
+<li class=""><strong>Network Robustness (Connectivity Metrics)</strong>
+<ul>
+<li class="">What is the minimum number of <strong>nodes</strong> to remove to disconnect the network? (node_connectivity)</li>
+<li class="">What is the minimum number of <strong>edges</strong> to remove to disconnect the network? (edge_connectivity)</li>
+</ul>
+</li>
+<li class=""><strong>Cuts and Critical Structures (Cuts / Critical Elements)</strong>
+<ul>
+<li class="">What is the minimum node cut/edge cut set? (minimum_node_cut / minimum_edge_cut)</li>
+<li class="">Which nodes are articulation points? Which structures are the blocks decomposed by bridges? (articulation_points / bridge_components)</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-operator-capability-classification">2. Operator Capability Classification<a href="#2-operator-capability-classification" class="hash-link" aria-label="Direct link to 2. Operator Capability Classification" title="Direct link to 2. Operator Capability Classification" translate="no">​</a></h2>
+<table><thead><tr><th>Capability Type</th><th>Corresponding Operator</th><th>Function Description</th></tr></thead><tbody><tr><td>Undirected graph global connectivity</td><td><code>is_connected</code></td><td>Judge whether an undirected graph is a single connected component</td></tr><tr><td>Undirected graph connected components</td><td><code>connected_components</code></td><td>Output the node set of each connected component</td></tr><tr><td>Undirected graph component count</td><td><code>number_connected_components</code></td><td>Return the number of connected components</td></tr><tr><td>Directed graph strong connectivity</td><td><code>is_strongly_connected</code></td><td>Whether every pair of nodes is mutually reachable</td></tr><tr><td>Directed graph strongly connected components</td><td><code>strongly_connected_components</code></td><td>Output SCC (Strongly Connected Component) partitioning</td></tr><tr><td>Directed graph weak connectivity</td><td><code>is_weakly_connected</code></td><td>Whether connected after ignoring edge directions</td></tr><tr><td>Directed graph weakly connected components</td><td><code>weakly_connected_components</code></td><td>Output WCC (Weakly Connected Component) partitioning</td></tr><tr><td>Robustness metric (node)</td><td><code>node_connectivity</code></td><td>Minimum number of nodes to remove to disconnect the graph (or s-t)</td></tr><tr><td>Robustness metric (edge)</td><td><code>edge_connectivity</code></td><td>Minimum number of edges to remove to disconnect the graph (or s-t)</td></tr><tr><td>Minimum node cut set</td><td><code>minimum_node_cut</code></td><td>Provide the minimum node set that disconnects the graph (or s-t) when removed</td></tr><tr><td>Minimum edge cut set</td><td><code>minimum_edge_cut</code></td><td>Provide the minimum edge set that disconnects the graph (or s-t) when removed</td></tr><tr><td>Critical nodes (articulation points)</td><td><code>articulation_points</code></td><td>Nodes in an undirected graph that increase the number of components when deleted</td></tr><tr><td>Bridge-connected component decomposition</td><td><code>bridge_components</code></td><td>2-edge-connected components bounded by &quot;bridges (cut edges)&quot;</td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-general-input-and-output-conventions">3. General Input and Output Conventions<a href="#3-general-input-and-output-conventions" class="hash-link" aria-label="Direct link to 3. General Input and Output Conventions" title="Direct link to 3. General Input and Output Conventions" translate="no">​</a></h2>
+<ul>
+<li class=""><strong>Input <code>G</code></strong>: NetworkX Graph / DiGraph (per algorithm requirements: some only support undirected/directed graphs)</li>
+<li class=""><strong>Output</strong>:<!-- -->
+<ul>
+<li class="">Judgment type: <code>bool</code></li>
+<li class="">Component type: <code>generator[set(node)]</code></li>
+<li class="">Connectivity metric: <code>int</code></li>
+<li class="">Minimum cut: <code>set(node)</code> or <code>set(edge)</code></li>
+<li class="">Articulation points: iterator (convertible to list)</li>
+<li class="">bridge_components: 2-edge-connected component generator (each item is a node set)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Notes:</p>
+<ul>
+<li class="">&quot;Strong connectivity/weak connectivity&quot; is only meaningful for <strong>directed graphs</strong>.</li>
+<li class="">&quot;Articulation points/bridge-connected components&quot; are usually for structural robustness analysis of <strong>undirected graphs</strong>.</li>
+</ul>
+</blockquote>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-detailed-operator-descriptions">4. Detailed Operator Descriptions<a href="#4-detailed-operator-descriptions" class="hash-link" aria-label="Direct link to 4. Detailed Operator Descriptions" title="Direct link to 4. Detailed Operator Descriptions" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="41-is_connected--undirected-graph-connectivity-check">4.1 is_connected —— Undirected Graph Connectivity Check<a href="#41-is_connected--undirected-graph-connectivity-check" class="hash-link" aria-label="Direct link to 4.1 is_connected —— Undirected Graph Connectivity Check" title="Direct link to 4.1 is_connected —— Undirected Graph Connectivity Check" translate="no">​</a></h3>
+<p><strong>Function Description</strong>
+Judge whether there is a reachable path between any two nodes in an undirected graph.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">The first health check for network health</li>
+<li class="">Quickly determine the existence of isolated islands/fractured areas
+<strong>Typical Scenarios</strong></li>
+<li class="">Whether there are completely isolated areas in the road network</li>
+<li class="">Whether the device interconnection topology forms a single network</li>
+<li class="">Whether there are completely isolated circles in the social network
+<strong>Applicability and Characteristics</strong></li>
+<li class="">Graph Type: Undirected graph</li>
+<li class="">Complexity: <code>O(V + E)</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="42-connected_components--undirected-graph-connected-component-partitioning">4.2 connected_components —— Undirected Graph Connected Component Partitioning<a href="#42-connected_components--undirected-graph-connected-component-partitioning" class="hash-link" aria-label="Direct link to 4.2 connected_components —— Undirected Graph Connected Component Partitioning" title="Direct link to 4.2 connected_components —— Undirected Graph Connected Component Partitioning" translate="no">​</a></h3>
+<p><strong>Function Description</strong>
+Output the node set of each connected component in an undirected graph (a component is a &quot;mutually reachable subnetwork&quot;).
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Identify the &quot;operational/community/topological regions&quot; that the network is divided into</li>
+<li class="">Provide partition boundaries for subsequent statistics, modeling and scheduling within components
+<strong>Typical Scenarios</strong></li>
+<li class="">Logistics station network: Divide into disconnected operational regions</li>
+<li class="">Device interconnection: Find isolated subnets</li>
+<li class="">Social network: Identify non-interacting circles
+<strong>Applicability and Characteristics</strong></li>
+<li class="">Graph Type: Undirected graph</li>
+<li class="">Complexity: <code>O(V + E)</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="43-number_connected_components--connected-component-count">4.3 number_connected_components —— Connected Component Count<a href="#43-number_connected_components--connected-component-count" class="hash-link" aria-label="Direct link to 4.3 number_connected_components —— Connected Component Count" title="Direct link to 4.3 number_connected_components —— Connected Component Count" translate="no">​</a></h3>
+<p><strong>Function Description</strong>
+Return the number of connected components in an undirected graph.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Quickly quantify the &quot;fragmentation degree&quot;</li>
+<li class="">Served as a network health KPI (more components usually mean poorer health/more fragmentation)
+<strong>Typical Scenarios</strong></li>
+<li class="">Evaluation of partition quantity after urban road network fracture</li>
+<li class="">Number of subnets after device network failure</li>
+<li class="">Number of isolated teams in a collaboration network
+<strong>Applicability and Characteristics</strong></li>
+<li class="">Graph Type: Undirected graph</li>
+<li class="">Complexity: <code>O(V + E)</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="44-is_strongly_connected--directed-graph-strong-connectivity-check">4.4 is_strongly_connected —— Directed Graph Strong Connectivity Check<a href="#44-is_strongly_connected--directed-graph-strong-connectivity-check" class="hash-link" aria-label="Direct link to 4.4 is_strongly_connected —— Directed Graph Strong Connectivity Check" title="Direct link to 4.4 is_strongly_connected —— Directed Graph Strong Connectivity Check" translate="no">​</a></h3>
+<p><strong>Function Description</strong>
+Judge whether a directed graph satisfies: mutual reachability between any two nodes (both u→v and v→u are reachable).
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Judge whether the system forms a closed-loop structure (capable of circulation)</li>
+<li class="">Suitable for analyzing systems with &quot;mutual calls/mutual jumps/capital circulation&quot;
+<strong>Typical Scenarios</strong></li>
+<li class="">Service calls: Whether mutually reachable to form a unified module</li>
+<li class="">Page navigation: Whether any page can reach any other page and return</li>
+<li class="">Transaction flow: Whether a reflowable closed-loop network is formed
+<strong>Applicability and Characteristics</strong></li>
+<li class="">Graph Type: Directed graph</li>
+<li class="">Complexity: <code>O(V + E)</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="45-strongly_connected_components--strongly-connected-components-scc">4.5 strongly_connected_components —— Strongly Connected Components (SCC)<a href="#45-strongly_connected_components--strongly-connected-components-scc" class="hash-link" aria-label="Direct link to 4.5 strongly_connected_components —— Strongly Connected Components (SCC)" title="Direct link to 4.5 strongly_connected_components —— Strongly Connected Components (SCC)" translate="no">​</a></h3>
+<p><strong>Function Description</strong>
+Output the SCC partitioning of a directed graph: any two nodes within each SCC are mutually reachable.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Identify &quot;cyclic modules/closed-loop groups&quot;</li>
+<li class="">Commonly used for dependency analysis, dead loop troubleshooting and modular disassembly
+<strong>Typical Scenarios</strong></li>
+<li class="">Service dependency graph: Find modules with mutual dependent cycles</li>
+<li class="">Flow chart: Find cyclic step groups that can return to the starting point</li>
+<li class="">Transaction network: Identify small groups with capital circulation
+<strong>Applicability and Characteristics</strong></li>
+<li class="">Graph Type: Directed graph</li>
+<li class="">Complexity: <code>O(V + E)</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="46-is_weakly_connected--directed-graph-weak-connectivity-check">4.6 is_weakly_connected —— Directed Graph Weak Connectivity Check<a href="#46-is_weakly_connected--directed-graph-weak-connectivity-check" class="hash-link" aria-label="Direct link to 4.6 is_weakly_connected —— Directed Graph Weak Connectivity Check" title="Direct link to 4.6 is_weakly_connected —— Directed Graph Weak Connectivity Check" translate="no">​</a></h3>
+<p><strong>Function Description</strong>
+Judge connectivity when the directed graph is treated as an undirected graph (ignoring edge directions).
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Judge whether &quot;structurally a single network&quot;, even if not mutually reachable in direction</li>
+<li class="">Suitable for scenarios with &quot;directions but still need to check overall fragmentation&quot;
+<strong>Typical Scenarios</strong></li>
+<li class="">Email sending network: Ignore directions to check if the organization is connected as a whole</li>
+<li class="">Follower network: Ignore directions to check if users are split into multiple communities</li>
+<li class="">Page link network: Ignore directions to check if the site is divided into isolated islands
+<strong>Applicability and Characteristics</strong></li>
+<li class="">Graph Type: Directed graph</li>
+<li class="">Complexity: <code>O(V + E)</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="47-weakly_connected_components--weakly-connected-components-wcc">4.7 weakly_connected_components —— Weakly Connected Components (WCC)<a href="#47-weakly_connected_components--weakly-connected-components-wcc" class="hash-link" aria-label="Direct link to 4.7 weakly_connected_components —— Weakly Connected Components (WCC)" title="Direct link to 4.7 weakly_connected_components —— Weakly Connected Components (WCC)" translate="no">​</a></h3>
+<p><strong>Function Description</strong>
+Partition the directed graph into several mutually connected components after ignoring edge directions.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Identify &quot;structural partitions&quot; of directional networks</li>
+<li class="">Provide boundaries for further SCC, centrality and other analyses within partitions
+<strong>Typical Scenarios</strong></li>
+<li class="">Follower/email network: Identify disconnected community domains</li>
+<li class="">Service calls: Identify unrelated business domains
+<strong>Applicability and Characteristics</strong></li>
+<li class="">Graph Type: Directed graph</li>
+<li class="">Complexity: <code>O(V + E)</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="48-node_connectivity--node-connectivity-robustness-metric">4.8 node_connectivity —— Node Connectivity (Robustness Metric)<a href="#48-node_connectivity--node-connectivity-robustness-metric" class="hash-link" aria-label="Direct link to 4.8 node_connectivity —— Node Connectivity (Robustness Metric)" title="Direct link to 4.8 node_connectivity —— Node Connectivity (Robustness Metric)" translate="no">​</a></h3>
+<p><strong>Function Description</strong>
+Return the minimum number of <strong>nodes</strong> to delete to disconnect the graph; if <code>s, t</code> are given, return the minimum number of nodes to delete to disconnect s and t.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Quantify the network&#x27;s &quot;anti-node failure/attack&quot; capability</li>
+<li class="">Evaluate the redundancy of key devices/key positions
+<strong>Typical Scenarios</strong></li>
+<li class="">Data center: Minimum number of device failures that disconnect the network</li>
+<li class="">Urban road network: Minimum number of road junctions to close that split the network</li>
+<li class="">Collaboration network: Minimum number of personnel departures that split the team
+<strong>Key Parameters</strong></li>
+<li class=""><code>s, t</code>: Calculate local (source-sink) connectivity</li>
+<li class=""><code>flow_func</code>: Maximum flow implementation selection (affects performance)
+<strong>Applicability and Characteristics</strong></li>
+<li class="">Graph Type: Directed/Undirected (implementation based on flow)</li>
+<li class="">Complexity: Flow based</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="49-edge_connectivity--edge-connectivity-robustness-metric">4.9 edge_connectivity —— Edge Connectivity (Robustness Metric)<a href="#49-edge_connectivity--edge-connectivity-robustness-metric" class="hash-link" aria-label="Direct link to 4.9 edge_connectivity —— Edge Connectivity (Robustness Metric)" title="Direct link to 4.9 edge_connectivity —— Edge Connectivity (Robustness Metric)" translate="no">​</a></h3>
+<p><strong>Function Description</strong>
+Return the minimum number of <strong>edges</strong> to delete to disconnect the graph; if <code>s, t</code> are given, return the minimum number of edges to delete to disconnect s and t.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Quantify the network&#x27;s &quot;anti-link failure/attack&quot; capability</li>
+<li class="">Used for link redundancy planning and reinforcement
+<strong>Typical Scenarios</strong></li>
+<li class="">Computer room links: Minimum number of link breaks that split the network</li>
+<li class="">Road network: Minimum number of roads to close that partition the network</li>
+<li class="">Logistics network: Minimum number of line interruptions that cause supply disruption
+<strong>Key Parameters</strong></li>
+<li class=""><code>flow_func</code>: Maximum flow implementation selection</li>
+<li class=""><code>cutoff</code>: Stop early when the threshold is reached (acceleration but only applicable for threshold judgment)
+<strong>Applicability and Characteristics</strong></li>
+<li class="">Graph Type: Directed/Undirected (implementation based on flow)</li>
+<li class="">Complexity: Flow based</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="410-minimum_node_cut--minimum-node-cut-set">4.10 minimum_node_cut —— Minimum Node Cut Set<a href="#410-minimum_node_cut--minimum-node-cut-set" class="hash-link" aria-label="Direct link to 4.10 minimum_node_cut —— Minimum Node Cut Set" title="Direct link to 4.10 minimum_node_cut —— Minimum Node Cut Set" translate="no">​</a></h3>
+<p><strong>Function Description</strong>
+Output a minimum node set that disconnects the graph when deleted; or (given s, t) disconnects s and t when deleted.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Directly provide the &quot;most vulnerable node set&quot;</li>
+<li class="">Used for fault drill, attack surface assessment and reinforcement priority setting
+<strong>Typical Scenarios</strong></li>
+<li class="">Data center: Minimum set of devices whose simultaneous failure disconnects the network</li>
+<li class="">Transportation: Minimum set of road junctions whose closure splits the network</li>
+<li class="">Power grid: Minimum set of stations whose failure partitions the network
+<strong>Key Parameters</strong></li>
+<li class=""><code>s, t</code>: Calculate local (source-sink) cut</li>
+<li class=""><code>flow_func</code>: Maximum flow implementation</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="411-minimum_edge_cut--minimum-edge-cut-set">4.11 minimum_edge_cut —— Minimum Edge Cut Set<a href="#411-minimum_edge_cut--minimum-edge-cut-set" class="hash-link" aria-label="Direct link to 4.11 minimum_edge_cut —— Minimum Edge Cut Set" title="Direct link to 4.11 minimum_edge_cut —— Minimum Edge Cut Set" translate="no">​</a></h3>
+<p><strong>Function Description</strong>
+Output a minimum edge set that disconnects the graph when deleted; or (given s, t) disconnects s and t when deleted.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Directly locate the &quot;most vulnerable link set&quot;</li>
+<li class="">Used for link reinforcement and backup line planning
+<strong>Typical Scenarios</strong></li>
+<li class="">Computer room: Minimum set of links whose disconnection splits the network</li>
+<li class="">Urban road network: Minimum set of roads whose closure partitions the network</li>
+<li class="">Logistics: Minimum set of lines whose interruption causes supply disruption
+<strong>Key Parameters</strong></li>
+<li class=""><code>s, t</code>: Local cut</li>
+<li class=""><code>flow_func</code>: Maximum flow implementation</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="412-articulation_points--articulation-points-critical-nodes">4.12 articulation_points —— Articulation Points (Critical Nodes)<a href="#412-articulation_points--articulation-points-critical-nodes" class="hash-link" aria-label="Direct link to 4.12 articulation_points —— Articulation Points (Critical Nodes)" title="Direct link to 4.12 articulation_points —— Articulation Points (Critical Nodes)" translate="no">​</a></h3>
+<p><strong>Function Description</strong>
+In an undirected graph, a node is an articulation point if its deletion results in an increase in the number of connected components.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Identify &quot;single point of failure&quot; nodes (the most typical critical nodes)</li>
+<li class="">Complementary to node_connectivity/minimum cut: articulation points provide &quot;the most obvious structural weak points&quot;
+<strong>Typical Scenarios</strong></li>
+<li class="">Urban road network: Which road junctions&#x27; closure causes traffic fragmentation</li>
+<li class="">Data center: Which device failures cause network splitting</li>
+<li class="">Social network: Which user departures split the community
+<strong>Applicability and Characteristics</strong></li>
+<li class="">Graph Type: Undirected graph</li>
+<li class="">Complexity: <code>O(V + E)</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="413-bridge_components--bridge-connected-components-2-edge-connected-components">4.13 bridge_components —— Bridge-connected Components (2-edge-connected components)<a href="#413-bridge_components--bridge-connected-components-2-edge-connected-components" class="hash-link" aria-label="Direct link to 4.13 bridge_components —— Bridge-connected Components (2-edge-connected components)" title="Direct link to 4.13 bridge_components —— Bridge-connected Components (2-edge-connected components)" translate="no">​</a></h3>
+<p><strong>Function Description</strong>
+Find all 2-edge-connected components in an undirected graph: within the same component, there are at least two edge-disjoint alternative paths between any two nodes (more resistant to &quot;single edge fracture&quot;). The algorithm decomposes the graph by identifying bridges (cut edges).
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Split the network into structural blocks with &quot;stronger internal redundancy&quot;</li>
+<li class="">Suitable for network partitioning, resilient module identification and hierarchical reinforcement
+<strong>Typical Scenarios</strong></li>
+<li class="">Road network: Regional blocks with more abundant internal alternative routes</li>
+<li class="">Data center: Device groups with higher internal link redundancy</li>
+<li class="">Collaboration network: Cooperation teams with more stable internal connections
+<strong>Applicability and Characteristics</strong></li>
+<li class="">Graph Type: Undirected graph (supports multigraph)</li>
+<li class="">Complexity: <code>O(V + E)</code></li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="5-recommended-usage-guide-practical-suggestions">5. Recommended Usage Guide (Practical Suggestions)<a href="#5-recommended-usage-guide-practical-suggestions" class="hash-link" aria-label="Direct link to 5. Recommended Usage Guide (Practical Suggestions)" title="Direct link to 5. Recommended Usage Guide (Practical Suggestions)" translate="no">​</a></h2>
+<ul>
+<li class=""><strong>First answer &quot;Is it a single network?&quot;</strong>:<!-- -->
+<ul>
+<li class="">Undirected: <code>is_connected</code></li>
+<li class="">Directed: <code>is_weakly_connected</code> (structural) / <code>is_strongly_connected</code> (directional)</li>
+</ul>
+</li>
+<li class=""><strong>Then check &quot;How many partitions and which nodes belong to each?&quot;</strong>:<!-- -->
+<ul>
+<li class="">Undirected: <code>connected_components</code> + <code>number_connected_components</code></li>
+<li class="">Directed: <code>weakly_connected_components</code> / <code>strongly_connected_components</code></li>
+</ul>
+</li>
+<li class=""><strong>Conduct &quot;resilience and break point localization&quot;</strong>:<!-- -->
+<ul>
+<li class="">Metrics: <code>node_connectivity</code> / <code>edge_connectivity</code></li>
+<li class="">Solutions: <code>minimum_node_cut</code> / <code>minimum_edge_cut</code></li>
+<li class="">Intuitive single points: <code>articulation_points</code></li>
+<li class="">Structural blocks: <code>bridge_components</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="6-typical-directly-answerable-questions-examples">6. Typical Directly Answerable Questions (Examples)<a href="#6-typical-directly-answerable-questions-examples" class="hash-link" aria-label="Direct link to 6. Typical Directly Answerable Questions (Examples)" title="Direct link to 6. Typical Directly Answerable Questions (Examples)" translate="no">​</a></h2>
+<ul>
+<li class="">&quot;Is this undirected graph connected? If not, how many partitions is it divided into?&quot;</li>
+<li class="">&quot;Is the directed graph connected after ignoring directions? Is it strongly connected in the directional sense?&quot;</li>
+<li class="">&quot;Output all Strongly Connected Components (SCC) and sort them by size.&quot;</li>
+<li class="">&quot;What is the minimum number of edges/nodes to disconnect this network?&quot;</li>
+<li class="">&quot;Provide a minimum node cut/minimum edge cut set.&quot;</li>
+<li class="">&quot;List all articulation points for single point of failure troubleshooting.&quot;</li>
+<li class="">&quot;Split the network into bridge components to identify regions with more robust internal structures.&quot;</li>
+</ul>
+<hr>
+<h1>Clustering &amp; Community Operator Set</h1>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="operator-category-clustering--community-clustering-coefficient-community-detection-transitivity-and-cycle-structureapplicable-stages-network-structure-insight-circlegang-identification-community-quality-assessment-closed-loopcycle-detection-relationship-tightness-quantificationproduct-positioning-provides-a-unified-operator-capability-base-for-answering-whether-the-network-has-tight-small-circles--how-to-partition-people-or-entities-into-communities--how-good-is-the-partitioning--whether-closed-loop-cycles-exist"><strong>Operator Category</strong>: Clustering &amp; Community (Clustering Coefficient, Community Detection, Transitivity and Cycle Structure)
+<strong>Applicable Stages</strong>: Network structure insight, circle/gang identification, community quality assessment, closed-loop/cycle detection, relationship tightness quantification
+<strong>Product Positioning</strong>: Provides a unified operator capability base for answering &quot;whether the network has tight small circles / how to partition people or entities into communities / how good is the partitioning / whether closed-loop cycles exist&quot;<a href="#operator-category-clustering--community-clustering-coefficient-community-detection-transitivity-and-cycle-structureapplicable-stages-network-structure-insight-circlegang-identification-community-quality-assessment-closed-loopcycle-detection-relationship-tightness-quantificationproduct-positioning-provides-a-unified-operator-capability-base-for-answering-whether-the-network-has-tight-small-circles--how-to-partition-people-or-entities-into-communities--how-good-is-the-partitioning--whether-closed-loop-cycles-exist" class="hash-link" aria-label="Direct link to operator-category-clustering--community-clustering-coefficient-community-detection-transitivity-and-cycle-structureapplicable-stages-network-structure-insight-circlegang-identification-community-quality-assessment-closed-loopcycle-detection-relationship-tightness-quantificationproduct-positioning-provides-a-unified-operator-capability-base-for-answering-whether-the-network-has-tight-small-circles--how-to-partition-people-or-entities-into-communities--how-good-is-the-partitioning--whether-closed-loop-cycles-exist" title="Direct link to operator-category-clustering--community-clustering-coefficient-community-detection-transitivity-and-cycle-structureapplicable-stages-network-structure-insight-circlegang-identification-community-quality-assessment-closed-loopcycle-detection-relationship-tightness-quantificationproduct-positioning-provides-a-unified-operator-capability-base-for-answering-whether-the-network-has-tight-small-circles--how-to-partition-people-or-entities-into-communities--how-good-is-the-partitioning--whether-closed-loop-cycles-exist" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="7-operator-set-overview">7. Operator Set Overview<a href="#7-operator-set-overview" class="hash-link" aria-label="Direct link to 7. Operator Set Overview" title="Direct link to 7. Operator Set Overview" translate="no">​</a></h2>
+<p>The Clustering &amp; Community operator set covers two major categories of capabilities:</p>
+<ol>
+<li class=""><strong>Local Tightness and Network Aggregation (Clustering / Transitivity)</strong>
+<ul>
+<li class="">Are nodes/the entire network &quot;clustered&quot;?</li>
+<li class="">Is the tendency for triangle closure strong?</li>
+<li class="">Suitable for judging whether the network has small circles, gangs and strong relationship groups from the perspective of &quot;micro local structure&quot;.</li>
+</ul>
+</li>
+<li class=""><strong>Community Detection and Scheme Evaluation (Community Detection &amp; Evaluation)</strong>
+<ul>
+<li class="">Automatically find communities/camps/circles without labels.</li>
+<li class="">Supports different mechanisms: modularity maximization, label propagation, hierarchical splitting, k-clique percolation (overlapping communities).</li>
+<li class="">Conduct quality scoring and validity verification for the obtained community partitioning.</li>
+</ul>
+</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="in-addition-this-category-also-includes-cycle-structurecycle-detection-capabilities-simple_cycles--cycle_basis-used-to-identify-closed-loop-patterns-such-as-capital-reflow-cyclic-dependencies-and-feedback-loops">In addition, this category also includes <strong>cycle structure/cycle detection</strong> capabilities (simple_cycles / cycle_basis), used to identify closed-loop patterns such as capital reflow, cyclic dependencies and feedback loops.<a href="#in-addition-this-category-also-includes-cycle-structurecycle-detection-capabilities-simple_cycles--cycle_basis-used-to-identify-closed-loop-patterns-such-as-capital-reflow-cyclic-dependencies-and-feedback-loops" class="hash-link" aria-label="Direct link to in-addition-this-category-also-includes-cycle-structurecycle-detection-capabilities-simple_cycles--cycle_basis-used-to-identify-closed-loop-patterns-such-as-capital-reflow-cyclic-dependencies-and-feedback-loops" title="Direct link to in-addition-this-category-also-includes-cycle-structurecycle-detection-capabilities-simple_cycles--cycle_basis-used-to-identify-closed-loop-patterns-such-as-capital-reflow-cyclic-dependencies-and-feedback-loops" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="8-operator-capability-classification">8. Operator Capability Classification<a href="#8-operator-capability-classification" class="hash-link" aria-label="Direct link to 8. Operator Capability Classification" title="Direct link to 8. Operator Capability Classification" translate="no">​</a></h2>
+<table><thead><tr><th>Capability Type</th><th>Corresponding Operator</th><th>Function Description</th></tr></thead><tbody><tr><td>Node clustering coefficient</td><td><code>clustering</code></td><td>Calculate the clustering coefficient of specified nodes or all nodes</td></tr><tr><td>Average clustering coefficient</td><td><code>average_clustering</code></td><td>Calculate the average clustering coefficient of the entire graph or a subset of nodes</td></tr><tr><td>Triangle closure count</td><td><code>triangles</code></td><td>Count the number of triangles a node participates in</td></tr><tr><td>Global transitivity</td><td><code>transitivity</code></td><td>Calculate the overall degree of &quot;a friend of a friend is also a friend&quot; in the network</td></tr><tr><td>4-cycle clustering</td><td><code>square_clustering</code></td><td>Calculate the local redundant structure tendency of nodes participating in 4-cycles</td></tr><tr><td>Community Detection - Greedy Modularity</td><td><code>greedy_modularity_communities</code></td><td>Clauset–Newman–Moore greedy merging to maximize modularity</td></tr><tr><td>Community Detection - Hierarchical Splitting</td><td><code>girvan_newman</code></td><td>Iteratively remove &quot;the most critical edges&quot; to obtain hierarchical community structures</td></tr><tr><td>Community Detection - Synchronous Label Propagation</td><td><code>label_propagation_communities</code></td><td>Form communities through majority label diffusion from neighbors</td></tr><tr><td>Community Detection - Asynchronous Label Propagation</td><td><code>asyn_lpa_communities</code></td><td>Asynchronous update label propagation (controllable weight and random seed)</td></tr><tr><td>Community Detection - k-clique</td><td><code>k_clique_communities</code></td><td>Overlapping community detection based on k-clique percolation</td></tr><tr><td>Community Detection - Louvain</td><td><code>louvain_communities</code></td><td>Multi-level modularity optimization, suitable for fast community partitioning of large graphs</td></tr><tr><td>Community Detection - Leiden</td><td><code>leiden_communities</code></td><td>Improved version of Louvain, more stable and guarantees internal community connectivity</td></tr><tr><td>Cycle Structure - Simple Cycle Enumeration</td><td><code>simple_cycles</code></td><td>Enumerate all simple cycles in the graph (can set length upper limit)</td></tr><tr><td>Cycle Structure - Cycle Basis</td><td><code>cycle_basis</code></td><td>Basic cycle set of an undirected graph (cycle space basis)</td></tr><tr><td>Scheme Quality - Modularity</td><td><code>modularity</code></td><td>Calculate modularity(Q) for a given partitioning</td></tr><tr><td>Scheme Quality - Coverage/Performance</td><td><code>partition_quality</code></td><td>Calculate (coverage, performance)</td></tr><tr><td>Scheme Validity</td><td><code>is_partition</code></td><td>Check whether the community list is a strict partition (non-overlapping and full coverage)</td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="9-general-input-and-output-conventions">9. General Input and Output Conventions<a href="#9-general-input-and-output-conventions" class="hash-link" aria-label="Direct link to 9. General Input and Output Conventions" title="Direct link to 9. General Input and Output Conventions" translate="no">​</a></h2>
+<ul>
+<li class=""><strong>Input <code>G</code></strong>: NetworkX Graph / DiGraph</li>
+<li class=""><strong>Output Type</strong>:<!-- -->
+<ul>
+<li class="">Metric type (clustering/transitivity/modularity): <code>float</code></li>
+<li class="">Count type (triangles): <code>dict</code> or <code>int</code></li>
+<li class="">Community result: <code>list[set]</code> / <code>iterable[set]</code> / <code>iterator[tuple[set]]</code></li>
+<li class="">Cycle structure: <code>list[list[node]]</code> or iterator</li>
+<li class="">Verification: <code>bool</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="10-detailed-operator-descriptions">10. Detailed Operator Descriptions<a href="#10-detailed-operator-descriptions" class="hash-link" aria-label="Direct link to 10. Detailed Operator Descriptions" title="Direct link to 10. Detailed Operator Descriptions" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="101-local-tightness-and-aggregation">10.1 Local Tightness and Aggregation<a href="#101-local-tightness-and-aggregation" class="hash-link" aria-label="Direct link to 10.1 Local Tightness and Aggregation" title="Direct link to 10.1 Local Tightness and Aggregation" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1011-clustering--node-clustering-coefficient">10.1.1 clustering —— Node Clustering Coefficient<a href="#1011-clustering--node-clustering-coefficient" class="hash-link" aria-label="Direct link to 10.1.1 clustering —— Node Clustering Coefficient" title="Direct link to 10.1.1 clustering —— Node Clustering Coefficient" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Calculate the node clustering coefficient: measure the proportion of mutual connections among a node&#x27;s neighbors (&quot;whether neighbors know each other&quot;).
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Find central nodes of &quot;tight friend circles&quot;</li>
+<li class="">Candidate core points of gangs/dense groups
+<strong>Key Parameters</strong></li>
+<li class=""><code>nodes</code>: Single node / multiple nodes / None (entire graph)</li>
+<li class=""><code>weight</code>: Weighted clustering (edge weight represents relationship strength)
+<strong>Complexity</strong>: <code>O(V * d^2)</code> (d is average degree)</li>
+</ul>
+<hr>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1012-average_clustering--average-clustering-coefficient">10.1.2 average_clustering —— Average Clustering Coefficient<a href="#1012-average_clustering--average-clustering-coefficient" class="hash-link" aria-label="Direct link to 10.1.2 average_clustering —— Average Clustering Coefficient" title="Direct link to 10.1.2 average_clustering —— Average Clustering Coefficient" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Return the average clustering coefficient of the entire graph or a specified node set, with a value range of 0~1.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Summarize the &quot;overall clustering degree&quot; in one sentence</li>
+<li class="">Used for network comparison, version comparison and regional comparison
+<strong>Key Parameters</strong></li>
+<li class=""><code>nodes</code>: Only consider a certain subgroup</li>
+<li class=""><code>weight</code>: Consider relationship strength</li>
+<li class=""><code>count_zeros</code>: Whether to include nodes with a clustering coefficient of 0 in the average
+<strong>Complexity</strong>: <code>O(V * d^2)</code></li>
+</ul>
+<hr>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1013-triangles--triangle-count-statistics">10.1.3 triangles —— Triangle Count Statistics<a href="#1013-triangles--triangle-count-statistics" class="hash-link" aria-label="Direct link to 10.1.3 triangles —— Triangle Count Statistics" title="Direct link to 10.1.3 triangles —— Triangle Count Statistics" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Count the number of triangles each node participates in, or return the number of triangles for specified nodes.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">More triangles mean the node is in a &quot;closed small circle&quot;</li>
+<li class="">Can be used as structural features in anti-fraud/gang identification
+<strong>Key Parameters</strong></li>
+<li class=""><code>nodes</code>: Single node / multiple nodes / None (entire graph)
+<strong>Complexity</strong>: <code>O(V * d^2)</code> or <code>O(E^{1.5})</code> (implementation dependent)</li>
+</ul>
+<hr>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1014-transitivity--global-transitivity">10.1.4 transitivity —— Global Transitivity<a href="#1014-transitivity--global-transitivity" class="hash-link" aria-label="Direct link to 10.1.4 transitivity —— Global Transitivity" title="Direct link to 10.1.4 transitivity —— Global Transitivity" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Global metric: the proportion of closed triplets (triangles) to all triplets, measuring the overall degree of &quot;triangle closure&quot;.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Whether &quot;a friend of a friend is more likely to be a friend&quot; holds for the entire network</li>
+<li class="">Judge whether the network is more like a random network or a small-world network (tendency metric)
+<strong>Complexity</strong>: <code>O(V * d^2)</code></li>
+</ul>
+<hr>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1015-square_clustering--4-cycle-clustering-coefficient">10.1.5 square_clustering —— 4-cycle Clustering Coefficient<a href="#1015-square_clustering--4-cycle-clustering-coefficient" class="hash-link" aria-label="Direct link to 10.1.5 square_clustering —— 4-cycle Clustering Coefficient" title="Direct link to 10.1.5 square_clustering —— 4-cycle Clustering Coefficient" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Measure the tendency of nodes to participate in &quot;4-cycle&quot; structures, commonly used in bipartite graphs or alternative path redundancy analysis.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Discover redundant relationships with &quot;two different paths connecting the same target&quot;</li>
+<li class="">Often more meaningful than triangles in bipartite graphs (e.g., user-commodity)
+<strong>Key Parameters</strong></li>
+<li class=""><code>nodes</code>: Only calculate for a subset of nodes
+<strong>Complexity</strong>: <code>O(V * d^2)</code></li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="102-community-detection">10.2 Community Detection<a href="#102-community-detection" class="hash-link" aria-label="Direct link to 10.2 Community Detection" title="Direct link to 10.2 Community Detection" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1021-greedy_modularity_communities--greedy-modularity-communities">10.2.1 greedy_modularity_communities —— Greedy Modularity Communities<a href="#1021-greedy_modularity_communities--greedy-modularity-communities" class="hash-link" aria-label="Direct link to 10.2.1 greedy_modularity_communities —— Greedy Modularity Communities" title="Direct link to 10.2.1 greedy_modularity_communities —— Greedy Modularity Communities" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Maximize modularity through a greedy merging strategy, output the community list (sorted by size).
+<strong>Applicable Characteristics</strong></p>
+<ul>
+<li class="">Fast speed and classic implementation</li>
+<li class="">Suitable for medium and large-scale undirected graphs, supports edge weights
+<strong>Key Parameters</strong></li>
+<li class=""><code>weight</code>: Edge weight</li>
+<li class=""><code>resolution</code>: Control community scale (&lt;1 for larger communities; &gt;1 for smaller communities)</li>
+<li class=""><code>cutoff</code> / <code>best_n</code>: Control stop conditions and community quantity range</li>
+</ul>
+<hr>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1022-girvan_newman--girvannewman-hierarchical-communities">10.2.2 girvan_newman —— Girvan–Newman Hierarchical Communities<a href="#1022-girvan_newman--girvannewman-hierarchical-communities" class="hash-link" aria-label="Direct link to 10.2.2 girvan_newman —— Girvan–Newman Hierarchical Communities" title="Direct link to 10.2.2 girvan_newman —— Girvan–Newman Hierarchical Communities" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Iteratively remove &quot;the most critical edges&quot; (default with the largest edge betweenness) to split the graph gradually, obtaining a hierarchical community structure (from coarse to fine).
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Suitable for interpretable &quot;structural splitting&quot;</li>
+<li class="">Can output multi-level schemes (suitable for small graphs/needing hierarchical structures)
+<strong>Key Parameters</strong></li>
+<li class=""><code>most_valuable_edge</code>: Custom scoring/selection method for &quot;the most critical edge&quot;
+<strong>Complexity</strong>: Relatively high (<code>O(E^2 * V)</code>), not suitable for ultra-large graphs</li>
+</ul>
+<hr>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1023-label_propagation_communities--synchronous-label-propagation">10.2.3 label_propagation_communities —— Synchronous Label Propagation<a href="#1023-label_propagation_communities--synchronous-label-propagation" class="hash-link" aria-label="Direct link to 10.2.3 label_propagation_communities —— Synchronous Label Propagation" title="Direct link to 10.2.3 label_propagation_communities —— Synchronous Label Propagation" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Label diffusion based on majority voting of neighbors, no optimization objective required, usually fast.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Fast rough clustering for ultra-large graphs</li>
+<li class="">Suitable for scenarios of &quot;generating results first then refining&quot;
+<strong>Complexity</strong>: <code>O(V + E)</code> per iteration (number of iterations depends on the graph)</li>
+</ul>
+<hr>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1024-asyn_lpa_communities--asynchronous-label-propagation">10.2.4 asyn_lpa_communities —— Asynchronous Label Propagation<a href="#1024-asyn_lpa_communities--asynchronous-label-propagation" class="hash-link" aria-label="Direct link to 10.2.4 asyn_lpa_communities —— Asynchronous Label Propagation" title="Direct link to 10.2.4 asyn_lpa_communities —— Asynchronous Label Propagation" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Similar to LPA, but adopts an asynchronous update order, allows reproducibility control through random seeds, and can use weights to influence label frequency.
+<strong>Key Parameters</strong></p>
+<ul>
+<li class=""><code>weight</code>: Edge weight affects the &quot;occurrence frequency&quot; of neighbor labels</li>
+<li class=""><code>seed</code>: Random state, affects result stability/reproducibility</li>
+</ul>
+<hr>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1025-k_clique_communities--k-clique-percolation-overlapping-communities">10.2.5 k_clique_communities —— k-clique Percolation (Overlapping Communities)<a href="#1025-k_clique_communities--k-clique-percolation-overlapping-communities" class="hash-link" aria-label="Direct link to 10.2.5 k_clique_communities —— k-clique Percolation (Overlapping Communities)" title="Direct link to 10.2.5 k_clique_communities —— k-clique Percolation (Overlapping Communities)" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Takes k-clique (complete subgraph) as the basic unit, two k-cliques are considered adjacent if they share k-1 nodes, thus forming &quot;percolation communities&quot;. Nodes can belong to multiple communities (overlapping).
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Find &quot;very tight&quot; core circles</li>
+<li class="">Allow member overlap, consistent with real social/collaboration networks
+<strong>Key Parameters</strong></li>
+<li class=""><code>k</code>: Minimum clique size (larger means stricter, smaller and tighter communities)</li>
+<li class=""><code>cliques</code>: Can pass in precomputed clique list (can significantly save repeated calculations)
+<strong>Complexity</strong>: Affected by clique enumeration, usually exponential (suitable for small and medium graphs or local subgraphs)</li>
+</ul>
+<hr>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1026-louvain_communities--louvain-communities">10.2.6 louvain_communities —— Louvain Communities<a href="#1026-louvain_communities--louvain-communities" class="hash-link" aria-label="Direct link to 10.2.6 louvain_communities —— Louvain Communities" title="Direct link to 10.2.6 louvain_communities —— Louvain Communities" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Classic multi-level modularity optimization method, fast speed, suitable for large-scale undirected graphs (supports weights).
+<strong>Key Parameters</strong></p>
+<ul>
+<li class=""><code>weight</code>: Edge weight</li>
+<li class=""><code>resolution</code>: Community scale</li>
+<li class=""><code>threshold</code> / <code>max_level</code> / <code>seed</code>: Convergence threshold, number of levels, randomness control
+<strong>Characteristics</strong></li>
+<li class="">One of the &quot;default first choices&quot; commonly used in industry</li>
+<li class="">Results may change with randomness (seed controllable)</li>
+</ul>
+<hr>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1027-leiden_communities--leiden-communities">10.2.7 leiden_communities —— Leiden Communities<a href="#1027-leiden_communities--leiden-communities" class="hash-link" aria-label="Direct link to 10.2.7 leiden_communities —— Leiden Communities" title="Direct link to 10.2.7 leiden_communities —— Leiden Communities" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Improved version of Louvain, usually more stable, and emphasizes internal community connectivity (avoids &quot;bad communities that look grouped but internally disconnected&quot;).
+<strong>Key Parameters</strong></p>
+<ul>
+<li class=""><code>weight</code> / <code>resolution</code></li>
+<li class=""><code>max_level</code> / <code>seed</code>
+<strong>Characteristics</strong></li>
+<li class="">More stable quality, suitable for scenarios with strict requirements on community structure</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="103-cycle-structure-and-cycle-detection">10.3 Cycle Structure and Cycle Detection<a href="#103-cycle-structure-and-cycle-detection" class="hash-link" aria-label="Direct link to 10.3 Cycle Structure and Cycle Detection" title="Direct link to 10.3 Cycle Structure and Cycle Detection" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1031-simple_cycles--simple-cycle-enumeration">10.3.1 simple_cycles —— Simple Cycle Enumeration<a href="#1031-simple_cycles--simple-cycle-enumeration" class="hash-link" aria-label="Direct link to 10.3.1 simple_cycles —— Simple Cycle Enumeration" title="Direct link to 10.3.1 simple_cycles —— Simple Cycle Enumeration" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Enumerate all simple cycles in the graph (no repeated nodes, start point = end point). Can set <code>length_bound</code> to limit cycle length.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Discover capital reflow and cyclic transactions</li>
+<li class="">Discover cyclic dependencies in software dependencies</li>
+<li class="">Discover feedback loops in biological metabolic/regulatory networks
+<strong>Key Parameters</strong></li>
+<li class=""><code>length_bound</code>: Limit cycle length to avoid explosive output
+<strong>Complexity</strong>: <code>O((V + E) * (C + 1))</code> (C is the number of cycles)</li>
+</ul>
+<hr>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1032-cycle_basis--cycle-basis-undirected-graph">10.3.2 cycle_basis —— Cycle Basis (Undirected Graph)<a href="#1032-cycle_basis--cycle-basis-undirected-graph" class="hash-link" aria-label="Direct link to 10.3.2 cycle_basis —— Cycle Basis (Undirected Graph)" title="Direct link to 10.3.2 cycle_basis —— Cycle Basis (Undirected Graph)" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Output a cycle basis for an undirected graph: a &quot;basic independent cycle set&quot; that can be combined to generate all cycles.
+<strong>Product Value</strong></p>
+<ul>
+<li class="">Circuit grid analysis (Kirchhoff&#x27;s laws)</li>
+<li class="">Basic closed block identification in road networks</li>
+<li class="">Decompose complex cycle structures into basic components</li>
+</ul>
+<hr>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="104-community-result-evaluation-and-verification">10.4 Community Result Evaluation and Verification<a href="#104-community-result-evaluation-and-verification" class="hash-link" aria-label="Direct link to 10.4 Community Result Evaluation and Verification" title="Direct link to 10.4 Community Result Evaluation and Verification" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1041-modularity--modularity-score-q-value">10.4.1 modularity —— Modularity Score (Q Value)<a href="#1041-modularity--modularity-score-q-value" class="hash-link" aria-label="Direct link to 10.4.1 modularity —— Modularity Score (Q Value)" title="Direct link to 10.4.1 modularity —— Modularity Score (Q Value)" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Calculate modularity for a given community partitioning: measure the degree of &quot;more intra-group edges and fewer inter-group edges&quot;.
+<strong>Key Parameters</strong></p>
+<ul>
+<li class=""><code>communities</code>: Must be a partition of nodes (mutually exclusive and full coverage)</li>
+<li class=""><code>weight</code> / <code>resolution</code>
+<strong>Output</strong>: <code>float</code> (usually larger is better, but needs to be understood in combination with network type and resolution)</li>
+</ul>
+<hr>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1042-partition_quality--coverage-and-performance">10.4.2 partition_quality —— Coverage and Performance<a href="#1042-partition_quality--coverage-and-performance" class="hash-link" aria-label="Direct link to 10.4.2 partition_quality —— Coverage and Performance" title="Direct link to 10.4.2 partition_quality —— Coverage and Performance" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Output <code>(coverage, performance)</code>:</p>
+<ul>
+<li class="">coverage: Proportion of intra-community edges (whether there are many intra-community edges)</li>
+<li class="">performance: Proportion of intra-community edges + extra-community non-edges (how good the separation is)</li>
+</ul>
+<hr>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="1043-is_partition--partition-validity-verification">10.4.3 is_partition —— Partition Validity Verification<a href="#1043-is_partition--partition-validity-verification" class="hash-link" aria-label="Direct link to 10.4.3 is_partition —— Partition Validity Verification" title="Direct link to 10.4.3 is_partition —— Partition Validity Verification" translate="no">​</a></h4>
+<p><strong>Function Description</strong>
+Check whether a given community list is a strict partition:</p>
+<ul>
+<li class="">Whether it covers all nodes</li>
+<li class="">Whether mutually non-overlapping
+<strong>Note</strong></li>
+<li class="">For algorithms that allow overlapping communities (e.g., <code>k_clique_communities</code>), their output usually <strong>does not satisfy</strong> the partition definition, and <code>is_partition</code> should not be used for forced verification in this case.</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="11-recommended-usage-guide-selection-suggestions">11. Recommended Usage Guide (Selection Suggestions)<a href="#11-recommended-usage-guide-selection-suggestions" class="hash-link" aria-label="Direct link to 11. Recommended Usage Guide (Selection Suggestions)" title="Direct link to 11. Recommended Usage Guide (Selection Suggestions)" translate="no">​</a></h2>
+<ul>
+<li class=""><strong>Want to first measure whether the network is &quot;clustered&quot;</strong>: <code>average_clustering</code> + <code>transitivity</code></li>
+<li class=""><strong>Want to find local tight core points/gang features</strong>: <code>clustering</code> + <code>triangles</code> ( <code>square_clustering</code> if necessary)</li>
+<li class=""><strong>Want to quickly obtain communities (priority for large graphs)</strong>: <code>louvain_communities</code> or <code>leiden_communities</code></li>
+<li class=""><strong>Want more interpretable hierarchical splitting (small graphs)</strong>: <code>girvan_newman</code></li>
+<li class=""><strong>Want extremely fast rough clustering (ultra-large graphs)</strong>: <code>label_propagation_communities</code> / <code>asyn_lpa_communities</code></li>
+<li class=""><strong>Want to find overlapping, extremely tight small circles</strong>: <code>k_clique_communities</code></li>
+<li class=""><strong>Want to score the partitioning</strong>: <code>modularity</code> + <code>partition_quality</code> (verify with <code>is_partition</code> first)</li>
+<li class=""><strong>Want to check closed loops/cyclic dependencies/capital reflow</strong>: <code>simple_cycles</code> (add <code>length_bound</code> if necessary), use <code>cycle_basis</code> for undirected graphs</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="12-typical-directly-answerable-questions-examples">12. Typical Directly Answerable Questions (Examples)<a href="#12-typical-directly-answerable-questions-examples" class="hash-link" aria-label="Direct link to 12. Typical Directly Answerable Questions (Examples)" title="Direct link to 12. Typical Directly Answerable Questions (Examples)" translate="no">​</a></h2>
+<ul>
+<li class="">&quot;Is the overall network more like a loose random network or a small-world network? Give me an overall metric.&quot;</li>
+<li class="">&quot;Which nodes have the tightest friend circles? List the Top-20 clustering coefficients/triangle counts.&quot;</li>
+<li class="">&quot;Automatically partition the network into several natural communities and output the members of each community.&quot;</li>
+<li class="">&quot;I have two community partitioning schemes, which one is better? Provide modularity and coverage/performance.&quot;</li>
+<li class="">&quot;Is this community result a strict partition? Are there any missing/duplicate assignments?&quot;</li>
+<li class="">&quot;Find all capital closed loops/cyclic dependency links (can limit cycle length).&quot;</li>
+<li class="">&quot;Find overlapping core small circles (communities connected by iron triangles).&quot;</li>
+</ul>
+<hr></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/iDC-NEU/YiGraphDocs/tree/main/docs-site/docs/tutorial-algorithm/Connectivity_Components.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/YiGraphDocs/en/docs/tutorial-algorithm/centrality"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Centrality and Key Operator Set</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/YiGraphDocs/en/docs/tutorial-algorithm/Clustering_Community"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Clustering &amp; Community Operator Set</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#1-operator-set-overview" class="table-of-contents__link toc-highlight">1. Operator Set Overview</a></li><li><a href="#2-operator-capability-classification" class="table-of-contents__link toc-highlight">2. Operator Capability Classification</a></li><li><a href="#3-general-input-and-output-conventions" class="table-of-contents__link toc-highlight">3. General Input and Output Conventions</a></li><li><a href="#4-detailed-operator-descriptions" class="table-of-contents__link toc-highlight">4. Detailed Operator Descriptions</a><ul><li><a href="#41-is_connected--undirected-graph-connectivity-check" class="table-of-contents__link toc-highlight">4.1 is_connected —— Undirected Graph Connectivity Check</a></li><li><a href="#42-connected_components--undirected-graph-connected-component-partitioning" class="table-of-contents__link toc-highlight">4.2 connected_components —— Undirected Graph Connected Component Partitioning</a></li><li><a href="#43-number_connected_components--connected-component-count" class="table-of-contents__link toc-highlight">4.3 number_connected_components —— Connected Component Count</a></li><li><a href="#44-is_strongly_connected--directed-graph-strong-connectivity-check" class="table-of-contents__link toc-highlight">4.4 is_strongly_connected —— Directed Graph Strong Connectivity Check</a></li><li><a href="#45-strongly_connected_components--strongly-connected-components-scc" class="table-of-contents__link toc-highlight">4.5 strongly_connected_components —— Strongly Connected Components (SCC)</a></li><li><a href="#46-is_weakly_connected--directed-graph-weak-connectivity-check" class="table-of-contents__link toc-highlight">4.6 is_weakly_connected —— Directed Graph Weak Connectivity Check</a></li><li><a href="#47-weakly_connected_components--weakly-connected-components-wcc" class="table-of-contents__link toc-highlight">4.7 weakly_connected_components —— Weakly Connected Components (WCC)</a></li><li><a href="#48-node_connectivity--node-connectivity-robustness-metric" class="table-of-contents__link toc-highlight">4.8 node_connectivity —— Node Connectivity (Robustness Metric)</a></li><li><a href="#49-edge_connectivity--edge-connectivity-robustness-metric" class="table-of-contents__link toc-highlight">4.9 edge_connectivity —— Edge Connectivity (Robustness Metric)</a></li><li><a href="#410-minimum_node_cut--minimum-node-cut-set" class="table-of-contents__link toc-highlight">4.10 minimum_node_cut —— Minimum Node Cut Set</a></li><li><a href="#411-minimum_edge_cut--minimum-edge-cut-set" class="table-of-contents__link toc-highlight">4.11 minimum_edge_cut —— Minimum Edge Cut Set</a></li><li><a href="#412-articulation_points--articulation-points-critical-nodes" class="table-of-contents__link toc-highlight">4.12 articulation_points —— Articulation Points (Critical Nodes)</a></li><li><a href="#413-bridge_components--bridge-connected-components-2-edge-connected-components" class="table-of-contents__link toc-highlight">4.13 bridge_components —— Bridge-connected Components (2-edge-connected components)</a></li></ul></li><li><a href="#5-recommended-usage-guide-practical-suggestions" class="table-of-contents__link toc-highlight">5. Recommended Usage Guide (Practical Suggestions)</a></li><li><a href="#6-typical-directly-answerable-questions-examples" class="table-of-contents__link toc-highlight">6. Typical Directly Answerable Questions (Examples)</a></li><li><a href="#operator-category-clustering--community-clustering-coefficient-community-detection-transitivity-and-cycle-structureapplicable-stages-network-structure-insight-circlegang-identification-community-quality-assessment-closed-loopcycle-detection-relationship-tightness-quantificationproduct-positioning-provides-a-unified-operator-capability-base-for-answering-whether-the-network-has-tight-small-circles--how-to-partition-people-or-entities-into-communities--how-good-is-the-partitioning--whether-closed-loop-cycles-exist" class="table-of-contents__link toc-highlight"><strong>Operator Category</strong>: Clustering &amp; Community (Clustering Coefficient, Community Detection, Transitivity and Cycle Structure)
+<strong>Applicable Stages</strong>: Network structure insight, circle/gang identification, community quality assessment, closed-loop/cycle detection, relationship tightness quantification
+<strong>Product Positioning</strong>: Provides a unified operator capability base for answering &quot;whether the network has tight small circles / how to partition people or entities into communities / how good is the partitioning / whether closed-loop cycles exist&quot;</a></li><li><a href="#7-operator-set-overview" class="table-of-contents__link toc-highlight">7. Operator Set Overview</a></li><li><a href="#in-addition-this-category-also-includes-cycle-structurecycle-detection-capabilities-simple_cycles--cycle_basis-used-to-identify-closed-loop-patterns-such-as-capital-reflow-cyclic-dependencies-and-feedback-loops" class="table-of-contents__link toc-highlight">In addition, this category also includes <strong>cycle structure/cycle detection</strong> capabilities (simple_cycles / cycle_basis), used to identify closed-loop patterns such as capital reflow, cyclic dependencies and feedback loops.</a></li><li><a href="#8-operator-capability-classification" class="table-of-contents__link toc-highlight">8. Operator Capability Classification</a></li><li><a href="#9-general-input-and-output-conventions" class="table-of-contents__link toc-highlight">9. General Input and Output Conventions</a></li><li><a href="#10-detailed-operator-descriptions" class="table-of-contents__link toc-highlight">10. Detailed Operator Descriptions</a><ul><li><a href="#101-local-tightness-and-aggregation" class="table-of-contents__link toc-highlight">10.1 Local Tightness and Aggregation</a></li><li><a href="#102-community-detection" class="table-of-contents__link toc-highlight">10.2 Community Detection</a></li><li><a href="#103-cycle-structure-and-cycle-detection" class="table-of-contents__link toc-highlight">10.3 Cycle Structure and Cycle Detection</a></li><li><a href="#104-community-result-evaluation-and-verification" class="table-of-contents__link toc-highlight">10.4 Community Result Evaluation and Verification</a></li></ul></li><li><a href="#11-recommended-usage-guide-selection-suggestions" class="table-of-contents__link toc-highlight">11. Recommended Usage Guide (Selection Suggestions)</a></li><li><a href="#12-typical-directly-answerable-questions-examples" class="table-of-contents__link toc-highlight">12. Typical Directly Answerable Questions (Examples)</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 AAG</div></div></div></footer></div>
+</body>
+</html>
