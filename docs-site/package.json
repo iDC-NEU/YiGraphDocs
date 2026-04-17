@@ -8,7 +8,7 @@
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "USE_SSH=true docusaurus deploy",
-    "deploy-https": "GIT_USER=<YOUR_GITHUB_USERNAME> docusaurus deploy",
+    "deploy-https": "docusaurus deploy",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
