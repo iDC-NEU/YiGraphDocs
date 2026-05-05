@@ -1,499 +1,601 @@
 ---
 sidebar_position: 4
+title: Connectivity & Components Operator Set
 ---
+
 # Connectivity & Components Operator Set
 
+**Operator Category**: Connectivity & Components (connectivity analysis, components, cuts/partitioning)
 
-**Operator Category**: Connectivity & Components (Connectivity, Connected Components and Cut Analysis)
+**Number of Algorithms**: 17
 
-**Applicable Stages**: Network structure health check, isolated island/partition identification, robustness assessment, key node/edge localization, fault/attack surface analysis
+**Applicable Stages**: Network health check, island/partition identification, robustness evaluation, critical node/edge localization, fault/attack surface analysis, strong/weak connectivity analysis, bridge structure identification, SCC compression modeling
 
-**Product Positioning**: Provides a unified capability base for answering "whether the network is connected / how many partitions it has / which nodes or edges will split the network when removed / the minimum number of cuts required to disconnect the network"
-
+**Product Positioning**: Provides a unified capability foundation for “is the network connected / how many blocks / which nodes or edges cause splitting upon removal / minimum cuts to disconnect / how to compress directed graphs into component-level DAGs / which edges are local bridges”.
 
 ---
-## 1. Operator Set Overview
-The Connectivity & Components operator set focuses on connectivity analysis for **undirected and directed graphs**, covering three core types of problems:
+
+## I. Operator Set Overview
+
+The Connectivity & Components operator set focuses on **connectivity analysis for undirected and directed graphs**, covering the following core questions:
+
 1. **Connectivity and Connected Components**
-   - Is an undirected graph fully connected? How many connected components does it have? (is_connected / connected_components / number_connected_components)
-   - Is a directed graph strongly connected or weakly connected in a directional sense? (is_strongly_connected / strongly_connected_components / is_weakly_connected / weakly_connected_components)
-2. **Network Robustness (Connectivity Metrics)**
-   - What is the minimum number of **nodes** to remove to disconnect the network? (node_connectivity)
-   - What is the minimum number of **edges** to remove to disconnect the network? (edge_connectivity)
-3. **Cuts and Critical Structures (Cuts / Critical Elements)**
-   - What is the minimum node cut/edge cut set? (minimum_node_cut / minimum_edge_cut)
-   - Which nodes are articulation points? Which structures are the blocks decomposed by bridges? (articulation_points / bridge_components)
+   - Is the undirected graph fully connected?
+   - How many connected components does the graph have?
+   - Which nodes belong to each connected component?
+   - Typical algorithms: `is_connected`, `connected_components`, `number_connected_components`
+
+2. **Strong and Weak Connectivity Analysis for Directed Graphs**
+   - Is the directed graph strongly connected?
+   - Is it weakly connected when ignoring direction?
+   - Which nodes form strongly or weakly connected components?
+   - Typical algorithms: `is_strongly_connected`, `strongly_connected_components`, `is_weakly_connected`, `weakly_connected_components`
+
+3. **Network Robustness Metrics**
+   - What is the minimum number of nodes whose removal disconnects the graph?
+   - What is the minimum number of edges whose removal disconnects the graph?
+   - What is the minimum cut between two given nodes?
+   - Typical algorithms: `node_connectivity`, `edge_connectivity`
+
+4. **Minimum Cuts and Critical Structures**
+   - Which set of nodes, when removed together, disconnects the graph?
+   - Which set of edges, when removed together, disconnects the graph?
+   - Which nodes are articulation points?
+   - Which edges are bridges?
+   - Typical algorithms: `minimum_node_cut`, `minimum_edge_cut`, `articulation_points`, `bridges`
+
+5. **Bridge Structures and Biconnected Decomposition**
+   - Which regions are internally more robust?
+   - Which edges connect originally separate structural blocks?
+   - Which edges cause component splitting when removed?
+   - Typical algorithms: `bridge_components`, `biconnected_component_edges`, `local_bridges`
+
+6. **Directed Component Compression**
+   - How to compress strongly connected components into a component-level DAG?
+   - How to extract high-level dependency structures from complex directed graphs?
+   - Typical algorithms: `condensation`
+
 ---
-## 2. Operator Capability Classification
-| Capability Type | Corresponding Operator | Function Description |
+
+## II. Operator Capability Classification
+
+| Capability Type | Corresponding Operator | Description |
 |---|---|---|
-| Undirected graph global connectivity | `is_connected` | Judge whether an undirected graph is a single connected component |
-| Undirected graph connected components | `connected_components` | Output the node set of each connected component |
-| Undirected graph component count | `number_connected_components` | Return the number of connected components |
-| Directed graph strong connectivity | `is_strongly_connected` | Whether every pair of nodes is mutually reachable |
-| Directed graph strongly connected components | `strongly_connected_components` | Output SCC (Strongly Connected Component) partitioning |
-| Directed graph weak connectivity | `is_weakly_connected` | Whether connected after ignoring edge directions |
-| Directed graph weakly connected components | `weakly_connected_components` | Output WCC (Weakly Connected Component) partitioning |
-| Robustness metric (node) | `node_connectivity` | Minimum number of nodes to remove to disconnect the graph (or s-t) |
-| Robustness metric (edge) | `edge_connectivity` | Minimum number of edges to remove to disconnect the graph (or s-t) |
-| Minimum node cut set | `minimum_node_cut` | Provide the minimum node set that disconnects the graph (or s-t) when removed |
-| Minimum edge cut set | `minimum_edge_cut` | Provide the minimum edge set that disconnects the graph (or s-t) when removed |
-| Critical nodes (articulation points) | `articulation_points` | Nodes in an undirected graph that increase the number of components when deleted |
-| Bridge-connected component decomposition | `bridge_components` | 2-edge-connected components bounded by "bridges (cut edges)" |
+| Overall connectivity (undirected) | `is_connected` | Check if the undirected graph is a single connected component |
+| Undirected connected components | `connected_components` | Output node sets of each connected component |
+| Number of undirected components | `number_connected_components` | Return the number of connected components |
+| Directed strong connectivity | `is_strongly_connected` | Check if every pair of nodes is mutually reachable in a directed graph |
+| Directed strongly connected components | `strongly_connected_components` | Output SCC partitioning |
+| Directed weak connectivity | `is_weakly_connected` | Check connectivity after ignoring direction |
+| Directed weakly connected components | `weakly_connected_components` | Output WCC partitioning |
+| Robustness metric (node) | `node_connectivity` | Minimum number of nodes whose removal disconnects the graph or a given s-t pair |
+| Robustness metric (edge) | `edge_connectivity` | Minimum number of edges whose removal disconnects the graph or a given s-t pair |
+| Minimum node cut set | `minimum_node_cut` | Smallest node set whose removal disconnects the graph or s-t |
+| Minimum edge cut set | `minimum_edge_cut` | Smallest edge set whose removal disconnects the graph or s-t |
+| Critical nodes (articulation points) | `articulation_points` | Nodes whose removal increases the number of connected components |
+| Bridge-connected components | `bridge_components` | 2-edge-connected components based on bridges |
+| Biconnected component edges | `biconnected_component_edges` | Output edge sets of biconnected components in an undirected graph |
+| SCC condensation | `condensation` | Compress SCCs into a DAG |
+| Bridge edges | `bridges` | Edges whose removal increases the number of connected components |
+| Local bridges | `local_bridges` | Edges whose endpoints share no common neighbors; can compute span |
+
 ---
-## 3. General Input and Output Conventions
-- **Input `G`**: NetworkX Graph / DiGraph (per algorithm requirements: some only support undirected/directed graphs)
-- **Output**:
-  - Judgment type: `bool`
-  - Component type: `generator[set(node)]`
-  - Connectivity metric: `int`
-  - Minimum cut: `set(node)` or `set(edge)`
-  - Articulation points: iterator (convertible to list)
-  - bridge_components: 2-edge-connected component generator (each item is a node set)
+
+## III. General Input/Output Conventions
+
+- **Input `G`**: NetworkX Graph / DiGraph
+  - Undirected connectivity algorithms typically use `Graph`
+  - Strong/weak connectivity and SCC condensation typically use `DiGraph`
+  - Some cut and connectivity algorithms support both directed and undirected graphs
+
+- **Common Output**
+  - Boolean: `bool`
+  - Component generators: `generator[set(node)]`
+  - Connectivity metrics: `int`
+  - Minimum cuts: `set(node)` or `set(edge)`
+  - Articulation points: node iterator
+  - Bridges: edge iterator
+  - Biconnected components: `generator[list[edge]]`
+  - Condensation graph: `DiGraph`
+
 > Notes:
-> - "Strong connectivity/weak connectivity" is only meaningful for **directed graphs**.
-> - "Articulation points/bridge-connected components" are usually for structural robustness analysis of **undirected graphs**.
+> - “Strongly connected / weakly connected” are meaningful only for **directed graphs**.
+> - “Articulation points / bridges / biconnected components / bridge components” are typically used for **undirected** graph robustness analysis.
+> - “Minimum cuts / node connectivity / edge connectivity” can be used for whole graphs or for specific node pairs `(s, t)` for local robustness.
+
 ---
-## 4. Detailed Operator Descriptions
-### 4.1 is_connected —— Undirected Graph Connectivity Check
-**Function Description**
-Judge whether there is a reachable path between any two nodes in an undirected graph.
+
+## IV. Detailed Operator Descriptions
+
+### 1. is_connected – Check if undirected graph is connected
+
+**Description**  
+Determines whether every pair of nodes in the undirected graph has a path connecting them.
+
 **Product Value**
-- The first health check for network health
-- Quickly determine the existence of isolated islands/fractured areas
+- First health check for a network
+- Quickly identify islands, disconnected regions, or isolated nodes
+- Useful as a pre-check for subsequent global algorithms
+
 **Typical Scenarios**
-- Whether there are completely isolated areas in the road network
-- Whether the device interconnection topology forms a single network
-- Whether there are completely isolated circles in the social network
-**Applicability and Characteristics**
-- Graph Type: Undirected graph
+- Check if a road network is fully connected
+- Verify device interconnectivity forms a single network
+- Detect fully isolated circles in social networks
+- Identify disconnected subnets in supply chains
+
+**Applicability & Characteristics**
+- Graph type: Undirected
+- Output: `bool`
 - Complexity: `O(V + E)`
+
 ---
-### 4.2 connected_components —— Undirected Graph Connected Component Partitioning
-**Function Description**
-Output the node set of each connected component in an undirected graph (a component is a "mutually reachable subnetwork").
+
+### 2. connected_components – Undirected connected components
+
+**Description**  
+Outputs the node set of each connected component in the undirected graph. Nodes in the same component are mutually reachable; different components are disconnected.
+
 **Product Value**
-- Identify the "operational/community/topological regions" that the network is divided into
-- Provide partition boundaries for subsequent statistics, modeling and scheduling within components
+- Identify regions, communities, or subsystems that are isolated from one another
+- Provide boundaries for partitioned statistics, modeling, or scheduling
+- Help locate isolated components and abnormal fragmentation
+
 **Typical Scenarios**
-- Logistics station network: Divide into disconnected operational regions
-- Device interconnection: Find isolated subnets
-- Social network: Identify non-interacting circles
-**Applicability and Characteristics**
-- Graph Type: Undirected graph
+- Logistics site network: separate operational regions
+- Device network: find isolated subnets
+- Social network: identify non-interacting circles
+- Corporate relationship network: identify unrelated corporate clusters
+
+**Applicability & Characteristics**
+- Graph type: Undirected
+- Output: `generator[set(node)]`
 - Complexity: `O(V + E)`
+
 ---
-### 4.3 number_connected_components —— Connected Component Count
-**Function Description**
-Return the number of connected components in an undirected graph.
+
+### 3. number_connected_components – Number of connected components
+
+**Description**  
+Returns the number of connected components in the undirected graph.
+
 **Product Value**
-- Quickly quantify the "fragmentation degree"
-- Served as a network health KPI (more components usually mean poorer health/more fragmentation)
+- Quickly quantify the degree of network fragmentation
+- Can be used as a network health KPI
+- Monitor how many pieces a network splits into before/after a failure
+
 **Typical Scenarios**
-- Evaluation of partition quantity after urban road network fracture
-- Number of subnets after device network failure
-- Number of isolated teams in a collaboration network
-**Applicability and Characteristics**
-- Graph Type: Undirected graph
+- Evaluate number of partitioned areas after road network disruption
+- Count subnets after device network failure
+- Count isolated teams in a collaboration network
+- Estimate number of independent fraud groups in a risk network
+
+**Applicability & Characteristics**
+- Graph type: Undirected
+- Output: `int`
 - Complexity: `O(V + E)`
+
 ---
-### 4.4 is_strongly_connected —— Directed Graph Strong Connectivity Check
-**Function Description**
-Judge whether a directed graph satisfies: mutual reachability between any two nodes (both u→v and v→u are reachable).
+
+### 4. is_strongly_connected – Check if directed graph is strongly connected
+
+**Description**  
+Determines whether the directed graph is strongly connected, i.e., for every pair of nodes `u` and `v`, there exists a path `u → v` and a path `v → u`.
+
 **Product Value**
-- Judge whether the system forms a closed-loop structure (capable of circulation)
-- Suitable for analyzing systems with "mutual calls/mutual jumps/capital circulation"
+- Evaluate whether a directed network forms complete mutual reachability
+- Suitable for analyzing systems like service calls, page navigation, or fund circulation
+- Identify directional blocking
+
 **Typical Scenarios**
-- Service calls: Whether mutually reachable to form a unified module
-- Page navigation: Whether any page can reach any other page and return
-- Transaction flow: Whether a reflowable closed-loop network is formed
-**Applicability and Characteristics**
-- Graph Type: Directed graph
+- Service invocation: whether every service can reach every other via call chains
+- Page navigation: whether every page can be reached and returned from
+- Transaction network: whether closed‑loop funds can circulate
+- State machine: whether all states are mutually reachable
+
+**Applicability & Characteristics**
+- Graph type: Directed
+- Output: `bool`
 - Complexity: `O(V + E)`
+
 ---
-### 4.5 strongly_connected_components —— Strongly Connected Components (SCC)
-**Function Description**
-Output the SCC partitioning of a directed graph: any two nodes within each SCC are mutually reachable.
+
+### 5. strongly_connected_components – Strongly connected components (SCCs)
+
+**Description**  
+Outputs the strongly connected components of a directed graph. Within each SCC, every node is mutually reachable.
+
 **Product Value**
-- Identify "cyclic modules/closed-loop groups"
-- Commonly used for dependency analysis, dead loop troubleshooting and modular disassembly
+- Identify cyclic modules, closed‑loop groups, and interdependent structures
+- Useful for dependency analysis, deadlock detection, and modular decomposition
+- Foundational for directed graph compression and hierarchical modeling
+
 **Typical Scenarios**
-- Service dependency graph: Find modules with mutual dependent cycles
-- Flow chart: Find cyclic step groups that can return to the starting point
-- Transaction network: Identify small groups with capital circulation
-**Applicability and Characteristics**
-- Graph Type: Directed graph
+- Service dependency graph: find circular dependencies
+- Flowcharts: identify loops that can return to start
+- Transaction networks: identify fund‑circulation cliques
+- Code dependencies: locate circular imports or references
+
+**Applicability & Characteristics**
+- Graph type: Directed
+- Output: `generator[set(node)]`
 - Complexity: `O(V + E)`
+
 ---
-### 4.6 is_weakly_connected —— Directed Graph Weak Connectivity Check
-**Function Description**
-Judge connectivity when the directed graph is treated as an undirected graph (ignoring edge directions).
+
+### 6. is_weakly_connected – Check if directed graph is weakly connected
+
+**Description**  
+Treats the directed graph as undirected (ignores direction) and checks if it is connected.
+
 **Product Value**
-- Judge whether "structurally a single network", even if not mutually reachable in direction
-- Suitable for scenarios with "directions but still need to check overall fragmentation"
+- Determine if the directed network is structurally one piece
+- Even if not mutually reachable, check overall connectivity
+- Suitable for macroscopic connectivity checks of directed graphs
+
 **Typical Scenarios**
-- Email sending network: Ignore directions to check if the organization is connected as a whole
-- Follower network: Ignore directions to check if users are split into multiple communities
-- Page link network: Ignore directions to check if the site is divided into isolated islands
-**Applicability and Characteristics**
-- Graph Type: Directed graph
+- Email network: check if the organization is fully connected ignoring direction
+- Follow network: see if users are isolated into separate groups
+- Page links: check if sites are partitioned into isolated islands
+- Service calls: determine if business domains are structurally related
+
+**Applicability & Characteristics**
+- Graph type: Directed
+- Output: `bool`
 - Complexity: `O(V + E)`
+
 ---
-### 4.7 weakly_connected_components —— Weakly Connected Components (WCC)
-**Function Description**
-Partition the directed graph into several mutually connected components after ignoring edge directions.
+
+### 7. weakly_connected_components – Weakly connected components (WCCs)
+
+**Description**  
+After ignoring direction, partitions the directed graph into weakly connected components.
+
 **Product Value**
-- Identify "structural partitions" of directional networks
-- Provide boundaries for further SCC, centrality and other analyses within partitions
+- Identify structural partitions of a directional network
+- Provide boundaries for further analysis (SCC, centrality, community detection)
+- Identify isolated business domains or propagation domains
+
 **Typical Scenarios**
-- Follower/email network: Identify disconnected community domains
-- Service calls: Identify unrelated business domains
-**Applicability and Characteristics**
-- Graph Type: Directed graph
+- Follow network: identify non‑interacting user domains
+- Email network: identify groups that do not communicate with each other
+- Service calls: identify unrelated business systems
+- Transaction network: identify account groups with no transaction connections
+
+**Applicability & Characteristics**
+- Graph type: Directed
+- Output: `generator[set(node)]`
 - Complexity: `O(V + E)`
+
 ---
-### 4.8 node_connectivity —— Node Connectivity (Robustness Metric)
-**Function Description**
-Return the minimum number of **nodes** to delete to disconnect the graph; if `s, t` are given, return the minimum number of nodes to delete to disconnect s and t.
+
+### 8. node_connectivity – Node connectivity
+
+**Description**  
+Returns the minimum number of nodes that must be removed to disconnect the graph. If `s, t` are specified, returns the minimum number of nodes whose removal disconnects `s` from `t`.
+
 **Product Value**
-- Quantify the network's "anti-node failure/attack" capability
-- Evaluate the redundancy of key devices/key positions
-**Typical Scenarios**
-- Data center: Minimum number of device failures that disconnect the network
-- Urban road network: Minimum number of road junctions to close that split the network
-- Collaboration network: Minimum number of personnel departures that split the team
+- Quantify the network’s ability to withstand node failures or attacks
+- Assess redundancy of critical equipment, roles, or accounts
+- Support robustness scoring and reinforcement budgeting
+
 **Key Parameters**
-- `s, t`: Calculate local (source-sink) connectivity
-- `flow_func`: Maximum flow implementation selection (affects performance)
-**Applicability and Characteristics**
-- Graph Type: Directed/Undirected (implementation based on flow)
-- Complexity: Flow based
+- `s, t`: source and target for local connectivity analysis
+- `flow_func`: max‑flow implementation, affects performance
+
+**Applicability & Characteristics**
+- Graph type: Directed / Undirected
+- Output: `int`
+- Complexity: Depends on max‑flow algorithm
+
 ---
-### 4.9 edge_connectivity —— Edge Connectivity (Robustness Metric)
-**Function Description**
-Return the minimum number of **edges** to delete to disconnect the graph; if `s, t` are given, return the minimum number of edges to delete to disconnect s and t.
+
+### 9. edge_connectivity – Edge connectivity
+
+**Description**  
+Returns the minimum number of edges that must be removed to disconnect the graph. If `s, t` are specified, returns the minimum number of edges whose removal disconnects `s` from `t`.
+
 **Product Value**
-- Quantify the network's "anti-link failure/attack" capability
-- Used for link redundancy planning and reinforcement
-**Typical Scenarios**
-- Computer room links: Minimum number of link breaks that split the network
-- Road network: Minimum number of roads to close that partition the network
-- Logistics network: Minimum number of line interruptions that cause supply disruption
+- Quantify the network’s ability to withstand link failures or edge attacks
+- Plan link redundancy, network hardening, and disaster recovery
+- Identify low‑redundancy connection bottlenecks
+
 **Key Parameters**
-- `flow_func`: Maximum flow implementation selection
-- `cutoff`: Stop early when the threshold is reached (acceleration but only applicable for threshold judgment)
-**Applicability and Characteristics**
-- Graph Type: Directed/Undirected (implementation based on flow)
-- Complexity: Flow based
+- `s, t`: source and target
+- `flow_func`: max‑flow implementation
+- `cutoff`: early stop threshold, useful to check if connectivity is below a certain level
+
+**Applicability & Characteristics**
+- Graph type: Directed / Undirected
+- Output: `int`
+- Complexity: Depends on max‑flow algorithm
+
 ---
-### 4.10 minimum_node_cut —— Minimum Node Cut Set
-**Function Description**
-Output a minimum node set that disconnects the graph when deleted; or (given s, t) disconnects s and t when deleted.
+
+### 10. minimum_node_cut – Minimum node cut set
+
+**Description**  
+Returns a set of nodes of minimum size whose removal disconnects the graph. If `s, t` are specified, returns a set of nodes whose removal disconnects `s` from `t`.
+
 **Product Value**
-- Directly provide the "most vulnerable node set"
-- Used for fault drill, attack surface assessment and reinforcement priority setting
-**Typical Scenarios**
-- Data center: Minimum set of devices whose simultaneous failure disconnects the network
-- Transportation: Minimum set of road junctions whose closure splits the network
-- Power grid: Minimum set of stations whose failure partitions the network
+- Directly identify the most vulnerable node sets
+- Support failure simulation, attack surface assessment, and prioritization of reinforcement
+- More actionable than plain connectivity metrics
+
 **Key Parameters**
-- `s, t`: Calculate local (source-sink) cut
-- `flow_func`: Maximum flow implementation
+- `s, t`: source and target for local cut analysis
+- `flow_func`: max‑flow implementation
+
+**Applicability & Characteristics**
+- Graph type: Directed / Undirected
+- Output: `set(node)`
+- Complexity: Depends on max‑flow algorithm
+
 ---
-### 4.11 minimum_edge_cut —— Minimum Edge Cut Set
-**Function Description**
-Output a minimum edge set that disconnects the graph when deleted; or (given s, t) disconnects s and t when deleted.
+
+### 11. minimum_edge_cut – Minimum edge cut set
+
+**Description**  
+Returns a set of edges of minimum size whose removal disconnects the graph. If `s, t` are specified, returns a set of edges whose removal disconnects `s` from `t`.
+
 **Product Value**
-- Directly locate the "most vulnerable link set"
-- Used for link reinforcement and backup line planning
-**Typical Scenarios**
-- Computer room: Minimum set of links whose disconnection splits the network
-- Urban road network: Minimum set of roads whose closure partitions the network
-- Logistics: Minimum set of lines whose interruption causes supply disruption
+- Directly locate the most vulnerable link sets
+- Plan backup routes, link hardening, and failure simulation
+- Assess vulnerability of cross‑regional or cross‑system connections
+
 **Key Parameters**
-- `s, t`: Local cut
-- `flow_func`: Maximum flow implementation
+- `s, t`: source and target
+- `flow_func`: max‑flow implementation
+
+**Applicability & Characteristics**
+- Graph type: Directed / Undirected
+- Output: `set(edge)`
+- Complexity: Depends on max‑flow algorithm
+
 ---
-### 4.12 articulation_points —— Articulation Points (Critical Nodes)
-**Function Description**
-In an undirected graph, a node is an articulation point if its deletion results in an increase in the number of connected components.
+
+### 12. articulation_points – Articulation points
+
+**Description**  
+In an undirected graph, a node whose removal increases the number of connected components is an articulation point (cut vertex).
+
 **Product Value**
-- Identify "single point of failure" nodes (the most typical critical nodes)
-- Complementary to node_connectivity/minimum cut: articulation points provide "the most obvious structural weak points"
+- Identify typical single points of failure
+- Complement node connectivity and minimum node cut analyses
+- Quickly locate structurally weak points
+
 **Typical Scenarios**
-- Urban road network: Which road junctions' closure causes traffic fragmentation
-- Data center: Which device failures cause network splitting
-- Social network: Which user departures split the community
-**Applicability and Characteristics**
-- Graph Type: Undirected graph
+- Road network: which intersections, if closed, would split the traffic network
+- Data center: which devices, if failed, would split the network
+- Social network: which users, if leaving, would split communities
+- Supply chain: which companies, if failing, would break upstream/downstream
+
+**Applicability & Characteristics**
+- Graph type: Undirected
+- Output: node iterator
 - Complexity: `O(V + E)`
+
 ---
-### 4.13 bridge_components —— Bridge-connected Components (2-edge-connected components)
-**Function Description**
-Find all 2-edge-connected components in an undirected graph: within the same component, there are at least two edge-disjoint alternative paths between any two nodes (more resistant to "single edge fracture"). The algorithm decomposes the graph by identifying bridges (cut edges).
+
+### 13. bridge_components – Bridge‑connected components
+
+**Description**  
+Finds all 2‑edge‑connected components (bridge components) in an undirected graph. Inside a bridge component, no single edge failure disconnects the component; components are connected by bridges.
+
 **Product Value**
-- Split the network into structural blocks with "stronger internal redundancy"
-- Suitable for network partitioning, resilient module identification and hierarchical reinforcement
+- Decompose the network into blocks with internal edge redundancy
+- Support network partitioning, resilience module identification, and layered hardening
+- Help locate backbone structures and vulnerable connections
+
 **Typical Scenarios**
-- Road network: Regional blocks with more abundant internal alternative routes
-- Data center: Device groups with higher internal link redundancy
-- Collaboration network: Cooperation teams with more stable internal connections
-**Applicability and Characteristics**
-- Graph Type: Undirected graph (supports multigraph)
+- Road network: regions with alternative routes
+- Data center: device groups with higher link redundancy
+- Collaboration network: stable working groups with strong internal ties
+- Communication network: sub‑nets resistant to single link failure
+
+**Applicability & Characteristics**
+- Graph type: Undirected
+- Output: `generator[set(node)]`
 - Complexity: `O(V + E)`
+
 ---
-## 5. Recommended Usage Guide (Practical Suggestions)
-- **First answer "Is it a single network?"**:
+
+### 14. biconnected_component_edges – Biconnected component edges
+
+**Description**  
+Outputs the edge sets of biconnected components in an undirected graph. A biconnected component typically has no articulation point that can split it.
+
+**Product Value**
+- Identify structural blocks with internal node redundancy
+- Analyze which areas are less likely to be split by a single node failure
+- Combine with `articulation_points` for block‑cutpoint structure analysis
+
+**Typical Scenarios**
+- Road network: areas resistant to single intersection closure
+- Communication network: link blocks resistant to single device failure
+- Social network: groups with highly sturdy relationships
+- Supply chain: subsystems with strong node redundancy
+
+**Applicability & Characteristics**
+- Graph type: Undirected
+- Output: `generator[list[edge]]`
+- Complexity: Typically `O(V + E)`
+
+---
+
+### 15. condensation – SCC condensation graph
+
+**Description**  
+Compresses each strongly connected component of a directed graph into a single node, producing a new directed acyclic graph (DAG). Edges in the condensation represent dependencies or reachability between SCCs.
+
+**Product Value**
+- Abstract complex directed graphs into component‑level structures
+- Extract high‑level DAGs from cyclic dependencies
+- Support modular analysis, dependency layering, and process simplification
+
+**Typical Scenarios**
+- Service dependencies: compress mutually dependent services into modules
+- Code dependencies: compress circular‑reference packages to analyze package‑level hierarchies
+- Transaction networks: compress fund‑circulation cliques to observe flows between cliques
+- Process networks: compress loop steps and then topologically sort high‑level steps
+
+**Applicability & Characteristics**
+- Graph type: Directed
+- Output: `DiGraph` (a DAG)
+- Complexity: Typically `O(V + E)`
+
+---
+
+### 16. bridges – Bridge edges
+
+**Description**  
+Finds all bridges (cut edges) in an undirected graph. Removing a bridge increases the number of connected components.
+
+**Product Value**
+- Directly identify single link failure risks
+- Support link hardening, backup planning, and network vulnerability analysis
+- Complement `articulation_points` for a “critical edge + critical node” diagnostic combination
+
+**Typical Scenarios**
+- Road network: roads whose closure would split regions
+- Communication network: links whose failure would isolate subnets
+- Logistics network: transport lines whose interruption would break supply
+- Device network: critical connections without backup paths
+
+**Applicability & Characteristics**
+- Graph type: Undirected
+- Output: edge iterator
+- Complexity: `O(V + E)`
+
+---
+
+### 17. local_bridges – Local bridges
+
+**Description**  
+Finds local bridges. A local bridge is an edge whose endpoints have no common neighbors; removing it lengthens the shortest alternative path between its endpoints. Optionally computes the span of the local bridge.
+
+**Product Value**
+- Identify cross‑circle connections in local structures
+- Discover edges that may not be global bridges but are critical in local neighborhoods
+- Suitable for social networks, recommendation networks, and local vulnerability analysis
+
+**Typical Scenarios**
+- Social network: weak ties connecting different friend circles
+- Collaboration network: cross‑team collaboration edges
+- Recommendation network: edges bridging interest groups
+- Risk network: suspicious relations connecting local fraud clusters
+
+**Key Parameters**
+- `with_span`: whether to return the span of local bridges
+- `weight`: edge weight field used to compute alternative path length
+
+**Applicability & Characteristics**
+- Graph type: Undirected
+- Output: edge iterator or edge‑span pairs
+- Suitable for local bridge and weak tie analysis
+
+---
+
+## V. Recommended Usage Guide (Practical Advice)
+
+- **First answer: “Is it one connected piece?”**
   - Undirected: `is_connected`
-  - Directed: `is_weakly_connected` (structural) / `is_strongly_connected` (directional)
-- **Then check "How many partitions and which nodes belong to each?"**:
+  - Directed structural connectivity: `is_weakly_connected`
+  - Directed mutual reachability: `is_strongly_connected`
+
+- **Then: “How many pieces and what are they?”**
   - Undirected: `connected_components` + `number_connected_components`
   - Directed: `weakly_connected_components` / `strongly_connected_components`
-- **Conduct "resilience and break point localization"**:
-  - Metrics: `node_connectivity` / `edge_connectivity`
-  - Solutions: `minimum_node_cut` / `minimum_edge_cut`
-  - Intuitive single points: `articulation_points`
-  - Structural blocks: `bridge_components`
----
-## 6. Typical Directly Answerable Questions (Examples)
-- "Is this undirected graph connected? If not, how many partitions is it divided into?"
-- "Is the directed graph connected after ignoring directions? Is it strongly connected in the directional sense?"
-- "Output all Strongly Connected Components (SCC) and sort them by size."
-- "What is the minimum number of edges/nodes to disconnect this network?"
-- "Provide a minimum node cut/minimum edge cut set."
-- "List all articulation points for single point of failure troubleshooting."
-- "Split the network into bridge components to identify regions with more robust internal structures."
+
+- **Then: “Robustness and breakpoints”**
+  - Node redundancy metric: `node_connectivity`
+  - Edge redundancy metric: `edge_connectivity`
+  - Minimum node cut: `minimum_node_cut`
+  - Minimum edge cut: `minimum_edge_cut`
+
+- **Find intuitive critical points and edges**
+  - Articulation points: `articulation_points`
+  - Bridges: `bridges`
+  - Local bridges: `local_bridges`
+
+- **Component‑level structural analysis**
+  - Bridge components: `bridge_components`
+  - Biconnected component edges: `biconnected_component_edges`
+  - SCC condensation: `condensation`
 
 ---
 
-# Clustering & Community Operator Set
-**Operator Category**: Clustering & Community (Clustering Coefficient, Community Detection, Transitivity and Cycle Structure)
-**Applicable Stages**: Network structure insight, circle/gang identification, community quality assessment, closed-loop/cycle detection, relationship tightness quantification
-**Product Positioning**: Provides a unified operator capability base for answering "whether the network has tight small circles / how to partition people or entities into communities / how good is the partitioning / whether closed-loop cycles exist"
----
-## 7. Operator Set Overview
-The Clustering & Community operator set covers two major categories of capabilities:
-1. **Local Tightness and Network Aggregation (Clustering / Transitivity)**
-   - Are nodes/the entire network "clustered"?
-   - Is the tendency for triangle closure strong?
-   - Suitable for judging whether the network has small circles, gangs and strong relationship groups from the perspective of "micro local structure".
-2. **Community Detection and Scheme Evaluation (Community Detection & Evaluation)**
-   - Automatically find communities/camps/circles without labels.
-   - Supports different mechanisms: modularity maximization, label propagation, hierarchical splitting, k-clique percolation (overlapping communities).
-   - Conduct quality scoring and validity verification for the obtained community partitioning.
+## VI. Typical Questions That Can Be Directly Answered (Examples)
 
-In addition, this category also includes **cycle structure/cycle detection** capabilities (simple_cycles / cycle_basis), used to identify closed-loop patterns such as capital reflow, cyclic dependencies and feedback loops.
+- “Is this undirected graph connected? If not, how many components?”
+- “Is the directed graph weakly connected? Is it strongly connected?”
+- “Output all strongly connected components and sort them by size.”
+- “Compress SCCs into a DAG and show the dependency levels between components.”
+- “What is the minimum number of edges or nodes whose removal would disconnect this network?”
+- “Give me a minimum node cut set or a minimum edge cut set.”
+- “List all articulation points for single point of failure analysis.”
+- “List all bridges, i.e., critical links without backup paths.”
+- “Which edges are local bridges connecting different local circles?”
+- “Decompose the network into bridge components and see which regions are internally robust.”
+- “Output biconnected component edges to analyze resistance to single node failures.”
+- “Show me all simple cycles with length ≤ 6.”
+- “Output the cycle basis of this undirected graph.”
+- “Compute the triadic census for this directed graph to see transitive vs cyclic triples.”
+- “Does this community partition cover all nodes with no overlaps? Check `is_partition`.”
+- “Which community partition has higher modularity?”
+
 ---
-## 8. Operator Capability Classification
-| Capability Type | Corresponding Operator | Function Description |
-|---|---|---|
-| Node clustering coefficient | `clustering` | Calculate the clustering coefficient of specified nodes or all nodes |
-| Average clustering coefficient | `average_clustering` | Calculate the average clustering coefficient of the entire graph or a subset of nodes |
-| Triangle closure count | `triangles` | Count the number of triangles a node participates in |
-| Global transitivity | `transitivity` | Calculate the overall degree of "a friend of a friend is also a friend" in the network |
-| 4-cycle clustering | `square_clustering` | Calculate the local redundant structure tendency of nodes participating in 4-cycles |
-| Community Detection - Greedy Modularity | `greedy_modularity_communities` | Clauset–Newman–Moore greedy merging to maximize modularity |
-| Community Detection - Hierarchical Splitting | `girvan_newman` | Iteratively remove "the most critical edges" to obtain hierarchical community structures |
-| Community Detection - Synchronous Label Propagation | `label_propagation_communities` | Form communities through majority label diffusion from neighbors |
-| Community Detection - Asynchronous Label Propagation | `asyn_lpa_communities` | Asynchronous update label propagation (controllable weight and random seed) |
-| Community Detection - k-clique | `k_clique_communities` | Overlapping community detection based on k-clique percolation |
-| Community Detection - Louvain | `louvain_communities` | Multi-level modularity optimization, suitable for fast community partitioning of large graphs |
-| Community Detection - Leiden | `leiden_communities` | Improved version of Louvain, more stable and guarantees internal community connectivity |
-| Cycle Structure - Simple Cycle Enumeration | `simple_cycles` | Enumerate all simple cycles in the graph (can set length upper limit) |
-| Cycle Structure - Cycle Basis | `cycle_basis` | Basic cycle set of an undirected graph (cycle space basis) |
-| Scheme Quality - Modularity | `modularity` | Calculate modularity(Q) for a given partitioning |
-| Scheme Quality - Coverage/Performance | `partition_quality` | Calculate (coverage, performance) |
-| Scheme Validity | `is_partition` | Check whether the community list is a strict partition (non-overlapping and full coverage) |
+
+## VII. Engineering and Usage Considerations
+
+1. **Differentiate graph types first**
+   - Undirected graphs: `is_connected`, `connected_components`, `bridges`, `articulation_points`, etc.
+   - Directed graphs: `is_strongly_connected`, `strongly_connected_components`, `is_weakly_connected`, `weakly_connected_components`, `condensation`, etc.
+
+2. **Strong vs. weak connectivity have different meanings**
+   - Strong connectivity requires mutual reachability in the directed sense.
+   - Weak connectivity only requires structural connectivity ignoring direction.
+   - In many directed business networks, the two can differ greatly.
+
+3. **Global connectivity vs. local s‑t connectivity**
+   - Global `node_connectivity` / `edge_connectivity` measure the most vulnerable part of the entire graph.
+   - Specifying `s, t` measures redundancy between two particular nodes.
+
+4. **Articulation points and bridges are good for quick health checks**
+   - `articulation_points` and `bridges` are usually fast to compute and intuitive to interpret.
+   - They quickly identify obvious single‑point‑of‑failure risks.
+
+5. **Minimum cuts are more suitable for reinforcement planning**
+   - `minimum_node_cut` and `minimum_edge_cut` directly give sets that need to be protected or hardened.
+   - Useful for failure simulation, attack simulation, and disaster recovery planning.
+
+6. **SCC condensation helps reduce complexity of directed graphs**
+   - When the original graph contains many cycles, first apply `condensation`.
+   - The resulting graph is a DAG, suitable for topological sorting, hierarchical analysis, and high‑level visualization.
+
+7. **Local bridges are not necessarily global bridges**
+   - `bridges` increase the number of connected components in the whole graph.
+   - `local_bridges` emphasize bridging roles in local neighborhoods, better suited for weak ties and cross‑circle connections in social networks.
+
 ---
-## 9. General Input and Output Conventions
-- **Input `G`**: NetworkX Graph / DiGraph
-- **Output Type**:
-  - Metric type (clustering/transitivity/modularity): `float`
-  - Count type (triangles): `dict` or `int`
-  - Community result: `list[set]` / `iterable[set]` / `iterator[tuple[set]]`
-  - Cycle structure: `list[list[node]]` or iterator
-  - Verification: `bool`
----
-## 10. Detailed Operator Descriptions
-### 10.1 Local Tightness and Aggregation
-#### 10.1.1 clustering —— Node Clustering Coefficient
-**Function Description**
-Calculate the node clustering coefficient: measure the proportion of mutual connections among a node's neighbors ("whether neighbors know each other").
-**Product Value**
-- Find central nodes of "tight friend circles"
-- Candidate core points of gangs/dense groups
-**Key Parameters**
-- `nodes`: Single node / multiple nodes / None (entire graph)
-- `weight`: Weighted clustering (edge weight represents relationship strength)
-**Complexity**: `O(V * d^2)` (d is average degree)
----
-#### 10.1.2 average_clustering —— Average Clustering Coefficient
-**Function Description**
-Return the average clustering coefficient of the entire graph or a specified node set, with a value range of 0~1.
-**Product Value**
-- Summarize the "overall clustering degree" in one sentence
-- Used for network comparison, version comparison and regional comparison
-**Key Parameters**
-- `nodes`: Only consider a certain subgroup
-- `weight`: Consider relationship strength
-- `count_zeros`: Whether to include nodes with a clustering coefficient of 0 in the average
-**Complexity**: `O(V * d^2)`
----
-#### 10.1.3 triangles —— Triangle Count Statistics
-**Function Description**
-Count the number of triangles each node participates in, or return the number of triangles for specified nodes.
-**Product Value**
-- More triangles mean the node is in a "closed small circle"
-- Can be used as structural features in anti-fraud/gang identification
-**Key Parameters**
-- `nodes`: Single node / multiple nodes / None (entire graph)
-**Complexity**: `O(V * d^2)` or `O(E^{1.5})` (implementation dependent)
----
-#### 10.1.4 transitivity —— Global Transitivity
-**Function Description**
-Global metric: the proportion of closed triplets (triangles) to all triplets, measuring the overall degree of "triangle closure".
-**Product Value**
-- Whether "a friend of a friend is more likely to be a friend" holds for the entire network
-- Judge whether the network is more like a random network or a small-world network (tendency metric)
-**Complexity**: `O(V * d^2)`
----
-#### 10.1.5 square_clustering —— 4-cycle Clustering Coefficient
-**Function Description**
-Measure the tendency of nodes to participate in "4-cycle" structures, commonly used in bipartite graphs or alternative path redundancy analysis.
-**Product Value**
-- Discover redundant relationships with "two different paths connecting the same target"
-- Often more meaningful than triangles in bipartite graphs (e.g., user-commodity)
-**Key Parameters**
-- `nodes`: Only calculate for a subset of nodes
-**Complexity**: `O(V * d^2)`
----
-### 10.2 Community Detection
-#### 10.2.1 greedy_modularity_communities —— Greedy Modularity Communities
-**Function Description**
-Maximize modularity through a greedy merging strategy, output the community list (sorted by size).
-**Applicable Characteristics**
-- Fast speed and classic implementation
-- Suitable for medium and large-scale undirected graphs, supports edge weights
-**Key Parameters**
-- `weight`: Edge weight
-- `resolution`: Control community scale (&lt;1 for larger communities; &gt;1 for smaller communities)
-- `cutoff` / `best_n`: Control stop conditions and community quantity range
----
-#### 10.2.2 girvan_newman —— Girvan–Newman Hierarchical Communities
-**Function Description**
-Iteratively remove "the most critical edges" (default with the largest edge betweenness) to split the graph gradually, obtaining a hierarchical community structure (from coarse to fine).
-**Product Value**
-- Suitable for interpretable "structural splitting"
-- Can output multi-level schemes (suitable for small graphs/needing hierarchical structures)
-**Key Parameters**
-- `most_valuable_edge`: Custom scoring/selection method for "the most critical edge"
-**Complexity**: Relatively high (`O(E^2 * V)`), not suitable for ultra-large graphs
----
-#### 10.2.3 label_propagation_communities —— Synchronous Label Propagation
-**Function Description**
-Label diffusion based on majority voting of neighbors, no optimization objective required, usually fast.
-**Product Value**
-- Fast rough clustering for ultra-large graphs
-- Suitable for scenarios of "generating results first then refining"
-**Complexity**: `O(V + E)` per iteration (number of iterations depends on the graph)
----
-#### 10.2.4 asyn_lpa_communities —— Asynchronous Label Propagation
-**Function Description**
-Similar to LPA, but adopts an asynchronous update order, allows reproducibility control through random seeds, and can use weights to influence label frequency.
-**Key Parameters**
-- `weight`: Edge weight affects the "occurrence frequency" of neighbor labels
-- `seed`: Random state, affects result stability/reproducibility
----
-#### 10.2.5 k_clique_communities —— k-clique Percolation (Overlapping Communities)
-**Function Description**
-Takes k-clique (complete subgraph) as the basic unit, two k-cliques are considered adjacent if they share k-1 nodes, thus forming "percolation communities". Nodes can belong to multiple communities (overlapping).
-**Product Value**
-- Find "very tight" core circles
-- Allow member overlap, consistent with real social/collaboration networks
-**Key Parameters**
-- `k`: Minimum clique size (larger means stricter, smaller and tighter communities)
-- `cliques`: Can pass in precomputed clique list (can significantly save repeated calculations)
-**Complexity**: Affected by clique enumeration, usually exponential (suitable for small and medium graphs or local subgraphs)
----
-#### 10.2.6 louvain_communities —— Louvain Communities
-**Function Description**
-Classic multi-level modularity optimization method, fast speed, suitable for large-scale undirected graphs (supports weights).
-**Key Parameters**
-- `weight`: Edge weight
-- `resolution`: Community scale
-- `threshold` / `max_level` / `seed`: Convergence threshold, number of levels, randomness control
-**Characteristics**
-- One of the "default first choices" commonly used in industry
-- Results may change with randomness (seed controllable)
----
-#### 10.2.7 leiden_communities —— Leiden Communities
-**Function Description**
-Improved version of Louvain, usually more stable, and emphasizes internal community connectivity (avoids "bad communities that look grouped but internally disconnected").
-**Key Parameters**
-- `weight` / `resolution`
-- `max_level` / `seed`
-**Characteristics**
-- More stable quality, suitable for scenarios with strict requirements on community structure
----
-### 10.3 Cycle Structure and Cycle Detection
-#### 10.3.1 simple_cycles —— Simple Cycle Enumeration
-**Function Description**
-Enumerate all simple cycles in the graph (no repeated nodes, start point = end point). Can set `length_bound` to limit cycle length.
-**Product Value**
-- Discover capital reflow and cyclic transactions
-- Discover cyclic dependencies in software dependencies
-- Discover feedback loops in biological metabolic/regulatory networks
-**Key Parameters**
-- `length_bound`: Limit cycle length to avoid explosive output
-**Complexity**: `O((V + E) * (C + 1))` (C is the number of cycles)
----
-#### 10.3.2 cycle_basis —— Cycle Basis (Undirected Graph)
-**Function Description**
-Output a cycle basis for an undirected graph: a "basic independent cycle set" that can be combined to generate all cycles.
-**Product Value**
-- Circuit grid analysis (Kirchhoff's laws)
-- Basic closed block identification in road networks
-- Decompose complex cycle structures into basic components
----
-### 10.4 Community Result Evaluation and Verification
-#### 10.4.1 modularity —— Modularity Score (Q Value)
-**Function Description**
-Calculate modularity for a given community partitioning: measure the degree of "more intra-group edges and fewer inter-group edges".
-**Key Parameters**
-- `communities`: Must be a partition of nodes (mutually exclusive and full coverage)
-- `weight` / `resolution`
-**Output**: `float` (usually larger is better, but needs to be understood in combination with network type and resolution)
----
-#### 10.4.2 partition_quality —— Coverage and Performance
-**Function Description**
-Output `(coverage, performance)`:
-- coverage: Proportion of intra-community edges (whether there are many intra-community edges)
-- performance: Proportion of intra-community edges + extra-community non-edges (how good the separation is)
----
-#### 10.4.3 is_partition —— Partition Validity Verification
-**Function Description**
-Check whether a given community list is a strict partition:
-- Whether it covers all nodes
-- Whether mutually non-overlapping
-**Note**
-- For algorithms that allow overlapping communities (e.g., `k_clique_communities`), their output usually **does not satisfy** the partition definition, and `is_partition` should not be used for forced verification in this case.
----
-## 11. Recommended Usage Guide (Selection Suggestions)
-- **Want to first measure whether the network is "clustered"**: `average_clustering` + `transitivity`
-- **Want to find local tight core points/gang features**: `clustering` + `triangles` ( `square_clustering` if necessary)
-- **Want to quickly obtain communities (priority for large graphs)**: `louvain_communities` or `leiden_communities`
-- **Want more interpretable hierarchical splitting (small graphs)**: `girvan_newman`
-- **Want extremely fast rough clustering (ultra-large graphs)**: `label_propagation_communities` / `asyn_lpa_communities`
-- **Want to find overlapping, extremely tight small circles**: `k_clique_communities`
-- **Want to score the partitioning**: `modularity` + `partition_quality` (verify with `is_partition` first)
-- **Want to check closed loops/cyclic dependencies/capital reflow**: `simple_cycles` (add `length_bound` if necessary), use `cycle_basis` for undirected graphs
----
-## 12. Typical Directly Answerable Questions (Examples)
-- "Is the overall network more like a loose random network or a small-world network? Give me an overall metric."
-- "Which nodes have the tightest friend circles? List the Top-20 clustering coefficients/triangle counts."
-- "Automatically partition the network into several natural communities and output the members of each community."
-- "I have two community partitioning schemes, which one is better? Provide modularity and coverage/performance."
-- "Is this community result a strict partition? Are there any missing/duplicate assignments?"
-- "Find all capital closed loops/cyclic dependency links (can limit cycle length)."
-- "Find overlapping core small circles (communities connected by iron triangles)."
----
+
+## VIII. Operator List
+
+| No. | Operator Name | Description |
+|---:|---|---|
+| 1 | `is_connected` | Check if undirected graph is connected |
+| 2 | `connected_components` | Undirected connected components |
+| 3 | `number_connected_components` | Number of undirected connected components |
+| 4 | `is_strongly_connected` | Check if directed graph is strongly connected |
+| 5 | `strongly_connected_components` | Strongly connected components |
+| 6 | `is_weakly_connected` | Check if directed graph is weakly connected |
+| 7 | `weakly_connected_components` | Weakly connected components |
+| 8 | `node_connectivity` | Node connectivity |
+| 9 | `edge_connectivity` | Edge connectivity |
+| 10 | `minimum_node_cut` | Minimum node cut |
+| 11 | `minimum_edge_cut` | Minimum edge cut |
+| 12 | `articulation_points` | Articulation points (cut vertices) |
+| 13 | `bridge_components` | Bridge‑connected components |
+| 14 | `biconnected_component_edges` | Biconnected component edges |
+| 15 | `condensation` | SCC condensation graph |
+| 16 | `bridges` | Bridge edges (cut edges) |
+| 17 | `local_bridges` | Local bridges |

@@ -1,240 +1,852 @@
 ---
 sidebar_position: 5
 ---
-# Clustering & Community Operator Set
+# Clustering & Community Operators
 
+**Operator Category**: Clustering & Community (clustering coefficient, community detection, transitivity, cycle structures)
 
-**Operator Category**: Clustering & Community (Clustering Coefficient, Community Detection, Transitivity and Cycle Structure)
+**Number of Algorithms**: 23
 
-**Applicable Stages**: Network Structure Insight, Circle/Gang Identification, Community Quality Evaluation, Closed Loop/Cycle Detection, Relationship Intensity Quantification
+**Applicable Stages**: network structure insight, clique/group identification, community quality evaluation, closed-loop/cycle detection, relationship density quantification, graph partitioning optimization, bipartite graph community analysis
 
-**Product Positioning**: Provide a unified operator capability base for answering "whether a network has tight small circles / how to divide people or entities into communities / how good is this division method / whether closed loops exist"
-
+**Product Positioning**: Provide a unified operator capability base for answering questions such as: "Does the network have tight subgroups?", "How can we partition people/entities into communities?", "Is this partition good?", "Are there closed loops/cycles?", "How to perform bipartite or multi-community partitioning?", "How to identify triadic structure patterns?"
 
 ---
-## 1. Operator Set Overview
-The Clustering & Community operator set covers two major categories of capabilities:
-1. **Local Intensity and Network Aggregation (Clustering / Transitivity)**
-   - Are nodes/the entire network "clustered"?
-   - Is the tendency for triangle closure strong?
-   - Suitable for judging whether a network has small circles, gangs, and strong relationship groups from the perspective of "micro local structure".
-2. **Community Detection & Evaluation**
-   - Automatically find communities/camps/circles without labels.
-   - Support different mechanisms: modularity maximization, label propagation, hierarchical splitting, k-clique percolation (overlapping communities).
-   - Conduct quality scoring and validity verification for the obtained community division.
 
-   In addition, this category also includes **cycle structure/cycle detection** capabilities (simple_cycles / cycle_basis), which are used to identify closed-loop patterns such as fund reflux, circular dependency, and feedback loops.
+## I. Operator Set Overview
+
+The Clustering & Community operator set covers four major categories:
+
+1. **Local Density & Network Clustering**
+   - Are a node’s neighbors connected to each other?
+   - How closed are triangles at the network level?
+   - Are there cliques, gangs, or locally dense structures?
+   - Typical algorithms: `clustering`, `average_clustering`, `triangles`, `transitivity`, `square_clustering`
+
+2. **Community Detection & Graph Partitioning**
+   - How to automatically discover communities, factions, or circles without labels?
+   - How to perform fast community detection on large-scale networks?
+   - How to perform bipartition or partition with a specified number of communities?
+   - Typical algorithms: `greedy_modularity_communities`, `naive_greedy_modularity_communities`, `louvain_communities`, `leiden_communities`, `girvan_newman`, `label_propagation_communities`, `asyn_lpa_communities`, `asyn_fluidc`, `kernighan_lin_bisection`
+
+3. **Overlapping Communities & Bipartite Graph Community Analysis**
+   - Can a node belong to multiple communities simultaneously?
+   - How to perform modularity-based bipartition on bipartite graphs?
+   - Typical algorithms: `k_clique_communities`, `spectral_modularity_bipartition`
+
+4. **Cycle Structures & Loop Detection**
+   - What are the simple cycles in the graph?
+   - What is a cycle basis for an undirected graph?
+   - Is there a minimum weight cycle basis?
+   - Typical algorithms: `simple_cycles`, `cycle_basis`, `minimum_cycle_basis`
+
+5. **Community Evaluation & Validation**
+   - How good is a community partition?
+   - Is it a strict partition?
+   - Are within-group edges sufficient and between-group edges few?
+   - Typical algorithms: `modularity`, `partition_quality`, `is_partition`
+
+6. **Triadic Structure Pattern Analysis**
+   - What are the typical 3-node structure patterns in directed graphs?
+   - Are there closed triads, transitive triples, or cyclic triples?
+   - Typical algorithm: `triadic_census`
+
 ---
-## 2. Operator Capability Classification
-| Capability Type | Corresponding Operator | Function Description |
-|---|---|---|
-| Node Clustering Coefficient | `clustering` | Calculate the clustering coefficient of specified nodes or all nodes |
-| Average Clustering Coefficient | `average_clustering` | Calculate the average clustering coefficient of the entire graph or a subset of nodes |
-| Triangle Closure Count | `triangles` | Count the number of triangles a node participates in |
-| Global Transitivity | `transitivity` | Calculate the overall degree of "a friend of a friend is also a friend" in the network |
-| 4-Cycle Clustering | `square_clustering` | Calculate the local redundant structure tendency of nodes participating in 4-cycles |
-| Community Detection - Greedy Modularity | `greedy_modularity_communities` | Clauset–Newman–Moore greedy merging to maximize modularity |
-| Community Detection - Hierarchical Splitting | `girvan_newman` | Iteratively remove "the most critical edges" to obtain hierarchical community structures |
-| Community Detection - Synchronous Label Propagation | `label_propagation_communities` | Form communities through majority label diffusion of neighbors |
-| Community Detection - Asynchronous Label Propagation | `asyn_lpa_communities` | Asynchronous update label propagation (controllable weight and random seed) |
-| Community Detection - k-clique | `k_clique_communities` | Overlapping community detection based on k-clique percolation |
-| Community Detection - Louvain | `louvain_communities` | Multi-layer modularity optimization, suitable for fast community division of large graphs |
-| Community Detection - Leiden | `leiden_communities` | Improved version of Louvain, more stable and ensures internal connectivity of communities |
-| Cycle Structure - Simple Cycle Enumeration | `simple_cycles` | Enumerate all simple cycles in the graph (can set length upper limit) |
-| Cycle Structure - Cycle Basis | `cycle_basis` | Basic cycle set of undirected graphs (cycle space basis) |
-| Solution Quality - Modularity | `modularity` | Calculate modularity(Q) for a given partition |
-| Solution Quality - Coverage/Performance | `partition_quality` | Calculate (coverage, performance) |
-| Solution Validity | `is_partition` | Check whether the community list is a strict partition (non-overlapping and full node coverage) |
+
+## II. Operator Capability Classification
+
+| Capability Type               | Operator                                          | Description                                                                 |
+| ----------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------- |
+| Node clustering coefficient   | `clustering`                                      | Compute local clustering coefficient for specified nodes or all nodes       |
+| Average clustering coefficient| `average_clustering`                             | Compute average clustering coefficient for the whole graph or a node subset |
+| Triangle count                | `triangles`                                       | Count number of triangles each node participates in                         |
+| Global transitivity           | `transitivity`                                    | Compute the overall triangle closure ratio of the network                   |
+| Square clustering             | `square_clustering`                              | Measure node’s tendency to participate in 4-cycles (redundant local structure) |
+| Community - greedy modularity | `greedy_modularity_communities`                  | Clauset-Newman-Moore greedy merge to maximize modularity                  |
+| Community - naive greedy modularity | `naive_greedy_modularity_communities`       | Naive greedy modularity optimization, suitable for teaching or small graphs |
+| Community - divisive (GN)     | `girvan_newman`                                  | Iteratively remove critical edges to obtain hierarchical community structure |
+| Community - synchronous LPA   | `label_propagation_communities`                  | Communities formed by majority label diffusion among neighbors              |
+| Community - asynchronous LPA  | `asyn_lpa_communities`                           | Asynchronous label propagation supporting weights and random seeds          |
+| Community - k-clique percolation | `k_clique_communities`                         | Overlapping communities based on k-clique percolation                       |
+| Community - Louvain           | `louvain_communities`                            | Multi-level modularity optimization, fast community detection on large graphs |
+| Community - Leiden            | `leiden_communities`                             | Improved version of Louvain, more stable and enforces community connectivity |
+| Community - asynchronous fluid | `asyn_fluidc`                                   | Fluid-based diffusion to partition into a specified number of communities   |
+| Graph bipartition             | `kernighan_lin_bisection`                        | Kernighan-Lin heuristic to partition graph into two parts                   |
+| Bipartite graph spectral modularity bipartition | `spectral_modularity_bipartition` | Spectral method for modularity bipartition of bipartite graphs            |
+| Cycle – simple cycles enumeration | `simple_cycles`                               | Enumerate all simple cycles in a graph                                      |
+| Cycle – cycle basis           | `cycle_basis`                                    | Return a cycle basis for an undirected graph                                |
+| Cycle – minimum cycle basis   | `minimum_cycle_basis`                            | Return a cycle basis with minimal total weight for an undirected graph      |
+| Triadic census                | `triadic_census`                                 | Count the different 3-node structure patterns in a directed graph           |
+| Quality – modularity          | `modularity`                                     | Compute modularity Q for a given community partition                        |
+| Quality – coverage/performance| `partition_quality`                              | Compute coverage and performance for a community partition                  |
+| Validity – is partition       | `is_partition`                                   | Check whether a list of communities forms a strict partition               |
+
 ---
-## 3. General Input and Output Conventions
-- **Input `G`**: NetworkX Graph / DiGraph
-- **Output Type**:
-  - Indicator Type (Clustering/Transitivity/Modularity): `float`
-  - Count Type (Triangles): `dict` or `int`
-  - Community Result: `list[set]` / `iterable[set]` / `iterator[tuple[set]]`
-  - Cycle Structure: `list[list[node]]` or iterator
-  - Verification: `bool`
+
+## III. General Input/Output Conventions
+
+- **Input `G`**: NetworkX Graph / DiGraph  
+  - Clustering measures are mostly for undirected graphs, but some support directed or weighted forms.
+  - Simple cycle enumeration is typically for directed graphs but can be used for some undirected scenarios.
+  - Community detection is mostly for undirected graphs.
+  - Bipartite algorithms require the input to conform to bipartite structure.
+
+- **Common Outputs**
+  - Metrics: `float`
+  - Counts: `dict` / `int`
+  - Community results: `list[set]` / `iterable[set]` / `iterator[tuple[set]]`
+  - Cycle structures: `list[list[node]]` or iterator
+  - Bisection result: `tuple[set, set]`
+  - Validation: `bool`
+
+> Notes:  
+> - Community detection algorithm outputs are usually lists of node sets.  
+> - `k_clique_communities` allows overlapping communities, so its result may not be a strict partition.  
+> - Modularity, coverage, performance generally require a partition covering all nodes without overlap.  
+> - Cycle enumeration and clique-based algorithms may produce exponential results; set limits or filter subgraphs for large graphs.
+
 ---
-## 4. Detailed Operator Descriptions
-### 4.1 Local Intensity and Network Aggregation
-#### 1) clustering —— Node Clustering Coefficient
-**Function Description**
-Calculate the node clustering coefficient: measure the proportion of mutual connections between the neighbors of a node ("whether neighbors know each other").
+
+## IV. Detailed Operator Descriptions
+
+## 4.1 Local Density & Clustering
+
+### 1. clustering — Node Clustering Coefficient
+
+**Description**  
+Compute the local clustering coefficient for a node, measuring the proportion of connections among its neighbors – i.e., whether neighbors know each other.
+
 **Product Value**
-- Find central nodes of "tight friend circles"
-- Candidate core points of gangs/tight groups
+- Identify tightly-knit friend circles or gang cores
+- Discover high-density relationship regions and key nodes
+- Serve as structural features for fraud detection, social analysis, and recommendation systems
+
+**Typical Scenarios**
+- Social networks: find users with the tightest friend circles
+- Transaction networks: identify accounts in closed transaction relationships
+- Collaboration networks: discover members with high collaboration density
+- Risk control networks: identify local gang structures
+
 **Key Parameters**
-- `nodes`: single node / multiple nodes / None (entire graph)
-- `weight`: weighted clustering (edge weight represents relationship intensity)
-**Complexity**: `O(V * d^2)` (d is the average degree)
+- `nodes`: single node, list of nodes, or all nodes
+- `weight`: edge weight representing relationship strength
+
+**Applicability & Characteristics**
+- Graph type: primarily undirected
+- Output: `{node: score}` or single node score
+- Complexity: typically related to square of node degree
+
 ---
-#### 2) average_clustering —— Average Clustering Coefficient
-**Function Description**
-Return the average clustering coefficient of the entire graph or the specified node set, with a value ranging from 0 to 1.
+
+### 2. average_clustering — Average Clustering Coefficient
+
+**Description**  
+Return the average clustering coefficient for the whole graph or a specified set of nodes. Values usually range between 0 and 1, summarizing the overall cliquishness of the network.
+
 **Product Value**
-- Summarize the "overall clustering degree" in one sentence
-- Used for network comparison, version comparison, and regional comparison
+- Provide a one-number summary of network clustering
+- Suitable for comparisons across networks, time windows, or regions
+- Monitor trends in network cliquishness or circle formation
+
+**Typical Scenarios**
+- Social network: overall clique density assessment
+- Risk control: monitor gang formation trends
+- City road networks: compare local redundancy levels
+- Organizational collaboration: compare density of collaboration
+
 **Key Parameters**
-- `nodes`: only view a specific subgroup
-- `weight`: consider relationship intensity
-- `count_zeros`: whether to include nodes with a clustering coefficient of 0 in the average
-**Complexity**: `O(V * d^2)`
+- `nodes`: only compute for a subgroup
+- `weight`: incorporate relationship strength
+- `count_zeros`: whether to include nodes with zero clustering coefficient in the average
+
+**Applicability & Characteristics**
+- Graph type: primarily undirected
+- Output: `float`
+- Complexity: typically related to square of node degree
+
 ---
-#### 3) triangles —— Triangle Count Statistics
-**Function Description**
-Count the number of triangles each node participates in, or return the number of triangles for the specified node.
+
+### 3. transitivity — Global Transitivity
+
+**Description**  
+Compute the global transitivity of the network, i.e., the ratio of closed triads to all triads, measuring the overall triangle closure tendency.
+
 **Product Value**
-- More triangles mean the node is in a "closed small circle"
-- Can be used as structural features in anti-fraud/gang identification
+- Determine whether the network tends to be random, small-world, or cliquish
+- Suitable for global structural characterization
+- Support network modeling and comparison
+
+**Typical Scenarios**
+- Social networks: overall triangle closure degree
+- Collaboration networks: tendency for three-way collaborations
+- Risk control: closed structures in funds or accounts
+- Knowledge graphs: transitive relationships among concepts
+
+**Applicability & Characteristics**
+- Graph type: primarily undirected
+- Output: `float`
+- Complexity: related to triangle counting
+
+---
+
+### 4. triangles — Triangle Count
+
+**Description**  
+Count the number of triangles each node participates in, or return the triangle count for specified nodes.
+
+**Product Value**
+- More triangles indicate a node lies in a tight circle
+- Useful as a feature for gang identification, local density, and community core detection
+- When combined with clustering coefficient, distinguishes “many connections” from “tight connections”
+
+**Typical Scenarios**
+- Social networks: users involved in many closed friend circles
+- Transaction networks: accounts in closed transaction relationships
+- Collaboration networks: group members with frequent three-way collaboration
+- Recommendation networks: analysis of closed common-interest loops
+
 **Key Parameters**
-- `nodes`: single node / multiple nodes / None (entire graph)
-**Complexity**: `O(V * d^2)` or `O(E^{1.5})` (implementation-dependent)
+- `nodes`: single node, list, or all nodes
+
+**Applicability & Characteristics**
+- Graph type: undirected
+- Output: `dict` or `int`
+- Complexity: related to node degree and edge count
+
 ---
-#### 4) transitivity —— Global Transitivity
-**Function Description**
-Global indicator: the proportion of closed triplets (triangles) to all triplets, measuring the overall degree of "triangle closure".
+
+### 5. square_clustering — Square Clustering Coefficient
+
+**Description**  
+Measure the tendency of a node to participate in 4-cycles. A 4-cycle often represents local redundant relationships where two different paths connect the same targets.
+
 **Product Value**
-- Whether "a friend of a friend is more likely to be a friend" holds for the entire network
-- Judge whether the network is more like a random network or a small-world network (tendency indicator)
-**Complexity**: `O(V * d^2)`
----
-#### 5) square_clustering —— 4-Cycle Clustering Coefficient
-**Function Description**
-Measure the tendency of nodes to participate in "4-cycle" structures, often used in bipartite graphs or alternative path redundancy analysis.
-**Product Value**
-- Discover redundant relationships of "connecting the same target through two different paths"
-- Often more meaningful than triangles in bipartite graphs (e.g., user-commodity)
+- Suitable for analyzing closed relationships in bipartite or near-bipartite structures
+- Discover local alternative paths and structural redundancy
+- More interpretable than triangles in user-item, author-paper, account-device networks
+
+**Typical Scenarios**
+- User-item network: multiple users purchasing multiple items
+- Author-paper network: multiple authors co-authoring multiple papers
+- Account-device network: multiple accounts sharing multiple devices
+- Road network: local alternative route redundancy
+
 **Key Parameters**
-- `nodes`: only calculate a subset of nodes
-**Complexity**: `O(V * d^2)`
+- `nodes`: compute only for a subset of nodes
+
+**Applicability & Characteristics**
+- Graph type: primarily undirected
+- Output: `{node: score}`
+- Complexity: related to local neighborhood size
+
 ---
-### 4.2 Community Detection
-#### 6) greedy_modularity_communities —— Greedy Modularity Communities
-**Function Description**
-Maximize modularity through a greedy merging strategy, and output a list of communities (sorted by size).
-**Applicable Characteristics**
-- Fast speed and classic implementation
-- Suitable for medium and large-scale undirected graphs, supports edge weights
+
+## 4.2 Community Detection & Graph Partitioning
+
+### 6. greedy_modularity_communities — Greedy Modularity Communities
+
+**Description**  
+Maximize modularity using a greedy merging strategy, outputting a list of communities. The algorithm starts from each node as its own community and repeatedly merges pairs that give the largest increase in modularity.
+
+**Product Value**
+- Classic, stable, and interpretable
+- Default choice for mid-to-large scale undirected graphs
+- Supports resolution parameter to control community size
+
+**Typical Scenarios**
+- Social networks: natural circle detection
+- Transaction networks: initial gang identification
+- Corporate relationship networks: group detection
+- Knowledge networks: topic cluster identification
+
 **Key Parameters**
 - `weight`: edge weight
-- `resolution`: control community scale (&lt;1 for larger communities; &gt;1 for smaller communities)
-- `cutoff` / `best_n`: control stop conditions and community quantity range
+- `resolution`: community scale (larger yields smaller communities)
+- `cutoff`: minimum number of communities
+- `best_n`: maximum number of communities
+
+**Applicability & Characteristics**
+- Graph type: undirected
+- Output: `list[set]`
+- Suitable for: mid-to-large scale community detection
+
 ---
-#### 7) girvan_newman —— Girvan–Newman Hierarchical Communities
-**Function Description**
-Iteratively remove "the most critical edges" (default to edges with the highest betweenness) to split the graph gradually and obtain a hierarchical community structure (from coarse to fine).
+
+### 7. girvan_newman — Girvan-Newman Hierarchical Communities
+
+**Description**  
+Iteratively remove the most critical edges (by default, edges with highest betweenness centrality) to progressively split the graph, producing a hierarchical community structure from coarse to fine.
+
 **Product Value**
-- Suitable for highly interpretable "structural splitting"
-- Can output multi-level solutions (suitable for small graphs/need for hierarchical structures)
+- Highly interpretable, suitable for illustrating how communities are split
+- Produces multi-level community partitions
+- Good for small graphs or scenarios requiring an interpretable splitting path
+
+**Typical Scenarios**
+- Small-scale organizational relationship splitting
+- Teaching complex network concepts
+- Critical-edge-driven community fission analysis
+- Risk control investigations needing an interpretable split path
+
 **Key Parameters**
-- `most_valuable_edge`: customize the scoring/selection method of "the most critical edge"
-**Complexity**: Relatively high (`O(E^2 * V)`), not suitable for ultra-large graphs
+- `most_valuable_edge`: custom strategy to select the most valuable edge
+
+**Applicability & Characteristics**
+- Graph type: undirected
+- Output: iterator over partitions
+- Note: High complexity, not suitable for very large graphs
+
 ---
-#### 8) label_propagation_communities —— Synchronous Label Propagation
-**Function Description**
-Label diffusion based on majority voting of neighbors, no optimization objective required, usually fast in speed.
+
+### 8. label_propagation_communities — Synchronous Label Propagation Communities
+
+**Description**  
+Form communities by diffusing labels to neighbors. Nodes iteratively adopt the majority label among neighbors; nodes with the same label form a community.
+
 **Product Value**
-- Fast rough clustering of ultra-large graphs
-- Suitable for scenarios of "obtaining results first and then refining"
-**Complexity**: `O(V + E)` per round (number of iterations depends on the graph)
+- No need to specify number of communities
+- Fast, suitable for coarse clustering on large graphs
+- Can serve as a preprocessing step for more refined community detection
+
+**Typical Scenarios**
+- Large-scale social network rapid circle detection
+- Recommendation system initial user interest grouping
+- Communication network coarse partitioning
+- Risk control candidate gang discovery
+
+**Applicability & Characteristics**
+- Graph type: undirected
+- Output: `generator[set(node)]`
+- Complexity: typically `O(V + E)` per iteration
+
 ---
-#### 9) asyn_lpa_communities —— Asynchronous Label Propagation
-**Function Description**
-Similar to LPA, but adopts an asynchronous update order, allows reproducibility control through random seeds, and can use weights to affect label frequency.
-**Key Parameters**
-- `weight`: edge weight affects the "occurrence frequency" of neighbor labels
-- `seed`: random state, affects result stability/reproducibility
----
-#### 10) k_clique_communities —— k-clique Percolation (Overlapping Communities)
-**Function Description**
-Takes k-clique (complete subgraph) as the basic unit. Two k-cliques are considered adjacent if they share k-1 nodes, thus forming "percolation communities". Nodes can belong to multiple communities (overlapping).
+
+### 9. asyn_lpa_communities — Asynchronous Label Propagation Communities
+
+**Description**  
+Asynchronous label propagation where node update order affects the result. Random seeds can improve reproducibility, and edge weights can influence label importance.
+
 **Product Value**
-- Find "very tight" core circles
-- Allow member overlap, consistent with real social/collaboration networks
+- More flexible than synchronous LPA
+- Supports weights and randomness control
+- Fast community detection on large graphs
+
+**Typical Scenarios**
+- Weighted social network circle detection
+- Large-scale transaction network preliminary gang identification
+- Organizational communication network rapid grouping
+- Recommendation network interest community partitioning
+
 **Key Parameters**
-- `k`: minimum clique size (larger values mean stricter, smaller and tighter communities)
-- `cliques`: precomputed clique list can be passed in (can significantly save repeated calculations)
-**Complexity**: Affected by clique enumeration, usually exponential (suitable for small and medium graphs or local subgraphs)
+- `weight`: edge weight influences label propagation
+- `seed`: random seed for reproducibility
+
+**Applicability & Characteristics**
+- Graph type: undirected
+- Output: `generator[set(node)]`
+- Complexity: typically `O(V + E)` per iteration
+
 ---
-#### 11) louvain_communities —— Louvain Communities
-**Function Description**
-Classic multi-layer modularity optimization method, fast speed, suitable for large-scale undirected graphs (supports weights).
+
+### 10. k_clique_communities — k-Clique Percolation Communities
+
+**Description**  
+Use k-cliques as basic units; if two k-cliques share `k-1` nodes, they belong to the same community. Nodes can belong to multiple communities.
+
+**Product Value**
+- Ideal for detecting very dense core circles
+- Supports overlapping communities, more realistic for social and collaboration networks
+- Highly interpretable for gangs, collusion, and small group identification
+
+**Typical Scenarios**
+- Social networks: allowing one person to belong to multiple friend circles
+- Collaboration networks: authors belonging to multiple research teams
+- Risk control: accounts involved in multiple gang structures
+- Biological networks: proteins participating in multiple functional modules
+
+**Key Parameters**
+- `k`: minimum clique size (larger k yields stricter communities)
+- `cliques`: optional precomputed clique list to avoid recomputation
+
+**Applicability & Characteristics**
+- Graph type: undirected
+- Output: `generator[frozenset(node)]`
+- Note: Results can overlap, not necessarily a strict partition
+
+---
+
+### 11. louvain_communities — Louvain Communities
+
+**Description**  
+The classic multi-level modularity optimization method. It first performs local node moves to improve modularity, then compresses communities into super-nodes for further optimization.
+
+**Product Value**
+- Industry standard for large-scale community detection
+- Fast and generally good performance
+- Supports multi-level community structures and resolution control
+
+**Typical Scenarios**
+- Large-scale social network community detection
+- Transaction network gang identification
+- Communication network structural partitioning
+- Knowledge graph topic community discovery
+
 **Key Parameters**
 - `weight`: edge weight
 - `resolution`: community scale
-- `threshold` / `max_level` / `seed`: convergence threshold, number of layers, randomness control
-**Characteristics**
-- One of the "default first choices" commonly used in the industry
-- Results may change with randomness (seed-controllable)
+- `threshold`: modularity improvement threshold
+- `max_level`: maximum number of levels
+- `seed`: random seed
+
+**Applicability & Characteristics**
+- Graph type: undirected
+- Output: `list[set]`
+- Characteristics: results may be affected by randomness; set seed for reproducibility
+
 ---
-#### 12) leiden_communities —— Leiden Communities
-**Function Description**
-Improved version of Louvain, usually more stable, and emphasizes the internal connectivity of communities (avoids "bad communities that look like a group but are internally disconnected").
-**Key Parameters**
-- `weight` / `resolution`
-- `max_level` / `seed`
-**Characteristics**
-- More stable quality, suitable for scenarios with rigorous requirements for community structure
----
-### 4.3 Cycle Structure and Cycle Detection
-#### 13) simple_cycles —— Simple Cycle Enumeration
-**Function Description**
-Enumerate all simple cycles in the graph (no repeated nodes, start point = end point). `length_bound` can be set to limit the cycle length.
+
+### 12. leiden_communities — Leiden Communities
+
+**Description**  
+Leiden is an improved version of Louvain, generally more stable and emphasizes community internal connectivity, avoiding partitions where a community is not well-connected internally.
+
 **Product Value**
-- Discover fund reflux and circular transactions
-- Discover circular dependencies in software dependencies
-- Discover feedback loops in biological metabolic/regulatory networks
+- Usually more robust community quality than Louvain
+- Suitable for scenarios requiring strong internal connectivity
+- Better for rigorous community analysis and production outputs
+
+**Typical Scenarios**
+- Large-scale social network precise grouping
+- Financial risk control gang identification
+- Biological network functional module identification
+- Organizational network stable circle detection
+
 **Key Parameters**
-- `length_bound`: limit cycle length to avoid explosive output
-**Complexity**: `O((V + E) * (C + 1))` (C is the number of cycles)
+- `weight`: edge weight
+- `resolution`: community scale
+- `max_level`: maximum number of levels
+- `seed`: random seed
+
+**Applicability & Characteristics**
+- Graph type: undirected
+- Output: `list[set]`
+- Characteristics: typically more stable than Louvain
+
 ---
-#### 14) cycle_basis —— Cycle Basis (Undirected Graph)
-**Function Description**
-Output a cycle basis for an undirected graph: a "basic independent cycle set" that can be combined to generate all cycles.
+
+### 13. naive_greedy_modularity_communities — Naive Greedy Modularity Communities
+
+**Description**  
+Optimize modularity using a naive greedy approach. Less efficient than the optimized version, but more intuitive. Suitable for teaching, small graph validation, or comparison.
+
 **Product Value**
-- Circuit grid analysis (Kirchhoff's laws)
-- Identification of basic closed blocks in road networks
+- Easy to explain algorithm logic
+- Good for small-scale community detection validation
+- Can serve as a reference or baseline against optimized greedy modularity
+
+**Typical Scenarios**
+- Small network community detection
+- Teaching demonstrations of modularity maximization
+- Comparing with optimized greedy modularity results
+- Debugging community detection logic
+
+**Key Parameters**
+- `weight`: edge weight
+- `resolution`: community scale
+
+**Applicability & Characteristics**
+- Graph type: undirected
+- Output: list of community sets
+- Note: Not recommended for very large graphs
+
+---
+
+### 14. spectral_modularity_bipartition — Spectral Modularity Bipartition
+
+**Description**  
+Use spectral methods to perform modularity-based bipartition on bipartite graphs, dividing nodes into two modules.
+
+**Product Value**
+- Suitable for community detection on bipartite graphs
+- Preserves the original two-sided structure of user-item, author-paper, etc.
+- Avoids information loss caused by projection onto one side
+
+**Typical Scenarios**
+- User-item network community detection
+- Author-paper network research direction grouping
+- Institution-project network module identification
+- Account-device network risk cluster splitting
+
+**Applicability & Characteristics**
+- Graph type: bipartite
+- Output: bipartition result (two sets)
+- Suitable for: modularity analysis on bipartite graphs
+
+---
+
+### 15. asyn_fluidc — Asynchronous Fluid Communities
+
+**Description**  
+Community detection based on fluid diffusion. The user specifies the number of communities `k`, and the algorithm asynchronously updates to form the specified number of communities.
+
+**Product Value**
+- Explicit control over the number of communities
+- Fast, suitable for scenarios requiring a fixed number of groups
+- Like label propagation, good for rapid community partitioning
+
+**Typical Scenarios**
+- Networks needing fixed K partitions
+- Recommendation systems with known number of user segments
+- Operations network fixed zoning
+- Risk control candidate gang generation with specified count
+
+**Key Parameters**
+- `k`: number of communities to partition into
+- `max_iter`: maximum number of iterations
+- `seed`: random seed
+
+**Applicability & Characteristics**
+- Graph type: typically requires a connected undirected graph
+- Output: `iterable[set(node)]`
+- Note: Requires advance specification of community count
+
+---
+
+### 16. kernighan_lin_bisection — Kernighan-Lin Bisection
+
+**Description**  
+Use the Kernighan-Lin heuristic to partition the graph into two parts, aiming to minimize the cut edge weight between them.
+
+**Product Value**
+- Suitable for graph bipartition, load balancing, and task splitting
+- Can be used for two-region partition, AB-group experiments, etc.
+- More oriented toward balanced cuts or reducing cross-group connections than generic community detection
+
+**Typical Scenarios**
+- Computational task graph bipartition scheduling
+- Network partitioning and load balancing
+- Structured splitting for A/B testing
+- Circuit or module partitioning
+
+**Key Parameters**
+- `partition`: optional initial bipartition
+- `max_iter`: maximum iterations
+- `weight`: edge weight
+- `seed`: random seed
+
+**Applicability & Characteristics**
+- Graph type: undirected
+- Output: `tuple[set, set]`
+- Characteristics: heuristic, not guaranteed to be globally optimal
+
+---
+
+## 4.3 Cycle Structures & Loop Detection
+
+### 17. simple_cycles — Simple Cycle Enumeration
+
+**Description**  
+Enumerate all simple cycles in the graph. A simple cycle is a closed walk where no node (except start/end) repeats.
+
+**Product Value**
+- Discover fund recycling, circular transactions, cyclic dependencies
+- Identify feedback loops and cyclic propagation structures
+- Useful for closed-loop risk investigation in directed networks
+
+**Typical Scenarios**
+- Financial network: circular transaction chains
+- Software dependency: cyclic dependency chains
+- Biological network: feedback regulation loops
+- Process network: abnormal closed-loop processes
+
+**Key Parameters**
+- `length_bound`: limit cycle length to avoid output explosion
+
+**Applicability & Characteristics**
+- Graph type: primarily directed
+- Output: cycle path iterator or list
+- Note: Number of cycles can be exponential; set length bound or filter subgraph for large graphs
+
+---
+
+### 18. cycle_basis — Cycle Basis
+
+**Description**  
+Return a cycle basis for an undirected graph – a set of independent cycles that can generate all cycles.
+
+**Product Value**
 - Decompose complex cycle structures into basic components
----
-### 4.4 Community Result Evaluation and Verification
-#### 15) modularity —— Modularity Score (Q Value)
-**Function Description**
-Calculate modularity for a given community partition: measure the degree of "more intra-group edges and fewer inter-group edges".
+- Suitable for circuit, road, pipeline network cycle analysis
+- Better for structural summarization than enumerating all cycles
+
+**Typical Scenarios**
+- Circuit networks: fundamental loop analysis
+- Road networks: basic closed block identification
+- Pipeline systems: basic loop structure identification
+- Relationship networks: fundamental closed structure summary
+
 **Key Parameters**
-- `communities`: must be a partition of nodes (mutually exclusive and fully covering)
-- `weight` / `resolution`
-**Output**: `float` (usually larger is better, but needs to be understood in combination with network type and resolution)
+- `root`: optional starting node
+
+**Applicability & Characteristics**
+- Graph type: undirected
+- Output: `list[list[node]]`
+
 ---
-#### 16) partition_quality —— Coverage and Performance
-**Function Description**
-Output `(coverage, performance)`:
-- coverage: proportion of intra-community edges (whether there are many intra-community edges)
-- performance: proportion of intra-community edges + extra-community non-edges (how good the separation is)
+
+### 19. minimum_cycle_basis — Minimum Cycle Basis
+
+**Description**  
+Return a minimum cycle basis for an undirected graph – a set of independent cycles with minimal total length or cost.
+
+**Product Value**
+- Prefers lower cost, smaller, or better-weighted cycle bases compared to a generic basis
+- Suitable for scenarios requiring the most compact closed-loop explanation
+- Useful in circuits, roads, pipelines for low-cost cycle analysis
+
+**Typical Scenarios**
+- Circuit networks: minimal fundamental loop analysis
+- Road networks: shortest closed block identification
+- Pipeline systems: low-cost fundamental loop analysis
+- Chemical structures: minimal ring system identification
+
+**Key Parameters**
+- `weight`: edge weight attribute (distance, cost, length)
+
+**Applicability & Characteristics**
+- Graph type: undirected
+- Output: `list[list[node]]`
+- Suitable for: small to medium graphs or scenarios needing minimal closed-loop summary
+
 ---
-#### 17) is_partition —— Partition Validity Verification
-**Function Description**
-Check whether the given community list is a strict partition:
-- Whether it covers all nodes
-- Whether there is no mutual overlap
-**Note**
-- For algorithms that allow overlapping communities (e.g., `k_clique_communities`), their output usually **does not satisfy** the partition definition, and `is_partition` should not be used for forced verification in this case.
+
+### 20. triadic_census — Triadic Census
+
+**Description**  
+Count the number of each type of 3-node subgraph (triad) in a directed graph. Different triad patterns represent reciprocity, transitivity, cyclicity, null connections, etc.
+
+**Product Value**
+- Characterize directed network structure at the triad level
+- Determine whether the network favors transitive, cyclic, or reciprocal relationships
+- Suitable for microstructure analysis of social, transaction, communication, organization, and ecological networks
+
+**Typical Scenarios**
+- Social networks: mutual following, one-way following, three-person closed loop statistics
+- Transaction networks: three-account cyclic transaction structure analysis
+- Organization networks: hierarchical transitive vs. feedback relationships
+- Communication networks: three-node message flow pattern analysis
+
+**Applicability & Characteristics**
+- Graph type: directed
+- Output: dictionary of triad type counts
+- Suitable for: microstructure pattern statistics and network fingerprinting
+
 ---
-## 5. Recommended Usage Guide (Selection Suggestions)
-- **Want to first measure whether the network is "clustered"**: `average_clustering` + `transitivity`
-- **Want to find local tight core points/gang features**: `clustering` + `triangles` (`square_clustering` if necessary)
-- **Want to quickly obtain communities (priority for large graphs)**: `louvain_communities` or `leiden_communities`
-- **Want more interpretable hierarchical splitting (small graphs)**: `girvan_newman`
-- **Want extremely fast rough clustering (ultra-large graphs)**: `label_propagation_communities` / `asyn_lpa_communities`
-- **Want to find overlapping, extremely tight small circles**: `k_clique_communities`
-- **Want to score the partition**: `modularity` + `partition_quality` (verify with `is_partition` first)
-- **Want to check closed loops/circular dependencies/fund reflux**: `simple_cycles` (add `length_bound` if necessary), use `cycle_basis` for undirected graphs
+
+## 4.4 Community Evaluation & Validation
+
+### 21. modularity — Modularity Score
+
+**Description**  
+Compute the modularity Q value for a given community partition, measuring whether within-community edges are more abundant than random expectation and between-community edges relatively few.
+
+**Product Value**
+- Provides a unified quality score for community partitions
+- Useful for comparing different community detection algorithms or parameter settings
+- The objective function optimized by Louvain, Leiden, greedy modularity, etc.
+
+**Typical Scenarios**
+- Compare Louvain vs. Leiden partition quality
+- Select better result after adjusting resolution parameter
+- Evaluate whether a manual grouping fits the network structure
+- Quality check before deploying community detection results
+
+**Key Parameters**
+- `communities`: list of communities (should be a strict partition normally)
+- `weight`: edge weight
+- `resolution`: resolution parameter
+
+**Applicability & Characteristics**
+- Output: `float`
+- Note: Higher modularity is generally better, but must be interpreted in business context and community scale
+
 ---
-## 6. Typical Answerable Questions (Examples)
-- "Is the entire network more like a loose random network or a small-world network? Give me an overall indicator."
-- "Which nodes have the tightest friend circles? List the Top-20 clustering coefficients/triangle counts."
-- "Automatically divide the network into several natural communities and output the members of each community."
-- "I have two community division schemes, which one is better? Provide modularity and coverage/performance."
-- "Is this community result a strict partition? Are there any missing nodes/duplicate assignments?"
-- "Find all fund closed loops/circular dependency links (can limit cycle length)."
-- "Find overlapping core small circles (communities connected by iron triangles)."
+
+### 22. partition_quality — Coverage and Performance
+
+**Description**  
+Compute two quality metrics for a community partition:
+
+- **coverage**: proportion of edges that are inside communities
+- **performance**: proportion of node pairs that are either inside the same community or not connected across communities
+
+**Product Value**
+- Evaluate partition quality from different angles
+- Coverage emphasizes whether within-group edges are abundant
+- Performance considers both within-group edges and between-group separation
+
+**Typical Scenarios**
+- Quality assessment of community detection results
+- Comparison between manual grouping and algorithmic grouping
+- Judging clarity of community boundaries
+- Evaluating gang splitting effectiveness in risk control
+
+**Applicability & Characteristics**
+- Input: community partition
+- Output: `(coverage, performance)`
+- Note: Typically requires a strict partition
+
 ---
+
+### 23. is_partition — Partition Validity Check
+
+**Description**  
+Check whether a given list of communities forms a strict partition, i.e., covers all nodes and no overlap between communities.
+
+**Product Value**
+- Basic validation before community evaluation
+- Prevent missing or duplicate nodes that could distort metrics
+- Quality check before passing community results downstream
+
+**Typical Scenarios**
+- Verify that algorithm output covers all users
+- Check manual grouping for duplicate members
+- Validate community results before computing modularity
+- Legality check before writing community results to database
+
+**Applicability & Characteristics**
+- Input: graph and community list
+- Output: `bool`
+- Note: Overlapping results like `k_clique_communities` typically do not satisfy strict partition
+
+---
+
+## V. Recommended Usage Guide (Selection Advice)
+
+- **First, measure whether the network is cliquish**
+  - Global cliquishness: `average_clustering` / `transitivity`
+  - Local cliquishness: `clustering`
+  - Triangle closure: `triangles`
+  - 4-cycle redundancy: `square_clustering`
+
+- **Quickly obtain communities**
+  - Default for large graphs: `louvain_communities` / `leiden_communities`
+  - Fast coarse grouping: `label_propagation_communities` / `asyn_lpa_communities`
+  - Fixed number of communities: `asyn_fluidc`
+
+- **Require interpretability or hierarchical splits**
+  - Hierarchical communities: `girvan_newman`
+  - Bipartition: `kernighan_lin_bisection`
+  - Small graph greedy validation: `naive_greedy_modularity_communities`
+
+- **Find overlapping tight circles**
+  - Overlapping dense communities: `k_clique_communities`
+
+- **Handle bipartite graph communities**
+  - Bipartite spectral modularity bipartition: `spectral_modularity_bipartition`
+
+- **Detect closed loops, cyclic dependencies, or fund recycling**
+  - All simple cycles: `simple_cycles`
+  - Cycle basis: `cycle_basis`
+  - Minimum cycle basis: `minimum_cycle_basis`
+
+- **Analyze triadic patterns**
+  - Directed triad statistics: `triadic_census`
+
+- **Evaluate community results**
+  - Modularity: `modularity`
+  - Coverage and performance: `partition_quality`
+  - Validity check: `is_partition`
+
+---
+
+## VI. Typical Questions That Can Be Answered Directly (Examples)
+
+- "Is the network overall loose random or small-world? Give me an overall metric."
+- "Which nodes have the tightest friend circles? Top-20 clustering coefficients."
+- "Which nodes participate in the most triangles?"
+- "Does this bipartite network have significant 4-cycle redundancy?"
+- "Automatically partition the network into natural communities and output each community's members."
+- "Use Louvain and Leiden to detect communities and compare modularity."
+- "I want a fixed partition into 5 communities. How should I do it?"
+- "Bisect the graph into two parts while minimizing cross-group connections."
+- "Find overlapping core circles."
+- "Is this community result a strict partition? Are any nodes missing or duplicated?"
+- "I have two community partitions; which is better? Give modularity and coverage/performance."
+- "Find all fund closed loops or cyclic dependency chains, with cycle length no more than 6."
+- "Output the minimum cycle basis of the undirected graph for basic closed-loop structure analysis."
+- "Count triadic patterns in the directed graph and see how many transitive and cyclic triads exist."
+
+---
+
+## VII. Engineering Implementation Considerations
+
+1. **Clarify analysis objectives first**
+   - Clustering coefficients answer "Is local relationship dense?"
+   - Community detection answers "How do nodes naturally group?"
+   - Cycle algorithms answer "Are there closed loops or cyclic paths?"
+   - Evaluation metrics answer "Is this partition good?"
+
+2. **No single correct answer for community detection**
+   - Louvain, Leiden, LPA, Girvan-Newman have different mechanisms and may yield different results.
+   - Combine `modularity`, `partition_quality`, and business interpretation for selection.
+   - For stochastic algorithms, set `seed` for reproducibility.
+
+3. **Prefer efficient algorithms for large graphs**
+   - Large graphs: `louvain_communities`, `leiden_communities`, `asyn_lpa_communities`.
+   - `girvan_newman` is more interpretable but suited for small graphs.
+   - Clique and cycle enumeration may be very slow on large graphs.
+
+4. **Distinguish overlapping vs. strict partitions**
+   - `k_clique_communities` allows node to belong to multiple communities.
+   - `modularity`, `partition_quality`, `is_partition` are typically for strict partitions.
+   - Do not directly evaluate overlapping communities with strict-partition metrics unless transformed.
+
+5. **Do not arbitrarily project bipartite graphs**
+   - Projecting user-item, author-paper can create many spurious edges.
+   - Prefer bipartite methods like `spectral_modularity_bipartition` that preserve the bipartite structure.
+   - If projection is necessary, define the projection rule and edge weights clearly.
+
+6. **Control output size for cycle algorithms**
+   - `simple_cycles` can have exponentially many results.
+   - Use `length_bound` or filter subgraph in production.
+   - For undirected graphs, prefer `cycle_basis` or `minimum_cycle_basis` for structural summary.
+
+7. **Triangles, squares, triads as structural features**
+   - `triangles`, `square_clustering`, `triadic_census` can serve as ML or rule-based features.
+   - They do not directly produce communities but capture local patterns and structural anomalies.
+
+8. **Modularity has resolution limits**
+   - `resolution` affects community size.
+   - Higher resolution typically yields smaller communities, lower resolution larger communities.
+   - Choose scale based on business scenario, not only the highest modularity.
+
+---
+
+## VIII. Operator List
+
+| No. | Operator Name                          | Description (Chinese)                     |
+|-----|----------------------------------------|-------------------------------------------|
+| 1   | `clustering`                           | Node clustering coefficient               |
+| 2   | `average_clustering`                   | Average clustering coefficient            |
+| 3   | `transitivity`                         | Global transitivity                       |
+| 4   | `triangles`                            | Triangle count                            |
+| 5   | `square_clustering`                    | Square clustering coefficient             |
+| 6   | `greedy_modularity_communities`        | Greedy modularity communities             |
+| 7   | `girvan_newman`                        | Girvan-Newman hierarchical communities    |
+| 8   | `label_propagation_communities`        | Synchronous label propagation communities |
+| 9   | `asyn_lpa_communities`                 | Asynchronous label propagation communities|
+| 10  | `k_clique_communities`                 | k-clique percolation overlapping communities |
+| 11  | `louvain_communities`                  | Louvain communities                       |
+| 12  | `leiden_communities`                   | Leiden communities                        |
+| 13  | `simple_cycles`                        | Simple cycle enumeration                  |
+| 14  | `cycle_basis`                          | Cycle basis                               |
+| 15  | `modularity`                           | Modularity score                          |
+| 16  | `partition_quality`                    | Coverage and performance                  |
+| 17  | `is_partition`                         | Partition validity check                  |
+| 18  | `naive_greedy_modularity_communities`  | Naive greedy modularity communities       |
+| 19  | `spectral_modularity_bipartition`      | Spectral modularity bipartition (bipartite) |
+| 20  | `minimum_cycle_basis`                  | Minimum cycle basis                       |
+| 21  | `triadic_census`                       | Triadic census (directed)                 |
+| 22  | `asyn_fluidc`                          | Asynchronous fluid communities            |
+| 23  | `kernighan_lin_bisection`              | Kernighan-Lin bisection                   |

@@ -1,170 +1,491 @@
 ---
-sidebar_position: 9
+sidebar_position: 10
+title: Matching & Coloring Operator Set
 ---
+
 # Matching & Coloring Operator Set
 
+**Operator Category**: Matching & Coloring (graph matching, edge cover, vertex coloring, and chromatic polynomial)
 
-**Operator Category**: Matching & Coloring (Graph Matching, Edge Cover, Vertex Coloring)
+**Number of Algorithms**: 10
 
-**Description**: Provides core capabilities such as "conflict-free pairing / minimum edge set covering all nodes / grouped coloring under conflict constraints", widely used in task assignment, resource scheduling, adversarial conflict grouping, compiler register allocation, frequency/examination room scheduling and other scenarios.
+**Applicable Stages**: One‑to‑one pairing, optimal matching, perfect matching in bipartite graphs, fast matching, edge cover, matching validation, conflict‑free grouping, balanced grouping, graph coloring complexity analysis, combinatorial structure analysis
 
+**Product Positioning**: Provides a capability base for matching, covering, and coloring operators to answer “how to pair without conflicts / how to pair optimally / how to achieve a complete matching in a bipartite graph / how to cover all vertices / how to group under conflict constraints / how to analyse the number of coloring schemes”.
 
 ---
-## 1. Operator Set Overview
-The Matching & Coloring operator set focuses on three typical structural optimization problems:
-1. **Matching**:
-   Select a set of edges from the graph such that no two edges share an endpoint (i.e., "one-to-one pairing").
-   - *Max/Min Weight Matching*: Optimize total revenue/total cost under the constraint of "one-to-one" pairing
-   - *Maximal Matching*: Quickly obtain a feasible pairing set that "cannot be further extended"
-   - *Matching Validity Check*: Verify whether the input pairing has conflicts
-2. **Edge Cover**:
-   Select a set of edges such that every node is covered by at least one of the edges.
-   - *Minimum Edge Cover*: Cover all nodes with as few edges as possible (often used for the minimum relation subset that "ensures everyone participates in at least one connection")
-3. **Vertex Coloring**:
-   Assign colors/groups to nodes with the requirement that adjacent nodes cannot have the same color (i.e., "conflicting nodes cannot be in the same group").
-   - *Greedy Coloring*: Quickly obtain an available grouping scheme under an interpretable heuristic strategy
-> Terminology Note:
-> - **Maximum** matching emphasizes the "maximum number of edges" (max cardinality).
-> - **Maximal** matching emphasizes being "unable to add more edges" (local optimum) and does not necessarily have the maximum number of edges.
-> - **Min edge cover** emphasizes the "minimum number of edges required to cover all nodes".
+
+## I. Operator Set Overview
+
+The Matching & Coloring operator set focuses on **pairing optimisation, covering relationships, conflict‑free grouping, and coloring structure analysis** on graphs, addressing the following key questions:
+
+1. **Matching and Pairing Optimisation**
+   - How to select a set of non‑conflicting edges from a graph?
+   - How to maximise the total weight of a matching?
+   - How to minimise the total weight of a matching?
+   - How to quickly generate a feasible matching?
+
+2. **Bipartite Matching**
+   - How to achieve a low‑cost perfect matching in a bipartite graph?
+   - How to handle pairings between supply and demand, jobs and candidates, tasks and resources?
+   - How to find matchings quickly in bipartite graphs?
+
+3. **Edge Cover**
+   - How to cover all vertices with as few edges as possible?
+   - How to ensure that every vertex participates in at least one connection?
+
+4. **Conflict‑Free Grouping and Vertex Coloring**
+   - How to assign groups (colours) to vertices so that adjacent vertices receive different colours?
+   - How to generate feasible groupings for exam scheduling, frequency assignment, or resource conflicts?
+   - How to keep group sizes balanced while satisfying conflict constraints?
+
+5. **Coloring Structure Analysis**
+   - How many proper colourings exist for a given number of colours?
+   - How can the complexity of conflicts be expressed as a polynomial?
+
 ---
-## 2. Operator List
-- Matching:
-  - `max_weight_matching`
-  - `min_weight_matching`
-  - `maximal_matching`
-  - `is_matching`
-- Edge Cover:
-  - `min_edge_cover`
-- Coloring:
-  - `greedy_color`
+
+## II. Operator Capability Classification
+
+| Capability Type | Corresponding Operator | Description |
+|---|---|---|
+| Maximum weight matching | `max_weight_matching` | Maximise total edge weight under one‑to‑one constraints |
+| Minimum weight matching | `min_weight_matching` | Minimise total edge weight under one‑to‑one constraints |
+| Maximal matching | `maximal_matching` | Quickly generate a matching that cannot be extended further |
+| Minimum weight full matching | `minimum_weight_full_matching` | Find a minimum‑weight perfect matching covering one partition of a bipartite graph |
+| Fast bipartite matching | `eppstein_matching` | Compute a matching in a bipartite graph using Eppstein‑style algorithms |
+| Minimum edge cover | `min_edge_cover` | Cover all vertices with as few edges as possible |
+| Matching validation | `is_matching` | Check whether a given edge set satisfies matching constraints |
+| Greedy vertex coloring | `greedy_color` | Assign colours to vertices such that adjacent vertices have different colours |
+| Equitable vertex coloring | `equitable_color` | Produce a colouring with given number of colours and balanced colour class sizes |
+| Chromatic polynomial | `chromatic_polynomial` | Compute the chromatic polynomial of the graph |
+
 ---
-## 3. General Input and Output Conventions
-### 3.1 Input
-- **G**: NetworkX graph object
-  - Most matching operators require an **undirected** graph
-  - `greedy_color` supports both directed and undirected graphs (NetworkX enforces coloring constraints based on adjacency relationships)
-- **Attribute keys** such as weight / capacity: Used to read edge weights
-- **Structures** such as matching / community: Used for verification or auxiliary calculation
-### 3.2 Output
-- Matching results: `set[(u, v), ...]` or dict (format depends on the algorithm)
-- Edge cover: `set[(u, v), (v, u), ...]` (NetworkX conventions may include symmetric edge pairs)
-- Coloring results: `dict[node -> color_id]`
-- Verification results: `bool`
+
+## III. General Input/Output Conventions
+
+- **Input `G`**: NetworkX Graph / DiGraph
+  - Matching algorithms typically work on undirected graphs
+  - Bipartite matching algorithms usually require a bipartite graph
+  - Edge cover algorithms are typically for undirected graphs
+  - Coloring algorithms are based on vertex adjacency conflict
+
+- **Common Input Parameters**
+  - `weight`: Edge weight attribute name
+  - `maxcardinality`: Whether to prioritise maximising the number of matching edges
+  - `matching`: Edge set or mapping to validate
+  - `top_nodes`: Node set specifying one partition of a bipartite graph
+  - `strategy`: Vertex ordering strategy for greedy coloring
+  - `interchange`: Whether to enable colour interchange optimisation
+  - `num_colors`: Number of colours to use for equitable coloring
+
+- **Common Output Types**
+  - Matching: `set[(u, v), ...]` or `dict[node → node]`
+  - Validation: `bool`
+  - Edge cover: `set[(u, v), ...]`
+  - Coloring: `dict[node → color_id]`
+  - Polynomial: symbolic polynomial expression
+
 ---
-## 4. Detailed Operator Descriptions
-### 4.1 max_weight_matching —— Maximum Weight Matching
-#### Function Description
-Finds a set of non-conflicting edges (matching) in an undirected weighted graph to **maximize the sum of the weights of the matching edges**.
-#### Application Scenarios
-- Resource/Task Assignment: Maximize revenue or preference (position-candidate matching, supply and demand matching)
-- Market/Transaction Matching: Maximize total transaction volume/total similarity
-- Social/Collaboration Pairing: Maximize interaction intensity, collaboration success probability
-#### Parameters and Tuning Mechanisms
-- **weight (str, default='weight')**: Specify the edge weight field (e.g., `score` / `affinity` / `amount`)
-- **maxcardinality (bool)**:
-  - `False`: Prioritize maximizing total weight
-  - `True`: First pursue the "maximum number of matching edges", then select the solution with the maximum weight among these schemes (enable when "matching as many pairs as possible" is also important)
-#### Principles and Complexity
-- Typical implementation is based on general graph matching (e.g., Blossom algorithm)
-- **Time Complexity**: `O(V^3)`
-#### Solvable Questions
-- Calculate the maximum weight matching and output the list of paired edges and total weight
-- Perform "one-to-one optimal pairing" in an interaction intensity/correlation network
-### 4.2 min_weight_matching —— Minimum Weight Matching
-#### Function Description
-Finds a matching in an undirected weighted graph to **minimize the sum of the weights of the matching edges** (often used for one-to-one pairing with "minimum cost").
-#### Application Scenarios
-- Pairing with minimized cost/mismatch penalty (logistics, supply chain, task-resource allocation)
-- Pairing with minimized "dissimilarity" (e.g., matching the most similar objects together to reduce differences)
-#### Parameters and Tuning Mechanisms
-- **weight (str, default='weight')**: Edge weight field name (treated as 1 if missing, which may affect results)
-#### Principles and Complexity
-- Solve the minimum weight matching through combinatorial optimization
-- **Time Complexity**: `O(V^3)`
-#### Solvable Questions
-- Output the list of minimum weight matching edges and total cost
-- Perform pairing under the constraint of "minimum cost/mismatch loss"
-### 4.3 maximal_matching —— Maximal Matching (Fast Feasible Solution)
-#### Function Description
-Returns a **maximal matching**: a matching set that cannot add any more edges without violating the matching conditions.
-It guarantees feasibility but not optimality (not necessarily the maximum number of edges or optimal weight).
-#### Application Scenarios
-- Need to quickly obtain an approximate "conflict-free pairing" scheme
-- Streaming/Online scenarios: First provide a feasible solution, then consider more optimal algorithms
-#### Parameters
-- Only requires the graph **G**
-#### Principles and Complexity
-- Greedily expand the matching until it cannot be extended further
-- **Time Complexity**: `O(E)`
-#### Solvable Questions
-- Generate a set of available one-to-one pairings (conflict-free and non-extendable)
-### 4.4 is_matching —— Matching Validity Check
-#### Function Description
-Check whether a given `matching` (dict or set) is a **valid matching** for graph `G`:
-- Each edge in the matching must exist in the graph
-- No two matching edges can share a node (i.e., no node is paired multiple times)
-#### Input Key Points
-- **matching**:
-  - dict: Must satisfy `matching[u] == v` and `matching[v] == u`
-  - set: Elements are in the form of `(u, v)` and must be edges in the graph
-#### Output
-- `True / False`
-#### Complexity
-- **Time Complexity**: `O(E)` (related to the size of the matching)
-#### Solvable Questions
-- "Does this set of pairings have conflicts? Is anyone paired twice?"
-### 4.5 min_edge_cover —— Minimum Edge Cover (Bipartite)
-#### Function Description
-Finds a set of edges in an **undirected bipartite graph** such that **every node is covered by at least one edge**, and the number of edges is minimized.
-> Note: The minimum edge cover can be derived from the maximum matching (a classic conclusion). NetworkX defaults to first finding the maximum cardinality matching and then constructing the edge cover.
-#### Application Scenarios
-- Minimum relation subset for "ensuring each object participates in at least one connection"
-- Recruitment/Position Coverage: Ensure each position/worker is covered by at least one connection
-- Account/Transaction Coverage: Cover all accounts with the minimum number of transaction records (structural sampling)
-#### Parameters and Tuning Mechanisms
-- **matching_algorithm**: Replaceable algorithm for finding the maximum matching (default: Hopcroft–Karp)
-#### Principles and Complexity
-- Complexity depends on the internal maximum matching algorithm; the common complexity of the default Hopcroft–Karp is about `O(E √V)` (for bipartite graphs)
-#### Solvable Questions
-- Output the minimum edge cover edge set and the number of edges
-- "Use the minimum number of relationships to ensure all nodes appear in at least one connection"
-### 4.6 greedy_color —— Greedy Graph Coloring
-#### Function Description
-Colors nodes one by one in a certain order, assigning the **smallest available color (group ID)** to the current node that is different from its already colored neighbors each time.
-The output format is: `{node: color_id}`.
-#### Application Scenarios
-- Conflict-constrained grouping: Adjacent nodes cannot be in the same group (examination scheduling, frequency allocation, task conflict scheduling)
-- Compiler register allocation (interference graph coloring)
-- "Mutually exclusive grouping" strategy for social/transaction networks
-#### Parameters and Tuning Mechanisms
-- **strategy (str or function)**: Determines the order of "coloring first" (has a significant impact on the number of colors)
-  - Built-in strategies include:
-    `largest_first` (default), `random_sequential`, `smallest_last`, `independent_set`,
-    `connected_sequential_bfs`, `connected_sequential_dfs`, `saturation_largest_first` / `DSATUR`
-- **interchange (bool)**: Whether to enable the color interchange optimization phase
-  - Used to reduce the number of colors, but incompatible with some strategies (e.g., `saturation_largest_first` / `independent_set`)
-#### Principles and Complexity
-- Greedy point-by-point coloring + (optional) interchange optimization
-- **Time Complexity**: `O(V + E)` (related to the implementation details of the strategy)
-#### Solvable Questions
-- Output the color (group number) of each node and the total number of colors
-- "How to group users to ensure that users with direct relationships are not in the same group?"
+
+## IV. Detailed Operator Descriptions
+
+### 1. max_weight_matching – Maximum Weight Matching
+
+**Description**  
+Finds a matching (set of pairwise non‑adjacent edges) that maximises the total sum of edge weights in an undirected weighted graph.
+
+Matching constraints:
+- Each vertex can appear in at most one matching edge
+- No two matching edges share a vertex
+
+**Product Value**
+- Supports one‑to‑one optimal pairing
+- Maximises value based on profit, preference, similarity, transaction amount, etc.
+- Suitable for scenarios requiring “maximise pairing quality”
+
+**Typical Scenarios**
+- Job‑candidate matching
+- Supply‑demand pairing
+- Order‑capacity matching
+- Social / collaboration partner pairing
+- High‑value one‑to‑one connections in recommendation systems
+
+**Key Parameters**
+- `weight`: Edge weight attribute, defaults to `weight`
+- `maxcardinality`:
+  - `False`: Prioritise maximising total weight
+  - `True`: Prioritise maximising number of matching edges, then maximise weight
+
+**Applicability & Characteristics**
+- Graph type: Undirected
+- Output: Set of matching edges
+- Complexity: Typically `O(V^3)`
+- Suitable for small‑ to medium‑scale high‑value pairing problems
+
 ---
-## 5. Selection Guide (How to Choose)
-- **For one-to-one optimal pairing (maximize revenue)**: `max_weight_matching`
-  - Enable `maxcardinality=True` when "matching as many pairs as possible" is also important
-- **For one-to-one optimal pairing (minimize cost)**: `min_weight_matching`
-- **For just a fast feasible pairing**: `maximal_matching`
-- **To check the validity of an existing pairing scheme**: `is_matching`
-- **To cover all nodes with the minimum number of edges (for bipartite graphs)**: `min_edge_cover`
-- **For conflict grouping/scheduling/frequency allocation**: `greedy_color` (prefer to compare the number of colors with strategies such as `DSATUR` / `largest_first`)
+
+### 2. min_weight_matching – Minimum Weight Matching
+
+**Description**  
+Finds a matching that minimises the total sum of edge weights in an undirected weighted graph.
+
+Edge weights often represent:
+- Cost
+- Distance
+- Loss
+- Dissimilarity
+- Risk penalty
+
+**Product Value**
+- Minimises cost under one‑to‑one constraints
+- Suitable for resource scheduling, logistics assignment, task allocation
+- Converts “minimum cost pairing” into a graph matching problem
+
+**Typical Scenarios**
+- Logistics resource pairing
+- Task‑assignee allocation
+- Supply chain cost optimisation
+- Pairing similar objects
+- Risk or loss minimisation matching
+
+**Key Parameters**
+- `weight`: Edge weight attribute, defaults to `weight`
+- Missing weights may be treated as default values, affecting interpretation
+
+**Applicability & Characteristics**
+- Graph type: Undirected
+- Output: Set of matching edges
+- Complexity: Typically `O(V^3)`
+- Suitable for cost‑oriented one‑to‑one pairing
+
 ---
-## 6. Typical Answerable Questions (Examples)
-- "Under one-to-one constraints, how to maximize total interaction intensity/total revenue?"
-- "Under one-to-one constraints, how to minimize total cost/mismatch loss?"
-- "Give me a fast conflict-free pairing scheme (no optimality required)."
-- "Does this set of pairings have conflicts? Is anyone paired twice?"
-- "Cover everyone with the minimum number of relationships, ensuring everyone appears in at least one connection."
-- "Divide the network into several groups, ensuring adjacent nodes are not in the same group, and output the group number of each node."
+
+### 3. maximal_matching – Maximal Matching
+
+**Description**  
+Produces a maximal matching: a matching that cannot be extended by adding any other edge without violating the matching constraints.
+
+Important notes:
+- Maximal matching ≠ maximum matching
+- Maximal matching only guarantees “no further extension possible”
+- It does not guarantee the largest number of edges nor optimal weight
+
+**Product Value**
+- Quickly obtains a conflict‑free pairing
+- Suitable when speed is more important than optimality
+- Can serve as an initial solution for subsequent optimisation
+
+**Typical Scenarios**
+- Rapid task assignment
+- Preliminary online matching results
+- Fast feasible solution on large graphs
+- Temporary scheduling or pairing
+- Preprocessing for matching algorithms
+
+**Applicability & Characteristics**
+- Graph type: Undirected
+- Output: Set of matching edges
+- Complexity: Typically `O(E)`
+- Features: Fast, but not globally optimal
+
 ---
+
+### 4. minimum_weight_full_matching – Minimum Weight Full Matching
+
+**Description**  
+In a bipartite graph, finds a minimum‑weight matching that covers all vertices on one specified side (a perfect matching for that partition). This is often used for full assignment problems, e.g.:
+- Every task is assigned a resource
+- Every job is matched to a candidate
+- Every order is assigned to a performer
+
+**Product Value**
+- Supports full low‑cost matching in bipartite graphs
+- Suitable for assignment problems that require covering an entire partition
+- Minimises cost, distance, or loss for full allocation
+
+**Typical Scenarios**
+- Task‑person assignment
+- Order‑driver pairing
+- Job‑candidate matching
+- Supplier‑buyer allocation
+- Minimum‑cost assignment from a resource pool to a task pool
+
+**Key Parameters**
+- `G`: Bipartite graph
+- `top_nodes`: The set of nodes that must be fully matched (one partition)
+- `weight`: Edge weight attribute (e.g., cost, distance, loss)
+
+**Applicability & Characteristics**
+- Graph type: Bipartite
+- Output: Matching mapping or edge set
+- Suitable for complete matching that must cover one side
+- If no feasible perfect matching exists, may return no valid result
+
+---
+
+### 5. eppstein_matching – Eppstein Bipartite Matching
+
+**Description**  
+Computes a matching in a bipartite graph, often used for fast maximum matching algorithms.
+
+It focuses on:
+- Feasible pairings between the two partitions
+- Building as many matching edges as possible without sharing vertices
+- Providing a basic matching capability for covering, assignment, and bipartite structure analysis
+
+**Product Value**
+- Tailored for bipartite matching scenarios
+- Performs well on large‑scale bipartite graphs
+- Underpins resource allocation, relationship pairing, and edge cover
+
+**Typical Scenarios**
+- User‑item matching
+- Worker‑job matching
+- Task‑machine assignment
+- Supply‑demand pairing
+- Bipartite network structure analysis
+
+**Applicability & Characteristics**
+- Graph type: Bipartite
+- Output: Matching mapping or edge set
+- Suitable for maximum matching problems in bipartite graphs
+- Often used as a base algorithm in bipartite matching toolchains
+
+---
+
+### 6. min_edge_cover – Minimum Edge Cover
+
+**Description**  
+Finds a set of edges such that every vertex in the graph is incident to at least one edge in the set, while minimising the number of edges used.
+
+Difference from matching:
+- Matching requires each vertex appear at most once
+- Edge cover requires each vertex appear at least once
+- Edge cover allows a vertex to be incident to multiple covering edges
+
+**Product Value**
+- Uses the fewest relationships to cover all objects
+- Suitable for constructing a minimal representative connection subset
+- Useful when “every vertex must be reached / associated / sampled”
+
+**Typical Scenarios**
+- Cover all accounts with the fewest transaction records
+- Cover all users with the fewest relationships
+- Build minimal participation structure for jobs/persons
+- Minimum covering relationships for data sampling
+- Object coverage analysis in bipartite graphs
+
+**Key Parameters**
+- `matching_algorithm`: Internal maximum matching algorithm can be specified
+- Default implementation is usually based on a maximum matching
+
+**Applicability & Characteristics**
+- Graph type: Undirected, often used on bipartite graphs
+- Output: Set of covering edges
+- Complexity: Depends on internal matching algorithm
+- For bipartite graphs, typical maximum matching complexity is `O(E√V)`
+
+---
+
+### 7. is_matching – Matching Validation
+
+**Description**  
+Checks whether a given set of edges (or mapping) is a valid matching in the graph.
+
+A valid matching must satisfy:
+- Every edge in the matching exists in the graph
+- No two matching edges share a vertex
+- Each vertex belongs to at most one matching edge
+
+**Product Value**
+- Provides pre‑ or post‑validation for matching results
+- Prevents duplicate assignment of an object
+- Suitable for validating manual input, external system output, or model‑generated pairings
+
+**Typical Scenarios**
+- Validate task allocation results
+- Check matching system output
+- Detect if anyone has been double‑paired
+- Verify that paired edges actually exist
+- Test matching algorithms and verify results
+
+**Input Notes**
+- `matching` can be an edge set or a node‑to‑node mapping
+- If a mapping, it should be consistent bidirectionally, e.g., `matching[u] == v` and `matching[v] == u`
+
+**Applicability & Characteristics**
+- Graph type: Undirected
+- Output: `bool`
+- Complexity: Linear in matching size
+- Often used together with matching generation algorithms
+
+---
+
+### 8. greedy_color – Greedy Vertex Coloring
+
+**Description**  
+Assigns a colour (integer) to each vertex so that adjacent vertices receive different colours.
+
+Basic idea:
+- Traverse vertices in a specified order
+- For each vertex, assign the smallest positive integer not used by any already‑colored neighbour
+- Return a mapping from vertex to colour
+
+**Product Value**
+- Converts conflict relationships into grouping solutions
+- Supports scheduling, resource allocation, frequency assignment under constraints
+- Fast, intuitive, and easy to productise
+
+**Typical Scenarios**
+- Exam scheduling
+- Meeting / task conflict resolution
+- Frequency assignment
+- Compiler register allocation
+- Mutually exclusive grouping of users or devices
+- Isolated grouping of risk objects
+
+**Key Parameters**
+- `strategy`: Vertex ordering strategy for greedy coloring. Common choices:
+  - `largest_first`
+  - `random_sequential`
+  - `smallest_last`
+  - `independent_set`
+  - `connected_sequential_bfs`
+  - `connected_sequential_dfs`
+  - `saturation_largest_first` (DSATUR)
+- `interchange`: Whether to enable colour interchange optimisation to try to reduce the number of colours
+
+**Applicability & Characteristics**
+- Graph type: Undirected / Directed (treated as undirected conflicts)
+- Output: `dict[node → color_id]`
+- Complexity: Typically `O(V + E)`, depends on strategy
+- Greedy coloring does not guarantee the minimum number of colours but is efficient and stable
+
+---
+
+### 9. equitable_color – Equitable Vertex Coloring
+
+**Description**  
+Assigns colours to vertices using a given number of colours, ensuring adjacent vertices have different colours and the sizes of colour classes differ by at most one (balanced groups).
+
+Equitable coloring focuses on:
+- Conflict‑free assignment (adjacent vertices different)
+- Balanced colour class sizes
+
+**Product Value**
+- Adds load balancing to conflict‑free grouping
+- Suitable for scenarios requiring “fair distribution” or “balanced load”
+- More appropriate than plain greedy coloring when resource capacities are similar
+
+**Typical Scenarios**
+- Balancing the number of examinees per session in exam scheduling
+- Balancing load across task groups
+- Balanced frequency / channel assignment
+- User bucketing for experiments
+- Batched processing of risk lists with balanced sizes
+
+**Key Parameters**
+- `num_colors`: Number of colours to use
+- Sufficiently many colours must be available, otherwise the constraints may be unsatisfiable
+
+**Applicability & Characteristics**
+- Graph type: Typically undirected
+- Output: `dict[node → color_id]`
+- Features: Emphasises group size balance compared to `greedy_color`
+- Suitable for scenarios with both conflict constraints and load balancing requirements
+
+---
+
+### 10. chromatic_polynomial – Chromatic Polynomial
+
+**Description**  
+Computes the chromatic polynomial of the graph. The chromatic polynomial `P(G, k)` counts the number of proper vertex colourings of `G` using at most `k` colours (adjacent vertices receive different colours).
+
+**Product Value**
+- Characterises the coloring complexity of a graph combinatorially
+- Analyses the number of feasible colourings for different numbers of colours
+- Suitable for theoretical analysis, structural evaluation, and feasibility studies of conflict networks
+
+**Typical Scenarios**
+- Analysing number of colouring schemes
+- Evaluating the complexity of conflict graphs
+- Feasibility analysis for scheduling / grouping
+- Graph theory education and research
+- Combinatorial structure analysis of small graphs
+
+**Applicability & Characteristics**
+- Graph type: Typically undirected
+- Output: Symbolic polynomial expression
+- Note: Computing the chromatic polynomial is generally more expensive than greedy coloring; suitable for small graphs or analytical tasks
+- Difference from `greedy_color`:
+  - `greedy_color` produces one concrete colouring
+  - `chromatic_polynomial` gives the number of proper colourings for each `k`
+
+---
+
+## V. Recommended Usage Guide
+
+### 1. One‑to‑One Pairing and Matching
+- Maximise profit: `max_weight_matching`
+- Minimise cost: `min_weight_matching`
+- Quickly obtain a feasible pairing: `maximal_matching`
+- Validate a pairing: `is_matching`
+
+### 2. Bipartite Full Matching
+- Minimum‑cost perfect matching (covering one side): `minimum_weight_full_matching`
+- Fast bipartite matching: `eppstein_matching`
+- Assign jobs / tasks / resources: prefer `minimum_weight_full_matching`
+
+### 3. Covering All Vertices
+- Minimum edge cover: `min_edge_cover`
+- When every vertex must appear at least once: `min_edge_cover`
+- Construct minimal edge subset covering all vertices: `min_edge_cover`
+
+### 4. Conflict‑Free Grouping and Scheduling
+- Adjacent vertices must be in different groups: `greedy_color`
+- For stable, commonly used heuristics: `largest_first`
+- To use fewer colours: try `saturation_largest_first` (DSATUR)
+- To balance group sizes: `equitable_color`
+
+### 5. Coloring Complexity Analysis
+- Need a concrete grouping: `greedy_color`
+- Need balanced grouping: `equitable_color`
+- Need to count number of proper colourings: `chromatic_polynomial`
+
+---
+
+## VI. Typical Questions That Can Be Directly Answered
+
+- “How to maximise total profit under one‑to‑one constraints?”
+- “How to optimally match candidates to jobs?”
+- “How to pair with minimum total cost?”
+- “Give me a quick conflict‑free pairing.”
+- “Is this pairing valid? Is anyone double‑paired?”
+- “How to achieve a minimum‑cost full matching in a bipartite graph?”
+- “How to quickly compute a matching in a bipartite graph?”
+- “How to cover all vertices with the fewest edges?”
+- “How to ensure every vertex participates in at least one connection?”
+- “How to assign conflicting tasks to different groups?”
+- “How to schedule exams so that conflicting students are not in the same session?”
+- “How to keep group sizes balanced when grouping under conflicts?”
+- “Which coloring strategy uses fewer colours on this graph?”
+- “How many proper colourings does this conflict graph have for k colours?”
+- “What is the chromatic polynomial of this graph?”
+
+---
+
+## VII. Operator List
+
+| No. | Operator Name | Description |
+|-----|---------------|-------------|
+| 1 | `max_weight_matching` | Maximum weight matching |
+| 2 | `min_weight_matching` | Minimum weight matching |
+| 3 | `maximal_matching` | Maximal matching |
+| 4 | `minimum_weight_full_matching` | Minimum weight full matching (in bipartite graphs) |
+| 5 | `eppstein_matching` | Eppstein bipartite matching |
+| 6 | `min_edge_cover` | Minimum edge cover |
+| 7 | `is_matching` | Matching validation |
+| 8 | `greedy_color` | Greedy vertex coloring |
+| 9 | `equitable_color` | Equitable vertex coloring |
+| 10 | `chromatic_polynomial` | Chromatic polynomial computation |

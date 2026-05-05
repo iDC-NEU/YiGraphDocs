@@ -1,318 +1,441 @@
 ---
-sidebar_position: 12
+sidebar_position: 15
 ---
 # Graph Query 图查询算子集
 
-**算子类别**：Graph Query（图查询）  
-**描述**：Graph query tools for querying specific nodes, neighbors, subgraphs, and paths。用于面向图数据做“查点 / 查边 / 查邻居 / 查路径 / 抽子图 / 做聚合统计”等基础查询能力，适合交互式探索分析、业务检索、风控排查、知识图谱关系发现与可视化取数。
+**算子类别**：Graph Query（图查询、结构检索与子图操作）
 
-> 与纯图算法（最短路、聚类、中心性等）不同：Graph Query 更偏 **数据获取与筛选**，用于把“要分析的对象/子图”快速定位出来，再交给上层算法或业务逻辑处理。
+**算法数量**：10 个
+
+**适用阶段**：节点属性查询、邻居扩展、共同邻居发现、路径检索、子图抽取、图结构划分、图差异度量、商图构建、条件独立判断、图合并与结构拼接
+
+**产品定位**：为“查节点属性 / 查 k 跳邻居 / 查共同邻居 / 查两点路径 / 抽取子图 / 按最近中心划分节点 / 比较两个图差异 / 压缩图结构 / 判断条件阻断关系 / 合并图结构”提供图查询与结构操作能力底座。
 
 ---
 
 ## 一、算子集概述
 
-Graph Query 算子集覆盖 4 类常见查询模式：
+Graph Query 算子集聚焦于**图数据检索、局部结构抽取、路径查询、结构划分与图级操作**，主要回答以下问题：
 
-1. **节点查询（Node Lookup）**  
-   - 精确查一个节点（唯一键：ID / account_id / name 等）
-   - 按属性条件筛选一批节点（年龄>30、状态=completed）
+1. **节点与属性查询**
+   - 某个节点有哪些属性？
+   - 是否可以批量查看节点的业务字段、标签或元数据？
+   - 如何为后续筛选、展示或分析提供节点属性信息？
 
-2. **关系/边查询（Relationship Filter）**  
-   - 按关系类型 + 属性条件过滤边（金额>400、时间范围、时长等）
-   - 可直接返回聚合统计（COUNT / SUM / AVG 等）
+2. **邻居与局部结构查询**
+   - 某个节点的 k 跳范围内有哪些节点？
+   - 两个节点是否拥有共同邻居？
+   - 如何快速定位局部关系圈或潜在关联对象？
 
-3. **结构遍历（Neighbors / Paths / Common Neighbors）**  
-   - 查 1~k 跳邻居、限定方向与关系类型
-   - 查两点之间的路径（最短或所有路径，受 hop 约束）
-   - 查共同邻居（可带关系属性过滤）
+3. **路径与关系链查询**
+   - 两个节点之间是否存在路径？
+   - 两个节点之间有哪些可达路径？
+   - 如何解释两个实体之间的关联链路？
 
-4. **子图抽取（Subgraph）**  
-   - 以中心节点扩展 k 跳形成 ego-network
-   - 或按关系属性条件抽取“交易子图/时间窗子图”
-   - 或按给定节点列表取诱导子图（只看内部关系）
+4. **子图抽取与结构划分**
+   - 如何从原图中抽取指定节点或边构成的子图？
+   - 如何根据一组中心节点，把图划分为不同的 Voronoi 区域？
+   - 如何将图按照节点分组压缩成商图？
+
+5. **图结构比较、推理与合并**
+   - 两个图之间的编辑距离有多大？
+   - 在有向概率图或因果图中，某些节点是否 d-separate？
+   - 如何将两个图进行 full join，形成合并后的结构？
 
 ---
 
-## 二、算子列表
+## 二、算子能力分类
 
-| 算子 | 核心能力 |
-|---|---|
-| `node_lookup` | 按 label + 唯一键精确查点；或按属性条件筛点 |
-| `relationship_filter` | 按 rel_type + 属性条件筛边；可聚合统计 |
-| `aggregation_query` | 分组聚合统计（按节点/属性分组，COUNT/SUM/AVG/…） |
-| `neighbor_query` | k-hop 邻居遍历（可限定 rel_type / 方向，返回边字段） |
-| `path_query` | 两点路径查询（可限定关系类型、方向、最小/最大跳数） |
-| `common_neighbor` | 两点共同邻居（可限定 rel_type / 方向 / 边属性过滤） |
-| `subgraph` | 子图抽取：中心点扩展模式 / 关系过滤模式 |
-| `subgraph_by_nodes` | 按节点列表抽取诱导子图（可选仅内部边） |
+| 能力类型 | 对应算子 | 功能描述 |
+|---|---|---|
+| 节点属性查询 | `get_node_attributes` | 获取图中节点的指定属性 |
+| K 跳邻居查询 | `k_hop_neighbors` | 查询指定节点 k 跳范围内的邻居 |
+| 共同邻居查询 | `common_neighbors` | 查询两个节点的共同邻居 |
+| 子图抽取 | `extract_subgraph` | 根据节点或边条件抽取子图 |
+| 两点路径查询 | `get_paths_between_two_nodes` | 查询两个节点之间的路径 |
+| Voronoi 划分 | `voronoi_cells` | 按中心节点将图划分为最近节点区域 |
+| 图编辑距离 | `graph_edit_distance` | 衡量两个图结构之间的编辑差异 |
+| 商图构建 | `quotient_graph` | 根据节点分组或等价关系压缩图结构 |
+| d-分离判断 | `is_d_separator` | 判断有向图中节点集合是否形成 d-separator |
+| 图 Full Join | `full_join` | 将两个图进行完全连接式合并 |
 
 ---
 
 ## 三、通用输入输出约定
 
-### 3.1 输入（Input）
-
-- **label / start_label / end_label**：异构图中用于指定节点类型（如 `Account` / `Person` / `Paper`）
-- **key / value / values**：用于按属性定位节点（如 `account_id=ACC_12345`）
-- **rel_type**：关系类型（如 `TRANSFER` / `FRIEND` / `CITES`）
-- **direction**：方向（`OUTGOING` / `INCOMING` / `BOTH`）
-- **conditions / rel_conditions**：属性过滤条件（支持多条件组合与比较运算）
-- **return_fields**：返回字段列表（用于减少传输、避免信息丢失）
-- **hops / min_hops / max_hops / limit / limit_paths**：控制搜索深度与规模
-
-### 3.2 输出（Output）
-
-- `node_lookup`：单个 node 或 node 列表
-- `relationship_filter`：relationship 列表或聚合值
-- `aggregation_query`：分组聚合结果列表（group_key + aggregated_value）
-- `neighbor_query`：邻居节点/边信息或路径结构（视 return_fields 与实现而定）
-- `path_query`：路径列表（通常为节点序列或节点+边结构）
-- `common_neighbor`：共同邻居节点列表（可附带字段）
-- `subgraph / subgraph_by_nodes`：subgraph（包含 nodes 与 relationships）
+- **输入 `G`**：NetworkX Graph / DiGraph
+- **常见输入参数**：
+  - `node` / `source` / `target`：查询起点、终点或目标节点
+  - `nodes`：节点集合，用于属性查询、子图抽取或分组
+  - `attribute` / `name`：节点属性名
+  - `k` / `cutoff`：跳数或路径搜索深度限制
+  - `center_nodes`：Voronoi 划分中的中心节点集合
+  - `partition`：商图构建中的节点分组
+  - `X` / `Y` / `Z`：d-分离判断中的节点集合
+  - `G1` / `G2`：图比较或图合并中的两个输入图
+- **常见输出类型**：
+  - 属性查询类：`dict[node → attribute_value]`
+  - 邻居查询类：`set(node)` 或节点列表
+  - 路径查询类：路径列表
+  - 子图类：`NetworkX Graph`
+  - 结构划分类：`dict[center_node → set(nodes)]`
+  - 图差异类：数值距离
+  - 判断类：`bool`
+  - 图合并类：合并后的 `NetworkX Graph`
 
 ---
 
 ## 四、算子详细说明
 
-## 4.1 node_lookup —— 节点查询（精确查点 / 条件筛点）
+### 1. get_node_attributes —— 节点属性查询
 
-### 功能说明
-支持两种模式：
-- **单点精确查询**：`label + key + value`
-- **多点条件过滤**：`label + conditions`
+**功能说明**  
+获取图中节点的指定属性，并返回节点到属性值的映射关系。
 
-### 参数要点
-- **return_fields**：建议只取必要字段，降低 IO
-- **conditions**：支持数值比较（`>`, `<`, `>=`, `<=`, `==`, `!=`）与字符串匹配
+**产品价值**
+- 快速读取节点业务字段
+- 支持图可视化中的节点标签、颜色、大小等属性展示
+- 可作为筛选、分组、统计和后续算法分析的基础输入
 
-### 原理与复杂度
-- 唯一键查点：走索引/哈希定位，近似 `O(1)`
-- 条件过滤：无索引时扫描为主，近似 `O(n)`
+**典型场景**
+- 查询账户节点的风险等级
+- 查询用户节点的年龄、地区或标签
+- 查询论文节点的年份、领域或作者信息
+- 为可视化节点设置颜色或分组
+- 在图分析前提取节点元数据
 
-### 可回答问题
-- Find the account node with `account_id = "ACC_12345"`
-- List all users with `age > 30`
-- Query all customers living in US with state `VT`
-
----
-
-## 4.2 relationship_filter —— 关系过滤（筛边 + 可聚合）
-
-### 功能说明
-按 **关系类型**（必填）过滤边，并可进一步指定：
-- 起点/终点 label
-- 关系属性条件（金额、时间、时长、标记等）
-- 聚合统计（COUNT/SUM/AVG/MAX/MIN）
-
-### 参数要点
-- **rel_conditions**：支持多条件组合（AND/OR 逻辑由实现约定）
-- **aggregate**：当只关心统计结果时建议开启，避免返回海量边
-- **return_fields**：返回你关心的交易字段（amount、timestamp、is_sar…）
-
-### 原理与复杂度
-- 扫描指定类型的关系并过滤：`O(m)`（m 为该 rel_type 的关系数量）
-
-### 可回答问题
-- Find all transactions with `amount > 400`
-- List the count of transactions where `is_sar` is False
-- Calculate the total amount of all outgoing transactions
+**适用与特性**
+- 图类型：有向图 / 无向图
+- 输入：图 `G`、属性名
+- 输出：`dict[node → attribute_value]`
+- 特点：偏数据读取，适合图查询与可视化前处理
 
 ---
 
-## 4.3 aggregation_query —— 分组聚合统计
+### 2. k_hop_neighbors —— K 跳邻居查询
 
-### 功能说明
-提供面向图数据的 GROUP BY + 聚合能力，用于：
-- 计数（COUNT）
-- 求和/均值/极值（SUM/AVG/MAX/MIN）
+**功能说明**  
+从指定节点出发，查询 k 跳范围内可到达的邻居节点。
 
-支持按：
-- **节点 label 分组**（per entity）
-- **属性分组**（per category）
+**产品价值**
+- 快速展开节点周边关系圈
+- 支持局部影响范围、关系扩散范围和潜在关联对象发现
+- 是局部图探索和子图抽取的重要前置能力
 
-### 参数要点
-- **aggregate_type**：COUNT / SUM / AVG / MAX / MIN（必填）
-- **aggregate_field**：SUM/AVG/MAX/MIN 时必填
-- **group_by_node / group_by_property**：决定统计维度
-- **direction / rel_type**：限制参与统计的关系范围
+**典型场景**
+- 查询某账户 2 跳内的交易对手
+- 查询某用户的朋友、朋友的朋友
+- 查询某设备周围的依赖节点
+- 查询知识图谱中某实体附近的概念节点
+- 查询风险节点周边的关联对象
 
-### 原理与复杂度
-- 遍历相关节点/边并分组聚合：`O(n + m)`（与参与统计的数据规模有关）
-
-### 可回答问题
-- Count the number of transactions per account
-- Calculate the total amount of outgoing transactions per account
-- Find the top 10 accounts with the most transactions
+**适用与特性**
+- 图类型：有向图 / 无向图
+- 输入：起点节点、跳数 `k`
+- 输出：邻居节点集合
+- 注意：高阶 k-hop 查询可能快速膨胀，应控制跳数和结果规模
 
 ---
 
-## 4.4 neighbor_query —— 邻居查询（k-hop）
+### 3. common_neighbors —— 共同邻居查询
 
-### 功能说明
-从指定起点出发做 **k 跳邻居扩展**（BFS）：
-- 1-hop：直接邻居
-- 2-hop：朋友的朋友 / 交易对手的对手
-- 3-hop+：更大范围的关系圈层（注意爆炸）
+**功能说明**  
+查询两个节点之间共享的邻居节点集合。
 
-### 参数要点
-- **hops**：控制扩展深度（默认 1）
-- **rel_type / direction**：强烈建议用于约束规模
-- **return_fields**：返回边详情（尤其 hops=1 时避免信息丢失）
+**产品价值**
+- 发现两个实体之间的共同关系基础
+- 支持好友推荐、相似性分析和隐藏关系发现
+- 可作为链接预测和关系强度评估的基础特征
 
-### 原理与复杂度
-- BFS 扩展，最坏近似 `O(d^k)`（d 为平均度，k 为 hops）
+**典型场景**
+- 查询两个人的共同好友
+- 查询两个账户的共同交易对象
+- 查询两个公司共享的供应商或客户
+- 查询两篇论文共同引用的文献
+- 查询两个风险对象是否存在共同中介
 
-### 可回答问题
-- Query neighbors of Collins Steven
-- Find all 2-hop neighbors of user Alice
-- Find all accounts that Collins Steven has transferred money to
-
----
-
-## 4.5 path_query —— 路径查询（两点如何连起来）
-
-### 功能说明
-查询两个节点之间的连接路径，可用于：
-- 资金链路追踪（Trace money flow）
-- 引用链路追踪（Citation chain）
-- 社交关系溯源（Connection discovery）
-
-支持限制：
-- 关系类型（只走 TRANSFER 等）
-- 方向（OUTGOING/INCOMING/BOTH）
-- 最小/最大跳数（控制搜索空间）
-
-### 参数要点
-- **max_hops**：强烈建议设置，避免全图爆炸
-- **min_hops**：用于排除直接连接（想看“间接关系”）
-- **rel_type**：限定特定关系类型，提升语义准确性与性能
-
-### 原理与复杂度
-- 最短路径：典型 `O(V+E)`
-- 枚举所有路径：可能指数级（图越密越危险）
-
-### 可回答问题
-- Find the path from Collins Steven to Nunez Mitchell
-- Find all paths between two companies within 5 hops
-- Trace the shortest supply chain path from supplier to customer
+**适用与特性**
+- 图类型：通常用于无向图
+- 输入：两个节点 `u`、`v`
+- 输出：共同邻居节点集合
+- 特点：适合局部结构查询和关系解释
 
 ---
 
-## 4.6 common_neighbor —— 共同邻居查询（互相认识谁 / 共享交易对手）
+### 4. extract_subgraph —— 子图抽取
 
-### 功能说明
-返回同时连接到 v1 与 v2 的节点集合（邻居集合交集），用于：
-- 互相关联对象（Mutual friends）
-- 潜在合谋/共谋检测（Shared transaction partners）
-- 相似性与链接预测的基础特征
+**功能说明**  
+从原图中抽取指定节点、边或满足条件的局部结构，形成一个新的子图。
 
-### 参数要点
-- **rel_conditions**：可对“共同邻居所涉及的边”再筛一层（例如 amount>400）
-- **direction / rel_type**：决定“共同邻居”的业务语义（共同转入方/共同转出方/共同朋友）
+**产品价值**
+- 将大图切分为可分析、可展示的小图
+- 支持局部结构分析、可视化取数和算法前处理
+- 便于围绕目标对象进行精准排查
 
-### 原理与复杂度
-- 取邻居集合交集：`O(d1 + d2)`（两点度数之和）
+**典型场景**
+- 抽取可疑账户周围的交易子图
+- 抽取某批节点之间的内部关系
+- 抽取某个社区或分组对应的子图
+- 抽取知识图谱中的某个主题片段
+- 为路径分析、社区发现或可视化准备局部图
 
-### 可回答问题
-- Identify mutual friends between user A and user B
-- Find common transaction partners of two accounts
-- Find common transaction neighbors where transaction amounts are all greater than 400
-
----
-
-## 4.7 subgraph —— 子图抽取（两种模式）
-
-### 功能说明
-提供两种抽取方式：
-
-**模式 1：中心节点扩展（ego network）**  
-- 输入：`label/key/value + hops (+ rel_type/direction)`
-- 输出：以该节点为中心的 k 跳子图（可用于可视化与局部分析）
-
-**模式 2：按关系过滤抽取（slice by edge filter）**  
-- 输入：`rel_type + rel_conditions (+ start_label/end_label) + limit`
-- 输出：满足条件的所有关系及其端点组成的子图（如“某月所有转账子图”）
-
-### 参数要点
-- **limit_paths / limit**：控制规模（尤其可视化/交互场景）
-- **rel_conditions**：用于时间窗/金额窗过滤
-- **direction**：资金流/引用链场景下尤为重要
-
-### 原理与复杂度
-- 模式 1：`O(d^k)`（随 hops 增长）
-- 模式 2：`O(m)`（m 为匹配的关系数量）
-
-### 可回答问题
-- Extract subgraph around Collins Steven within 2 hops
-- Extract subgraph of all transactions on 2025-05-01
-- Extract subgraph of transactions with amounts between 300 and 500
+**适用与特性**
+- 图类型：有向图 / 无向图
+- 输入：节点集合、边集合或抽取条件
+- 输出：`NetworkX Graph`
+- 特点：适合从大图中截取业务相关结构
 
 ---
 
-## 4.8 subgraph_by_nodes —— 按节点列表抽取诱导子图
+### 5. get_paths_between_two_nodes —— 两点路径查询
 
-### 功能说明
-给定一组节点（通过 `label + key + values` 指定），抽取它们之间的关系子图：
-- **include_internal=True（默认）**：仅包含这些节点之间的内部边（最常用）
-- **include_internal=False**：可能包含到外部节点的边（具体以实现约定为准）
+**功能说明**  
+查询两个节点之间的路径，用于判断两个实体是否可达，以及它们之间通过哪些中间节点连接。
 
-### 参数要点
-- **rel_type / direction**：在多关系类型场景下建议指定
-- **include_internal**：用于控制是否“只看组内关系”
+**产品价值**
+- 解释两个节点之间的关系链路
+- 支持资金链、引用链、供应链、社交链等路径追踪
+- 有助于发现间接关联和隐藏关系
 
-### 原理与复杂度
-- 取指定节点 + 过滤它们之间的边：`O(n + m)`（n 节点数，m 组内边数）
+**典型场景**
+- 查询两个账户之间是否存在资金路径
+- 查询两家公司之间的供应链路径
+- 查询两个用户之间的社交连接链
+- 查询两篇论文之间的引用路径
+- 查询风险对象之间的中间关联节点
 
-### 可回答问题
-- Extract accounts A, B, C and their transfer relationships
-- Analyze transaction network among 5 suspicious accounts
-- Find all relationships among a set of companies
-
----
-
-## 五、选型指南（怎么选）
-
-- **查一个实体（按 ID / account_id）**：`node_lookup`（key+value）
-- **按属性筛一批实体**：`node_lookup`（conditions）
-- **按边属性筛交易/通信记录**：`relationship_filter`
-- **直接做统计报表/排名**：`aggregation_query`
-- **看某节点局部关系圈（k-hop）**：`neighbor_query`
-- **查两点如何关联（路径）**：`path_query`（务必设 max_hops）
-- **查共同好友/共同对手/共享供应商**：`common_neighbor`
-- **抽一个可视化/分析子图**：`subgraph`（中心扩展或关系过滤）
-- **指定一组节点看组内关系**：`subgraph_by_nodes`
+**适用与特性**
+- 图类型：有向图 / 无向图
+- 输入：起点节点、终点节点、路径长度限制
+- 输出：路径列表
+- 注意：枚举路径可能出现组合爆炸，建议设置最大路径长度或结果数量限制
 
 ---
 
-## 六、工程注意事项与常见坑位
+### 6. voronoi_cells —— Voronoi 节点区域划分
 
-1. **路径与 k-hop 查询最容易爆炸**  
-   - 建议始终设置：`max_hops` / `hops`、`rel_type`、`direction`、`limit/limit_paths`
+**功能说明**  
+给定一组中心节点，将图中其他节点分配给距离最近的中心节点，形成图上的 Voronoi cells。
 
-2. **聚合优先（能不拉明细就不拉）**  
-   - 只要结果是统计值/TopK，优先用 `relationship_filter(aggregate=...)` 或 `aggregation_query`
+**产品价值**
+- 支持按最近中心进行节点归属划分
+- 可用于服务范围、影响区域和最近归属分析
+- 适合把图结构按多个中心进行空间化或拓扑化切分
 
-3. **return_fields 是性能关键**  
-   - 避免返回整条边/整节点的所有字段，尤其是大图与多属性图
+**典型场景**
+- 多个服务中心的覆盖范围划分
+- 多个核心节点的影响区域分析
+- 路网中按最近站点划分区域
+- 社交网络中按核心用户划分圈层
+- 知识图谱中按主题中心划分实体集合
 
-4. **direction 影响语义**  
-   - 在资金流/引用链等场景，OUTGOING 与 INCOMING 的业务含义完全不同
+**适用与特性**
+- 图类型：有向图 / 无向图
+- 输入：中心节点集合
+- 输出：`dict[center_node → set(nodes)]`
+- 特点：基于图距离进行区域划分
 
-5. **条件字段类型要统一**  
-   - 时间字段建议统一 timestamp/date 格式  
-   - 数值字段避免以字符串存储导致比较错误
+---
+
+### 7. graph_edit_distance —— 图编辑距离
+
+**功能说明**  
+计算两个图之间的编辑距离，即将一个图变换为另一个图所需的节点/边插入、删除或替换成本。
+
+**产品价值**
+- 衡量两个图结构的差异程度
+- 支持图结构相似性比较和模式匹配
+- 可用于异常结构识别、模板匹配和图聚类
+
+**典型场景**
+- 比较两个流程图是否相似
+- 判断两个欺诈团伙结构是否相近
+- 比较两个分子结构差异
+- 检测网络结构异常变化
+- 图样本之间的相似度计算
+
+**适用与特性**
+- 图类型：有向图 / 无向图
+- 输入：两个图 `G1`、`G2`
+- 输出：编辑距离数值
+- 注意：图编辑距离通常计算成本较高，大图需谨慎使用
+
+---
+
+### 8. quotient_graph —— 商图构建
+
+**功能说明**  
+根据节点分组、等价关系或划分结果，将原图压缩为商图。商图中的每个节点通常代表原图中的一个节点集合。
+
+**产品价值**
+- 将复杂图压缩为更高层级的结构
+- 支持社区级、分组级、模块级关系分析
+- 便于从宏观层面观察图结构
+
+**典型场景**
+- 将社区压缩为社区关系图
+- 将部门成员压缩为部门关系图
+- 将城市路网压缩为区域关系图
+- 将知识图谱实体分组后生成主题图
+- 对大图做结构摘要和层级建模
+
+**适用与特性**
+- 图类型：有向图 / 无向图
+- 输入：节点划分或等价关系
+- 输出：商图 `NetworkX Graph`
+- 特点：适合图压缩、结构摘要和宏观分析
+
+---
+
+### 9. is_d_separator —— d-分离判断
+
+**功能说明**  
+判断有向图中节点集合 `Z` 是否 d-separate 节点集合 `X` 与 `Y`。常用于有向概率图、贝叶斯网络和因果图中的条件独立判断。
+
+**产品价值**
+- 支持图结构上的条件独立推理
+- 可用于因果分析和概率图模型结构解释
+- 帮助判断给定条件变量是否阻断两个变量集合之间的依赖路径
+
+**典型场景**
+- 贝叶斯网络条件独立判断
+- 因果图中的混杂变量分析
+- 判断控制变量是否阻断因果路径
+- 概率图模型结构验证
+- 变量依赖关系解释
+
+**适用与特性**
+- 图类型：有向无环图通常更常见
+- 输入：节点集合 `X`、`Y`、`Z`
+- 输出：`bool`
+- 特点：偏图推理与结构条件独立分析
+
+---
+
+### 10. full_join —— 图 Full Join 合并
+
+**功能说明**  
+将两个图进行 full join 操作，生成包含两个图节点和边的组合结构，并在需要时连接两个图之间的节点。
+
+**产品价值**
+- 支持图之间的结构合并与拼接
+- 可用于构造组合图、跨图关系图或实验图结构
+- 适合需要把两个独立图整体纳入同一分析空间的场景
+
+**典型场景**
+- 合并两个来源的关系网络
+- 构建跨业务域的联合图
+- 将用户图与商品图合并分析
+- 组合两个子图进行结构实验
+- 构造跨图连接后的整体网络
+
+**适用与特性**
+- 图类型：有向图 / 无向图
+- 输入：两个图 `G1`、`G2`
+- 输出：合并后的图
+- 特点：适合图结构拼接、联合分析和跨域建模
+
+---
+
+## 五、推荐使用指南
+
+### 1. 节点属性与局部查询
+
+- 查询节点属性：`get_node_attributes`
+- 查询 k 跳邻居：`k_hop_neighbors`
+- 查询两个节点共同邻居：`common_neighbors`
+
+### 2. 路径与关系链分析
+
+- 查询两点之间路径：`get_paths_between_two_nodes`
+- 判断两个实体是否存在间接关联：`get_paths_between_two_nodes`
+- 发现共享中介或共同对象：`common_neighbors`
+
+### 3. 子图抽取与局部分析
+
+- 抽取指定节点或边构成的子图：`extract_subgraph`
+- 抽取局部关系圈：`extract_subgraph` + `k_hop_neighbors`
+- 为可视化或算法分析准备小图：`extract_subgraph`
+
+### 4. 图划分与结构压缩
+
+- 按最近中心划分节点区域：`voronoi_cells`
+- 按社区、分组或等价关系压缩图：`quotient_graph`
+
+### 5. 图比较、推理与合并
+
+- 比较两个图的结构差异：`graph_edit_distance`
+- 判断条件变量是否阻断依赖路径：`is_d_separator`
+- 合并两个图结构：`full_join`
+
+### 6. 场景化选型建议
+
+- **想查看节点属性信息**：`get_node_attributes`
+- **想看某节点 k 跳范围内有哪些对象**：`k_hop_neighbors`
+- **想找两个节点的共同好友 / 共同交易对象**：`common_neighbors`
+- **想抽取一个局部子图做可视化**：`extract_subgraph`
+- **想查询两个节点之间如何连接**：`get_paths_between_two_nodes`
+- **想按多个中心划分图上的归属区域**：`voronoi_cells`
+- **想比较两个图结构差异**：`graph_edit_distance`
+- **想把社区或分组压缩成高层图**：`quotient_graph`
+- **想做因果图 / 概率图中的条件独立判断**：`is_d_separator`
+- **想合并两个图进行联合分析**：`full_join`
+
+---
+
+## 六、工程与使用注意事项
+
+1. **k-hop 与路径查询要控制规模**  
+   `k_hop_neighbors` 和 `get_paths_between_two_nodes` 在高平均度图中可能迅速膨胀，建议控制 `k`、路径长度和返回数量。
+
+2. **共同邻居的方向语义要明确**  
+   在有向图中，共同邻居可能表示共同出邻居、共同入邻居或混合邻居。业务解释时需要明确方向口径。
+
+3. **子图抽取建议先限定范围**  
+   使用 `extract_subgraph` 时，建议先通过节点集合、边条件、k-hop 范围或业务标签缩小抽取规模。
+
+4. **图编辑距离适合小图或模式图**  
+   `graph_edit_distance` 计算成本较高，更适合小规模图、模板图或候选结构之间的相似性比较。
+
+5. **商图依赖合理分组**  
+   `quotient_graph` 的结果质量取决于节点划分方式。社区划分、业务分组或等价关系需要在分析前明确。
+
+6. **d-分离适合有向概率图 / 因果图语境**  
+   `is_d_separator` 的解释依赖图模型语义，不应直接用于普通有向关系图的因果结论判断。
+
+7. **图合并前要注意节点命名冲突**  
+   使用 `full_join` 合并两个图时，应确认两个图的节点命名空间是否一致，避免不同实体被误认为同一节点。
 
 ---
 
 ## 七、可直接回答的典型问题
 
-- “找 account_id=ACC_12345 的账户信息”
-- “筛出所有金额>400 的转账”
-- “每个账户的转账次数 Top10”
-- "A 和 B 之间是否存在资金路径（&lt;=5 hop）？"
-- “两个人的共同好友是谁？”
-- “围绕某个可疑账户抽取 2 跳子图用于可视化排查”
-- “抽取指定 5 个账户之间的内部交易网络，判断是否形成团伙”
+- “这个节点有哪些属性？”
+- “某个节点 2 跳以内有哪些邻居？”
+- “两个账户有哪些共同交易对象？”
+- “两个用户是否有共同好友？”
+- “从 A 到 B 有哪些路径？”
+- “围绕某个节点抽取一个局部子图。”
+- “按照这些中心节点，把全图划分成不同覆盖区域。”
+- “两个流程图结构差异有多大？”
+- “把社区压缩成社区级关系图。”
+- “在这个因果图中，Z 是否阻断了 X 到 Y 的依赖关系？”
+- “把两个图合并成一个联合图进行分析。”
+- “这两个图是否只是局部结构不同，还是整体差异很大？”
 
 ---
+
+## 八、算子清单
+
+| 序号 | 算子名称 | 中文说明 |
+|---:|---|---|
+| 1 | `get_node_attributes` | 获取节点属性 |
+| 2 | `k_hop_neighbors` | 查询 K 跳邻居 |
+| 3 | `common_neighbors` | 查询共同邻居 |
+| 4 | `extract_subgraph` | 抽取子图 |
+| 5 | `get_paths_between_two_nodes` | 查询两点之间路径 |
+| 6 | `voronoi_cells` | 图上 Voronoi 区域划分 |
+| 7 | `graph_edit_distance` | 计算图编辑距离 |
+| 8 | `quotient_graph` | 构建商图 |
+| 9 | `is_d_separator` | 判断 d-分离条件 |
+| 10 | `full_join` | 图 Full Join 合并 |

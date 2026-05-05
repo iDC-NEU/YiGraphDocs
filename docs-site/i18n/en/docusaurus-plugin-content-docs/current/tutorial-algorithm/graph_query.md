@@ -1,231 +1,443 @@
 ---
-sidebar_position: 12
+sidebar_position: 15
+title: Graph Query Operator Set
 ---
+
 # Graph Query Operator Set
 
+**Operator Category**: Graph Query (structural retrieval and subgraph operations)
 
-**Operator Category**: Graph Query
+**Number of Algorithms**: 10
 
-**Description**: Graph query tools for querying specific nodes, neighbors, subgraphs, and paths. It provides basic query capabilities for graph data such as node lookup, edge lookup, neighbor lookup, path lookup, subgraph extraction, and aggregate statistics. Suitable for interactive exploratory analysis, business retrieval, risk control investigation, knowledge graph relationship discovery, and visualized data extraction.
-> Different from pure graph algorithms (shortest path, clustering, centrality, etc.): Graph Query is more focused on **data acquisition and filtering**. It is used to quickly locate the "objects/subgraphs to be analyzed" and then hand them over to upper-layer algorithms or business logic for processing.
+**Applicable Stages**: Node attribute query, neighbor expansion, common neighbor discovery, path retrieval, subgraph extraction, graph structure partitioning, graph difference measurement, quotient graph construction, conditional independence testing, graph merging and structural concatenation
 
+**Product Positioning**: Provides foundational graph query and structural manipulation capabilities for "querying node attributes / k-hop neighbors / common neighbors / paths between two nodes / extracting subgraphs / partitioning nodes by nearest center / comparing graph differences / compressing graph structures / testing d-separation / merging graph structures".
 
 ---
-## 1. Overview of the Operator Set
-The Graph Query operator set covers 4 common query modes:
-1. **Node Lookup**
-   - Precisely query a single node (unique key: ID / account_id / name, etc.)
-   - Filter a set of nodes by attribute conditions (age&gt;30, status=completed)
-2. **Relationship/Edge Filter**
-   - Filter edges by relationship type + attribute conditions (amount&gt;400, time range, duration, etc.)
-   - Can directly return aggregate statistics (COUNT / SUM / AVG, etc.)
-3. **Structural Traversal (Neighbors / Paths / Common Neighbors)**
-   - Query 1~k hop neighbors with limited direction and relationship type
-   - Query paths between two nodes (shortest or all paths, constrained by hops)
-   - Query common neighbors (support filtering by relationship attributes)
-4. **Subgraph Extraction**
-   - Form an ego-network by expanding k hops from a central node
-   - Or extract a "transaction subgraph/time window subgraph" by relationship attribute conditions
-   - Or extract an induced subgraph from a given node list (only internal relationships are considered)
+
+## I. Operator Set Overview
+
+The Graph Query operator set focuses on **graph data retrieval, local structure extraction, path querying, structure partitioning, and graph-level operations**, addressing the following key questions:
+
+1. **Node and Attribute Query**
+   - What attributes does a given node have?
+   - Can business fields, labels, or metadata be retrieved in batch for nodes?
+   - How can node attribute information be provided for subsequent filtering, visualization, or analysis?
+
+2. **Neighbor and Local Structure Query**
+   - Which nodes are within k hops of a given node?
+   - Do two nodes share common neighbors?
+   - How can local relationship circles or potential associated objects be quickly identified?
+
+3. **Path and Relationship Chain Query**
+   - Does a path exist between two nodes?
+   - What are the reachable paths between two nodes?
+   - How can the association chain between two entities be explained?
+
+4. **Subgraph Extraction and Structure Partitioning**
+   - How can a subgraph consisting of specified nodes or edges be extracted from the original graph?
+   - How can a graph be partitioned into different Voronoi regions based on a set of center nodes?
+   - How can a graph be compressed into a quotient graph according to node groupings?
+
+5. **Graph Structure Comparison, Reasoning, and Merging**
+   - How large is the edit distance between two graphs?
+   - In directed probabilistic graphs or causal graphs, are certain nodes d-separated?
+   - How can two graphs be merged via a full join to form a combined structure?
+
 ---
-## 2. Operator List
-| Operator | Core Capability |
-|---|---|
-| `node_lookup` | Precisely query nodes by label + unique key; or filter nodes by attribute conditions |
-| `relationship_filter` | Filter edges by rel_type + attribute conditions; support aggregate statistics |
-| `aggregation_query` | Group aggregate statistics (group by node/attribute, COUNT/SUM/AVG/…) |
-| `neighbor_query` | k-hop neighbor traversal (can limit rel_type / direction, return edge fields) |
-| `path_query` | Path query between two nodes (can limit relationship type, direction, min/max hops) |
-| `common_neighbor` | Common neighbors of two nodes (can limit rel_type / direction / filter by edge attributes) |
-| `subgraph` | Subgraph extraction: central node expansion mode / relationship filter mode |
-| `subgraph_by_nodes` | Extract induced subgraph by node list (optional internal edges only) |
+
+## II. Operator Capability Classification
+
+| Capability Type               | Corresponding Operator            | Description                                                              |
+|-------------------------------|------------------------------------|--------------------------------------------------------------------------|
+| Node Attribute Query          | `get_node_attributes`              | Retrieve specified attributes of nodes in the graph.                     |
+| K-hop Neighbor Query          | `k_hop_neighbors`                  | Query neighbors within k hops of a given node.                          |
+| Common Neighbor Query         | `common_neighbors`                 | Query common neighbors of two nodes.                                    |
+| Subgraph Extraction           | `extract_subgraph`                 | Extract a subgraph based on node or edge conditions.                    |
+| Path Query Between Two Nodes  | `get_paths_between_two_nodes`      | Query paths between two nodes.                                          |
+| Voronoi Partition             | `voronoi_cells`                    | Partition the graph into nearest-node regions around center nodes.      |
+| Graph Edit Distance           | `graph_edit_distance`              | Measure the edit distance between two graphs.                           |
+| Quotient Graph Construction   | `quotient_graph`                   | Compress graph structure based on node groupings or equivalence.        |
+| d-separation Test             | `is_d_separator`                   | Determine whether a node set d-separates two other sets in a DAG.       |
+| Graph Full Join               | `full_join`                        | Merge two graphs via a full join operation.                             |
+
 ---
-## 3. General Input and Output Conventions
-### 3.1 Input
-- **label / start_label / end_label**: Specify node types in a heterogeneous graph (e.g., `Account` / `Person` / `Paper`)
-- **key / value / values**: Locate nodes by attributes (e.g., `account_id=ACC_12345`)
-- **rel_type**: Relationship type (e.g., `TRANSFER` / `FRIEND` / `CITES`)
-- **direction**: Direction (`OUTGOING` / `INCOMING` / `BOTH`)
-- **conditions / rel_conditions**: Attribute filter conditions (support multi-condition combination and comparison operations)
-- **return_fields**: List of returned fields (used to reduce transmission and avoid information loss)
-- **hops / min_hops / max_hops / limit / limit_paths**: Control search depth and scale
-### 3.2 Output
-- `node_lookup`: Single node or node list
-- `relationship_filter`: Relationship list or aggregate value
-- `aggregation_query`: Group aggregate result list (group_key + aggregated_value)
-- `neighbor_query`: Neighbor node/edge information or path structure (depending on return_fields and implementation)
-- `path_query`: Path list (usually node sequence or node+edge structure)
-- `common_neighbor`: Common neighbor node list (can be attached with fields)
-- `subgraph / subgraph_by_nodes`: Subgraph (including nodes and relationships)
+
+## III. General Input/Output Conventions
+
+- **Input `G`**: NetworkX Graph / DiGraph
+- **Common Input Parameters**:
+  - `node` / `source` / `target`: Query start, end, or target node
+  - `nodes`: Node set for attribute query, subgraph extraction, or grouping
+  - `attribute` / `name`: Node attribute name
+  - `k` / `cutoff`: Hop count or path search depth limit
+  - `center_nodes`: Set of center nodes for Voronoi partitioning
+  - `partition`: Node grouping for quotient graph construction
+  - `X` / `Y` / `Z`: Node sets for d-separation test
+  - `G1` / `G2`: Two input graphs for comparison or merging
+- **Common Output Types**:
+  - Attribute query: `dict[node → attribute_value]`
+  - Neighbor query: `set(node)` or list of nodes
+  - Path query: list of paths
+  - Subgraph: `NetworkX Graph`
+  - Structure partition: `dict[center_node → set(nodes)]`
+  - Graph difference: numeric distance
+  - Boolean test: `bool`
+  - Graph merge: merged `NetworkX Graph`
+
 ---
-## 4. Detailed Operator Descriptions
-### 4.1 node_lookup — Node Lookup (Precise Node Query / Conditional Node Filter)
-#### Function Description
-Supports two modes:
-- **Single node precise query**: `label + key + value`
-- **Multi-node conditional filter**: `label + conditions`
-#### Parameter Key Points
-- **return_fields**: It is recommended to only retrieve necessary fields to reduce IO overhead
-- **conditions**: Support numerical comparison (`>`, `<`, `>=`, `<=`, `==`, `!=`) and string matching
-#### Principle and Complexity
-- Unique key node lookup: Positioning via index/hash, approximately `O(1)`
-- Conditional filtering: Scanning is the main method without index, approximately `O(n)`
-#### Answerable Questions
-- Find the account node with `account_id = "ACC_12345"`
-- List all users with `age > 30`
-- Query all customers living in US with state `VT`
-### 4.2 relationship_filter — Relationship Filter (Edge Filter + Aggregation Supported)
-#### Function Description
-Filter edges by **relationship type** (required), and can further specify:
-- Start/end node label
-- Relationship attribute conditions (amount, time, duration, tag, etc.)
-- Aggregate statistics (COUNT/SUM/AVG/MAX/MIN)
-#### Parameter Key Points
-- **rel_conditions**: Support multi-condition combination (AND/OR logic is agreed by implementation)
-- **aggregate**: It is recommended to enable when only statistical results are concerned to avoid returning massive edges
-- **return_fields**: Return transaction fields you care about (amount, timestamp, is_sar…)
-#### Principle and Complexity
-- Scan and filter relationships of the specified type: `O(m)` (m is the number of relationships of the rel_type)
-#### Answerable Questions
-- Find all transactions with `amount > 400`
-- List the count of transactions where `is_sar` is False
-- Calculate the total amount of all outgoing transactions
-### 4.3 aggregation_query — Group Aggregate Statistics
-#### Function Description
-Provides GROUP BY + aggregation capabilities for graph data, used for:
-- Counting (COUNT)
-- Summation/mean/extreme value (SUM/AVG/MAX/MIN)
-Supports grouping by:
-- **Node label** (per entity)
-- **Attribute** (per category)
-#### Parameter Key Points
-- **aggregate_type**: COUNT / SUM / AVG / MAX / MIN (required)
-- **aggregate_field**: Required for SUM/AVG/MAX/MIN
-- **group_by_node / group_by_property**: Determine the statistical dimension
-- **direction / rel_type**: Limit the scope of relationships involved in statistics
-#### Principle and Complexity
-- Traverse relevant nodes/edges and perform group aggregation: `O(n + m)` (related to the scale of data involved in statistics)
-#### Answerable Questions
-- Count the number of transactions per account
-- Calculate the total amount of outgoing transactions per account
-- Find the top 10 accounts with the most transactions
-### 4.4 neighbor_query — Neighbor Query (k-hop)
-#### Function Description
-Perform **k-hop neighbor expansion** (BFS) starting from the specified node:
-- 1-hop: Direct neighbors
-- 2-hop: Friends of friends / Counterpart's counterparts in transactions
-- 3-hop+: Larger scope of relationship circles (beware of scale explosion)
-#### Parameter Key Points
-- **hops**: Control expansion depth (default 1)
-- **rel_type / direction**: Strongly recommended to constrain the scale
-- **return_fields**: Return edge details (avoid information loss especially when hops=1)
-#### Principle and Complexity
-- BFS expansion, worst case approximately `O(d^k)` (d is the average degree, k is the number of hops)
-#### Answerable Questions
-- Query neighbors of Collins Steven
-- Find all 2-hop neighbors of user Alice
-- Find all accounts that Collins Steven has transferred money to
-### 4.5 path_query — Path Query (How Two Nodes Are Connected)
-#### Function Description
-Query the connection paths between two nodes, which can be used for:
-- Fund flow tracing
-- Citation chain tracing
-- Social relationship discovery
-Supports restrictions on:
-- Relationship type (only TRANSFER, etc.)
-- Direction (OUTGOING/INCOMING/BOTH)
-- Min/max hops (control search space)
-#### Parameter Key Points
-- **max_hops**: Strongly recommended to set to avoid full graph scale explosion
-- **min_hops**: Used to exclude direct connections (for viewing "indirect relationships")
-- **rel_type**: Limit to specific relationship types to improve semantic accuracy and performance
-#### Principle and Complexity
-- Shortest path: Typically `O(V+E)`
-- Enumerate all paths: May be exponential (the denser the graph, the higher the risk)
-#### Answerable Questions
-- Find the path from Collins Steven to Nunez Mitchell
-- Find all paths between two companies within 5 hops
-- Trace the shortest supply chain path from supplier to customer
-### 4.6 common_neighbor — Common Neighbor Query (Mutual Acquaintances / Shared Transaction Counterparts)
-#### Function Description
-Return the set of nodes connected to both v1 and v2 (intersection of neighbor sets), used for:
-- Mutual associated objects (Mutual friends)
-- Potential collusion/conspiracy detection (Shared transaction partners)
-- Basic features for similarity and link prediction
-#### Parameter Key Points
-- **rel_conditions**: Can further filter the "edges involved in common neighbors" (e.g., amount&gt;400)
-- **direction / rel_type**: Determine the business semantics of "common neighbors" (mutual incoming parties/mutual outgoing parties/mutual friends)
-#### Principle and Complexity
-- Take the intersection of neighbor sets: `O(d1 + d2)` (sum of the degrees of the two nodes)
-#### Answerable Questions
-- Identify mutual friends between user A and user B
-- Find common transaction partners of two accounts
-- Find common transaction neighbors where transaction amounts are all greater than 400
-### 4.7 subgraph — Subgraph Extraction (Two Modes)
-#### Function Description
-Provides two extraction methods:
-**Mode 1: Central Node Expansion (ego network)**
-- Input: `label/key/value + hops (+ rel_type/direction)`
-- Output: k-hop subgraph centered on the node (can be used for visualization and local analysis)
-**Mode 2: Extraction by Relationship Filter (slice by edge filter)**
-- Input: `rel_type + rel_conditions (+ start_label/end_label) + limit`
-- Output: Subgraph consisting of all qualified relationships and their endpoints (e.g., "all transfer subgraphs in a certain month")
-#### Parameter Key Points
-- **limit_paths / limit**: Control the scale (especially in visualization/interactive scenarios)
-- **rel_conditions**: Used for time window/amount window filtering
-- **direction**: Particularly important in fund flow/citation chain scenarios
-#### Principle and Complexity
-- Mode 1: `O(d^k)` (grows with the number of hops)
-- Mode 2: `O(m)` (m is the number of matching relationships)
-#### Answerable Questions
-- Extract subgraph around Collins Steven within 2 hops
-- Extract subgraph of all transactions on 2025-05-01
-- Extract subgraph of transactions with amounts between 300 and 500
-### 4.8 subgraph_by_nodes — Extract Induced Subgraph by Node List
-#### Function Description
-Given a set of nodes (specified by `label + key + values`), extract the relationship subgraph between them:
-- **include_internal=True (default)**: Only include internal edges between these nodes (most commonly used)
-- **include_internal=False**: May include edges to external nodes (subject to implementation agreement)
-#### Parameter Key Points
-- **rel_type / direction**: It is recommended to specify in multi-relationship type scenarios
-- **include_internal**: Used to control whether to "only view intra-group relationships"
-#### Principle and Complexity
-- Retrieve specified nodes + filter edges between them: `O(n + m)` (n is the number of nodes, m is the number of intra-group edges)
-#### Answerable Questions
-- Extract accounts A, B, C and their transfer relationships
-- Analyze transaction network among 5 suspicious accounts
-- Find all relationships among a set of companies
+
+## IV. Detailed Operator Descriptions
+
+### 1. get_node_attributes – Node Attribute Query
+
+**Description**  
+Retrieves specified attributes of nodes in the graph and returns a mapping from nodes to attribute values.
+
+**Product Value**
+- Quickly read node business fields
+- Support node labeling, coloring, sizing for graph visualization
+- Serve as basic input for filtering, grouping, statistics, and subsequent algorithmic analysis
+
+**Typical Scenarios**
+- Query risk level of account nodes
+- Query age, region, or tags of user nodes
+- Query year, field, or author information of paper nodes
+- Set node colors or groups for visualization
+- Extract node metadata before graph analysis
+
+**Applicability & Characteristics**
+- Graph type: Directed / Undirected
+- Input: Graph `G`, attribute name
+- Output: `dict[node → attribute_value]`
+- Features: Data‑reading oriented, suitable for graph query and pre‑visualization processing
+
 ---
-## 5. Selection Guide (How to Choose)
-- **Query a single entity (by ID / account_id)**: `node_lookup` (key+value)
-- **Filter a set of entities by attributes**: `node_lookup` (conditions)
-- **Filter transaction/communication records by edge attributes**: `relationship_filter`
-- **Directly generate statistical reports/rankings**: `aggregation_query`
-- **View the local relationship circle of a node (k-hop)**: `neighbor_query`
-- **Query how two nodes are associated (paths)**: `path_query` (be sure to set max_hops)
-- **Query mutual friends/mutual counterparts/shared suppliers**: `common_neighbor`
-- **Extract a subgraph for visualization/analysis**: `subgraph` (central expansion or relationship filter)
-- **Specify a set of nodes to view intra-group relationships**: `subgraph_by_nodes`
+
+### 2. k_hop_neighbors – K‑Hop Neighbor Query
+
+**Description**  
+Starting from a given node, returns the set of nodes reachable within k hops.
+
+**Product Value**
+- Quickly expand the relationship circle around a node
+- Support local influence scope, relationship diffusion, and discovery of potential associated objects
+- Essential precursor for local graph exploration and subgraph extraction
+
+**Typical Scenarios**
+- Query 2‑hop trading counterparties of an account
+- Query friends and friends‑of‑friends of a user
+- Query dependent nodes around a device
+- Query concept nodes near an entity in a knowledge graph
+- Query associated objects around a risky node
+
+**Applicability & Characteristics**
+- Graph type: Directed / Undirected
+- Input: Start node, hop count `k`
+- Output: Set of neighbor nodes
+- Note: High‑order k‑hop queries can expand rapidly; control hop count and result size.
+
 ---
-## 6. Engineering Considerations and Common Pitfalls
-1. **Path and k-hop queries are most prone to scale explosion**
-   - It is recommended to always set: `max_hops` / `hops`、`rel_type`、`direction`、`limit/limit_paths`
-2. **Prioritize aggregation (do not retrieve details unless necessary)**
-   - As long as the result is a statistical value/TopK, prioritize using `relationship_filter(aggregate=...)` or `aggregation_query`
-3. **return_fields is the key to performance**
-   - Avoid returning all fields of the entire edge/node, especially for large graphs and multi-attribute graphs
-4. **direction affects semantics**
-   - In scenarios such as fund flow/citation chains, OUTGOING and INCOMING have completely different business meanings
-5. **Unify the data types of conditional fields**
-   - It is recommended to unify the timestamp/date format for time fields
-   - Avoid storing numerical fields as strings leading to comparison errors
+
+### 3. common_neighbors – Common Neighbor Query
+
+**Description**  
+Returns the set of neighbors shared by two nodes.
+
+**Product Value**
+- Discover common relationship basis between two entities
+- Support friend recommendation, similarity analysis, and hidden relationship discovery
+- Serve as basic features for link prediction and relationship strength assessment
+
+**Typical Scenarios**
+- Query common friends of two persons
+- Query common trading counterparties of two accounts
+- Query shared suppliers or customers of two companies
+- Query co‑cited literature of two papers
+- Query whether two risky objects have a common intermediary
+
+**Applicability & Characteristics**
+- Graph type: Typically undirected
+- Input: Two nodes `u`, `v`
+- Output: Set of common neighbor nodes
+- Features: Suitable for local structure query and relationship explanation
+
 ---
-## 7. Typical Answerable Questions
-- "Find the account information of account_id=ACC_12345"
-- "Filter all transfers with amount&gt;400"
-- "Top 10 accounts by the number of transfers per account"
-- "Is there a fund path between A and B (&lt;=5 hop)?"
-- "Who are the mutual friends of two people?"
-- "Extract a 2-hop subgraph around a suspicious account for visual investigation"
-- "Extract the internal transaction network among 5 specified accounts to judge whether a gang is formed"
+
+### 4. extract_subgraph – Subgraph Extraction
+
+**Description**  
+Extracts a new subgraph from the original graph based on specified nodes, edges, or conditions.
+
+**Product Value**
+- Break a large graph into smaller, analyzable and visualizable pieces
+- Support local structure analysis, visual data sampling, and preprocessing for algorithms
+- Facilitate precise inspection around target objects
+
+**Typical Scenarios**
+- Extract a transaction subgraph around suspicious accounts
+- Extract internal relationships among a set of nodes
+- Extract a subgraph corresponding to a community or group
+- Extract a topic fragment from a knowledge graph
+- Prepare local graphs for path analysis, community detection, or visualization
+
+**Applicability & Characteristics**
+- Graph type: Directed / Undirected
+- Input: Node set, edge set, or extraction condition
+- Output: `NetworkX Graph`
+- Features: Suitable for cutting business‑relevant structures from large graphs
+
 ---
+
+### 5. get_paths_between_two_nodes – Path Query Between Two Nodes
+
+**Description**  
+Queries paths between two nodes to determine reachability and the intermediate nodes connecting them.
+
+**Product Value**
+- Explain the relationship chain between two nodes
+- Support path tracing in fund chains, citation chains, supply chains, social chains, etc.
+- Help discover indirect associations and hidden relationships
+
+**Typical Scenarios**
+- Query whether a fund path exists between two accounts
+- Query the supply chain path between two companies
+- Query the social connection chain between two users
+- Query the citation path between two papers
+- Query intermediate nodes linking risky objects
+
+**Applicability & Characteristics**
+- Graph type: Directed / Undirected
+- Input: Start node, end node, path length limit
+- Output: List of paths
+- Note: Enumerating all paths may cause combinatorial explosion; set max path length or result count limits.
+
+---
+
+### 6. voronoi_cells – Voronoi Node Partitioning
+
+**Description**  
+Given a set of center nodes, assigns every other node in the graph to the nearest center node, forming graph Voronoi cells.
+
+**Product Value**
+- Support node‑to‑nearest‑center assignment
+- Enable analysis of service coverage, influence regions, and nearest belonging
+- Suitable for spatially or topologically partitioning a graph by multiple centers
+
+**Typical Scenarios**
+- Partition coverage areas of multiple service centers
+- Analyze influence regions of multiple core nodes
+- Partition road networks by nearest stations
+- Partition social networks by core users
+- Partition knowledge graph entities by topic centers
+
+**Applicability & Characteristics**
+- Graph type: Directed / Undirected
+- Input: Set of center nodes
+- Output: `dict[center_node → set(nodes)]`
+- Features: Region partitioning based on graph distance
+
+---
+
+### 7. graph_edit_distance – Graph Edit Distance
+
+**Description**  
+Computes the edit distance between two graphs – the cost of transforming one graph into the other via node/edge insertions, deletions, or substitutions.
+
+**Product Value**
+- Measure structural differences between two graphs
+- Support graph structure similarity comparison and pattern matching
+- Enable anomaly structure detection, template matching, and graph clustering
+
+**Typical Scenarios**
+- Compare similarity between two flowcharts
+- Determine whether two fraud group structures are similar
+- Compare differences between two molecular structures
+- Detect anomalous changes in network structure
+- Compute similarity between graph samples
+
+**Applicability & Characteristics**
+- Graph type: Directed / Undirected
+- Input: Two graphs `G1`, `G2`
+- Output: Numeric edit distance
+- Note: Graph edit distance is computationally expensive; use with care on large graphs.
+
+---
+
+### 8. quotient_graph – Quotient Graph Construction
+
+**Description**  
+Compresses the original graph into a quotient graph based on node groupings, equivalence relations, or partitions. Each node in the quotient graph typically represents a set of nodes in the original graph.
+
+**Product Value**
+- Compress a complex graph into a higher‑level structure
+- Support community‑level, group‑level, or module‑level relationship analysis
+- Facilitate macroscopic observation of graph structure
+
+**Typical Scenarios**
+- Compress communities into a community relationship graph
+- Compress department members into a department relationship graph
+- Compress a city road network into a regional relationship graph
+- Generate a topic graph after grouping knowledge graph entities
+- Produce structural summaries and hierarchical models of large graphs
+
+**Applicability & Characteristics**
+- Graph type: Directed / Undirected
+- Input: Node partition or equivalence relation
+- Output: `NetworkX Graph` (quotient graph)
+- Features: Suitable for graph compression, structural summarization, and macro‑level analysis
+
+---
+
+### 9. is_d_separator – d‑separation Test
+
+**Description**  
+Determines whether node set `Z` d‑separates node set `X` from node set `Y` in a directed graph. Commonly used in directed probabilistic graphs, Bayesian networks, and causal graphs for conditional independence testing.
+
+**Product Value**
+- Support conditional independence reasoning on graph structures
+- Enable causal analysis and interpretation of probabilistic graphical models
+- Help determine whether a given conditioning set blocks dependency paths between two variable sets
+
+**Typical Scenarios**
+- Conditional independence testing in Bayesian networks
+- Confounder analysis in causal graphs
+- Determine whether control variables block causal paths
+- Validate probabilistic graphical model structures
+- Explain variable dependency relationships
+
+**Applicability & Characteristics**
+- Graph type: Typically directed acyclic graphs (DAGs)
+- Input: Node sets `X`, `Y`, `Z`
+- Output: `bool`
+- Features: Geared toward graph reasoning and structural conditional independence analysis
+
+---
+
+### 10. full_join – Graph Full Join
+
+**Description**  
+Performs a full join operation on two graphs, producing a combined structure containing nodes and edges from both graphs, with optional connections between nodes of the two graphs.
+
+**Product Value**
+- Support structural merging and concatenation of graphs
+- Enable construction of combined graphs, cross‑graph relationship graphs, or experimental graph structures
+- Suitable for scenarios that require bringing two independent graphs into a single analysis space
+
+**Typical Scenarios**
+- Merge relationship networks from two sources
+- Build a joint graph across business domains
+- Combine a user graph and a product graph for joint analysis
+- Combine two subgraphs for structural experiments
+- Construct an overall network with cross‑graph connections
+
+**Applicability & Characteristics**
+- Graph type: Directed / Undirected
+- Input: Two graphs `G1`, `G2`
+- Output: Merged graph
+- Features: Suitable for graph concatenation, joint analysis, and cross‑domain modeling
+
+---
+
+## V. Recommended Usage Guide
+
+### 1. Node Attribute & Local Query
+
+- Query node attributes: `get_node_attributes`
+- Query k‑hop neighbors: `k_hop_neighbors`
+- Query common neighbors: `common_neighbors`
+
+### 2. Path & Relationship Chain Analysis
+
+- Query paths between two nodes: `get_paths_between_two_nodes`
+- Determine indirect association: `get_paths_between_two_nodes`
+- Discover shared intermediaries or common objects: `common_neighbors`
+
+### 3. Subgraph Extraction & Local Analysis
+
+- Extract subgraph defined by nodes/edges: `extract_subgraph`
+- Extract local relationship circles: `extract_subgraph` + `k_hop_neighbors`
+- Prepare small graphs for visualization or algorithmic analysis: `extract_subgraph`
+
+### 4. Graph Partitioning & Structure Compression
+
+- Partition nodes by nearest center: `voronoi_cells`
+- Compress graph by communities, groups, or equivalence: `quotient_graph`
+
+### 5. Graph Comparison, Reasoning & Merging
+
+- Compare structural differences: `graph_edit_distance`
+- Test conditional independence: `is_d_separator`
+- Merge two graphs: `full_join`
+
+### 6. Scenario‑based Selection Recommendations
+
+- **View node attributes** → `get_node_attributes`
+- **Find nodes within k hops of a node** → `k_hop_neighbors`
+- **Find common friends / common trading objects of two nodes** → `common_neighbors`
+- **Extract a local subgraph for visualization** → `extract_subgraph`
+- **Find how two nodes are connected** → `get_paths_between_two_nodes`
+- **Partition the graph by multiple centers** → `voronoi_cells`
+- **Compare structural differences between two graphs** → `graph_edit_distance`
+- **Compress communities into a higher‑level graph** → `quotient_graph`
+- **Test conditional independence in causal / probabilistic graphs** → `is_d_separator`
+- **Merge two graphs for joint analysis** → `full_join`
+
+---
+
+## VI. Engineering and Usage Considerations
+
+1. **Control scale in k‑hop and path queries**  
+   `k_hop_neighbors` and `get_paths_between_two_nodes` can explode quickly in high‑average‑degree graphs. Limit `k`, path length, and result counts.
+
+2. **Clarify direction semantics for common neighbors**  
+   In directed graphs, “common neighbors” may refer to common out‑neighbors, common in‑neighbors, or mixed. Clearly define the direction according to business logic.
+
+3. **Limit scope before subgraph extraction**  
+   When using `extract_subgraph`, first narrow down the set of nodes, edges, k‑hop range, or business tags.
+
+4. **Graph edit distance is suitable for small or pattern graphs**  
+   `graph_edit_distance` is computationally expensive; prefer small graphs, templates, or candidate structures.
+
+5. **Quotient graph quality depends on grouping**  
+   The result of `quotient_graph` is only as good as the node partition. Define community partitions, business groupings, or equivalence relations clearly.
+
+6. **d‑separation is meaningful in directed probabilistic / causal graph contexts**  
+   The interpretation of `is_d_separator` relies on graphical model semantics. Do not apply it to ordinary directed relationship graphs for causal conclusions.
+
+7. **Check for node name conflicts before merging graphs**  
+   When using `full_join`, ensure that the node namespaces of the two graphs are compatible to avoid mistakenly identifying distinct entities as the same node.
+
+---
+
+## VII. Typical Questions That Can Be Directly Answered
+
+- “What attributes does this node have?”
+- “Which nodes are within 2 hops of a given node?”
+- “What common trading objects do two accounts have?”
+- “Do two users have common friends?”
+- “What paths exist from A to B?”
+- “Extract a local subgraph around a node.”
+- “Partition the whole graph into coverage regions around these center nodes.”
+- “How structurally different are two flowcharts?”
+- “Compress communities into a community‑level relationship graph.”
+- “In this causal graph, does Z d‑separate X from Y?”
+- “Merge two graphs into a joint graph for analysis.”
+- “Are these two graphs only locally different, or globally very different?”
+
+---
+
+## VIII. Operator List
+
+| No. | Operator Name                    | Description                                       |
+|-----|----------------------------------|---------------------------------------------------|
+| 1   | `get_node_attributes`            | Retrieve node attributes                         |
+| 2   | `k_hop_neighbors`                | Query k‑hop neighbors                            |
+| 3   | `common_neighbors`               | Query common neighbors                           |
+| 4   | `extract_subgraph`               | Extract subgraph                                 |
+| 5   | `get_paths_between_two_nodes`    | Query paths between two nodes                    |
+| 6   | `voronoi_cells`                  | Graph Voronoi region partitioning                |
+| 7   | `graph_edit_distance`            | Compute graph edit distance                      |
+| 8   | `quotient_graph`                 | Construct quotient graph                         |
+| 9   | `is_d_separator`                 | Test d‑separation condition                      |
+| 10  | `full_join`                      | Graph full join merge                            |

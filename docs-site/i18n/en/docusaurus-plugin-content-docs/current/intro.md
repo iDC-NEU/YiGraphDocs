@@ -85,28 +85,31 @@ Instead, it centers on "verifiable algorithm modules" for invocation and combina
 
 #### Rich Graph Algorithm Library
 
-YiGraph has built-in **93 professional graph algorithms**, covering **10 major categories**, providing powerful algorithm support for various graph analysis scenarios:
+YiGraph provides **212 professional graph algorithms** across **21 major categories**, offering powerful algorithmic support for graph analysis, network modeling, structural mining, path computation, community detection, graph querying, and graph neural network scenarios.
 
 | Algorithm Category | Number of Algorithms | Core Capabilities |
-|---------|---------|---------|
-| **Basics** | 10 | Graph structure determination, basic traversal, topological sorting, dependency analysis |
-| **Path** | 13 | Shortest path, Eulerian path, DAG longest path, reachability determination |
-| **Centrality** | 14 | Key node identification, influence assessment, bridge location, seed selection |
-| **Connectivity & Components** | 13 | Connected components, strongly connected components, cut vertices/edges, network robustness |
-| **Clustering & Community** | 17 | Community detection, clustering coefficient, cycle detection, gang identification |
-| **Tree & Spanning Tree** | 3 | Minimum/maximum spanning tree, network skeleton extraction |
-| **Flow & Cut** | 5 | Maximum flow, minimum cut, capacity planning, bottleneck analysis |
-| **Matching & Coloring** | 6 | Optimal matching, resource allocation, conflict detection |
-| **Cliques & Cores** | 4 | Tight group discovery, core member identification, k-core analysis |
-| **Distance & Measures** | 8 | Network diameter, center/periphery, assortativity coefficient, compactness analysis |
-
-These algorithms cover the full process requirements from basic graph operations to advanced network analysis, and can support:
-- **Relationship chain analysis**: Shortest path, dependency chain, fund flow tracking
-- **Key node identification**: PageRank, betweenness centrality, influence assessment
-- **Gang/community discovery**: Louvain, Leiden, label propagation, k-clique
-- **Network robustness**: Connectivity analysis, cut vertices/edges, minimum cut
-- **Capacity and flow**: Maximum flow, minimum cut, bottleneck identification
-- **Structural insights**: Clustering coefficient, assortativity, network diameter
+|---------|---------:|---------|
+| **Basics** | 15 | Graph structure validation, basic traversal, topological sorting, isomorphism detection, planarity and tournament graph checks |
+| **Path** | 19 | Shortest paths, multi-source paths, DAG longest paths, reachability analysis, Eulerian/Hamiltonian paths and cycles |
+| **Centrality** | 21 | Key node identification, influence evaluation, bridge node detection, propagation capability analysis, hierarchy and importance measurement |
+| **Connectivity & Components** | 17 | Connected components, strongly/weakly connected components, articulation points/bridges, bridging structures, network robustness analysis |
+| **Clustering & Community** | 23 | Community detection, clustering coefficients, triangle relationships, cycle detection, modularity evaluation, graph partition quality analysis |
+| **Tree & Spanning Tree** | 9 | Minimum/maximum/random spanning trees, tree structure analysis, lowest common ancestor, chordal graphs and treewidth estimation |
+| **Dominance** | 2 | Dominance relationship analysis in directed graphs, control-flow graph analysis, dominance frontier computation |
+| **Flow & Cut** | 7 | Maximum flow, augmenting paths, preflow-push, capacity scaling, Gomory-Hu trees, edge/node boundary analysis |
+| **Link Prediction** | 11 | Missing edge prediction, similarity evaluation, neighbor relationship modeling, community-aware link prediction |
+| **Matching & Coloring** | 10 | Optimal matching, edge cover, matching validity checks, graph coloring, resource allocation and conflict detection |
+| **Graph Matching** | 2 | Subgraph pattern matching, structural containment analysis, tree isomorphism recognition |
+| **Graph Polynomials** | 1 | Graph invariant computation, Tutte polynomial, combinatorial structure counting |
+| **Cliques & Cores** | 8 | Maximum clique/weighted clique detection, k-core/k-truss analysis, independent sets, dominating sets, onion decomposition |
+| **Distance & Measures** | 24 | Network diameter, radius, center/periphery, assortativity, efficiency, redundancy, reciprocity and overall structural metrics |
+| **Graph Query** | 10 | Node attribute queries, k-hop neighbors, common neighbors, subgraph extraction, path queries and graph edit distance |
+| **Directed Acyclic Graphs, DAG** | 4 | DAG acyclicity checks, antichain analysis, collider structures and v-structure identification |
+| **Bipartite** | 1 | Bipartite graph recognition and structural validation |
+| **Graph Hashing** | 1 | Graph structure hashing, canonical representation, Weisfeiler-Lehman graph hashing |
+| **Small-world** | 1 | Small-world reference graph generation, random rewiring and network baseline comparison |
+| **Sparsifiers** | 1 | Graph backbone preservation, low-density approximation, spanner-based sparsification |
+| **Graph Neural Networks** | 25 | GCN, GraphSAGE, GAT, TransformerConv, heterogeneous graph convolution and graph representation learning |
 
 > For detailed algorithm descriptions and usage guides, please refer to the [Algorithm Documentation](./tutorial-algorithm/basic.md)
 
