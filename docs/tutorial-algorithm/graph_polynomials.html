@@ -1,0 +1,194 @@
+<!doctype html><html lang=zh-CN dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-tutorial-algorithm/graph_polynomials" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Graph Polynomials 图多项式算子集 | YiGraph Documentation</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:url content=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/graph_polynomials /><meta data-rh=true property=og:locale content=zh_CN /><meta data-rh=true property=og:locale:alternate content=en_US /><meta data-rh=true name=docusaurus_locale content=zh-CN /><meta data-rh=true name=docsearch:language content=zh-CN /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Graph Polynomials 图多项式算子集 | YiGraph Documentation"/><meta data-rh=true name=description content="算子类别：Graph Polynomials（图多项式不变量与组合计数分析）"/><meta data-rh=true property=og:description content="算子类别：Graph Polynomials（图多项式不变量与组合计数分析）"/><link data-rh=true rel=icon href=/YiGraphDocs/img/favicon.ico /><link data-rh=true rel=canonical href=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/graph_polynomials /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/graph_polynomials hreflang=zh-CN /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/graph_polynomials hreflang=en-US /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/graph_polynomials hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/graph_polynomials","name":"Graph Polynomials 图多项式算子集","position":1}]}</script><link rel=stylesheet href=/YiGraphDocs/assets/css/styles.74348a64.css /><script src=/YiGraphDocs/assets/js/runtime~main.4d70087d.js defer></script><script src=/YiGraphDocs/assets/js/main.2e0cef14.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ea2")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/YiGraphDocs/><b class="navbar__title text--truncate">YiGraph中文文档</b></a><a class="navbar__item navbar__link" href=/YiGraphDocs/docs/intro>开发者指南</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href=# aria-haspopup=true aria-expanded=false role=button class=navbar__link><svg viewBox="0 0 24 24" width=20 height=20 aria-hidden=true class=iconLanguage_nlXk><path fill=currentColor d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>简体中文</a><ul class=dropdown__menu><li><a href=/YiGraphDocs/docs/tutorial-algorithm/graph_polynomials target=_self rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang=zh-CN>简体中文</a><li><a href=/YiGraphDocs/en/docs/tutorial-algorithm/graph_polynomials target=_self rel="noopener noreferrer" class=dropdown__link lang=en-US>English</a></ul></div><a href=https://github.com/iDC-NEU/YiGraph target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/docs/intro><span title=基本信息 class=categoryLinkLabel_W154>基本信息</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/intro><span title=简介 class=linkLabel_WmDU>简介</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/docs/tutorial-basics/create-a-page><span title=从这里开始 class=categoryLinkLabel_W154>从这里开始</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-basics/create-a-page><span title="YiGraph 安装与使用指南" class=linkLabel_WmDU>YiGraph 安装与使用指南</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-basics/windows-deploy><span title="YiGraph Windows 本地部署指南" class=linkLabel_WmDU>YiGraph Windows 本地部署指南</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/docs/tutorial-extras/getting-started-cases><span title=上手案例 class=categoryLinkLabel_W154>上手案例</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-extras/getting-started-cases><span title=用户上手案例 class=linkLabel_WmDU>用户上手案例</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-extras/normal-mode><span title=案例1.normal-mode class=linkLabel_WmDU>案例1.normal-mode</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-extras/interact-mode><span title=案例2.interact-mode class=linkLabel_WmDU>案例2.interact-mode</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-extras/expert-mode><span title=案例3.expert-mode class=linkLabel_WmDU>案例3.expert-mode</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/YiGraphDocs/docs/tutorial-algorithm/basic><span title=专用算子 class=categoryLinkLabel_W154>专用算子</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/basic><span title="Basics 基础算子集" class=linkLabel_WmDU>Basics 基础算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/path><span title="Path 路径算子集" class=linkLabel_WmDU>Path 路径算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/centrality><span title="Centrality 中心性与关键性算子集" class=linkLabel_WmDU>Centrality 中心性与关键性算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/Connectivity_Components><span title="Connectivity & Components 连通性与组件算子集" class=linkLabel_WmDU>Connectivity & Components 连通性与组件算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community><span title="Clustering & Community 聚类与社区算子集" class=linkLabel_WmDU>Clustering & Community 聚类与社区算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/tree><span title="Tree & Spanning Tree 树与生成树算子集" class=linkLabel_WmDU>Tree & Spanning Tree 树与生成树算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/Dominance><span title="Dominance 支配关系算子集" class=linkLabel_WmDU>Dominance 支配关系算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/flow><span title="Flow & Cut 流与割算子集" class=linkLabel_WmDU>Flow & Cut 流与割算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/link_prediction><span title="Link Prediction 链接预测算子集" class=linkLabel_WmDU>Link Prediction 链接预测算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/matching_coloring><span title=matching_coloring class=linkLabel_WmDU>matching_coloring</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/graph_matching><span title="Graph Matching 图结构匹配算子集" class=linkLabel_WmDU>Graph Matching 图结构匹配算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/graph_polynomials><span title="Graph Polynomials 图多项式算子集" class=linkLabel_WmDU>Graph Polynomials 图多项式算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/cliques_cores><span title="Cliques & Cores 团与核算子集" class=linkLabel_WmDU>Cliques & Cores 团与核算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/distance><span title="Distance & Measures 距离与结构度量算子集" class=linkLabel_WmDU>Distance & Measures 距离与结构度量算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/graph_query><span title="Graph Query 图查询算子集" class=linkLabel_WmDU>Graph Query 图查询算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/dag><span title="Directed Acyclic Graphs, DAG 有向无环图算子集" class=linkLabel_WmDU>Directed Acyclic Graphs, DAG 有向无环图算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/bipartite><span title="Bipartite 二分图算子集" class=linkLabel_WmDU>Bipartite 二分图算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/graph_hashing><span title="Graph Hashing 图哈希算子集" class=linkLabel_WmDU>Graph Hashing 图哈希算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/small_world><span title="Small-world 小世界网络分析算子集" class=linkLabel_WmDU>Small-world 小世界网络分析算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/sparsifiers><span title="Sparsifiers 稀疏化算子集" class=linkLabel_WmDU>Sparsifiers 稀疏化算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/gnn><span title="Graph Neural Networks 图神经网络卷积算子集" class=linkLabel_WmDU>Graph Neural Networks 图神经网络卷积算子集</span></a></ul></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/YiGraphDocs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>专用算子</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Graph Polynomials 图多项式算子集</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>Graph Polynomials 图多项式算子集</h1></header>
+<p><strong>算子类别</strong>：Graph Polynomials（图多项式不变量与组合计数分析）</p>
+<p><strong>算法数量</strong>：1 个</p>
+<p><strong>适用阶段</strong>：图结构不变量分析、组合性质刻画、图结构分类、图论研究、网络可靠性分析、生成树/连通性/着色相关结构计数</p>
+<p><strong>产品定位</strong>：为“如何用一个多项式表达图的结构特征 / 如何从组合角度刻画图 / 如何分析图的连通、生成树、着色等结构性质”提供符号化图结构分析能力底座。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=一算子集概述>一、算子集概述<a href=#一算子集概述 class=hash-link aria-label=一、算子集概述的直接链接 title=一、算子集概述的直接链接 translate=no>​</a></h2>
+<p>Graph Polynomials 算子集聚焦于<strong>用多项式形式刻画图的组合结构特征</strong>。</p>
+<p>与路径、匹配、着色这类“直接给出一个具体解”的算法不同，图多项式更偏向于<strong>结构摘要、理论分析与组合计数</strong>，主要回答以下问题：</p>
+<ol>
+<li class="">
+<p><strong>图结构不变量</strong></p>
+<ul>
+<li class="">一个图是否可以用某种多项式形式进行结构刻画？</li>
+<li class="">两个图是否具有相同的组合结构特征？</li>
+<li class="">图的结构复杂度能否通过符号表达式描述？</li>
+</ul>
+</li>
+<li class="">
+<p><strong>组合计数分析</strong></p>
+<ul>
+<li class="">图中生成树、森林、连通子图等结构如何被统一表达？</li>
+<li class="">图的删边、缩边结构如何影响整体组合性质？</li>
+<li class="">图的不同子结构能否通过多项式系数体现？</li>
+</ul>
+</li>
+<li class="">
+<p><strong>图论性质推导</strong></p>
+<ul>
+<li class="">图的连通性、生成树数量、着色相关性质是否可以从多项式中推导？</li>
+<li class="">是否可以用一个统一对象关联多类图性质？</li>
+<li class="">图的结构复杂度如何进行理论层面的比较？</li>
+</ul>
+</li>
+<li class="">
+<p><strong>符号化结构分析</strong></p>
+<ul>
+<li class="">如何将图结构转化为可计算、可比较的符号表达？</li>
+<li class="">如何为图分类、结构识别、理论研究提供基础表达？</li>
+</ul>
+</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=二算子能力分类>二、算子能力分类<a href=#二算子能力分类 class=hash-link aria-label=二、算子能力分类的直接链接 title=二、算子能力分类的直接链接 translate=no>​</a></h2>
+<table><thead><tr><th>能力类型<th>对应算子<th>功能描述<tbody><tr><td>Tutte 多项式<td><code>tutte_polynomial</code><td>计算图的 Tutte 多项式，用于刻画生成树、连通性、着色、流等多种组合结构性质</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=三通用输入输出约定>三、通用输入输出约定<a href=#三通用输入输出约定 class=hash-link aria-label=三、通用输入输出约定的直接链接 title=三、通用输入输出约定的直接链接 translate=no>​</a></h2>
+<ul>
+<li class="">
+<p><strong>输入 <code>G</code></strong>：NetworkX Graph</p>
+<ul>
+<li class="">通常用于无向图</li>
+<li class="">图可以包含多个连通分量</li>
+<li class="">适合中小规模图的符号化结构分析</li>
+</ul>
+</li>
+<li class="">
+<p><strong>常见输出类型</strong></p>
+<ul>
+<li class="">符号多项式表达式</li>
+<li class="">形式通常包含变量 <code>x</code>、<code>y</code></li>
+<li class="">可进一步用于代入、化简、比较或组合性质分析</li>
+</ul>
+</li>
+<li class="">
+<p><strong>使用注意</strong></p>
+<ul>
+<li class="">图多项式计算通常比普通遍历、连通性判断、匹配生成等算法成本更高</li>
+<li class="">更适合结构分析、研究型任务、小规模图解释，而不是大规模在线实时计算</li>
+</ul>
+</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=四算子详细说明>四、算子详细说明<a href=#四算子详细说明 class=hash-link aria-label=四、算子详细说明的直接链接 title=四、算子详细说明的直接链接 translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-tutte_polynomial--tutte-多项式>1. tutte_polynomial —— Tutte 多项式<a href=#1-tutte_polynomial--tutte-多项式 class=hash-link aria-label="1. tutte_polynomial —— Tutte 多项式的直接链接" title="1. tutte_polynomial —— Tutte 多项式的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong>
+计算图的 <strong>Tutte 多项式</strong>。Tutte 多项式是图论中非常重要的二元多项式不变量，通常记为：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">T_G(x, y)</span><br/></div></code></pre></div></div>
+<p>它可以统一表达图中的多种组合结构信息，例如：</p>
+<ul>
+<li class="">生成树相关性质</li>
+<li class="">生成森林相关性质</li>
+<li class="">连通子图相关性质</li>
+<li class="">图着色相关性质</li>
+<li class="">网络可靠性相关性质</li>
+<li class="">流与割相关性质</li>
+</ul>
+<p>Tutte 多项式可以理解为一种“图结构指纹”：
+它把图中大量组合结构信息压缩到一个符号多项式中，用于分析、比较和推导。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">提供图结构的符号化摘要</li>
+<li class="">支持从组合数学角度分析图复杂度</li>
+<li class="">可作为图结构分类、比较和理论研究的基础工具</li>
+<li class="">能统一关联生成树、着色、连通性等多个图性质</li>
+<li class="">适合高阶图分析、教学研究和结构解释场景</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">图结构不变量计算</li>
+<li class="">小规模网络结构复杂度分析</li>
+<li class="">生成树 / 森林相关组合性质研究</li>
+<li class="">图着色与流相关理论分析</li>
+<li class="">网络可靠性分析</li>
+<li class="">图分类与结构比较</li>
+<li class="">图论教学、验证与实验</li>
+</ul>
+<p><strong>核心理解</strong></p>
+<ul>
+<li class="">
+<p>普通算法通常回答：“给我一个结果”</p>
+<ul>
+<li class="">例如一条路径、一个匹配、一组颜色</li>
+</ul>
+</li>
+<li class="">
+<p><code>tutte_polynomial</code> 更偏向回答：“这个图整体具有怎样的组合结构”</p>
+<ul>
+<li class="">它不是直接输出一个具体匹配或路径</li>
+<li class="">而是输出一个可用于推导多种结构性质的多项式表达式</li>
+</ul>
+</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：通常用于无向图</li>
+<li class="">输出：Tutte 多项式表达式</li>
+<li class="">特点：理论表达能力强、信息密度高</li>
+<li class="">注意：计算成本通常较高，大规模图需要谨慎使用</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=五推荐使用指南>五、推荐使用指南<a href=#五推荐使用指南 class=hash-link aria-label=五、推荐使用指南的直接链接 title=五、推荐使用指南的直接链接 translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-图结构不变量分析>1. 图结构不变量分析<a href=#1-图结构不变量分析 class=hash-link aria-label="1. 图结构不变量分析的直接链接" title="1. 图结构不变量分析的直接链接" translate=no>​</a></h3>
+<ul>
+<li class="">需要计算图的组合结构指纹：<code>tutte_polynomial</code></li>
+<li class="">需要比较图的结构性质：<code>tutte_polynomial</code></li>
+<li class="">需要进行图分类或结构摘要：<code>tutte_polynomial</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-组合计数与理论分析>2. 组合计数与理论分析<a href=#2-组合计数与理论分析 class=hash-link aria-label="2. 组合计数与理论分析的直接链接" title="2. 组合计数与理论分析的直接链接" translate=no>​</a></h3>
+<ul>
+<li class="">分析生成树相关性质：<code>tutte_polynomial</code></li>
+<li class="">分析生成森林相关性质：<code>tutte_polynomial</code></li>
+<li class="">研究连通子图、割、流、着色等组合结构：<code>tutte_polynomial</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-图论研究与教学>3. 图论研究与教学<a href=#3-图论研究与教学 class=hash-link aria-label="3. 图论研究与教学的直接链接" title="3. 图论研究与教学的直接链接" translate=no>​</a></h3>
+<ul>
+<li class="">需要符号化表达图结构：<code>tutte_polynomial</code></li>
+<li class="">需要展示图多项式与图性质之间的关系：<code>tutte_polynomial</code></li>
+<li class="">需要对小规模图进行理论验证：<code>tutte_polynomial</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=4-与其他算子集的关系>4. 与其他算子集的关系<a href=#4-与其他算子集的关系 class=hash-link aria-label="4. 与其他算子集的关系的直接链接" title="4. 与其他算子集的关系的直接链接" translate=no>​</a></h3>
+<ul>
+<li class="">
+<p>与 <code>Graph Matching</code> 不同：</p>
+<ul>
+<li class="">Graph Matching 关注结构是否匹配、是否包含某种模式</li>
+<li class="">Graph Polynomials 关注图整体组合性质的符号表达</li>
+</ul>
+</li>
+<li class="">
+<p>与 <code>Matching & Coloring</code> 不同：</p>
+<ul>
+<li class="">Matching & Coloring 输出具体匹配、覆盖或着色方案</li>
+<li class="">Graph Polynomials 输出可用于组合性质推导的多项式</li>
+</ul>
+</li>
+<li class="">
+<p>与 <code>Basics</code> 不同：</p>
+<ul>
+<li class="">Basics 判断基础结构是否合法，如是否是树、DAG、平面图</li>
+<li class="">Graph Polynomials 从更高阶的组合角度刻画图结构</li>
+</ul>
+</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=六可直接回答的典型问题>六、可直接回答的典型问题<a href=#六可直接回答的典型问题 class=hash-link aria-label=六、可直接回答的典型问题的直接链接 title=六、可直接回答的典型问题的直接链接 translate=no>​</a></h2>
+<ul>
+<li class="">“这个图的 Tutte 多项式是什么？”</li>
+<li class="">“如何用多项式刻画这个图的组合结构？”</li>
+<li class="">“这个图有哪些生成树、森林或连通性相关结构特征？”</li>
+<li class="">“能否用一个符号表达式表示图的结构复杂度？”</li>
+<li class="">“两个图的组合结构不变量是否一致？”</li>
+<li class="">“这个小图的 Tutte 多项式能推导出哪些性质？”</li>
+<li class="">“如何从图多项式角度分析网络可靠性？”</li>
+<li class="">“这个图的结构是否适合做组合性质研究？”</li>
+<li class="">“图的着色、流、生成树等性质能否统一表达？”</li>
+<li class="">“如何为图结构生成一个理论分析用的多项式摘要？”</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=七算子清单>七、算子清单<a href=#七算子清单 class=hash-link aria-label=七、算子清单的直接链接 title=七、算子清单的直接链接 translate=no>​</a></h2>
+<table><thead><tr><th style=text-align:right>序号<th>算子名称<th>中文说明<tbody><tr><td style=text-align:right>1<td><code>tutte_polynomial</code><td>Tutte 多项式计算</table></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/iDC-NEU/YiGraphDocs/tree/main/docs-site/docs/tutorial-algorithm/graph_polynomials.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/YiGraphDocs/docs/tutorial-algorithm/graph_matching><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>Graph Matching 图结构匹配算子集</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/YiGraphDocs/docs/tutorial-algorithm/cliques_cores><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>Cliques & Cores 团与核算子集</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#一算子集概述 class="table-of-contents__link toc-highlight">一、算子集概述</a><li><a href=#二算子能力分类 class="table-of-contents__link toc-highlight">二、算子能力分类</a><li><a href=#三通用输入输出约定 class="table-of-contents__link toc-highlight">三、通用输入输出约定</a><li><a href=#四算子详细说明 class="table-of-contents__link toc-highlight">四、算子详细说明</a><ul><li><a href=#1-tutte_polynomial--tutte-多项式 class="table-of-contents__link toc-highlight">1. tutte_polynomial —— Tutte 多项式</a></ul><li><a href=#五推荐使用指南 class="table-of-contents__link toc-highlight">五、推荐使用指南</a><ul><li><a href=#1-图结构不变量分析 class="table-of-contents__link toc-highlight">1. 图结构不变量分析</a><li><a href=#2-组合计数与理论分析 class="table-of-contents__link toc-highlight">2. 组合计数与理论分析</a><li><a href=#3-图论研究与教学 class="table-of-contents__link toc-highlight">3. 图论研究与教学</a><li><a href=#4-与其他算子集的关系 class="table-of-contents__link toc-highlight">4. 与其他算子集的关系</a></ul><li><a href=#六可直接回答的典型问题 class="table-of-contents__link toc-highlight">六、可直接回答的典型问题</a><li><a href=#七算子清单 class="table-of-contents__link toc-highlight">七、算子清单</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class=footer__copyright>版权所有 © 2026 AAG</div></div></div></footer></div></body>

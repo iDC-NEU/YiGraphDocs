@@ -1,301 +1,880 @@
-<!doctype html>
-<html lang="zh-CN" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-tutorial-algorithm/Clustering_Community" data-has-hydrated="false">
-<head>
-<meta charset="UTF-8">
-<meta name="generator" content="Docusaurus v3.9.2">
-<title data-rh="true">Clustering &amp; Community 聚类与社区算子集 | YiGraph Documentation</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community"><meta data-rh="true" property="og:locale" content="zh_CN"><meta data-rh="true" property="og:locale:alternate" content="en_US"><meta data-rh="true" name="docusaurus_locale" content="zh-CN"><meta data-rh="true" name="docsearch:language" content="zh-CN"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Clustering &amp; Community 聚类与社区算子集 | YiGraph Documentation"><meta data-rh="true" name="description" content="算子类别：Clustering &amp; Community（聚类系数、社区发现、传递性与环结构）"><meta data-rh="true" property="og:description" content="算子类别：Clustering &amp; Community（聚类系数、社区发现、传递性与环结构）"><link data-rh="true" rel="icon" href="/YiGraphDocs/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community" hreflang="zh-CN"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/Clustering_Community" hreflang="en-US"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Clustering & Community 聚类与社区算子集","item":"https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community"}]}</script><link rel="stylesheet" href="/YiGraphDocs/assets/css/styles.27c37220.css">
-<script src="/YiGraphDocs/assets/js/runtime~main.e92aff22.js" defer="defer"></script>
-<script src="/YiGraphDocs/assets/js/main.7c673358.js" defer="defer"></script>
-</head>
-<body class="navigation-with-keyboard">
-<svg style="display: none;"><defs>
-<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+<!doctype html><html lang=zh-CN dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-tutorial-algorithm/Clustering_Community" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Clustering & Community 聚类与社区算子集 | YiGraph Documentation</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:url content=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community /><meta data-rh=true property=og:locale content=zh_CN /><meta data-rh=true property=og:locale:alternate content=en_US /><meta data-rh=true name=docusaurus_locale content=zh-CN /><meta data-rh=true name=docsearch:language content=zh-CN /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Clustering & Community 聚类与社区算子集 | YiGraph Documentation"/><meta data-rh=true name=description content="算子类别：Clustering & Community（聚类系数、社区发现、传递性与环结构）"/><meta data-rh=true property=og:description content="算子类别：Clustering & Community（聚类系数、社区发现、传递性与环结构）"/><link data-rh=true rel=icon href=/YiGraphDocs/img/favicon.ico /><link data-rh=true rel=canonical href=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community hreflang=zh-CN /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/Clustering_Community hreflang=en-US /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community","name":"Clustering & Community 聚类与社区算子集","position":1}]}</script><link rel=stylesheet href=/YiGraphDocs/assets/css/styles.74348a64.css /><script src=/YiGraphDocs/assets/js/runtime~main.4d70087d.js defer></script><script src=/YiGraphDocs/assets/js/main.2e0cef14.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
 </defs></svg>
-<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="跳到主要内容"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/YiGraphDocs/"><b class="navbar__title text--truncate">YiGraph中文文档</b></a><a class="navbar__item navbar__link" href="/YiGraphDocs/docs/intro">开发者指南</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" class="iconLanguage_nlXk"><path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>简体中文</a><ul class="dropdown__menu"><li><a href="/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community" target="_self" rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang="zh-CN">简体中文</a></li><li><a href="/YiGraphDocs/en/docs/tutorial-algorithm/Clustering_Community" target="_self" rel="noopener noreferrer" class="dropdown__link" lang="en-US">English</a></li></ul></div><a href="https://github.com/iDC-NEU/YiGraph" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/docs/intro"><span title="基本信息" class="categoryLinkLabel_W154">基本信息</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/intro"><span title="简介" class="linkLabel_WmDU">简介</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/docs/tutorial-basics/create-a-page"><span title="从这里开始" class="categoryLinkLabel_W154">从这里开始</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-basics/create-a-page"><span title="YiGraph 安装与使用指南" class="linkLabel_WmDU">YiGraph 安装与使用指南</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-basics/windows-deploy"><span title="YiGraph Windows 本地部署指南" class="linkLabel_WmDU">YiGraph Windows 本地部署指南</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/docs/tutorial-extras/getting-started-cases"><span title="上手案例" class="categoryLinkLabel_W154">上手案例</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/getting-started-cases"><span title="用户上手案例" class="linkLabel_WmDU">用户上手案例</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/normal-mode"><span title="案例1.normal-mode" class="linkLabel_WmDU">案例1.normal-mode</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/interact-mode"><span title="案例2.interact-mode" class="linkLabel_WmDU">案例2.interact-mode</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/expert-mode"><span title="案例3.expert-mode" class="linkLabel_WmDU">案例3.expert-mode</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/YiGraphDocs/docs/tutorial-algorithm/basic"><span title="专用算子" class="categoryLinkLabel_W154">专用算子</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/basic"><span title="Basics 基础算子集" class="linkLabel_WmDU">Basics 基础算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/path"><span title="Path 路径算子集" class="linkLabel_WmDU">Path 路径算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/centrality"><span title="Centrality 中心性与关键性算子集" class="linkLabel_WmDU">Centrality 中心性与关键性算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/Connectivity_Components"><span title="Connectivity &amp; Components 连通性与组件算子集" class="linkLabel_WmDU">Connectivity &amp; Components 连通性与组件算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community"><span title="Clustering &amp; Community 聚类与社区算子集" class="linkLabel_WmDU">Clustering &amp; Community 聚类与社区算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/tree"><span title="Tree &amp; Spanning Tree 树与生成树算子集" class="linkLabel_WmDU">Tree &amp; Spanning Tree 树与生成树算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/flow"><span title="Flow &amp; Cut 流与割算子集" class="linkLabel_WmDU">Flow &amp; Cut 流与割算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/link_prediction"><span title="Link Prediction 链接预测算子集" class="linkLabel_WmDU">Link Prediction 链接预测算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/matching_coloring"><span title="Matching &amp; Coloring 匹配与着色算子集" class="linkLabel_WmDU">Matching &amp; Coloring 匹配与着色算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/cliques_cores"><span title="Cliques &amp; Cores 团与核算子集" class="linkLabel_WmDU">Cliques &amp; Cores 团与核算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/distance"><span title="Distance &amp; Measures 距离与结构度量算子集" class="linkLabel_WmDU">Distance &amp; Measures 距离与结构度量算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/graph_query"><span title="Graph Query 图查询算子集" class="linkLabel_WmDU">Graph Query 图查询算子集</span></a></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="页面路径"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/YiGraphDocs/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">专用算子</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Clustering &amp; Community 聚类与社区算子集</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>Clustering &amp; Community 聚类与社区算子集</h1></header>
-<p><strong>算子类别</strong>：Clustering &amp; Community（聚类系数、社区发现、传递性与环结构）</p>
-<p><strong>适用阶段</strong>：网络结构洞察、圈层/团伙识别、群落质量评估、闭环/循环检测、关系紧密度量化</p>
-<p><strong>产品定位</strong>：为“网络是否存在紧密小圈子 / 如何把人群或实体切成社区 / 这个切法好不好 / 是否存在闭环循环”提供统一算子能力底座</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="一算子集概述">一、算子集概述<a href="#一算子集概述" class="hash-link" aria-label="一、算子集概述的直接链接" title="一、算子集概述的直接链接" translate="no">​</a></h2>
-<p>Clustering &amp; Community 算子集覆盖两大类能力：</p>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ea2")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/YiGraphDocs/><b class="navbar__title text--truncate">YiGraph中文文档</b></a><a class="navbar__item navbar__link" href=/YiGraphDocs/docs/intro>开发者指南</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href=# aria-haspopup=true aria-expanded=false role=button class=navbar__link><svg viewBox="0 0 24 24" width=20 height=20 aria-hidden=true class=iconLanguage_nlXk><path fill=currentColor d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>简体中文</a><ul class=dropdown__menu><li><a href=/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community target=_self rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang=zh-CN>简体中文</a><li><a href=/YiGraphDocs/en/docs/tutorial-algorithm/Clustering_Community target=_self rel="noopener noreferrer" class=dropdown__link lang=en-US>English</a></ul></div><a href=https://github.com/iDC-NEU/YiGraph target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/docs/intro><span title=基本信息 class=categoryLinkLabel_W154>基本信息</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/intro><span title=简介 class=linkLabel_WmDU>简介</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/docs/tutorial-basics/create-a-page><span title=从这里开始 class=categoryLinkLabel_W154>从这里开始</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-basics/create-a-page><span title="YiGraph 安装与使用指南" class=linkLabel_WmDU>YiGraph 安装与使用指南</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-basics/windows-deploy><span title="YiGraph Windows 本地部署指南" class=linkLabel_WmDU>YiGraph Windows 本地部署指南</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/docs/tutorial-extras/getting-started-cases><span title=上手案例 class=categoryLinkLabel_W154>上手案例</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-extras/getting-started-cases><span title=用户上手案例 class=linkLabel_WmDU>用户上手案例</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-extras/normal-mode><span title=案例1.normal-mode class=linkLabel_WmDU>案例1.normal-mode</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-extras/interact-mode><span title=案例2.interact-mode class=linkLabel_WmDU>案例2.interact-mode</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-extras/expert-mode><span title=案例3.expert-mode class=linkLabel_WmDU>案例3.expert-mode</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/YiGraphDocs/docs/tutorial-algorithm/basic><span title=专用算子 class=categoryLinkLabel_W154>专用算子</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/basic><span title="Basics 基础算子集" class=linkLabel_WmDU>Basics 基础算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/path><span title="Path 路径算子集" class=linkLabel_WmDU>Path 路径算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/centrality><span title="Centrality 中心性与关键性算子集" class=linkLabel_WmDU>Centrality 中心性与关键性算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/Connectivity_Components><span title="Connectivity & Components 连通性与组件算子集" class=linkLabel_WmDU>Connectivity & Components 连通性与组件算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community><span title="Clustering & Community 聚类与社区算子集" class=linkLabel_WmDU>Clustering & Community 聚类与社区算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/tree><span title="Tree & Spanning Tree 树与生成树算子集" class=linkLabel_WmDU>Tree & Spanning Tree 树与生成树算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/Dominance><span title="Dominance 支配关系算子集" class=linkLabel_WmDU>Dominance 支配关系算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/flow><span title="Flow & Cut 流与割算子集" class=linkLabel_WmDU>Flow & Cut 流与割算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/link_prediction><span title="Link Prediction 链接预测算子集" class=linkLabel_WmDU>Link Prediction 链接预测算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/matching_coloring><span title=matching_coloring class=linkLabel_WmDU>matching_coloring</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/graph_matching><span title="Graph Matching 图结构匹配算子集" class=linkLabel_WmDU>Graph Matching 图结构匹配算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/graph_polynomials><span title="Graph Polynomials 图多项式算子集" class=linkLabel_WmDU>Graph Polynomials 图多项式算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/cliques_cores><span title="Cliques & Cores 团与核算子集" class=linkLabel_WmDU>Cliques & Cores 团与核算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/distance><span title="Distance & Measures 距离与结构度量算子集" class=linkLabel_WmDU>Distance & Measures 距离与结构度量算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/graph_query><span title="Graph Query 图查询算子集" class=linkLabel_WmDU>Graph Query 图查询算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/dag><span title="Directed Acyclic Graphs, DAG 有向无环图算子集" class=linkLabel_WmDU>Directed Acyclic Graphs, DAG 有向无环图算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/bipartite><span title="Bipartite 二分图算子集" class=linkLabel_WmDU>Bipartite 二分图算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/graph_hashing><span title="Graph Hashing 图哈希算子集" class=linkLabel_WmDU>Graph Hashing 图哈希算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/small_world><span title="Small-world 小世界网络分析算子集" class=linkLabel_WmDU>Small-world 小世界网络分析算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/sparsifiers><span title="Sparsifiers 稀疏化算子集" class=linkLabel_WmDU>Sparsifiers 稀疏化算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/gnn><span title="Graph Neural Networks 图神经网络卷积算子集" class=linkLabel_WmDU>Graph Neural Networks 图神经网络卷积算子集</span></a></ul></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/YiGraphDocs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>专用算子</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Clustering & Community 聚类与社区算子集</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>Clustering & Community 聚类与社区算子集</h1></header>
+<p><strong>算子类别</strong>：Clustering & Community（聚类系数、社区发现、传递性与环结构）</p>
+<p><strong>算法数量</strong>：23 个</p>
+<p><strong>适用阶段</strong>：网络结构洞察、圈层/团伙识别、群落质量评估、闭环/循环检测、关系紧密度量化、图划分优化、二部图社区分析</p>
+<p><strong>产品定位</strong>：为“网络是否存在紧密小圈子 / 如何把人群或实体切成社区 / 这个切法好不好 / 是否存在闭环循环 / 如何做二分或多社区划分 / 如何识别三元结构模式”提供统一算子能力底座。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=一算子集概述>一、算子集概述<a href=#一算子集概述 class=hash-link aria-label=一、算子集概述的直接链接 title=一、算子集概述的直接链接 translate=no>​</a></h2>
+<p>Clustering & Community 算子集覆盖四大类能力：</p>
 <ol>
 <li class="">
-<p><strong>局部紧密度与网络聚集性（Clustering / Transitivity）</strong></p>
+<p><strong>局部紧密度与网络聚集性</strong></p>
 <ul>
-<li class="">节点/网络整体是否“抱团”？</li>
-<li class="">三角闭合（triangle closure）倾向强不强？</li>
-<li class="">适合从“微观局部结构”判断网络是否存在小圈子、团伙、强关系群。</li>
+<li class="">节点邻居之间是否彼此相连？</li>
+<li class="">网络整体三角闭合程度如何？</li>
+<li class="">是否存在小圈子、团伙或局部高密度结构？</li>
+<li class="">典型算法：<code>clustering</code>, <code>average_clustering</code>, <code>triangles</code>, <code>transitivity</code>, <code>square_clustering</code></li>
 </ul>
 </li>
 <li class="">
-<p><strong>社区发现与方案评估（Community Detection &amp; Evaluation）</strong></p>
+<p><strong>社区发现与图划分</strong></p>
 <ul>
-<li class="">在没有标签的情况下，自动找到社区/阵营/圈层。</li>
-<li class="">支持不同机制：模块度最大化、标签传播、分层拆分、k-clique 渗透（可重叠社区）。</li>
-<li class="">对得到的社区切分进行质量评分与合法性校验。</li>
+<li class="">在没有标签的情况下，如何自动发现社区、阵营、圈层？</li>
+<li class="">如何进行大规模网络快速社区划分？</li>
+<li class="">如何进行二分划分或指定社区数量划分？</li>
+<li class="">典型算法：<code>greedy_modularity_communities</code>, <code>naive_greedy_modularity_communities</code>, <code>louvain_communities</code>, <code>leiden_communities</code>, <code>girvan_newman</code>, <code>label_propagation_communities</code>, <code>asyn_lpa_communities</code>, <code>asyn_fluidc</code>, <code>kernighan_lin_bisection</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>可重叠社区与二部图社区分析</strong></p>
+<ul>
+<li class="">一个节点是否可以同时属于多个社区？</li>
+<li class="">二部图如何进行模块度意义下的二分划分？</li>
+<li class="">典型算法：<code>k_clique_communities</code>, <code>spectral_modularity_bipartition</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>环结构与循环检测</strong></p>
+<ul>
+<li class="">图中有哪些简单环？</li>
+<li class="">无向图的基础环集合是什么？</li>
+<li class="">是否存在最小权重环基？</li>
+<li class="">典型算法：<code>simple_cycles</code>, <code>cycle_basis</code>, <code>minimum_cycle_basis</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>社区结果评估与合法性校验</strong></p>
+<ul>
+<li class="">社区划分质量如何？</li>
+<li class="">是否是严格分区？</li>
+<li class="">组内边是否足够多，组间边是否足够少？</li>
+<li class="">典型算法：<code>modularity</code>, <code>partition_quality</code>, <code>is_partition</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>三元结构模式分析</strong></p>
+<ul>
+<li class="">有向图中三节点之间有哪些典型结构模式？</li>
+<li class="">网络是否存在闭合三元组、传递关系、循环三元组？</li>
+<li class="">典型算法：<code>triadic_census</code></li>
 </ul>
 </li>
 </ol>
-<p>另外，本类别也包含<strong>环结构/循环检测</strong>能力（simple_cycles / cycle_basis），用于识别资金回流、循环依赖、反馈回路等闭环模式。</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="二算子能力分类">二、算子能力分类<a href="#二算子能力分类" class="hash-link" aria-label="二、算子能力分类的直接链接" title="二、算子能力分类的直接链接" translate="no">​</a></h2>
-<table><thead><tr><th>能力类型</th><th>对应算子</th><th>功能描述</th></tr></thead><tbody><tr><td>节点聚类系数</td><td><code>clustering</code></td><td>计算指定节点或全部节点的聚类系数</td></tr><tr><td>平均聚类系数</td><td><code>average_clustering</code></td><td>计算全图或子集节点的平均聚类系数</td></tr><tr><td>三角闭合计数</td><td><code>triangles</code></td><td>统计节点参与的三角形数量</td></tr><tr><td>全局传递性</td><td><code>transitivity</code></td><td>计算网络整体“朋友的朋友也是朋友”的程度</td></tr><tr><td>四环聚类</td><td><code>square_clustering</code></td><td>计算节点参与 4-cycle 的局部冗余结构倾向</td></tr><tr><td>社区发现-贪心模块度</td><td><code>greedy_modularity_communities</code></td><td>Clauset–Newman–Moore 贪心合并最大化模块度</td></tr><tr><td>社区发现-分层拆分</td><td><code>girvan_newman</code></td><td>迭代移除“最关键边”得到分层社区结构</td></tr><tr><td>社区发现-同步标签传播</td><td><code>label_propagation_communities</code></td><td>通过邻居多数标签扩散形成社区</td></tr><tr><td>社区发现-异步标签传播</td><td><code>asyn_lpa_communities</code></td><td>异步更新标签传播（可控权重与随机种子）</td></tr><tr><td>社区发现-k clique</td><td><code>k_clique_communities</code></td><td>基于 k 团渗透的可重叠社区发现</td></tr><tr><td>社区发现-Louvain</td><td><code>louvain_communities</code></td><td>多层模块度优化，适合大图快速社区划分</td></tr><tr><td>社区发现-Leiden</td><td><code>leiden_communities</code></td><td>Louvain 改进版，更稳定且保证社区内部连通性</td></tr><tr><td>环结构-简单环枚举</td><td><code>simple_cycles</code></td><td>列举图中的所有简单环（可设置长度上限）</td></tr><tr><td>环结构-环基</td><td><code>cycle_basis</code></td><td>无向图的基础环集合（cycle space basis）</td></tr><tr><td>方案质量-模块度</td><td><code>modularity</code></td><td>对给定划分计算 modularity(Q)</td></tr><tr><td>方案质量-覆盖/性能</td><td><code>partition_quality</code></td><td>计算(coverage, performance)</td></tr><tr><td>方案合法性</td><td><code>is_partition</code></td><td>检查社区列表是否为严格 partition（不重叠且覆盖全节点）</td></tr></tbody></table>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="三通用输入输出约定">三、通用输入输出约定<a href="#三通用输入输出约定" class="hash-link" aria-label="三、通用输入输出约定的直接链接" title="三、通用输入输出约定的直接链接" translate="no">​</a></h2>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=二算子能力分类>二、算子能力分类<a href=#二算子能力分类 class=hash-link aria-label=二、算子能力分类的直接链接 title=二、算子能力分类的直接链接 translate=no>​</a></h2>
+<table><thead><tr><th>能力类型<th>对应算子<th>功能描述<tbody><tr><td>节点聚类系数<td><code>clustering</code><td>计算指定节点或全部节点的局部聚类系数<tr><td>平均聚类系数<td><code>average_clustering</code><td>计算全图或指定节点集合的平均聚类系数<tr><td>三角闭合计数<td><code>triangles</code><td>统计节点参与的三角形数量<tr><td>全局传递性<td><code>transitivity</code><td>计算网络整体三角闭合程度<tr><td>四环聚类<td><code>square_clustering</code><td>计算节点参与 4-cycle 的局部冗余结构倾向<tr><td>社区发现-贪心模块度<td><code>greedy_modularity_communities</code><td>Clauset-Newman-Moore 贪心合并最大化模块度<tr><td>社区发现-朴素贪心模块度<td><code>naive_greedy_modularity_communities</code><td>使用朴素贪心策略进行模块度优化，适合教学或小图验证<tr><td>社区发现-分层拆分<td><code>girvan_newman</code><td>迭代移除关键边，得到层级社区结构<tr><td>社区发现-同步标签传播<td><code>label_propagation_communities</code><td>通过邻居多数标签扩散形成社区<tr><td>社区发现-异步标签传播<td><code>asyn_lpa_communities</code><td>异步更新标签传播，支持权重和随机种子<tr><td>社区发现-k clique<td><code>k_clique_communities</code><td>基于 k 团渗透发现可重叠社区<tr><td>社区发现-Louvain<td><code>louvain_communities</code><td>多层模块度优化，适合大图快速社区划分<tr><td>社区发现-Leiden<td><code>leiden_communities</code><td>Louvain 改进版，更稳定并强调社区内部连通性<tr><td>社区发现-异步流体<td><code>asyn_fluidc</code><td>基于流体扩散思想划分指定数量社区<tr><td>图二分划分<td><code>kernighan_lin_bisection</code><td>使用 Kernighan-Lin 启发式将图划分为两个部分<tr><td>二部图谱模块度二分<td><code>spectral_modularity_bipartition</code><td>基于谱方法对二部图进行模块度二分<tr><td>环结构-简单环枚举<td><code>simple_cycles</code><td>枚举图中的所有简单环<tr><td>环结构-环基<td><code>cycle_basis</code><td>输出无向图的基础环集合<tr><td>环结构-最小环基<td><code>minimum_cycle_basis</code><td>输出无向图中总权重较小的环基<tr><td>三元结构普查<td><code>triadic_census</code><td>统计有向图中不同三节点结构模式数量<tr><td>方案质量-模块度<td><code>modularity</code><td>对给定社区划分计算模块度 Q 值<tr><td>方案质量-覆盖/性能<td><code>partition_quality</code><td>计算社区划分的 coverage 和 performance<tr><td>方案合法性<td><code>is_partition</code><td>检查社区列表是否为严格 partition</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=三通用输入输出约定>三、通用输入输出约定<a href=#三通用输入输出约定 class=hash-link aria-label=三、通用输入输出约定的直接链接 title=三、通用输入输出约定的直接链接 translate=no>​</a></h2>
 <ul>
-<li class=""><strong>输入 <code>G</code></strong>：NetworkX Graph / DiGraph</li>
-<li class=""><strong>输出类型</strong>：<!-- -->
+<li class="">
+<p><strong>输入 <code>G</code></strong>：NetworkX Graph / DiGraph</p>
 <ul>
-<li class="">指标类（聚类/传递性/模块度）：<code>float</code></li>
-<li class="">计数类（三角形）：<code>dict</code> 或 <code>int</code></li>
+<li class="">聚类系数多数用于无向图，也可支持部分有向或加权形式</li>
+<li class="">简单环枚举常用于有向图，也可用于部分无向场景</li>
+<li class="">社区发现多数用于无向图</li>
+<li class="">二部图相关算法要求输入符合二部图结构</li>
+</ul>
+</li>
+<li class="">
+<p><strong>常见输出</strong></p>
+<ul>
+<li class="">指标类：<code>float</code></li>
+<li class="">计数类：<code>dict</code> / <code>int</code></li>
 <li class="">社区结果：<code>list[set]</code> / <code>iterable[set]</code> / <code>iterator[tuple[set]]</code></li>
 <li class="">环结构：<code>list[list[node]]</code> 或迭代器</li>
-<li class="">校验：<code>bool</code></li>
+<li class="">二分结果：<code>tuple[set, set]</code></li>
+<li class="">校验类：<code>bool</code></li>
 </ul>
 </li>
 </ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="四算子详细说明">四、算子详细说明<a href="#四算子详细说明" class="hash-link" aria-label="四、算子详细说明的直接链接" title="四、算子详细说明的直接链接" translate="no">​</a></h2>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="41-局部紧密度与聚集性">4.1 局部紧密度与聚集性<a href="#41-局部紧密度与聚集性" class="hash-link" aria-label="4.1 局部紧密度与聚集性的直接链接" title="4.1 局部紧密度与聚集性的直接链接" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-clustering--节点聚类系数">1) clustering —— 节点聚类系数<a href="#1-clustering--节点聚类系数" class="hash-link" aria-label="1) clustering —— 节点聚类系数的直接链接" title="1) clustering —— 节点聚类系数的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->计算节点聚类系数：衡量一个节点的邻居之间互相连接的比例（“邻居是否也彼此认识”）。</p>
+<blockquote>
+<p>说明：</p>
+<ul>
+<li class="">社区发现算法的输出通常是节点集合列表。</li>
+<li class=""><code>k_clique_communities</code> 允许重叠社区，因此其结果不一定满足严格 partition。</li>
+<li class="">模块度、覆盖率、性能等评估指标通常要求社区结果覆盖全部节点且互不重叠。</li>
+<li class="">环枚举和 clique 类算法可能产生指数级结果，大图中应设置限制或先做子图筛选。</li>
+</ul>
+</blockquote>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=四算子详细说明>四、算子详细说明<a href=#四算子详细说明 class=hash-link aria-label=四、算子详细说明的直接链接 title=四、算子详细说明的直接链接 translate=no>​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=41-局部紧密度与聚集性>4.1 局部紧密度与聚集性<a href=#41-局部紧密度与聚集性 class=hash-link aria-label="4.1 局部紧密度与聚集性的直接链接" title="4.1 局部紧密度与聚集性的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-clustering--节点聚类系数>1. clustering —— 节点聚类系数<a href=#1-clustering--节点聚类系数 class=hash-link aria-label="1. clustering —— 节点聚类系数的直接链接" title="1. clustering —— 节点聚类系数的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->计算节点聚类系数，衡量一个节点的邻居之间互相连接的比例，也就是“邻居是否也彼此认识”。</p>
 <p><strong>产品价值</strong></p>
 <ul>
-<li class="">找“紧密朋友圈”中心节点</li>
-<li class="">团伙/密集团体的候选核心点</li>
+<li class="">识别紧密朋友圈或局部团伙核心</li>
+<li class="">发现高密度关系区域中的关键节点</li>
+<li class="">可作为反欺诈、社群分析和推荐系统的结构特征</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">社交网络：找朋友圈最紧密的用户</li>
+<li class="">交易网络：识别闭合交易关系中的账户</li>
+<li class="">合作网络：发现高协作密度成员</li>
+<li class="">风控网络：识别局部团伙结构</li>
 </ul>
 <p><strong>关键参数</strong></p>
 <ul>
-<li class=""><code>nodes</code>：单个节点 / 多节点 / None（全图）</li>
-<li class=""><code>weight</code>：加权聚类（边权表示关系强度）</li>
+<li class=""><code>nodes</code>：单个节点、多节点或全图</li>
+<li class=""><code>weight</code>：边权，表示关系强度</li>
 </ul>
-<p><strong>复杂度</strong>：<code>O(V * d^2)</code>（d 为平均度）</p>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-average_clustering--平均聚类系数">2) average_clustering —— 平均聚类系数<a href="#2-average_clustering--平均聚类系数" class="hash-link" aria-label="2) average_clustering —— 平均聚类系数的直接链接" title="2) average_clustering —— 平均聚类系数的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->返回全图或指定节点集合的平均聚类系数，取值 0~1。</p>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：无向图为主</li>
+<li class="">输出：<code>{node: score}</code> 或单节点分数</li>
+<li class="">复杂度：通常与节点度数平方相关</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-average_clustering--平均聚类系数>2. average_clustering —— 平均聚类系数<a href=#2-average_clustering--平均聚类系数 class=hash-link aria-label="2. average_clustering —— 平均聚类系数的直接链接" title="2. average_clustering —— 平均聚类系数的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->返回全图或指定节点集合的平均聚类系数，取值通常在 0 到 1 之间，用于概括网络整体抱团程度。</p>
 <p><strong>产品价值</strong></p>
 <ul>
-<li class="">一句话概括“整体抱团程度”</li>
-<li class="">用于网络对比、版本对比、区域对比</li>
+<li class="">一句话概括网络整体聚集程度</li>
+<li class="">适合跨网络、跨时间窗口、跨区域对比</li>
+<li class="">可用于监控网络是否出现团伙化或圈层化趋势</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">社交网络整体抱团程度评估</li>
+<li class="">风控网络团伙化趋势监测</li>
+<li class="">不同城市路网局部冗余程度对比</li>
+<li class="">组织协作网络紧密程度比较</li>
 </ul>
 <p><strong>关键参数</strong></p>
 <ul>
-<li class=""><code>nodes</code>：只看某个子群</li>
+<li class=""><code>nodes</code>：只计算某个子群</li>
 <li class=""><code>weight</code>：考虑关系强度</li>
-<li class=""><code>count_zeros</code>：是否把聚类系数为 0 的节点计入平均值</li>
+<li class=""><code>count_zeros</code>：是否将聚类系数为 0 的节点计入平均值</li>
 </ul>
-<p><strong>复杂度</strong>：<code>O(V * d^2)</code></p>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-triangles--三角形数量统计">3) triangles —— 三角形数量统计<a href="#3-triangles--三角形数量统计" class="hash-link" aria-label="3) triangles —— 三角形数量统计的直接链接" title="3) triangles —— 三角形数量统计的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：无向图为主</li>
+<li class="">输出：<code>float</code></li>
+<li class="">复杂度：通常与节点度数平方相关</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-transitivity--全局传递性>3. transitivity —— 全局传递性<a href=#3-transitivity--全局传递性 class=hash-link aria-label="3. transitivity —— 全局传递性的直接链接" title="3. transitivity —— 全局传递性的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->计算网络整体传递性，即闭合三元组占所有三元组的比例，用于衡量全局“三角闭合”程度。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">判断网络整体是否具有“朋友的朋友也是朋友”的倾向</li>
+<li class="">可用于分析网络是否更像随机网络、小世界网络或团伙网络</li>
+<li class="">适合全局结构特征建模</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">社交网络：整体三角闭合程度</li>
+<li class="">合作网络：合作关系是否容易形成三人闭环</li>
+<li class="">风控网络：资金或账户是否形成闭合结构</li>
+<li class="">知识网络：概念之间是否形成高度传递关系</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：无向图为主</li>
+<li class="">输出：<code>float</code></li>
+<li class="">复杂度：通常与三角形计数相关</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=4-triangles--三角形数量统计>4. triangles —— 三角形数量统计<a href=#4-triangles--三角形数量统计 class=hash-link aria-label="4. triangles —— 三角形数量统计的直接链接" title="4. triangles —— 三角形数量统计的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
 <!-- -->统计每个节点参与的三角形数量，或返回指定节点的三角形数。</p>
 <p><strong>产品价值</strong></p>
 <ul>
-<li class="">三角形越多，节点越处于“闭合小圈子”中</li>
-<li class="">可用于反欺诈/团伙识别中的结构特征</li>
+<li class="">三角形越多，节点越处于闭合小圈子中</li>
+<li class="">可作为团伙识别、局部密度和社群核心判断特征</li>
+<li class="">与聚类系数配合可以区分“连接多”和“连接紧密”</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">社交网络：参与多个朋友圈闭环的用户</li>
+<li class="">交易网络：闭合交易关系中的账户</li>
+<li class="">合作网络：频繁形成三方合作的小组成员</li>
+<li class="">推荐网络：共同兴趣闭环分析</li>
 </ul>
 <p><strong>关键参数</strong></p>
 <ul>
-<li class=""><code>nodes</code>：单节点 / 多节点 / None（全图）</li>
+<li class=""><code>nodes</code>：单节点、多节点或全图</li>
 </ul>
-<p><strong>复杂度</strong>：<code>O(V * d^2)</code> 或 <code>O(E^{1.5})</code>（实现相关）</p>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-transitivity--全局传递性">4) transitivity —— 全局传递性<a href="#4-transitivity--全局传递性" class="hash-link" aria-label="4) transitivity —— 全局传递性的直接链接" title="4) transitivity —— 全局传递性的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->全局指标：闭合三元组（triangle）占所有三元组的比例，衡量整体“三角闭合”程度。</p>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：无向图</li>
+<li class="">输出：<code>dict</code> 或 <code>int</code></li>
+<li class="">复杂度：通常与节点度数和边数相关</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=5-square_clustering--四环聚类系数>5. square_clustering —— 四环聚类系数<a href=#5-square_clustering--四环聚类系数 class=hash-link aria-label="5. square_clustering —— 四环聚类系数的直接链接" title="5. square_clustering —— 四环聚类系数的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->衡量节点参与四元环结构的倾向。四环结构常用于表示两条不同路径连接同一目标的局部冗余关系。</p>
 <p><strong>产品价值</strong></p>
 <ul>
-<li class="">“朋友的朋友也更可能是朋友”在网络整体是否成立</li>
-<li class="">判断网络是否更像随机网络还是小世界网络（倾向性指标）</li>
+<li class="">适合分析二部图或近似二部结构中的闭合关系</li>
+<li class="">可发现局部替代路径和结构冗余</li>
+<li class="">在用户-商品、作者-论文、账户-设备等网络中比三角形更有解释力</li>
 </ul>
-<p><strong>复杂度</strong>：<code>O(V * d^2)</code></p>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="5-square_clustering--四环聚类系数4-cycle">5) square_clustering —— 四环聚类系数（4-cycle）<a href="#5-square_clustering--四环聚类系数4-cycle" class="hash-link" aria-label="5) square_clustering —— 四环聚类系数（4-cycle）的直接链接" title="5) square_clustering —— 四环聚类系数（4-cycle）的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->衡量节点参与“4-cycle（四元环）”结构的倾向，常用于二部图或替代路径冗余分析。</p>
-<p><strong>产品价值</strong></p>
+<p><strong>典型场景</strong></p>
 <ul>
-<li class="">发现“通过两条不同路径连接同一目标”的冗余关系</li>
-<li class="">二部图中经常比三角形更有意义（例如用户-商品）</li>
+<li class="">用户-商品网络：多个用户共同购买多个商品</li>
+<li class="">作者-论文网络：多个作者共同参与多篇论文</li>
+<li class="">账户-设备网络：多个账户共享多个设备</li>
+<li class="">路网分析：局部替代路径冗余</li>
 </ul>
 <p><strong>关键参数</strong></p>
 <ul>
-<li class=""><code>nodes</code>：只计算子集节点</li>
+<li class=""><code>nodes</code>：只计算部分节点</li>
 </ul>
-<p><strong>复杂度</strong>：<code>O(V * d^2)</code></p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="42-社区发现community-detection">4.2 社区发现（Community Detection）<a href="#42-社区发现community-detection" class="hash-link" aria-label="4.2 社区发现（Community Detection）的直接链接" title="4.2 社区发现（Community Detection）的直接链接" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="6-greedy_modularity_communities--贪心模块度社区">6) greedy_modularity_communities —— 贪心模块度社区<a href="#6-greedy_modularity_communities--贪心模块度社区" class="hash-link" aria-label="6) greedy_modularity_communities —— 贪心模块度社区的直接链接" title="6) greedy_modularity_communities —— 贪心模块度社区的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->通过贪心合并策略最大化 modularity，输出社区列表（按规模排序）。</p>
-<p><strong>适用特点</strong></p>
+<p><strong>适用与特性</strong></p>
 <ul>
-<li class="">速度快、实现经典</li>
-<li class="">适合中大规模无向图，支持边权</li>
+<li class="">图类型：无向图为主</li>
+<li class="">输出：<code>{node: score}</code></li>
+<li class="">复杂度：通常与局部邻域规模相关</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=42-社区发现与图划分>4.2 社区发现与图划分<a href=#42-社区发现与图划分 class=hash-link aria-label="4.2 社区发现与图划分的直接链接" title="4.2 社区发现与图划分的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=6-greedy_modularity_communities--贪心模块度社区>6. greedy_modularity_communities —— 贪心模块度社区<a href=#6-greedy_modularity_communities--贪心模块度社区 class=hash-link aria-label="6. greedy_modularity_communities —— 贪心模块度社区的直接链接" title="6. greedy_modularity_communities —— 贪心模块度社区的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->通过贪心合并策略最大化模块度，输出社区列表。该算法从小社区开始逐步合并，使模块度提升最大。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">经典、稳定、解释性较强</li>
+<li class="">适合中大规模无向图的默认社区发现</li>
+<li class="">支持通过分辨率参数控制社区尺度</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">社交网络自然圈层识别</li>
+<li class="">交易网络团伙初筛</li>
+<li class="">企业关系网络集团划分</li>
+<li class="">知识网络主题簇识别</li>
 </ul>
 <p><strong>关键参数</strong></p>
 <ul>
 <li class=""><code>weight</code>：边权</li>
-<li class=""><code>resolution</code>：控制社区尺度（&lt;1 更大社区；&gt;1 更小社区）</li>
-<li class=""><code>cutoff</code> / <code>best_n</code>：控制停止条件与社区数量范围</li>
+<li class=""><code>resolution</code>：社区尺度，较大通常得到更小社区</li>
+<li class=""><code>cutoff</code>：最少社区数量</li>
+<li class=""><code>best_n</code>：最多社区数量</li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="7-girvan_newman--girvannewman-分层社区">7) girvan_newman —— Girvan–Newman 分层社区<a href="#7-girvan_newman--girvannewman-分层社区" class="hash-link" aria-label="7) girvan_newman —— Girvan–Newman 分层社区的直接链接" title="7) girvan_newman —— Girvan–Newman 分层社区的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->迭代移除“最关键边”（默认边介数最大）使图逐步分裂，得到一棵分层社区结构（从粗到细）。</p>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：无向图</li>
+<li class="">输出：<code>list[set]</code></li>
+<li class="">适合：中大规模社区划分</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=7-girvan_newman--girvan-newman-分层社区>7. girvan_newman —— Girvan-Newman 分层社区<a href=#7-girvan_newman--girvan-newman-分层社区 class=hash-link aria-label="7. girvan_newman —— Girvan-Newman 分层社区的直接链接" title="7. girvan_newman —— Girvan-Newman 分层社区的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->迭代移除最关键边，默认通常选择边介数最高的边，使图逐步分裂，从而得到从粗到细的层级社区结构。</p>
 <p><strong>产品价值</strong></p>
 <ul>
-<li class="">适合解释性强的“结构拆分”</li>
-<li class="">能输出多层级方案（适合小图/需要层次结构）</li>
+<li class="">解释性强，适合展示社区如何被拆分</li>
+<li class="">能输出多层级社区方案</li>
+<li class="">适合小图或需要层次结构说明的场景</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">小规模组织关系拆分</li>
+<li class="">复杂网络教学演示</li>
+<li class="">关键边驱动的社群分裂分析</li>
+<li class="">需要可解释拆分路径的风控调查</li>
 </ul>
 <p><strong>关键参数</strong></p>
 <ul>
-<li class=""><code>most_valuable_edge</code>：自定义“最关键边”的评分/选择方式</li>
+<li class=""><code>most_valuable_edge</code>：自定义最关键边选择策略</li>
 </ul>
-<p><strong>复杂度</strong>：较高（<code>O(E^2 * V)</code>），不适合超大图</p>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="8-label_propagation_communities--同步标签传播">8) label_propagation_communities —— 同步标签传播<a href="#8-label_propagation_communities--同步标签传播" class="hash-link" aria-label="8) label_propagation_communities —— 同步标签传播的直接链接" title="8) label_propagation_communities —— 同步标签传播的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->基于邻居多数投票的标签扩散，无需优化目标，通常速度快。</p>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：无向图</li>
+<li class="">输出：社区划分迭代器</li>
+<li class="">注意：复杂度较高，不适合超大图</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=8-label_propagation_communities--同步标签传播社区>8. label_propagation_communities —— 同步标签传播社区<a href=#8-label_propagation_communities--同步标签传播社区 class=hash-link aria-label="8. label_propagation_communities —— 同步标签传播社区的直接链接" title="8. label_propagation_communities —— 同步标签传播社区的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->基于邻居多数标签扩散形成社区。节点不断根据邻居标签更新自身标签，最终相同标签的节点形成社区。</p>
 <p><strong>产品价值</strong></p>
 <ul>
-<li class="">超大图快速粗分群</li>
-<li class="">适合“先出结果再细化”的场景</li>
+<li class="">无需指定社区数量</li>
+<li class="">速度快，适合大图快速粗分群</li>
+<li class="">可作为后续精细社区发现的预处理结果</li>
 </ul>
-<p><strong>复杂度</strong>：每轮 <code>O(V + E)</code>（迭代轮数依图而定）</p>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="9-asyn_lpa_communities--异步标签传播">9) asyn_lpa_communities —— 异步标签传播<a href="#9-asyn_lpa_communities--异步标签传播" class="hash-link" aria-label="9) asyn_lpa_communities —— 异步标签传播的直接链接" title="9) asyn_lpa_communities —— 异步标签传播的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->与 LPA 类似，但采用异步更新顺序，允许通过随机种子控制可复现性，并可使用权重影响标签频率。</p>
-<p><strong>关键参数</strong></p>
+<p><strong>典型场景</strong></p>
 <ul>
-<li class=""><code>weight</code>：边权影响邻居标签“出现频率”</li>
-<li class=""><code>seed</code>：随机状态，影响结果稳定性/可复现性</li>
+<li class="">大规模社交网络快速圈层划分</li>
+<li class="">推荐系统用户兴趣群初筛</li>
+<li class="">通信网络粗粒度分区</li>
+<li class="">风控网络团伙候选发现</li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="10-k_clique_communities--k-团渗透可重叠社区">10) k_clique_communities —— k 团渗透（可重叠社区）<a href="#10-k_clique_communities--k-团渗透可重叠社区" class="hash-link" aria-label="10) k_clique_communities —— k 团渗透（可重叠社区）的直接链接" title="10) k_clique_communities —— k 团渗透（可重叠社区）的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->以 k-clique（完全子图）为基本单元，若两个 k-clique 共享 k-1 个节点则视为相邻，从而形成“渗透社区”。节点可属于多个社区（重叠）。</p>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：无向图</li>
+<li class="">输出：<code>generator[set(node)]</code></li>
+<li class="">复杂度：每轮通常 <code>O(V + E)</code></li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=9-asyn_lpa_communities--异步标签传播社区>9. asyn_lpa_communities —— 异步标签传播社区<a href=#9-asyn_lpa_communities--异步标签传播社区 class=hash-link aria-label="9. asyn_lpa_communities —— 异步标签传播社区的直接链接" title="9. asyn_lpa_communities —— 异步标签传播社区的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->异步更新节点标签的标签传播算法。更新顺序会影响结果，可通过随机种子提高可复现性，也可通过权重影响邻居标签的重要性。</p>
 <p><strong>产品价值</strong></p>
 <ul>
-<li class="">找“非常紧密”的核心圈子</li>
-<li class="">允许成员重叠，符合真实社交/合作网络</li>
+<li class="">相比同步标签传播更灵活</li>
+<li class="">支持权重和随机性控制</li>
+<li class="">适合大图快速社区发现</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">权重社交网络圈层发现</li>
+<li class="">大规模交易网络初步团伙识别</li>
+<li class="">组织沟通网络快速分群</li>
+<li class="">推荐网络兴趣社区划分</li>
 </ul>
 <p><strong>关键参数</strong></p>
 <ul>
-<li class=""><code>k</code>：最小 clique 大小（越大越严格，社区更小更紧）</li>
-<li class=""><code>cliques</code>：可传入预计算 clique 列表（可显著节省重复计算）</li>
+<li class=""><code>weight</code>：边权影响标签传播</li>
+<li class=""><code>seed</code>：随机种子，控制结果可复现性</li>
 </ul>
-<p><strong>复杂度</strong>：受 clique 枚举影响，通常指数级（适合中小图或局部子图）</p>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="11-louvain_communities--louvain-社区">11) louvain_communities —— Louvain 社区<a href="#11-louvain_communities--louvain-社区" class="hash-link" aria-label="11) louvain_communities —— Louvain 社区的直接链接" title="11) louvain_communities —— Louvain 社区的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->经典多层模块度优化方法，速度快、适合大规模无向图（支持权重）。</p>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：无向图</li>
+<li class="">输出：<code>generator[set(node)]</code></li>
+<li class="">复杂度：每轮通常 <code>O(V + E)</code></li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=10-k_clique_communities--k-团渗透社区>10. k_clique_communities —— k 团渗透社区<a href=#10-k_clique_communities--k-团渗透社区 class=hash-link aria-label="10. k_clique_communities —— k 团渗透社区的直接链接" title="10. k_clique_communities —— k 团渗透社区的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->以 k-clique 为基本单元，若两个 k-clique 共享 <code>k-1</code> 个节点，则它们属于同一社区。该方法允许节点属于多个社区。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">适合发现非常紧密的核心圈子</li>
+<li class="">支持重叠社区，更符合真实社交和合作网络</li>
+<li class="">对团伙、共谋、小团体识别具有较强解释性</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">社交网络：允许一个人属于多个朋友圈</li>
+<li class="">合作网络：作者参与多个研究团队</li>
+<li class="">风控网络：账户同时参与多个团伙结构</li>
+<li class="">生物网络：蛋白参与多个功能模块</li>
+</ul>
+<p><strong>关键参数</strong></p>
+<ul>
+<li class=""><code>k</code>：最小 clique 大小，越大越严格</li>
+<li class=""><code>cliques</code>：可传入预计算 clique 列表以减少重复计算</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：无向图</li>
+<li class="">输出：<code>generator[frozenset(node)]</code></li>
+<li class="">注意：结果可重叠，不一定是严格 partition</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=11-louvain_communities--louvain-社区>11. louvain_communities —— Louvain 社区<a href=#11-louvain_communities--louvain-社区 class=hash-link aria-label="11. louvain_communities —— Louvain 社区的直接链接" title="11. louvain_communities —— Louvain 社区的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->经典多层模块度优化方法。算法先进行局部节点移动提升模块度，再将社区压缩为超节点进行多层优化。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">工业界常用的大图社区发现算法</li>
+<li class="">速度快，效果通常较好</li>
+<li class="">支持多层社区结构和分辨率控制</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">大规模社交网络社区划分</li>
+<li class="">交易网络团伙识别</li>
+<li class="">通信网络结构分区</li>
+<li class="">知识图谱主题社区发现</li>
+</ul>
 <p><strong>关键参数</strong></p>
 <ul>
 <li class=""><code>weight</code>：边权</li>
 <li class=""><code>resolution</code>：社区尺度</li>
-<li class=""><code>threshold</code> / <code>max_level</code> / <code>seed</code>：收敛阈值、层数、随机性控制</li>
+<li class=""><code>threshold</code>：模块度提升阈值</li>
+<li class=""><code>max_level</code>：最大层数</li>
+<li class=""><code>seed</code>：随机种子</li>
 </ul>
-<p><strong>特点</strong></p>
+<p><strong>适用与特性</strong></p>
 <ul>
-<li class="">工业界常用的“默认首选”之一</li>
-<li class="">结果可能随随机性变化（seed 可控）</li>
+<li class="">图类型：无向图</li>
+<li class="">输出：<code>list[set]</code></li>
+<li class="">特点：结果可能受随机性影响，建议设置 seed</li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="12-leiden_communities--leiden-社区">12) leiden_communities —— Leiden 社区<a href="#12-leiden_communities--leiden-社区" class="hash-link" aria-label="12) leiden_communities —— Leiden 社区的直接链接" title="12) leiden_communities —— Leiden 社区的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->Louvain 的改进版本，通常更稳定，且强调社区内部连通性（避免“看起来一组但内部断裂”的坏社区）。</p>
-<p><strong>关键参数</strong></p>
-<ul>
-<li class=""><code>weight</code> / <code>resolution</code></li>
-<li class=""><code>max_level</code> / <code>seed</code></li>
-</ul>
-<p><strong>特点</strong></p>
-<ul>
-<li class="">质量更稳，适合对社区结构有严谨性要求的场景</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="43-环结构与循环检测">4.3 环结构与循环检测<a href="#43-环结构与循环检测" class="hash-link" aria-label="4.3 环结构与循环检测的直接链接" title="4.3 环结构与循环检测的直接链接" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="13-simple_cycles--简单环枚举">13) simple_cycles —— 简单环枚举<a href="#13-simple_cycles--简单环枚举" class="hash-link" aria-label="13) simple_cycles —— 简单环枚举的直接链接" title="13) simple_cycles —— 简单环枚举的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->枚举图中所有简单环（不重复节点，起点=终点）。可设置 <code>length_bound</code> 限制环长度。</p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=12-leiden_communities--leiden-社区>12. leiden_communities —— Leiden 社区<a href=#12-leiden_communities--leiden-社区 class=hash-link aria-label="12. leiden_communities —— Leiden 社区的直接链接" title="12. leiden_communities —— Leiden 社区的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->Leiden 是 Louvain 的改进方法，通常更稳定，并强调社区内部连通性，避免出现内部断裂但仍被划为同一社区的问题。</p>
 <p><strong>产品价值</strong></p>
 <ul>
-<li class="">发现资金回流、循环交易</li>
-<li class="">发现软件依赖中的循环依赖</li>
-<li class="">发现生物代谢/调控网络的反馈环</li>
+<li class="">社区质量通常比 Louvain 更稳健</li>
+<li class="">适合对社区内部连通性有要求的场景</li>
+<li class="">更适合严谨的社区结构分析和产品化输出</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">大规模社交网络严谨分群</li>
+<li class="">金融风控团伙识别</li>
+<li class="">生物网络功能模块识别</li>
+<li class="">组织网络稳定圈层划分</li>
 </ul>
 <p><strong>关键参数</strong></p>
 <ul>
-<li class=""><code>length_bound</code>：限制环长度，避免爆炸式输出</li>
+<li class=""><code>weight</code>：边权</li>
+<li class=""><code>resolution</code>：社区尺度</li>
+<li class=""><code>max_level</code>：最大层数</li>
+<li class=""><code>seed</code>：随机种子</li>
 </ul>
-<p><strong>复杂度</strong>：<code>O((V + E) * (C + 1))</code>（C 为环数量）</p>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="14-cycle_basis--环基无向图">14) cycle_basis —— 环基（无向图）<a href="#14-cycle_basis--环基无向图" class="hash-link" aria-label="14) cycle_basis —— 环基（无向图）的直接链接" title="14) cycle_basis —— 环基（无向图）的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->为无向图输出一个 cycle basis：能够组合生成所有环的“基础独立环集合”。</p>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：无向图</li>
+<li class="">输出：<code>list[set]</code></li>
+<li class="">特点：通常比 Louvain 更稳定</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=13-naive_greedy_modularity_communities--朴素贪心模块度社区>13. naive_greedy_modularity_communities —— 朴素贪心模块度社区<a href=#13-naive_greedy_modularity_communities--朴素贪心模块度社区 class=hash-link aria-label="13. naive_greedy_modularity_communities —— 朴素贪心模块度社区的直接链接" title="13. naive_greedy_modularity_communities —— 朴素贪心模块度社区的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->使用朴素贪心方式进行模块度优化。相比优化版本更直观，但性能较弱，更适合教学、小图验证或算法结果对照。</p>
 <p><strong>产品价值</strong></p>
 <ul>
-<li class="">电路网格分析（基尔霍夫法则）</li>
-<li class="">道路网络的基本闭合街区识别</li>
-<li class="">分解复杂环结构为基本构件</li>
+<li class="">算法逻辑更容易解释</li>
+<li class="">适合小规模图上的社区发现验证</li>
+<li class="">可作为贪心模块度算法的参考实现或对照方案</li>
 </ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="44-社区结果评估与校验">4.4 社区结果评估与校验<a href="#44-社区结果评估与校验" class="hash-link" aria-label="4.4 社区结果评估与校验的直接链接" title="4.4 社区结果评估与校验的直接链接" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="15-modularity--模块度评分q-值">15) modularity —— 模块度评分（Q 值）<a href="#15-modularity--模块度评分q-值" class="hash-link" aria-label="15) modularity —— 模块度评分（Q 值）的直接链接" title="15) modularity —— 模块度评分（Q 值）的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->对给定社区划分计算 modularity：衡量“组内边多、组间边少”的程度。</p>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">小规模网络社区划分</li>
+<li class="">教学演示模块度最大化过程</li>
+<li class="">与优化版贪心模块度算法做结果对比</li>
+<li class="">调试社区划分逻辑</li>
+</ul>
 <p><strong>关键参数</strong></p>
 <ul>
-<li class=""><code>communities</code>：必须是对节点的 partition（互斥且覆盖）</li>
-<li class=""><code>weight</code> / <code>resolution</code></li>
+<li class=""><code>weight</code>：边权</li>
+<li class=""><code>resolution</code>：社区尺度</li>
 </ul>
-<p><strong>产出</strong>：<code>float</code>（通常越大越好，但需结合网络类型与分辨率理解）</p>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="16-partition_quality--覆盖率与性能">16) partition_quality —— 覆盖率与性能<a href="#16-partition_quality--覆盖率与性能" class="hash-link" aria-label="16) partition_quality —— 覆盖率与性能的直接链接" title="16) partition_quality —— 覆盖率与性能的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->输出 <code>(coverage, performance)</code>：</p>
+<p><strong>适用与特性</strong></p>
 <ul>
-<li class="">coverage：社区内部边占比（内部边多不多）</li>
-<li class="">performance：内部边 + 外部非边的比例（分隔做得好不好）</li>
+<li class="">图类型：无向图</li>
+<li class="">输出：社区集合列表</li>
+<li class="">注意：不建议用于超大图</li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="17-is_partition--分区合法性校验">17) is_partition —— 分区合法性校验<a href="#17-is_partition--分区合法性校验" class="hash-link" aria-label="17) is_partition —— 分区合法性校验的直接链接" title="17) is_partition —— 分区合法性校验的直接链接" translate="no">​</a></h3>
-<p><strong>功能说明</strong><br>
-<!-- -->检查给定社区列表是否是严格 partition：</p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=14-spectral_modularity_bipartition--谱模块度二分>14. spectral_modularity_bipartition —— 谱模块度二分<a href=#14-spectral_modularity_bipartition--谱模块度二分 class=hash-link aria-label="14. spectral_modularity_bipartition —— 谱模块度二分的直接链接" title="14. spectral_modularity_bipartition —— 谱模块度二分的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->基于谱方法对二部图进行模块度意义下的二分划分，将节点划分为两个模块。</p>
+<p><strong>产品价值</strong></p>
 <ul>
-<li class="">是否覆盖全部节点</li>
-<li class="">是否互相不重叠</li>
+<li class="">适合二部图结构的社区划分</li>
+<li class="">能保留用户-物品、作者-论文等两侧关系的原始结构</li>
+<li class="">避免直接投影到单侧图造成信息损失</li>
 </ul>
-<p><strong>注意</strong></p>
+<p><strong>典型场景</strong></p>
 <ul>
-<li class="">对于允许重叠社区的算法（如 <code>k_clique_communities</code>），其输出通常<strong>不满足</strong> partition 定义，此时不应强行用 <code>is_partition</code> 验证。</li>
+<li class="">用户-商品网络社区划分</li>
+<li class="">作者-论文网络研究方向划分</li>
+<li class="">机构-项目网络模块识别</li>
+<li class="">账户-设备网络风险簇拆分</li>
 </ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="五推荐使用指南选型建议">五、推荐使用指南（选型建议）<a href="#五推荐使用指南选型建议" class="hash-link" aria-label="五、推荐使用指南（选型建议）的直接链接" title="五、推荐使用指南（选型建议）的直接链接" translate="no">​</a></h2>
+<p><strong>适用与特性</strong></p>
 <ul>
-<li class=""><strong>想先衡量网络是否“抱团”</strong>：<code>average_clustering</code> + <code>transitivity</code></li>
-<li class=""><strong>想找局部紧密核心点/团伙特征</strong>：<code>clustering</code> + <code>triangles</code>（必要时 <code>square_clustering</code>）</li>
-<li class=""><strong>想快速得到社区（大图优先）</strong>：<code>louvain_communities</code> 或 <code>leiden_communities</code></li>
-<li class=""><strong>想要更解释性的分层拆分（小图）</strong>：<code>girvan_newman</code></li>
-<li class=""><strong>想极快粗分群（超大图）</strong>：<code>label_propagation_communities</code> / <code>asyn_lpa_communities</code></li>
-<li class=""><strong>想找可重叠、极紧密的小圈子</strong>：<code>k_clique_communities</code></li>
-<li class=""><strong>想给划分打分</strong>：<code>modularity</code> + <code>partition_quality</code>（先 <code>is_partition</code> 校验）</li>
-<li class=""><strong>想查闭环/循环依赖/资金回流</strong>：<code>simple_cycles</code>（必要时加 <code>length_bound</code>），无向图用 <code>cycle_basis</code></li>
+<li class="">图类型：二部图</li>
+<li class="">输出：二分结果</li>
+<li class="">适合：二部图模块度分析</li>
 </ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="六可直接回答的典型问题示例">六、可直接回答的典型问题（示例）<a href="#六可直接回答的典型问题示例" class="hash-link" aria-label="六、可直接回答的典型问题（示例）的直接链接" title="六、可直接回答的典型问题（示例）的直接链接" translate="no">​</a></h2>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=15-asyn_fluidc--异步流体社区>15. asyn_fluidc —— 异步流体社区<a href=#15-asyn_fluidc--异步流体社区 class=hash-link aria-label="15. asyn_fluidc —— 异步流体社区的直接链接" title="15. asyn_fluidc —— 异步流体社区的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->基于流体扩散思想进行社区发现。用户需要指定社区数量 <code>k</code>，算法通过异步更新逐步形成指定数量的社区。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">可以显式控制社区数量</li>
+<li class="">速度较快，适合需要固定分群数量的场景</li>
+<li class="">与标签传播类算法一样，适合作为快速社区划分方法</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">需要固定划分为 K 个区域的网络</li>
+<li class="">用户分群数量已知的推荐系统</li>
+<li class="">运维网络固定分区</li>
+<li class="">风控策略中按指定数量生成候选团伙</li>
+</ul>
+<p><strong>关键参数</strong></p>
+<ul>
+<li class=""><code>k</code>：需要划分的社区数量</li>
+<li class=""><code>max_iter</code>：最大迭代次数</li>
+<li class=""><code>seed</code>：随机种子</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：通常要求连通无向图</li>
+<li class="">输出：<code>iterable[set(node)]</code></li>
+<li class="">注意：需要提前指定社区数量</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=16-kernighan_lin_bisection--kernighan-lin-二分划分>16. kernighan_lin_bisection —— Kernighan-Lin 二分划分<a href=#16-kernighan_lin_bisection--kernighan-lin-二分划分 class=hash-link aria-label="16. kernighan_lin_bisection —— Kernighan-Lin 二分划分的直接链接" title="16. kernighan_lin_bisection —— Kernighan-Lin 二分划分的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->使用 Kernighan-Lin 启发式方法将图划分为两个部分，目标是减少两个部分之间的割边权重。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">适合图二分、负载均衡和任务拆分</li>
+<li class="">可用于需要两个区域、两组节点或二分实验的场景</li>
+<li class="">比单纯社区发现更偏向“平衡切分”或“降低跨组连接”</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">计算任务图二分调度</li>
+<li class="">网络分区与负载均衡</li>
+<li class="">A/B 分组中的结构化拆分</li>
+<li class="">电路或模块划分</li>
+</ul>
+<p><strong>关键参数</strong></p>
+<ul>
+<li class=""><code>partition</code>：可传入初始二分</li>
+<li class=""><code>max_iter</code>：最大迭代次数</li>
+<li class=""><code>weight</code>：边权</li>
+<li class=""><code>seed</code>：随机种子</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：无向图</li>
+<li class="">输出：<code>tuple[set, set]</code></li>
+<li class="">特点：启发式算法，不保证全局最优</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=43-环结构与循环检测>4.3 环结构与循环检测<a href=#43-环结构与循环检测 class=hash-link aria-label="4.3 环结构与循环检测的直接链接" title="4.3 环结构与循环检测的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=17-simple_cycles--简单环枚举>17. simple_cycles —— 简单环枚举<a href=#17-simple_cycles--简单环枚举 class=hash-link aria-label="17. simple_cycles —— 简单环枚举的直接链接" title="17. simple_cycles —— 简单环枚举的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->枚举图中的所有简单环。简单环指起点和终点相同，且中间节点不重复的环路。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">发现资金回流、循环交易、循环依赖</li>
+<li class="">识别反馈回路和闭环传播结构</li>
+<li class="">可用于有向网络中的闭环风险排查</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">资金网络：循环交易链路</li>
+<li class="">软件依赖：循环依赖链</li>
+<li class="">生物网络：反馈调控环</li>
+<li class="">流程网络：异常闭环流程</li>
+</ul>
+<p><strong>关键参数</strong></p>
+<ul>
+<li class=""><code>length_bound</code>：限制环长度，避免输出爆炸</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：有向图为主</li>
+<li class="">输出：环路径迭代器或列表</li>
+<li class="">注意：环数量可能非常多，建议设置长度上限</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=18-cycle_basis--环基>18. cycle_basis —— 环基<a href=#18-cycle_basis--环基 class=hash-link aria-label="18. cycle_basis —— 环基的直接链接" title="18. cycle_basis —— 环基的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->为无向图输出一个 cycle basis，即能够组合生成所有环的基础独立环集合。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">将复杂环结构分解为基础构件</li>
+<li class="">适合电路、路网、管网等环状结构分析</li>
+<li class="">比枚举所有环更适合做结构摘要</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">电路网络：基础回路分析</li>
+<li class="">道路网络：基本闭合街区识别</li>
+<li class="">管网系统：基础环路结构识别</li>
+<li class="">关系网络：基础闭环结构摘要</li>
+</ul>
+<p><strong>关键参数</strong></p>
+<ul>
+<li class=""><code>root</code>：可选起始节点</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：无向图</li>
+<li class="">输出：<code>list[list[node]]</code></li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=19-minimum_cycle_basis--最小环基>19. minimum_cycle_basis —— 最小环基<a href=#19-minimum_cycle_basis--最小环基 class=hash-link aria-label="19. minimum_cycle_basis —— 最小环基的直接链接" title="19. minimum_cycle_basis —— 最小环基的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->输出无向图的最小环基，即在权重意义下总长度或总成本较小的一组基础环。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">相比普通环基，更偏向选择成本更低、规模更小或权重更优的基础环集合</li>
+<li class="">适合需要最简闭环解释的场景</li>
+<li class="">可用于电路、路网、管网中的低成本环结构分析</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">电路网络：最小基础回路分析</li>
+<li class="">路网网络：最短闭合街区识别</li>
+<li class="">管网系统：低成本基础环路分析</li>
+<li class="">化学结构：最小环系统识别</li>
+</ul>
+<p><strong>关键参数</strong></p>
+<ul>
+<li class=""><code>weight</code>：边权字段，表示距离、成本或长度</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：无向图</li>
+<li class="">输出：<code>list[list[node]]</code></li>
+<li class="">适合：中小规模图或需要最小闭环摘要的场景</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=20-triadic_census--三元结构普查>20. triadic_census —— 三元结构普查<a href=#20-triadic_census--三元结构普查 class=hash-link aria-label="20. triadic_census —— 三元结构普查的直接链接" title="20. triadic_census —— 三元结构普查的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->统计有向图中所有三节点子图的结构类型数量。不同三元组模式可表示互惠、传递、循环、空连接等不同关系形态。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">从三节点模式层面刻画有向网络结构</li>
+<li class="">可用于判断网络是否偏向传递关系、循环关系或互惠关系</li>
+<li class="">适合社交、交易、通信、组织和生态网络的微观结构分析</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">社交网络：互粉、单向关注、三人闭环模式统计</li>
+<li class="">交易网络：三账户循环交易结构分析</li>
+<li class="">组织网络：层级传递关系和反馈关系识别</li>
+<li class="">通信网络：三节点消息流模式分析</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：有向图</li>
+<li class="">输出：三元组类型计数字典</li>
+<li class="">适合：微观结构模式统计和网络画像</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=44-社区结果评估与校验>4.4 社区结果评估与校验<a href=#44-社区结果评估与校验 class=hash-link aria-label="4.4 社区结果评估与校验的直接链接" title="4.4 社区结果评估与校验的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=21-modularity--模块度评分>21. modularity —— 模块度评分<a href=#21-modularity--模块度评分 class=hash-link aria-label="21. modularity —— 模块度评分的直接链接" title="21. modularity —— 模块度评分的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->对给定社区划分计算模块度 Q 值，衡量社区内部边是否多于随机期望、社区之间边是否相对较少。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">为社区划分提供统一质量评分</li>
+<li class="">适合比较不同社区发现算法或不同参数结果</li>
+<li class="">是 Louvain、Leiden、贪心模块度等算法的核心优化目标</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">比较 Louvain 与 Leiden 的社区划分质量</li>
+<li class="">调整 resolution 参数后选择更合适的结果</li>
+<li class="">评估人工分群是否符合网络结构</li>
+<li class="">社区发现结果上线前质量校验</li>
+</ul>
+<p><strong>关键参数</strong></p>
+<ul>
+<li class=""><code>communities</code>：社区列表，通常应为严格 partition</li>
+<li class=""><code>weight</code>：边权</li>
+<li class=""><code>resolution</code>：分辨率参数</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">输出：<code>float</code></li>
+<li class="">注意：模块度越高通常越好，但需结合业务场景和社区尺度解释</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=22-partition_quality--覆盖率与性能>22. partition_quality —— 覆盖率与性能<a href=#22-partition_quality--覆盖率与性能 class=hash-link aria-label="22. partition_quality —— 覆盖率与性能的直接链接" title="22. partition_quality —— 覆盖率与性能的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->计算社区划分的两个质量指标：</p>
+<ul>
+<li class=""><strong>coverage</strong>：社区内部边占全部边的比例</li>
+<li class=""><strong>performance</strong>：社区内部边和社区外部非边在所有节点对中的比例</li>
+</ul>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">从不同角度评估社区划分质量</li>
+<li class="">coverage 强调组内连接是否多</li>
+<li class="">performance 同时考虑组内连接和组间分离是否合理</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">社区划分方案质量评估</li>
+<li class="">人工分群与算法分群对比</li>
+<li class="">社群边界清晰度判断</li>
+<li class="">风控团伙切分效果评估</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">输入：社区划分</li>
+<li class="">输出：<code>(coverage, performance)</code></li>
+<li class="">注意：通常要求社区划分为严格 partition</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=23-is_partition--分区合法性校验>23. is_partition —— 分区合法性校验<a href=#23-is_partition--分区合法性校验 class=hash-link aria-label="23. is_partition —— 分区合法性校验的直接链接" title="23. is_partition —— 分区合法性校验的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong><br/>
+<!-- -->检查给定社区列表是否为严格 partition，即是否覆盖全部节点且各社区之间互不重叠。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">社区评估前的基础校验</li>
+<li class="">防止漏节点、重复分配节点导致指标失真</li>
+<li class="">适合社区发现结果进入下游流程前做质量检查</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">检查算法输出是否覆盖所有用户</li>
+<li class="">检查人工分群是否有重复成员</li>
+<li class="">在计算 modularity 前验证社区结果</li>
+<li class="">社区结果写入数据库前做合法性校验</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">输入：图和社区列表</li>
+<li class="">输出：<code>bool</code></li>
+<li class="">注意：可重叠社区如 <code>k_clique_communities</code> 通常不满足严格 partition</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=五推荐使用指南选型建议>五、推荐使用指南（选型建议）<a href=#五推荐使用指南选型建议 class=hash-link aria-label=五、推荐使用指南（选型建议）的直接链接 title=五、推荐使用指南（选型建议）的直接链接 translate=no>​</a></h2>
+<ul>
+<li class="">
+<p><strong>想先衡量网络是否抱团</strong></p>
+<ul>
+<li class="">全局抱团程度：<code>average_clustering</code> / <code>transitivity</code></li>
+<li class="">局部抱团程度：<code>clustering</code></li>
+<li class="">三角闭合结构：<code>triangles</code></li>
+<li class="">四环冗余结构：<code>square_clustering</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>想快速得到社区</strong></p>
+<ul>
+<li class="">大图默认优先：<code>louvain_communities</code> / <code>leiden_communities</code></li>
+<li class="">快速粗分群：<code>label_propagation_communities</code> / <code>asyn_lpa_communities</code></li>
+<li class="">指定社区数量：<code>asyn_fluidc</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>想要解释性或层级拆分</strong></p>
+<ul>
+<li class="">分层社区：<code>girvan_newman</code></li>
+<li class="">二分划分：<code>kernighan_lin_bisection</code></li>
+<li class="">小图贪心验证：<code>naive_greedy_modularity_communities</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>想找重叠小圈子</strong></p>
+<ul>
+<li class="">可重叠紧密社区：<code>k_clique_communities</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>想处理二部图社区</strong></p>
+<ul>
+<li class="">二部图谱模块度二分：<code>spectral_modularity_bipartition</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>想查闭环、循环依赖或资金回流</strong></p>
+<ul>
+<li class="">所有简单环：<code>simple_cycles</code></li>
+<li class="">基础环集合：<code>cycle_basis</code></li>
+<li class="">最小基础环集合：<code>minimum_cycle_basis</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>想做三节点模式分析</strong></p>
+<ul>
+<li class="">有向三元结构统计：<code>triadic_census</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>想评估社区结果</strong></p>
+<ul>
+<li class="">模块度：<code>modularity</code></li>
+<li class="">覆盖率与性能：<code>partition_quality</code></li>
+<li class="">合法性校验：<code>is_partition</code></li>
+</ul>
+</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=六可直接回答的典型问题示例>六、可直接回答的典型问题（示例）<a href=#六可直接回答的典型问题示例 class=hash-link aria-label=六、可直接回答的典型问题（示例）的直接链接 title=六、可直接回答的典型问题（示例）的直接链接 translate=no>​</a></h2>
 <ul>
 <li class="">“网络整体更像松散随机还是小世界？给我一个总体指标。”</li>
-<li class="">“哪些节点的朋友圈最紧？列 Top-20 的聚类系数/三角形数。”</li>
+<li class="">“哪些节点的朋友圈最紧？列 Top-20 聚类系数。”</li>
+<li class="">“哪些节点参与最多三角形？”</li>
+<li class="">“这个二部网络是否存在明显四环冗余结构？”</li>
 <li class="">“把网络自动分成几个自然社区，并输出每个社区成员。”</li>
+<li class="">“用 Louvain 和 Leiden 分别划分社区，并比较模块度。”</li>
+<li class="">“我希望固定分成 5 个社区，应该怎么划分？”</li>
+<li class="">“把图二分成两个部分，尽量减少跨组连接。”</li>
+<li class="">“找允许重叠的核心小圈子。”</li>
+<li class="">“这个社区结果是不是严格分区？有没有漏节点或重复分配？”</li>
 <li class="">“我有两种社区划分方案，哪个更好？给出 modularity 和 coverage/performance。”</li>
-<li class="">“这个社区结果是不是严格分区？有没有漏人/重复分配？”</li>
-<li class="">“找出所有资金闭环/循环依赖链路（可限制环长度）。”</li>
-<li class="">“找允许重叠的核心小圈子（铁三角串起来的社群）。”</li>
-</ul></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/iDC-NEU/YiGraphDocs/tree/main/docs-site/docs/tutorial-algorithm/Clustering_Community.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/YiGraphDocs/docs/tutorial-algorithm/Connectivity_Components"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">Connectivity &amp; Components 连通性与组件算子集</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/YiGraphDocs/docs/tutorial-algorithm/tree"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">Tree &amp; Spanning Tree 树与生成树算子集</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#一算子集概述" class="table-of-contents__link toc-highlight">一、算子集概述</a></li><li><a href="#二算子能力分类" class="table-of-contents__link toc-highlight">二、算子能力分类</a></li><li><a href="#三通用输入输出约定" class="table-of-contents__link toc-highlight">三、通用输入输出约定</a></li><li><a href="#四算子详细说明" class="table-of-contents__link toc-highlight">四、算子详细说明</a></li><li><a href="#41-局部紧密度与聚集性" class="table-of-contents__link toc-highlight">4.1 局部紧密度与聚集性</a><ul><li><a href="#1-clustering--节点聚类系数" class="table-of-contents__link toc-highlight">1) clustering —— 节点聚类系数</a></li><li><a href="#2-average_clustering--平均聚类系数" class="table-of-contents__link toc-highlight">2) average_clustering —— 平均聚类系数</a></li><li><a href="#3-triangles--三角形数量统计" class="table-of-contents__link toc-highlight">3) triangles —— 三角形数量统计</a></li><li><a href="#4-transitivity--全局传递性" class="table-of-contents__link toc-highlight">4) transitivity —— 全局传递性</a></li><li><a href="#5-square_clustering--四环聚类系数4-cycle" class="table-of-contents__link toc-highlight">5) square_clustering —— 四环聚类系数（4-cycle）</a></li></ul></li><li><a href="#42-社区发现community-detection" class="table-of-contents__link toc-highlight">4.2 社区发现（Community Detection）</a><ul><li><a href="#6-greedy_modularity_communities--贪心模块度社区" class="table-of-contents__link toc-highlight">6) greedy_modularity_communities —— 贪心模块度社区</a></li><li><a href="#7-girvan_newman--girvannewman-分层社区" class="table-of-contents__link toc-highlight">7) girvan_newman —— Girvan–Newman 分层社区</a></li><li><a href="#8-label_propagation_communities--同步标签传播" class="table-of-contents__link toc-highlight">8) label_propagation_communities —— 同步标签传播</a></li><li><a href="#9-asyn_lpa_communities--异步标签传播" class="table-of-contents__link toc-highlight">9) asyn_lpa_communities —— 异步标签传播</a></li><li><a href="#10-k_clique_communities--k-团渗透可重叠社区" class="table-of-contents__link toc-highlight">10) k_clique_communities —— k 团渗透（可重叠社区）</a></li><li><a href="#11-louvain_communities--louvain-社区" class="table-of-contents__link toc-highlight">11) louvain_communities —— Louvain 社区</a></li><li><a href="#12-leiden_communities--leiden-社区" class="table-of-contents__link toc-highlight">12) leiden_communities —— Leiden 社区</a></li></ul></li><li><a href="#43-环结构与循环检测" class="table-of-contents__link toc-highlight">4.3 环结构与循环检测</a><ul><li><a href="#13-simple_cycles--简单环枚举" class="table-of-contents__link toc-highlight">13) simple_cycles —— 简单环枚举</a></li><li><a href="#14-cycle_basis--环基无向图" class="table-of-contents__link toc-highlight">14) cycle_basis —— 环基（无向图）</a></li></ul></li><li><a href="#44-社区结果评估与校验" class="table-of-contents__link toc-highlight">4.4 社区结果评估与校验</a><ul><li><a href="#15-modularity--模块度评分q-值" class="table-of-contents__link toc-highlight">15) modularity —— 模块度评分（Q 值）</a></li><li><a href="#16-partition_quality--覆盖率与性能" class="table-of-contents__link toc-highlight">16) partition_quality —— 覆盖率与性能</a></li><li><a href="#17-is_partition--分区合法性校验" class="table-of-contents__link toc-highlight">17) is_partition —— 分区合法性校验</a></li></ul></li><li><a href="#五推荐使用指南选型建议" class="table-of-contents__link toc-highlight">五、推荐使用指南（选型建议）</a></li><li><a href="#六可直接回答的典型问题示例" class="table-of-contents__link toc-highlight">六、可直接回答的典型问题（示例）</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">版权所有 © 2026 AAG</div></div></div></footer></div>
-</body>
-</html>
+<li class="">“找出所有资金闭环或循环依赖链路，并限制环长度不超过 6。”</li>
+<li class="">“输出无向图的最小环基，用于分析基础闭环结构。”</li>
+<li class="">“统计有向图中的三元结构模式，看看传递关系和循环关系分别有多少。”</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=七工程落地注意事项>七、工程落地注意事项<a href=#七工程落地注意事项 class=hash-link aria-label=七、工程落地注意事项的直接链接 title=七、工程落地注意事项的直接链接 translate=no>​</a></h2>
+<ol>
+<li class="">
+<p><strong>先明确分析目标</strong></p>
+<ul>
+<li class="">聚类系数回答“局部关系是否紧密”。</li>
+<li class="">社区发现回答“节点如何自然分组”。</li>
+<li class="">环结构算法回答“是否存在闭环或循环路径”。</li>
+<li class="">社区评估算法回答“这个划分好不好”。</li>
+</ul>
+</li>
+<li class="">
+<p><strong>社区发现算法没有唯一正确答案</strong></p>
+<ul>
+<li class="">Louvain、Leiden、标签传播、Girvan-Newman 机制不同，结果可能不同。</li>
+<li class="">建议结合 <code>modularity</code>、<code>partition_quality</code> 和业务解释综合选择。</li>
+<li class="">随机算法建议设置 <code>seed</code> 保证可复现。</li>
+</ul>
+</li>
+<li class="">
+<p><strong>大图优先选择高效算法</strong></p>
+<ul>
+<li class="">大规模图优先使用 <code>louvain_communities</code>、<code>leiden_communities</code>、<code>asyn_lpa_communities</code>。</li>
+<li class=""><code>girvan_newman</code> 解释性强，但更适合小图。</li>
+<li class="">clique、环枚举类算法在大图中可能非常慢。</li>
+</ul>
+</li>
+<li class="">
+<p><strong>重叠社区与严格分区要区分</strong></p>
+<ul>
+<li class=""><code>k_clique_communities</code> 允许节点属于多个社区。</li>
+<li class=""><code>modularity</code>、<code>partition_quality</code>、<code>is_partition</code> 通常面向严格 partition。</li>
+<li class="">不要用严格分区指标直接评估重叠社区，除非先做转换。</li>
+</ul>
+</li>
+<li class="">
+<p><strong>二部图不要随意投影</strong></p>
+<ul>
+<li class="">用户-商品、作者-论文等二部图投影后可能产生大量虚假边。</li>
+<li class="">二部图社区分析优先考虑 <code>spectral_modularity_bipartition</code> 等保留二部结构的方法。</li>
+<li class="">如需投影，应明确投影规则和边权含义。</li>
+</ul>
+</li>
+<li class="">
+<p><strong>环结构算法要控制输出规模</strong></p>
+<ul>
+<li class=""><code>simple_cycles</code> 的结果数量可能指数级增长。</li>
+<li class="">工程中建议使用 <code>length_bound</code> 或先筛选子图。</li>
+<li class="">若只需要结构摘要，无向图可优先使用 <code>cycle_basis</code> 或 <code>minimum_cycle_basis</code>。</li>
+</ul>
+</li>
+<li class="">
+<p><strong>三角形、四环、三元组适合做结构特征</strong></p>
+<ul>
+<li class=""><code>triangles</code>、<code>square_clustering</code>、<code>triadic_census</code> 可作为机器学习或风控规则特征。</li>
+<li class="">它们不一定直接给出社区，但能刻画局部模式和结构异常。</li>
+</ul>
+</li>
+<li class="">
+<p><strong>模块度存在分辨率限制</strong></p>
+<ul>
+<li class=""><code>resolution</code> 会影响社区大小。</li>
+<li class="">较高 resolution 往往得到更小社区，较低 resolution 往往得到更大社区。</li>
+<li class="">不同业务场景应选择不同尺度，不宜只追求最高模块度。</li>
+</ul>
+</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=八算子清单>八、算子清单<a href=#八算子清单 class=hash-link aria-label=八、算子清单的直接链接 title=八、算子清单的直接链接 translate=no>​</a></h2>
+<table><thead><tr><th style=text-align:right>序号<th>算子名称<th>中文说明<tbody><tr><td style=text-align:right>1<td><code>clustering</code><td>节点聚类系数<tr><td style=text-align:right>2<td><code>average_clustering</code><td>平均聚类系数<tr><td style=text-align:right>3<td><code>transitivity</code><td>全局传递性<tr><td style=text-align:right>4<td><code>triangles</code><td>三角形数量统计<tr><td style=text-align:right>5<td><code>square_clustering</code><td>四环聚类系数<tr><td style=text-align:right>6<td><code>greedy_modularity_communities</code><td>贪心模块度社区发现<tr><td style=text-align:right>7<td><code>girvan_newman</code><td>Girvan-Newman 分层社区发现<tr><td style=text-align:right>8<td><code>label_propagation_communities</code><td>同步标签传播社区发现<tr><td style=text-align:right>9<td><code>asyn_lpa_communities</code><td>异步标签传播社区发现<tr><td style=text-align:right>10<td><code>k_clique_communities</code><td>k 团渗透可重叠社区发现<tr><td style=text-align:right>11<td><code>louvain_communities</code><td>Louvain 社区发现<tr><td style=text-align:right>12<td><code>leiden_communities</code><td>Leiden 社区发现<tr><td style=text-align:right>13<td><code>simple_cycles</code><td>简单环枚举<tr><td style=text-align:right>14<td><code>cycle_basis</code><td>环基<tr><td style=text-align:right>15<td><code>modularity</code><td>模块度评分<tr><td style=text-align:right>16<td><code>partition_quality</code><td>覆盖率与性能评估<tr><td style=text-align:right>17<td><code>is_partition</code><td>社区分区合法性校验<tr><td style=text-align:right>18<td><code>naive_greedy_modularity_communities</code><td>朴素贪心模块度社区发现<tr><td style=text-align:right>19<td><code>spectral_modularity_bipartition</code><td>二部图谱模块度二分<tr><td style=text-align:right>20<td><code>minimum_cycle_basis</code><td>最小环基<tr><td style=text-align:right>21<td><code>triadic_census</code><td>三元结构普查<tr><td style=text-align:right>22<td><code>asyn_fluidc</code><td>异步流体社区发现<tr><td style=text-align:right>23<td><code>kernighan_lin_bisection</code><td>Kernighan-Lin 图二分</table></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/iDC-NEU/YiGraphDocs/tree/main/docs-site/docs/tutorial-algorithm/Clustering_Community.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/YiGraphDocs/docs/tutorial-algorithm/Connectivity_Components><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>Connectivity & Components 连通性与组件算子集</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/YiGraphDocs/docs/tutorial-algorithm/tree><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>Tree & Spanning Tree 树与生成树算子集</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#一算子集概述 class="table-of-contents__link toc-highlight">一、算子集概述</a><li><a href=#二算子能力分类 class="table-of-contents__link toc-highlight">二、算子能力分类</a><li><a href=#三通用输入输出约定 class="table-of-contents__link toc-highlight">三、通用输入输出约定</a><li><a href=#四算子详细说明 class="table-of-contents__link toc-highlight">四、算子详细说明</a><li><a href=#41-局部紧密度与聚集性 class="table-of-contents__link toc-highlight">4.1 局部紧密度与聚集性</a><ul><li><a href=#1-clustering--节点聚类系数 class="table-of-contents__link toc-highlight">1. clustering —— 节点聚类系数</a><li><a href=#2-average_clustering--平均聚类系数 class="table-of-contents__link toc-highlight">2. average_clustering —— 平均聚类系数</a><li><a href=#3-transitivity--全局传递性 class="table-of-contents__link toc-highlight">3. transitivity —— 全局传递性</a><li><a href=#4-triangles--三角形数量统计 class="table-of-contents__link toc-highlight">4. triangles —— 三角形数量统计</a><li><a href=#5-square_clustering--四环聚类系数 class="table-of-contents__link toc-highlight">5. square_clustering —— 四环聚类系数</a></ul><li><a href=#42-社区发现与图划分 class="table-of-contents__link toc-highlight">4.2 社区发现与图划分</a><ul><li><a href=#6-greedy_modularity_communities--贪心模块度社区 class="table-of-contents__link toc-highlight">6. greedy_modularity_communities —— 贪心模块度社区</a><li><a href=#7-girvan_newman--girvan-newman-分层社区 class="table-of-contents__link toc-highlight">7. girvan_newman —— Girvan-Newman 分层社区</a><li><a href=#8-label_propagation_communities--同步标签传播社区 class="table-of-contents__link toc-highlight">8. label_propagation_communities —— 同步标签传播社区</a><li><a href=#9-asyn_lpa_communities--异步标签传播社区 class="table-of-contents__link toc-highlight">9. asyn_lpa_communities —— 异步标签传播社区</a><li><a href=#10-k_clique_communities--k-团渗透社区 class="table-of-contents__link toc-highlight">10. k_clique_communities —— k 团渗透社区</a><li><a href=#11-louvain_communities--louvain-社区 class="table-of-contents__link toc-highlight">11. louvain_communities —— Louvain 社区</a><li><a href=#12-leiden_communities--leiden-社区 class="table-of-contents__link toc-highlight">12. leiden_communities —— Leiden 社区</a><li><a href=#13-naive_greedy_modularity_communities--朴素贪心模块度社区 class="table-of-contents__link toc-highlight">13. naive_greedy_modularity_communities —— 朴素贪心模块度社区</a><li><a href=#14-spectral_modularity_bipartition--谱模块度二分 class="table-of-contents__link toc-highlight">14. spectral_modularity_bipartition —— 谱模块度二分</a><li><a href=#15-asyn_fluidc--异步流体社区 class="table-of-contents__link toc-highlight">15. asyn_fluidc —— 异步流体社区</a><li><a href=#16-kernighan_lin_bisection--kernighan-lin-二分划分 class="table-of-contents__link toc-highlight">16. kernighan_lin_bisection —— Kernighan-Lin 二分划分</a></ul><li><a href=#43-环结构与循环检测 class="table-of-contents__link toc-highlight">4.3 环结构与循环检测</a><ul><li><a href=#17-simple_cycles--简单环枚举 class="table-of-contents__link toc-highlight">17. simple_cycles —— 简单环枚举</a><li><a href=#18-cycle_basis--环基 class="table-of-contents__link toc-highlight">18. cycle_basis —— 环基</a><li><a href=#19-minimum_cycle_basis--最小环基 class="table-of-contents__link toc-highlight">19. minimum_cycle_basis —— 最小环基</a><li><a href=#20-triadic_census--三元结构普查 class="table-of-contents__link toc-highlight">20. triadic_census —— 三元结构普查</a></ul><li><a href=#44-社区结果评估与校验 class="table-of-contents__link toc-highlight">4.4 社区结果评估与校验</a><ul><li><a href=#21-modularity--模块度评分 class="table-of-contents__link toc-highlight">21. modularity —— 模块度评分</a><li><a href=#22-partition_quality--覆盖率与性能 class="table-of-contents__link toc-highlight">22. partition_quality —— 覆盖率与性能</a><li><a href=#23-is_partition--分区合法性校验 class="table-of-contents__link toc-highlight">23. is_partition —— 分区合法性校验</a></ul><li><a href=#五推荐使用指南选型建议 class="table-of-contents__link toc-highlight">五、推荐使用指南（选型建议）</a><li><a href=#六可直接回答的典型问题示例 class="table-of-contents__link toc-highlight">六、可直接回答的典型问题（示例）</a><li><a href=#七工程落地注意事项 class="table-of-contents__link toc-highlight">七、工程落地注意事项</a><li><a href=#八算子清单 class="table-of-contents__link toc-highlight">八、算子清单</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class=footer__copyright>版权所有 © 2026 AAG</div></div></div></footer></div></body>

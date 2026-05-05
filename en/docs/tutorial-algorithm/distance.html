@@ -1,275 +1,795 @@
-<!doctype html>
-<html lang="en-US" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-tutorial-algorithm/distance" data-has-hydrated="false">
-<head>
-<meta charset="UTF-8">
-<meta name="generator" content="Docusaurus v3.9.2">
-<title data-rh="true">Distance &amp; Measures Operator Set | YiGraph Documentation</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/distance"><meta data-rh="true" property="og:locale" content="en_US"><meta data-rh="true" property="og:locale:alternate" content="zh_CN"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Distance &amp; Measures Operator Set | YiGraph Documentation"><meta data-rh="true" name="description" content="Operator Category: Distance &amp; Measures (Distance and Structural Metrics)"><meta data-rh="true" property="og:description" content="Operator Category: Distance &amp; Measures (Distance and Structural Metrics)"><link data-rh="true" rel="icon" href="/YiGraphDocs/en/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/distance"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/distance" hreflang="zh-CN"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/distance" hreflang="en-US"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/distance" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Distance & Measures Operator Set","item":"https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/distance"}]}</script><link rel="stylesheet" href="/YiGraphDocs/en/assets/css/styles.27c37220.css">
-<script src="/YiGraphDocs/en/assets/js/runtime~main.aa7893ac.js" defer="defer"></script>
-<script src="/YiGraphDocs/en/assets/js/main.d3bc8723.js" defer="defer"></script>
-</head>
-<body class="navigation-with-keyboard">
-<svg style="display: none;"><defs>
-<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+<!doctype html><html lang=en-US dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-tutorial-algorithm/distance" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Distance & Measures Operator Set | YiGraph Documentation</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:url content=https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/distance /><meta data-rh=true property=og:locale content=en_US /><meta data-rh=true property=og:locale:alternate content=zh_CN /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Distance & Measures Operator Set | YiGraph Documentation"/><meta data-rh=true name=description content="Operator Category: Distance & Measures"/><meta data-rh=true property=og:description content="Operator Category: Distance & Measures"/><link data-rh=true rel=icon href=/YiGraphDocs/en/img/favicon.ico /><link data-rh=true rel=canonical href=https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/distance /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/distance hreflang=zh-CN /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/distance hreflang=en-US /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/distance hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/distance","name":"Distance & Measures Operator Set","position":1}]}</script><link rel=stylesheet href=/YiGraphDocs/en/assets/css/styles.74348a64.css /><script src=/YiGraphDocs/en/assets/js/runtime~main.86e25217.js defer></script><script src=/YiGraphDocs/en/assets/js/main.ce8df468.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
 </defs></svg>
-<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/YiGraphDocs/en/"><b class="navbar__title text--truncate">YiGraph Documentation</b></a><a class="navbar__item navbar__link" href="/YiGraphDocs/en/docs/intro">开发者指南</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" class="iconLanguage_nlXk"><path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>English</a><ul class="dropdown__menu"><li><a href="/YiGraphDocs/docs/tutorial-algorithm/distance" target="_self" rel="noopener noreferrer" class="dropdown__link" lang="zh-CN">简体中文</a></li><li><a href="/YiGraphDocs/en/docs/tutorial-algorithm/distance" target="_self" rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang="en-US">English</a></li></ul></div><a href="https://github.com/iDC-NEU/YiGraph" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/en/docs/intro"><span title="Basic Information" class="categoryLinkLabel_W154">Basic Information</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/intro"><span title="Introduction" class="linkLabel_WmDU">Introduction</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/en/docs/tutorial-basics/create-a-page"><span title="Getting Started" class="categoryLinkLabel_W154">Getting Started</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-basics/create-a-page"><span title="YiGraph Installation and Usage Guide" class="linkLabel_WmDU">YiGraph Installation and Usage Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-basics/windows-deploy"><span title="YiGraph Windows Local Deployment Guide" class="linkLabel_WmDU">YiGraph Windows Local Deployment Guide</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/en/docs/tutorial-extras/getting-started-cases"><span title="Tutorials" class="categoryLinkLabel_W154">Tutorials</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-extras/getting-started-cases"><span title="User Onboarding Guide" class="linkLabel_WmDU">User Onboarding Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-extras/normal-mode"><span title="Case 1. Normal Mode" class="linkLabel_WmDU">Case 1. Normal Mode</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-extras/interact-mode"><span title="Case 2. Interact Mode" class="linkLabel_WmDU">Case 2. Interact Mode</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-extras/expert-mode"><span title="Case 3. Expert Mode" class="linkLabel_WmDU">Case 3. Expert Mode</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/YiGraphDocs/en/docs/tutorial-algorithm/basic"><span title="Algorithms" class="categoryLinkLabel_W154">Algorithms</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/basic"><span title="Basics Operator Set" class="linkLabel_WmDU">Basics Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/path"><span title="Path Operator Set" class="linkLabel_WmDU">Path Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/centrality"><span title="Centrality and Key Operator Set" class="linkLabel_WmDU">Centrality and Key Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/Connectivity_Components"><span title="Connectivity &amp; Components Operator Set" class="linkLabel_WmDU">Connectivity &amp; Components Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/Clustering_Community"><span title="Clustering &amp; Community Operator Set" class="linkLabel_WmDU">Clustering &amp; Community Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/tree"><span title="Tree &amp; Spanning Tree Operator Set" class="linkLabel_WmDU">Tree &amp; Spanning Tree Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/flow"><span title="Flow &amp; Cut Operator Set" class="linkLabel_WmDU">Flow &amp; Cut Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/link_prediction"><span title="Link Prediction Operator Set" class="linkLabel_WmDU">Link Prediction Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/matching_coloring"><span title="Matching &amp; Coloring Operator Set" class="linkLabel_WmDU">Matching &amp; Coloring Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/cliques_cores"><span title="Cliques &amp; Cores Operator Set" class="linkLabel_WmDU">Cliques &amp; Cores Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/distance"><span title="Distance &amp; Measures Operator Set" class="linkLabel_WmDU">Distance &amp; Measures Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/graph_query"><span title="Graph Query Operator Set" class="linkLabel_WmDU">Graph Query Operator Set</span></a></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/YiGraphDocs/en/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Algorithms</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Distance &amp; Measures Operator Set</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Distance &amp; Measures Operator Set</h1></header>
-<p><strong>Operator Category</strong>: Distance &amp; Measures (Distance and Structural Metrics)</p>
-<p><strong>Description</strong>: Provides a set of global/semi-global graph metrics to measure network properties such as &quot;span, compactness, central position, peripheral position, overall distance cost, and homophily connection tendency&quot;. Commonly used for network health checks, topology comparison, resilience assessment, propagation/tracking cost assessment, and structural preference analysis.</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-operator-set-overview">1. Operator Set Overview<a href="#1-operator-set-overview" class="hash-link" aria-label="Direct link to 1. Operator Set Overview" title="Direct link to 1. Operator Set Overview" translate="no">​</a></h2>
-<p>The Distance &amp; Measures operator set mainly covers two types of metrics:</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1️⃣-distance-based-global-structural-metrics">1️⃣ Distance-based Global Structural Metrics<a href="#1️⃣-distance-based-global-structural-metrics" class="hash-link" aria-label="Direct link to 1️⃣ Distance-based Global Structural Metrics" title="Direct link to 1️⃣ Distance-based Global Structural Metrics" translate="no">​</a></h3>
-<p>Built around <strong>Shortest Path Distance</strong>:</p>
-<ul>
-<li class=""><strong>eccentricity</strong>: &quot;Distance to the farthest point&quot; for a single node</li>
-<li class=""><strong>radius</strong>: Minimum eccentricity in the graph (worst distance from the optimal center)</li>
-<li class=""><strong>diameter</strong>: Maximum eccentricity in the graph (distance between the two farthest points in the network)</li>
-<li class=""><strong>center</strong>: Set of nodes with minimum eccentricity</li>
-<li class=""><strong>periphery</strong>: Set of nodes with eccentricity equal to the diameter</li>
-<li class=""><strong>wiener_index</strong>: Sum of all-pairs shortest path distances (overall &quot;distance cost/compactness&quot;)</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2️⃣-structural-preference-and-assortativity">2️⃣ Structural Preference and Assortativity<a href="#2️⃣-structural-preference-and-assortativity" class="hash-link" aria-label="Direct link to 2️⃣ Structural Preference and Assortativity" title="Direct link to 2️⃣ Structural Preference and Assortativity" translate="no">​</a></h3>
-<p>Measures &quot;whether connections tend to link similar nodes&quot;:</p>
-<ul>
-<li class=""><strong>degree_assortativity_coefficient</strong>: Degree assortativity (whether high-activity nodes prefer to connect with high-activity nodes)</li>
-<li class=""><strong>attribute_assortativity_coefficient</strong>: Attribute assortativity (whether nodes with the same label/type prefer to interconnect)</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-operator-list">2. Operator List<a href="#2-operator-list" class="hash-link" aria-label="Direct link to 2. Operator List" title="Direct link to 2. Operator List" translate="no">​</a></h2>
-<table><thead><tr><th>Operator</th><th>Core Output</th><th>Intuitive Meaning</th></tr></thead><tbody><tr><td><code>eccentricity</code></td><td>dict[node→e]</td><td>Shortest path distance from node to farthest node</td></tr><tr><td><code>radius</code></td><td>int/float</td><td>Minimum eccentricity in the graph (worst distance from the best center)</td></tr><tr><td><code>diameter</code></td><td>int/float</td><td>Maximum eccentricity in the graph (distance between farthest two points)</td></tr><tr><td><code>center</code></td><td>list[nodes]</td><td>Set of center nodes with minimum eccentricity</td></tr><tr><td><code>periphery</code></td><td>list[nodes]</td><td>Set of peripheral nodes with eccentricity equal to diameter</td></tr><tr><td><code>wiener_index</code></td><td>number</td><td>Sum of all-pairs shortest path distances (overall distance cost)</td></tr><tr><td><code>degree_assortativity_coefficient</code></td><td>float r</td><td>Degree assortativity coefficient (-1~1)</td></tr><tr><td><code>attribute_assortativity_coefficient</code></td><td>float r</td><td>Attribute assortativity coefficient (-1~1)</td></tr></tbody></table>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-general-inputoutput-conventions">3. General Input/Output Conventions<a href="#3-general-inputoutput-conventions" class="hash-link" aria-label="Direct link to 3. General Input/Output Conventions" title="Direct link to 3. General Input/Output Conventions" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="31-input">3.1 Input<a href="#31-input" class="hash-link" aria-label="Direct link to 3.1 Input" title="Direct link to 3.1 Input" translate="no">​</a></h3>
-<ul>
-<li class="">
-<p><strong>G</strong>: NetworkX graph (supports directed/undirected, some optimizations only work for undirected graphs)</p>
-</li>
-<li class="">
-<p><strong>weight (optional)</strong>: Edge weight field name / function / None</p>
-<ul>
-<li class=""><code>None</code>: Each edge distance = 1 (unweighted graph)</li>
-<li class="">string: Get distance from <code>G.edges[u, v][weight]</code></li>
-<li class="">function: Custom edge distance function (must return positive number)
-⚠️ Note: Floating-point weights may introduce small rounding errors, prefer integer weights; weights should be positive (distance semantics).</li>
-</ul>
-</li>
-<li class="">
-<p><strong>e (optional)</strong>: Pre-computed eccentricity dictionary (can be reused by center / radius / diameter / periphery)</p>
-</li>
-<li class="">
-<p><strong>usebounds (optional)</strong>: Extrema bounding acceleration switch for undirected graphs (only effective when <code>e is None</code>)</p>
-</li>
-<li class="">
-<p><strong>sp (optional)</strong>: Pre-computed shortest path distance dictionary (can be reused by eccentricity)</p>
-</li>
-<li class="">
-<p><strong>nodes (optional)</strong>: Assortativity metrics can be limited to a subset of nodes</p>
-</li>
-<li class="">
-<p><strong>attribute (required)</strong>: Node attribute key for attribute_assortativity_coefficient</p>
-</li>
-<li class="">
-<p><strong>x / y (optional)</strong>: Degree type selection for directed graphs (degree assortativity, used to specify source/target using in or out)</p>
-</li>
-</ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="32-output">3.2 Output<a href="#32-output" class="hash-link" aria-label="Direct link to 3.2 Output" title="Direct link to 3.2 Output" translate="no">​</a></h3>
-<ul>
-<li class="">Distance metrics: Numeric value (int/float), node list, or node→metric dictionary</li>
-<li class="">Assortativity: Single float <code>r</code> (usually in [-1, 1] range)</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-detailed-operator-description">4. Detailed Operator Description<a href="#4-detailed-operator-description" class="hash-link" aria-label="Direct link to 4. Detailed Operator Description" title="Direct link to 4. Detailed Operator Description" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="41-eccentricity--eccentricity-node-farthest-distance">4.1 eccentricity —— Eccentricity (Node Farthest Distance)<a href="#41-eccentricity--eccentricity-node-farthest-distance" class="hash-link" aria-label="Direct link to 4.1 eccentricity —— Eccentricity (Node Farthest Distance)" title="Direct link to 4.1 eccentricity —— Eccentricity (Node Farthest Distance)" translate="no">​</a></h3>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="function-description">Function Description<a href="#function-description" class="hash-link" aria-label="Direct link to Function Description" title="Direct link to Function Description" translate="no">​</a></h4>
-<p>For node <code>v</code>, eccentricity is defined as:</p>
-<blockquote>
-<p>The maximum shortest path distance from <code>v</code> to all reachable nodes</p>
-</blockquote>
-<p>By default, outputs an eccentricity dictionary for <strong>all nodes</strong>; can also query only a specific node via <code>v</code>.</p>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="key-parameters">Key Parameters<a href="#key-parameters" class="hash-link" aria-label="Direct link to Key Parameters" title="Direct link to Key Parameters" translate="no">​</a></h4>
-<ul>
-<li class=""><strong>v (optional)</strong>: Return eccentricity only for the specified node</li>
-<li class=""><strong>sp (optional)</strong>: Pass in pre-computed all-pairs shortest path lengths to avoid redundant computation</li>
-<li class=""><strong>weight (optional)</strong>: Calculate distance by weighted shortest path</li>
-</ul>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="principle-and-complexity">Principle and Complexity<a href="#principle-and-complexity" class="hash-link" aria-label="Direct link to Principle and Complexity" title="Direct link to Principle and Complexity" translate="no">​</a></h4>
-<ul>
-<li class="">Depends on shortest path computation (unweighted BFS / weighted Dijkstra, etc.)</li>
-<li class=""><strong>Time Complexity</strong>: Usually <code>O(V · (V + E))</code> (based on APSP/multi-source shortest path scale)</li>
-</ul>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="applicable-scenarios">Applicable Scenarios<a href="#applicable-scenarios" class="hash-link" aria-label="Direct link to Applicable Scenarios" title="Direct link to Applicable Scenarios" translate="no">​</a></h4>
-<ul>
-<li class="">Identify &quot;most remote/hardest to reach&quot; nodes (large eccentricity)</li>
-<li class="">Evaluate worst-case tracking distance for single-point monitoring entry</li>
-</ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="42-radius--graph-radius-worst-distance-from-best-center">4.2 radius —— Graph Radius (Worst Distance from Best Center)<a href="#42-radius--graph-radius-worst-distance-from-best-center" class="hash-link" aria-label="Direct link to 4.2 radius —— Graph Radius (Worst Distance from Best Center)" title="Direct link to 4.2 radius —— Graph Radius (Worst Distance from Best Center)" translate="no">​</a></h3>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="function-description-1">Function Description<a href="#function-description-1" class="hash-link" aria-label="Direct link to Function Description" title="Direct link to Function Description" translate="no">​</a></h4>
-<p>Radius is defined as the minimum eccentricity in the graph:</p>
-<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">radius(G) = min_v eccentricity(v)</span><br></span></code></pre></div></div>
-<p>It answers:</p>
-<ul>
-<li class="">&quot;If we choose the optimal center point, what is the worst-case distance to the farthest point?&quot;</li>
-</ul>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="optimization-points">Optimization Points<a href="#optimization-points" class="hash-link" aria-label="Direct link to Optimization Points" title="Direct link to Optimization Points" translate="no">​</a></h4>
-<ul>
-<li class="">Passing in <strong>e</strong> (pre-computed eccentricity) can be reused to accelerate multi-metric joint calculation</li>
-<li class="">Undirected graphs can try <strong>usebounds=True</strong> for acceleration (when e is not provided)</li>
-</ul>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="complexity">Complexity<a href="#complexity" class="hash-link" aria-label="Direct link to Complexity" title="Direct link to Complexity" translate="no">​</a></h4>
-<ul>
-<li class=""><strong>Time Complexity</strong>: <code>O(V · (V + E))</code> (usually same scale as eccentricity)</li>
-</ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="43-diameter--graph-diameter-network-span-upper-bound">4.3 diameter —— Graph Diameter (Network Span Upper Bound)<a href="#43-diameter--graph-diameter-network-span-upper-bound" class="hash-link" aria-label="Direct link to 4.3 diameter —— Graph Diameter (Network Span Upper Bound)" title="Direct link to 4.3 diameter —— Graph Diameter (Network Span Upper Bound)" translate="no">​</a></h3>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="function-description-2">Function Description<a href="#function-description-2" class="hash-link" aria-label="Direct link to Function Description" title="Direct link to Function Description" translate="no">​</a></h4>
-<p>Diameter is defined as the maximum eccentricity in the graph:</p>
-<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">diameter(G) = max_v eccentricity(v)</span><br></span></code></pre></div></div>
-<p>It answers:</p>
-<ul>
-<li class="">&quot;What is the minimum shortest path distance between the two farthest points in the network?&quot;</li>
-</ul>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="optimization-points-1">Optimization Points<a href="#optimization-points-1" class="hash-link" aria-label="Direct link to Optimization Points" title="Direct link to Optimization Points" translate="no">​</a></h4>
-<p>Same as radius:</p>
-<ul>
-<li class="">Passing in <strong>e</strong> can accelerate</li>
-<li class="">Undirected graphs can try <strong>usebounds=True</strong></li>
-</ul>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="complexity-1">Complexity<a href="#complexity-1" class="hash-link" aria-label="Direct link to Complexity" title="Direct link to Complexity" translate="no">​</a></h4>
-<ul>
-<li class=""><strong>Time Complexity</strong>: <code>O(V · (V + E))</code> (via APSP/multi-source shortest path)</li>
-</ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="44-center--graph-center-minimum-eccentricity-node-set">4.4 center —— Graph Center (Minimum Eccentricity Node Set)<a href="#44-center--graph-center-minimum-eccentricity-node-set" class="hash-link" aria-label="Direct link to 4.4 center —— Graph Center (Minimum Eccentricity Node Set)" title="Direct link to 4.4 center —— Graph Center (Minimum Eccentricity Node Set)" translate="no">​</a></h3>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="function-description-3">Function Description<a href="#function-description-3" class="hash-link" aria-label="Direct link to Function Description" title="Direct link to Function Description" translate="no">​</a></h4>
-<p>Center nodes are those with minimum eccentricity (may be more than one):</p>
-<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">center(G) = { v | eccentricity(v) == radius(G) }</span><br></span></code></pre></div></div>
-<p>Output: List of center nodes.</p>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="typical-interpretation">Typical Interpretation<a href="#typical-interpretation" class="hash-link" aria-label="Direct link to Typical Interpretation" title="Direct link to Typical Interpretation" translate="no">​</a></h4>
-<ul>
-<li class="">These points are most suitable as &quot;global coordination center/monitoring entry/hub location&quot; because they have the minimum distance to the farthest point.</li>
-</ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="45-periphery--graph-periphery-maximum-eccentricity-node-set">4.5 periphery —— Graph Periphery (Maximum Eccentricity Node Set)<a href="#45-periphery--graph-periphery-maximum-eccentricity-node-set" class="hash-link" aria-label="Direct link to 4.5 periphery —— Graph Periphery (Maximum Eccentricity Node Set)" title="Direct link to 4.5 periphery —— Graph Periphery (Maximum Eccentricity Node Set)" translate="no">​</a></h3>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="function-description-4">Function Description<a href="#function-description-4" class="hash-link" aria-label="Direct link to Function Description" title="Direct link to Function Description" translate="no">​</a></h4>
-<p>Peripheral nodes are defined as nodes with eccentricity equal to the diameter:</p>
-<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">periphery(G) = { v | eccentricity(v) == diameter(G) }</span><br></span></code></pre></div></div>
-<p>Output: List of peripheral nodes.</p>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="typical-interpretation-1">Typical Interpretation<a href="#typical-interpretation-1" class="hash-link" aria-label="Direct link to Typical Interpretation" title="Direct link to Typical Interpretation" translate="no">​</a></h4>
-<ul>
-<li class="">These points are often &quot;most remote/hardest to cover&quot; locations, suitable for identifying structural boundaries, isolated risk points, and coverage blind spots.</li>
-</ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="46-wiener_index--wiener-index-total-all-pairs-distance-cost">4.6 wiener_index —— Wiener Index (Total All-Pairs Distance Cost)<a href="#46-wiener_index--wiener-index-total-all-pairs-distance-cost" class="hash-link" aria-label="Direct link to 4.6 wiener_index —— Wiener Index (Total All-Pairs Distance Cost)" title="Direct link to 4.6 wiener_index —— Wiener Index (Total All-Pairs Distance Cost)" translate="no">​</a></h3>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="function-description-5">Function Description<a href="#function-description-5" class="hash-link" aria-label="Direct link to Function Description" title="Direct link to Function Description" translate="no">​</a></h4>
-<p>The Wiener index is the sum of shortest path distances between <strong>all node pairs</strong>:</p>
-<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">Wiener(G) = Σ(u&lt;v) dist(u, v)</span><br></span></code></pre></div></div>
-<p>(Or accumulate all pairs according to NetworkX definition)</p>
-<p>It measures:</p>
-<ul>
-<li class="">Whether the network is compact overall (smaller distance sum means more compact)</li>
-<li class="">The &quot;distance cost&quot; level for global propagation/tracking/collaboration</li>
-</ul>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="key-parameters-1">Key Parameters<a href="#key-parameters-1" class="hash-link" aria-label="Direct link to Key Parameters" title="Direct link to Key Parameters" translate="no">​</a></h4>
-<ul>
-<li class=""><strong>weight (optional)</strong>: If provided, accumulate by weighted distance</li>
-</ul>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="complexity-2">Complexity<a href="#complexity-2" class="hash-link" aria-label="Direct link to Complexity" title="Direct link to Complexity" translate="no">​</a></h4>
-<ul>
-<li class=""><strong>Time Complexity</strong>: <code>O(V · (V + E))</code> (essentially requires many shortest path distances)</li>
-</ul>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="applicable-scenarios-1">Applicable Scenarios<a href="#applicable-scenarios-1" class="hash-link" aria-label="Direct link to Applicable Scenarios" title="Direct link to Applicable Scenarios" translate="no">​</a></h4>
-<ul>
-<li class="">Global compactness comparison of different network structures</li>
-<li class="">Overall path cost assessment for transportation/supply chain/collaboration networks</li>
-</ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="47-degree_assortativity_coefficient--degree-assortativity-coefficient">4.7 degree_assortativity_coefficient —— Degree Assortativity Coefficient<a href="#47-degree_assortativity_coefficient--degree-assortativity-coefficient" class="hash-link" aria-label="Direct link to 4.7 degree_assortativity_coefficient —— Degree Assortativity Coefficient" title="Direct link to 4.7 degree_assortativity_coefficient —— Degree Assortativity Coefficient" translate="no">​</a></h3>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="function-description-6">Function Description<a href="#function-description-6" class="hash-link" aria-label="Direct link to Function Description" title="Direct link to Function Description" translate="no">​</a></h4>
-<p>Measures whether &quot;the degrees of nodes at both ends of connections&quot; are correlated (a form of Pearson correlation coefficient):</p>
-<ul>
-<li class=""><strong>r &gt; 0</strong>: Assortative (high-degree nodes prefer to connect with high-degree nodes)</li>
-<li class=""><strong>r &lt; 0</strong>: Disassortative (high-degree nodes prefer to connect with low-degree nodes, showing hierarchical/hub-spoke structure)</li>
-<li class=""><strong>r ≈ 0</strong>: No obvious preference</li>
-</ul>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="key-parameters-2">Key Parameters<a href="#key-parameters-2" class="hash-link" aria-label="Direct link to Key Parameters" title="Direct link to Key Parameters" translate="no">​</a></h4>
-<ul>
-<li class="">For directed graphs, can specify:<!-- -->
-<ul>
-<li class=""><strong>x</strong>: Source end uses in/out-degree (default out)</li>
-<li class=""><strong>y</strong>: Target end uses in/out-degree (default in)</li>
-</ul>
-</li>
-<li class=""><strong>weight (optional)</strong>: Accumulate degree by edge weight (degree = sum of adjacent edge weights)</li>
-<li class=""><strong>nodes (optional)</strong>: Limit calculation to a subset of nodes (for group comparison)</li>
-</ul>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="complexity-3">Complexity<a href="#complexity-3" class="hash-link" aria-label="Direct link to Complexity" title="Direct link to Complexity" translate="no">​</a></h4>
-<ul>
-<li class=""><strong>Time Complexity</strong>: <code>O(E)</code></li>
-</ul>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="applicable-scenarios-2">Applicable Scenarios<a href="#applicable-scenarios-2" class="hash-link" aria-label="Direct link to Applicable Scenarios" title="Direct link to Applicable Scenarios" translate="no">​</a></h4>
-<ul>
-<li class="">Determine if the network has obvious &quot;core-periphery&quot; structure (commonly negative assortativity)</li>
-<li class="">Determine if active accounts &quot;cluster together&quot; or &quot;radiate outward&quot;</li>
-</ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="48-attribute_assortativity_coefficient--attribute-assortativity-coefficient">4.8 attribute_assortativity_coefficient —— Attribute Assortativity Coefficient<a href="#48-attribute_assortativity_coefficient--attribute-assortativity-coefficient" class="hash-link" aria-label="Direct link to 4.8 attribute_assortativity_coefficient —— Attribute Assortativity Coefficient" title="Direct link to 4.8 attribute_assortativity_coefficient —— Attribute Assortativity Coefficient" translate="no">​</a></h3>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="function-description-7">Function Description<a href="#function-description-7" class="hash-link" aria-label="Direct link to Function Description" title="Direct link to Function Description" translate="no">​</a></h4>
-<p>Measures &quot;whether nodes with the same attribute are more likely to interconnect&quot;:</p>
-<ul>
-<li class=""><strong>r &gt; 0</strong>: Homophilic connection obvious (same type clusters together)</li>
-<li class=""><strong>r &lt; 0</strong>: Heterophilic connection obvious (cross-type connections stronger)</li>
-<li class=""><strong>r ≈ 0</strong>: Attribute has weak influence on connection preference</li>
-</ul>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="key-parameters-3">Key Parameters<a href="#key-parameters-3" class="hash-link" aria-label="Direct link to Key Parameters" title="Direct link to Key Parameters" translate="no">​</a></h4>
-<ul>
-<li class=""><strong>attribute (required)</strong>: Node attribute key (e.g., <code>risk_level</code> / <code>account_type</code> / <code>department</code>)</li>
-<li class=""><strong>nodes (optional)</strong>: Calculate on a specified subset of nodes (e.g., only look at a certain community/region)</li>
-</ul>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="complexity-4">Complexity<a href="#complexity-4" class="hash-link" aria-label="Direct link to Complexity" title="Direct link to Complexity" translate="no">​</a></h4>
-<ul>
-<li class=""><strong>Time Complexity</strong>: <code>O(E)</code></li>
-</ul>
-<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="applicable-scenarios-3">Applicable Scenarios<a href="#applicable-scenarios-3" class="hash-link" aria-label="Direct link to Applicable Scenarios" title="Direct link to Applicable Scenarios" translate="no">​</a></h4>
-<ul>
-<li class="">Whether risk level/account type shows &quot;same type connects&quot;</li>
-<li class="">Whether medical institution hierarchy/department attributes show &quot;same level interconnects&quot;</li>
-<li class="">Whether organizational structure is &quot;mainly intra-department connections&quot; or &quot;mainly cross-department collaboration&quot;</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="5-selection-guide-how-to-choose">5. Selection Guide (How to Choose)<a href="#5-selection-guide-how-to-choose" class="hash-link" aria-label="Direct link to 5. Selection Guide (How to Choose)" title="Direct link to 5. Selection Guide (How to Choose)" translate="no">​</a></h2>
-<ul>
-<li class=""><strong>Want to know the maximum network span</strong>: <code>diameter</code></li>
-<li class=""><strong>Want to know the worst distance from the best center</strong>: <code>radius</code> + <code>center</code></li>
-<li class=""><strong>Want to find the most remote boundary nodes</strong>: <code>periphery</code> (or look at maximum eccentricity)</li>
-<li class=""><strong>Want to rank all nodes by &quot;worst reachable distance&quot;</strong>: <code>eccentricity</code></li>
-<li class=""><strong>Want to see global compactness/distance cost</strong>: <code>wiener_index</code></li>
-<li class=""><strong>Want to see if &quot;high-activity clustering/core-periphery structure&quot;</strong>: <code>degree_assortativity_coefficient</code></li>
-<li class=""><strong>Want to see if &quot;same type clustering/cross-type connection&quot;</strong>: <code>attribute_assortativity_coefficient</code></li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="6-engineering-and-usage-notes-common-pitfalls">6. Engineering and Usage Notes (Common Pitfalls)<a href="#6-engineering-and-usage-notes-common-pitfalls" class="hash-link" aria-label="Direct link to 6. Engineering and Usage Notes (Common Pitfalls)" title="Direct link to 6. Engineering and Usage Notes (Common Pitfalls)" translate="no">​</a></h2>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-cad")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/YiGraphDocs/en/><b class="navbar__title text--truncate">YiGraph Documentation</b></a><a class="navbar__item navbar__link" href=/YiGraphDocs/en/docs/intro>开发者指南</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href=# aria-haspopup=true aria-expanded=false role=button class=navbar__link><svg viewBox="0 0 24 24" width=20 height=20 aria-hidden=true class=iconLanguage_nlXk><path fill=currentColor d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>English</a><ul class=dropdown__menu><li><a href=/YiGraphDocs/docs/tutorial-algorithm/distance target=_self rel="noopener noreferrer" class=dropdown__link lang=zh-CN>简体中文</a><li><a href=/YiGraphDocs/en/docs/tutorial-algorithm/distance target=_self rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang=en-US>English</a></ul></div><a href=https://github.com/iDC-NEU/YiGraph target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/en/docs/intro><span title="Basic Information" class=categoryLinkLabel_W154>Basic Information</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/intro><span title=Introduction class=linkLabel_WmDU>Introduction</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/en/docs/tutorial-basics/create-a-page><span title="Getting Started" class=categoryLinkLabel_W154>Getting Started</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-basics/create-a-page><span title="YiGraph Installation and Usage Guide" class=linkLabel_WmDU>YiGraph Installation and Usage Guide</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-basics/windows-deploy><span title="YiGraph Windows Local Deployment Guide" class=linkLabel_WmDU>YiGraph Windows Local Deployment Guide</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/en/docs/tutorial-extras/getting-started-cases><span title=Tutorials class=categoryLinkLabel_W154>Tutorials</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-extras/getting-started-cases><span title="User Onboarding Guide" class=linkLabel_WmDU>User Onboarding Guide</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-extras/normal-mode><span title="Case 1. Normal Mode" class=linkLabel_WmDU>Case 1. Normal Mode</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-extras/interact-mode><span title="Case 2. Interact Mode" class=linkLabel_WmDU>Case 2. Interact Mode</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-extras/expert-mode><span title="Case 3. Expert Mode" class=linkLabel_WmDU>Case 3. Expert Mode</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/YiGraphDocs/en/docs/tutorial-algorithm/basic><span title=Algorithms class=categoryLinkLabel_W154>Algorithms</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/basic><span title="Basics Operator Set" class=linkLabel_WmDU>Basics Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/path><span title="Path Operator Set" class=linkLabel_WmDU>Path Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/centrality><span title="Centrality and Criticality Operator Set" class=linkLabel_WmDU>Centrality and Criticality Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/Connectivity_Components><span title="Connectivity & Components Operator Set" class=linkLabel_WmDU>Connectivity & Components Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/Clustering_Community><span title="Clustering & Community Operators" class=linkLabel_WmDU>Clustering & Community Operators</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/tree><span title="Tree & Spanning Tree Operators" class=linkLabel_WmDU>Tree & Spanning Tree Operators</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/Dominance><span title="Dominance Operator Set" class=linkLabel_WmDU>Dominance Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/flow><span title="Flow & Cut Operators" class=linkLabel_WmDU>Flow & Cut Operators</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/link_prediction><span title="Link Prediction Operator Set" class=linkLabel_WmDU>Link Prediction Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/matching_coloring><span title="Matching & Coloring Operator Set" class=linkLabel_WmDU>Matching & Coloring Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/graph_matching><span title="Graph Matching Operator Set" class=linkLabel_WmDU>Graph Matching Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/graph_polynomials><span title="Graph Polynomials Operator Set" class=linkLabel_WmDU>Graph Polynomials Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/cliques_cores><span title="Cliques & Cores Operator Set" class=linkLabel_WmDU>Cliques & Cores Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/distance><span title="Distance & Measures Operator Set" class=linkLabel_WmDU>Distance & Measures Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/graph_query><span title="Graph Query Operator Set" class=linkLabel_WmDU>Graph Query Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/dag><span title="Directed Acyclic Graphs (DAG) Operator Set" class=linkLabel_WmDU>Directed Acyclic Graphs (DAG) Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/bipartite><span title="Bipartite Operator Set" class=linkLabel_WmDU>Bipartite Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/graph_hashing><span title="Graph Hashing Operator Set" class=linkLabel_WmDU>Graph Hashing Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/small_world><span title="Small-world Operator Set" class=linkLabel_WmDU>Small-world Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/sparsifiers><span title="Sparsifiers Operator Set" class=linkLabel_WmDU>Sparsifiers Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/gnn><span title="Graph Neural Networks Operator Set" class=linkLabel_WmDU>Graph Neural Networks Operator Set</span></a></ul></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/YiGraphDocs/en/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Algorithms</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Distance & Measures Operator Set</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Distance & Measures Operator Set</h1></header>
+<p><strong>Operator Category</strong>: Distance & Measures</p>
+<p><strong>Number of Algorithms</strong>: 24</p>
+<p><strong>Applicable Stages</strong>: Network health check, topological span assessment, center/periphery identification, global compactness analysis, graph resistance and random‑walk analysis, propagation/tracing cost evaluation, assortativity analysis, connection preference analysis, mixing matrix modeling, structural preference diagnosis</p>
+<p><strong>Product Positioning</strong>: Provides a unified capability base for answering “how large is the network span / which nodes are in the center or on the periphery / what is the overall distance cost / whether the graph is compact / whether nodes tend to connect to similar nodes / whether high‑degree nodes connect to each other / how different attributes mix in connections / how neighbor‑degree structure is distributed”.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=i-operator-set-overview>I. Operator Set Overview<a href=#i-operator-set-overview class=hash-link aria-label="Direct link to I. Operator Set Overview" title="Direct link to I. Operator Set Overview" translate=no>​</a></h2>
+<p>The Distance & Measures operator set focuses on <strong>global distance structure, center‑periphery positioning, overall compactness, random‑walk stability, graph resistance characteristics, assortative mixing preferences, and mixing patterns</strong>, addressing the following questions:</p>
 <ol>
 <li class="">
-<p><strong>Connectivity Requirements</strong>
-Metrics like diameter/radius/center/periphery/eccentricity are affected in &quot;unreachable&quot; situations.</p>
+<p><strong>Distance and Span Structure</strong></p>
 <ul>
-<li class="">Undirected graphs: If not connected, usually need to calculate separately for each connected component or take the largest connected component</li>
-<li class="">Directed graphs: May need to consider strongly connected components or interpret results on reachable subgraphs</li>
+<li class="">How far is a node from its farthest reachable node?</li>
+<li class="">What is the distance between the two farthest nodes in the network?</li>
+<li class="">Where is the optimal center of the network?</li>
+<li class="">Which nodes lie on the structural periphery?</li>
+<li class="">Is the network compact, and what is its overall distance cost?</li>
 </ul>
 </li>
 <li class="">
-<p><strong>Semantics of Weighted Distance</strong>
-<code>weight</code> represents &quot;distance/cost/time&quot;, should be positive; if your edge weight is &quot;capacity/similarity/strength&quot;, don&#x27;t use it directly as distance (need to convert first, such as taking reciprocal or negative logarithm, and ensure positive weight).</p>
+<p><strong>Center and Periphery Identification</strong></p>
+<ul>
+<li class="">Which nodes are best suited as monitoring entries, service centers, or coordination hubs?</li>
+<li class="">Which nodes are most remote or hardest to cover?</li>
+<li class="">How are the radius, diameter, and center sets distributed?</li>
+</ul>
 </li>
 <li class="">
-<p><strong>Performance Recommendations</strong>
-If you need <code>eccentricity + diameter + radius + center + periphery</code> in the same analysis:</p>
+<p><strong>Graph Resistance and Random‑Walk Measures</strong></p>
 <ul>
-<li class=""><strong>Calculate eccentricity (e) first</strong>, then pass it to other metrics for reuse</li>
-<li class="">Undirected graphs can try <code>usebounds=True</code> (when e is not pre-provided)</li>
+<li class="">What is the resistance distance between two nodes?</li>
+<li class="">What is the effective graph resistance of the whole graph?</li>
+<li class="">How efficient is long‑term random‑walk access on the graph?</li>
+<li class="">Does the network exhibit high diffusion or reachability cost?</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Assortativity and Connection Preferences</strong></p>
+<ul>
+<li class="">Do high‑degree nodes tend to connect to high‑degree nodes?</li>
+<li class="">Do nodes with the same attribute tend to connect to each other?</li>
+<li class="">Are nodes with similar numeric attributes more likely to be connected?</li>
+<li class="">Is the network assortative, disassortative, or neutral?</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Mixing Matrices and Edge‑Endpoint Relationships</strong></p>
+<ul>
+<li class="">How frequently do different attribute classes connect to each other?</li>
+<li class="">How do nodes of different degrees connect?</li>
+<li class="">How are attribute values or degrees paired across each edge?</li>
+<li class="">Can connection preferences be turned into matrices or dictionaries for downstream modeling?</li>
 </ul>
 </li>
 </ol>
-<hr></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/iDC-NEU/YiGraphDocs/tree/main/docs-site/docs/tutorial-algorithm/distance.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/YiGraphDocs/en/docs/tutorial-algorithm/cliques_cores"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Cliques &amp; Cores Operator Set</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/YiGraphDocs/en/docs/tutorial-algorithm/graph_query"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Graph Query Operator Set</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#1-operator-set-overview" class="table-of-contents__link toc-highlight">1. Operator Set Overview</a><ul><li><a href="#1️⃣-distance-based-global-structural-metrics" class="table-of-contents__link toc-highlight">1️⃣ Distance-based Global Structural Metrics</a></li><li><a href="#2️⃣-structural-preference-and-assortativity" class="table-of-contents__link toc-highlight">2️⃣ Structural Preference and Assortativity</a></li></ul></li><li><a href="#2-operator-list" class="table-of-contents__link toc-highlight">2. Operator List</a></li><li><a href="#3-general-inputoutput-conventions" class="table-of-contents__link toc-highlight">3. General Input/Output Conventions</a><ul><li><a href="#31-input" class="table-of-contents__link toc-highlight">3.1 Input</a></li><li><a href="#32-output" class="table-of-contents__link toc-highlight">3.2 Output</a></li></ul></li><li><a href="#4-detailed-operator-description" class="table-of-contents__link toc-highlight">4. Detailed Operator Description</a><ul><li><a href="#41-eccentricity--eccentricity-node-farthest-distance" class="table-of-contents__link toc-highlight">4.1 eccentricity —— Eccentricity (Node Farthest Distance)</a></li><li><a href="#42-radius--graph-radius-worst-distance-from-best-center" class="table-of-contents__link toc-highlight">4.2 radius —— Graph Radius (Worst Distance from Best Center)</a></li><li><a href="#43-diameter--graph-diameter-network-span-upper-bound" class="table-of-contents__link toc-highlight">4.3 diameter —— Graph Diameter (Network Span Upper Bound)</a></li><li><a href="#44-center--graph-center-minimum-eccentricity-node-set" class="table-of-contents__link toc-highlight">4.4 center —— Graph Center (Minimum Eccentricity Node Set)</a></li><li><a href="#45-periphery--graph-periphery-maximum-eccentricity-node-set" class="table-of-contents__link toc-highlight">4.5 periphery —— Graph Periphery (Maximum Eccentricity Node Set)</a></li><li><a href="#46-wiener_index--wiener-index-total-all-pairs-distance-cost" class="table-of-contents__link toc-highlight">4.6 wiener_index —— Wiener Index (Total All-Pairs Distance Cost)</a></li><li><a href="#47-degree_assortativity_coefficient--degree-assortativity-coefficient" class="table-of-contents__link toc-highlight">4.7 degree_assortativity_coefficient —— Degree Assortativity Coefficient</a></li><li><a href="#48-attribute_assortativity_coefficient--attribute-assortativity-coefficient" class="table-of-contents__link toc-highlight">4.8 attribute_assortativity_coefficient —— Attribute Assortativity Coefficient</a></li></ul></li><li><a href="#5-selection-guide-how-to-choose" class="table-of-contents__link toc-highlight">5. Selection Guide (How to Choose)</a></li><li><a href="#6-engineering-and-usage-notes-common-pitfalls" class="table-of-contents__link toc-highlight">6. Engineering and Usage Notes (Common Pitfalls)</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 AAG</div></div></div></footer></div>
-</body>
-</html>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=ii-operator-capability-classification>II. Operator Capability Classification<a href=#ii-operator-capability-classification class=hash-link aria-label="Direct link to II. Operator Capability Classification" title="Direct link to II. Operator Capability Classification" translate=no>​</a></h2>
+<table><thead><tr><th>Capability Type<th>Corresponding Operator<th>Description<tbody><tr><td>Node farthest distance<td><code>eccentricity</code><td>Distance to farthest reachable node<tr><td>Graph radius<td><code>radius</code><td>Minimum eccentricity in the graph<tr><td>Graph diameter<td><code>diameter</code><td>Maximum eccentricity in the graph<tr><td>Graph center<td><code>center</code><td>Set of nodes with minimum eccentricity<tr><td>Graph periphery<td><code>periphery</code><td>Set of nodes with eccentricity equal to diameter<tr><td>Graph barycenter<td><code>barycenter</code><td>Set of nodes with minimum sum of shortest‑path distances<tr><td>Harmonic diameter<td><code>harmonic_diameter</code><td>Effective distance scale using harmonic mean<tr><td>Wiener index<td><code>wiener_index</code><td>Sum of all‑pairs shortest‑path distances<tr><td>Resistance distance<td><code>resistance_distance</code><td>Resistance distance between node pairs<tr><td>Effective graph resistance<td><code>effective_graph_resistance</code><td>Global effective resistance of the graph<tr><td>Kemeny constant<td><code>kemeny_constant</code><td>Mean hitting time to stationarity for random walks<tr><td>Degree assortativity coefficient<td><code>degree_assortativity_coefficient</code><td>Correlation of degrees between connected nodes<tr><td>Degree Pearson correlation<td><code>degree_pearson_correlation_coefficient</code><td>Pearson correlation of degrees across edges<tr><td>Attribute assortativity coefficient<td><code>attribute_assortativity_coefficient</code><td>Homophily/heterophily for categorical attributes<tr><td>Numeric assortativity coefficient<td><code>numeric_assortativity_coefficient</code><td>Correlation of numeric attributes across edges<tr><td>Average neighbor degree<td><code>average_neighbor_degree</code><td>Average degree of neighbors for each node<tr><td>Average degree connectivity<td><code>average_degree_connectivity</code><td>For each degree, average neighbor degree<tr><td>Attribute mixing matrix<td><code>attribute_mixing_matrix</code><td>Matrix of connections between attribute classes<tr><td>Degree mixing matrix<td><code>degree_mixing_matrix</code><td>Matrix of connections between degree values<tr><td>Attribute mixing dictionary<td><code>attribute_mixing_dict</code><td>Dictionary version of attribute mixing<tr><td>Degree mixing dictionary<td><code>degree_mixing_dict</code><td>Dictionary version of degree mixing<tr><td>Generic mixing dictionary<td><code>mixing_dict</code><td>Build mixing dictionary from arbitrary endpoint value pairs<tr><td>Node attribute XY generator<td><code>node_attribute_xy</code><td>Generate (attribute value, attribute value) pairs for each edge<tr><td>Node degree XY generator<td><code>node_degree_xy</code><td>Generate (degree, degree) pairs for each edge</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=iii-general-inputoutput-conventions>III. General Input/Output Conventions<a href=#iii-general-inputoutput-conventions class=hash-link aria-label="Direct link to III. General Input/Output Conventions" title="Direct link to III. General Input/Output Conventions" translate=no>​</a></h2>
+<ul>
+<li class=""><strong>Input <code>G</code></strong>: NetworkX Graph / DiGraph</li>
+<li class=""><strong>Common Input Parameters</strong>:<!-- -->
+<ul>
+<li class=""><code>weight</code>: Edge weight field name, function, or <code>None</code></li>
+<li class=""><code>e</code>: Pre‑computed eccentricity dictionary (reused by <code>radius</code>, <code>diameter</code>, <code>center</code>, <code>periphery</code>)</li>
+<li class=""><code>sp</code>: Pre‑computed shortest‑path distance dictionary (for <code>eccentricity</code>, <code>barycenter</code>, <code>harmonic_diameter</code>)</li>
+<li class=""><code>usebounds</code>: Acceleration for undirected graphs using bounds</li>
+<li class=""><code>attribute</code>: Node attribute name (for attribute‑based assortativity and mixing)</li>
+<li class=""><code>nodes</code>: Subset of nodes to restrict computation</li>
+<li class=""><code>x</code> / <code>y</code>: Degree type for source/target in directed graphs (<code>in</code> / <code>out</code>)</li>
+<li class=""><code>source</code> / <code>target</code>: Direction or degree type for neighbor‑degree algorithms</li>
+<li class=""><code>normalized</code>: Whether to normalize mixing matrices or dictionaries</li>
+</ul>
+</li>
+<li class=""><strong>Common Output Types</strong>:<!-- -->
+<ul>
+<li class="">Distance measures: numeric, list of nodes, or <code>dict[node → value]</code></li>
+<li class="">Resistance / random‑walk: numeric or node‑pair measures</li>
+<li class="">Assortativity: float correlation coefficient</li>
+<li class="">Neighbor degree: <code>dict[node → average_degree]</code> or <code>dict[degree → average_neighbor_degree]</code></li>
+<li class="">Mixing relations: matrix, nested dictionary, or edge‑endpoint value iterator</li>
+</ul>
+</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=iv-detailed-operator-descriptions>IV. Detailed Operator Descriptions<a href=#iv-detailed-operator-descriptions class=hash-link aria-label="Direct link to IV. Detailed Operator Descriptions" title="Direct link to IV. Detailed Operator Descriptions" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-eccentricity--eccentricity>1. eccentricity – Eccentricity<a href=#1-eccentricity--eccentricity class=hash-link aria-label="Direct link to 1. eccentricity – Eccentricity" title="Direct link to 1. eccentricity – Eccentricity" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->For each node, computes the maximum shortest‑path distance to any reachable node. A larger eccentricity means the node is more peripheral.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Measures worst‑case reachability distance</li>
+<li class="">Identifies remote nodes and coverage blind spots</li>
+<li class="">Foundation for radius, diameter, center, periphery</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Network coverage analysis</li>
+<li class="">Service entry point selection</li>
+<li class="">Tracking cost estimation</li>
+<li class="">Remote node identification</li>
+<li class="">Topology health check</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Output: <code>dict[node → eccentricity]</code> or single value</li>
+<li class="">Note: For disconnected graphs, interpret per component or reachable subgraph</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-radius--graph-radius>2. radius – Graph Radius<a href=#2-radius--graph-radius class=hash-link aria-label="Direct link to 2. radius – Graph Radius" title="Direct link to 2. radius – Graph Radius" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->The minimum eccentricity among all nodes. It is the smallest possible worst‑case distance from an optimal center.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Measures the best‑center worst‑case coverage distance</li>
+<li class="">Indicates global compactness</li>
+<li class="">Useful for hub location and coordination ability assessment</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Service center placement</li>
+<li class="">Monitoring entry deployment</li>
+<li class="">Emergency coordination hub selection</li>
+<li class="">Organisational coordination cost analysis</li>
+<li class="">Network compactness evaluation</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Output: numeric</li>
+<li class="">Can reuse pre‑computed eccentricity for speed</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-diameter--graph-diameter>3. diameter – Graph Diameter<a href=#3-diameter--graph-diameter class=hash-link aria-label="Direct link to 3. diameter – Graph Diameter" title="Direct link to 3. diameter – Graph Diameter" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->The maximum eccentricity among all nodes. It is the longest shortest‑path distance between any two nodes.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Measures the maximum span of the network</li>
+<li class="">Indicates worst‑case propagation, tracking, or collaboration cost</li>
+<li class="">Allows structural comparison across networks</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Social network span analysis</li>
+<li class="">Maximum detour distance in transportation</li>
+<li class="">Maximum hierarchical distance in supply chains</li>
+<li class="">Upper bound of communication latency</li>
+<li class="">Topology health check</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Output: numeric</li>
+<li class="">Interpret carefully for disconnected graphs</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=4-center--graph-center>4. center – Graph Center<a href=#4-center--graph-center class=hash-link aria-label="Direct link to 4. center – Graph Center" title="Direct link to 4. center – Graph Center" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Returns the set of nodes whose eccentricity equals the graph radius. These are the structural centers.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Identifies best global center nodes</li>
+<li class="">Supports selection of service, monitoring, scheduling, and coordination hubs</li>
+<li class="">Helps understand central locations in the network</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Monitoring node selection</li>
+<li class="">Service facility layout</li>
+<li class="">Hub node identification</li>
+<li class="">Emergency response centre selection</li>
+<li class="">Network centrality interpretation</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Output: list of center nodes</li>
+<li class="">Multiple centers may exist</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=5-periphery--graph-periphery>5. periphery – Graph Periphery<a href=#5-periphery--graph-periphery class=hash-link aria-label="Direct link to 5. periphery – Graph Periphery" title="Direct link to 5. periphery – Graph Periphery" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Returns the set of nodes whose eccentricity equals the graph diameter. These nodes lie on the structural boundary.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Identifies coverage blind spots and remote positions</li>
+<li class="">Supports edge node, isolated risk point, and structural boundary analysis</li>
+<li class="">Useful for network optimisation and adding edges</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Remote device identification</li>
+<li class="">Peripheral user analysis</li>
+<li class="">Transportation terminal analysis</li>
+<li class="">Supply chain endpoint risk identification</li>
+<li class="">Network coverage optimisation</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Output: list of periphery nodes</li>
+<li class="">Often used together with <code>diameter</code> and <code>eccentricity</code></li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=6-barycenter--graph-barycenter>6. barycenter – Graph Barycenter<a href=#6-barycenter--graph-barycenter class=hash-link aria-label="Direct link to 6. barycenter – Graph Barycenter" title="Direct link to 6. barycenter – Graph Barycenter" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Returns the set of nodes that minimise the sum of shortest‑path distances to all other nodes. Unlike <code>center</code> (which minimises worst‑case distance), <code>barycenter</code> minimises total distance cost.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Selects nodes with smallest average access cost</li>
+<li class="">Suitable for logistics hubs, coordination centres, or service placement</li>
+<li class="">Complements <code>center</code> by considering total cost instead of worst case</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Warehouse / logistics center location</li>
+<li class="">Organisational coordination hub analysis</li>
+<li class="">Network service node selection</li>
+<li class="">Average access cost optimisation</li>
+<li class="">Road network center identification</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Typically for connected graphs</li>
+<li class="">Output: list of barycenter nodes</li>
+<li class="">Can use <code>weight</code> for weighted shortest paths</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=7-harmonic_diameter--harmonic-diameter>7. harmonic_diameter – Harmonic Diameter<a href=#7-harmonic_diameter--harmonic-diameter class=hash-link aria-label="Direct link to 7. harmonic_diameter – Harmonic Diameter" title="Direct link to 7. harmonic_diameter – Harmonic Diameter" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Uses the harmonic mean of pairwise distances to measure the effective distance scale of the graph. More robust to extreme distances or disconnected components than ordinary diameter.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Provides a robust global distance measure</li>
+<li class="">Suitable for graphs that are not fully connected or have local fractures</li>
+<li class="">Allows comparison of overall reachability efficiency</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Large‑scale social network distance analysis</li>
+<li class="">Effective distance in disconnected graphs</li>
+<li class="">Compactness comparison before/after network evolution</li>
+<li class="">Propagation efficiency assessment</li>
+<li class="">Topology optimisation evaluation</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Output: numeric</li>
+<li class="">Focuses on overall effective distance rather than the single farthest pair</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=8-wiener_index--wiener-index>8. wiener_index – Wiener Index<a href=#8-wiener_index--wiener-index class=hash-link aria-label="Direct link to 8. wiener_index – Wiener Index" title="Direct link to 8. wiener_index – Wiener Index" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Sum of shortest‑path distances over all unordered node pairs. Measures the global distance cost of the graph.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Quantifies overall compactness of the network</li>
+<li class="">Supports structural comparison between different networks</li>
+<li class="">Useful for propagation, collaboration, transportation cost evaluation</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Total path cost analysis in transportation networks</li>
+<li class="">Collaboration cost in supply chains</li>
+<li class="">Compactness comparison of social networks</li>
+<li class="">Molecular graph structure analysis</li>
+<li class="">Before/after topology optimisation</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Output: numeric</li>
+<li class="">Can be computed unweighted or weighted</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=9-resistance_distance--resistance-distance>9. resistance_distance – Resistance Distance<a href=#9-resistance_distance--resistance-distance class=hash-link aria-label="Direct link to 9. resistance_distance – Resistance Distance" title="Direct link to 9. resistance_distance – Resistance Distance" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Treats the graph as an electrical network and computes the equivalent resistance distance between two nodes. It accounts for multiple parallel paths (redundancy) in addition to the shortest path.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Measures global connection strength between nodes</li>
+<li class="">Reflects path redundancy influence on proximity</li>
+<li class="">More nuanced than simple shortest‑path distance</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Robustness analysis</li>
+<li class="">Power grid / communication network structure analysis</li>
+<li class="">Node similarity measurement</li>
+<li class="">Multi‑path redundancy assessment</li>
+<li class="">Graph kernel feature construction</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Typically undirected, connected</li>
+<li class="">Output: numeric resistance distance</li>
+<li class="">Smaller distance means stronger overall connectivity</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=10-effective_graph_resistance--effective-graph-resistance>10. effective_graph_resistance – Effective Graph Resistance<a href=#10-effective_graph_resistance--effective-graph-resistance class=hash-link aria-label="Direct link to 10. effective_graph_resistance – Effective Graph Resistance" title="Direct link to 10. effective_graph_resistance – Effective Graph Resistance" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Computes the total effective resistance of the whole graph, a global measure of the graph’s resistance (inverse of robustness).</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Measures overall connectivity resilience</li>
+<li class="">Reflects path redundancy and structural tightness</li>
+<li class="">Allows robustness comparison across networks</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Power network resilience analysis</li>
+<li class="">Communication network robustness assessment</li>
+<li class="">Transportation network redundancy analysis</li>
+<li class="">Graph structure optimisation comparison</li>
+<li class="">Network vulnerability analysis</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Typically undirected, connected</li>
+<li class="">Output: numeric</li>
+<li class="">Lower values indicate tighter connectivity and stronger redundancy</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=11-kemeny_constant--kemeny-constant>11. kemeny_constant – Kemeny Constant<a href=#11-kemeny_constant--kemeny-constant class=hash-link aria-label="Direct link to 11. kemeny_constant – Kemeny Constant" title="Direct link to 11. kemeny_constant – Kemeny Constant" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->The Kemeny constant of a random walk on the graph. It measures the expected time to reach stationarity, averaged over starting nodes.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Quantifies mixing efficiency of random walks</li>
+<li class="">Supports diffusion, access, and convergence analysis</li>
+<li class="">Serves as a global reachability and stability measure</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Random walk model analysis</li>
+<li class="">Web page access modelling</li>
+<li class="">Random walk‑based recommendation recall</li>
+<li class="">Diffusion process stability analysis</li>
+<li class="">Markov chain network evaluation</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Typically connected graphs (or suitable directed graphs)</li>
+<li class="">Output: numeric</li>
+<li class="">Related to random walks, transition matrices, and stationary analysis</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=12-degree_assortativity_coefficient--degree-assortativity-coefficient>12. degree_assortativity_coefficient – Degree Assortativity Coefficient<a href=#12-degree_assortativity_coefficient--degree-assortativity-coefficient class=hash-link aria-label="Direct link to 12. degree_assortativity_coefficient – Degree Assortativity Coefficient" title="Direct link to 12. degree_assortativity_coefficient – Degree Assortativity Coefficient" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Measures the correlation of degrees between connected nodes.</p>
+<ul>
+<li class=""><code>r > 0</code>: Assortative (high‑degree nodes connect to high‑degree nodes)</li>
+<li class=""><code>r &lt; 0</code>: Disassortative (high‑degree nodes connect to low‑degree nodes)</li>
+<li class=""><code>r ≈ 0</code>: No linear degree preference</li>
+</ul>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Determines whether high‑degree nodes cluster together or form a core‑periphery</li>
+<li class="">Supports connection preference analysis for active accounts</li>
+<li class="">Identifies core‑periphery structure</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Social network assortativity analysis</li>
+<li class="">Core‑periphery diagnosis</li>
+<li class="">High‑activity account connection preference</li>
+<li class="">Biological network connection patterns</li>
+<li class="">Transaction network hierarchical structure analysis</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Output: float correlation coefficient</li>
+<li class="">For directed graphs, can specify in‑ or out‑degree for source/target</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=13-degree_pearson_correlation_coefficient--degree-pearson-correlation-coefficient>13. degree_pearson_correlation_coefficient – Degree Pearson Correlation Coefficient<a href=#13-degree_pearson_correlation_coefficient--degree-pearson-correlation-coefficient class=hash-link aria-label="Direct link to 13. degree_pearson_correlation_coefficient – Degree Pearson Correlation Coefficient" title="Direct link to 13. degree_pearson_correlation_coefficient – Degree Pearson Correlation Coefficient" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Pearson correlation of degrees across edges. Equivalent to degree assortativity in the undirected case.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Standard correlation view of degree mixing</li>
+<li class="">Suitable for statistical analysis and cross‑network comparison</li>
+<li class="">Can be cross‑checked with degree assortativity</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Degree correlation analysis</li>
+<li class="">Statistical modelling of network structure</li>
+<li class="">High‑degree node connection preference</li>
+<li class="">Core‑periphery identification</li>
+<li class="">Assortativity comparison across networks</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Output: float</li>
+<li class="">Interpretation similar to degree assortativity coefficient</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=14-attribute_assortativity_coefficient--attribute-assortativity-coefficient>14. attribute_assortativity_coefficient – Attribute Assortativity Coefficient<a href=#14-attribute_assortativity_coefficient--attribute-assortativity-coefficient class=hash-link aria-label="Direct link to 14. attribute_assortativity_coefficient – Attribute Assortativity Coefficient" title="Direct link to 14. attribute_assortativity_coefficient – Attribute Assortativity Coefficient" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Measures whether nodes with the same categorical attribute value are more likely to be connected.</p>
+<ul>
+<li class=""><code>r > 0</code>: Homophily (same attribute connects)</li>
+<li class=""><code>r &lt; 0</code>: Heterophily (different attributes connect)</li>
+<li class=""><code>r ≈ 0</code>: Weak preference</li>
+</ul>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Diagnoses homophily/heterophily in the network</li>
+<li class="">Supports analysis of connection preferences for departments, types, risk levels</li>
+<li class="">Useful for community, organisation, and risk structure analysis</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Intra‑ / inter‑department collaboration analysis</li>
+<li class="">Risk‑level homophily analysis</li>
+<li class="">User type connection preference</li>
+<li class="">Institutional hierarchical connectivity</li>
+<li class="">Community homophily evaluation</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Required parameter: <code>attribute</code></li>
+<li class="">Output: float</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=15-numeric_assortativity_coefficient--numeric-assortativity-coefficient>15. numeric_assortativity_coefficient – Numeric Assortativity Coefficient<a href=#15-numeric_assortativity_coefficient--numeric-assortativity-coefficient class=hash-link aria-label="Direct link to 15. numeric_assortativity_coefficient – Numeric Assortativity Coefficient" title="Direct link to 15. numeric_assortativity_coefficient – Numeric Assortativity Coefficient" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Measures whether the numeric attribute values (e.g., age, score, risk level) of connected nodes are correlated (Pearson correlation).</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Supports connection preference analysis for continuous or ordinal attributes</li>
+<li class="">Determines whether similar numeric values tend to connect</li>
+<li class="">Suitable for risk, grade, activity, size, etc.</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Do accounts with similar risk scores connect?</li>
+<li class="">Do users of similar ages follow each other?</li>
+<li class="">Do nodes with similar activity levels cluster?</li>
+<li class="">Do companies of similar size trade?</li>
+<li class="">Node score vs connection preference analysis</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Required parameter: <code>attribute</code></li>
+<li class="">Output: float correlation</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=16-average_neighbor_degree--average-neighbor-degree>16. average_neighbor_degree – Average Neighbor Degree<a href=#16-average_neighbor_degree--average-neighbor-degree class=hash-link aria-label="Direct link to 16. average_neighbor_degree – Average Neighbor Degree" title="Direct link to 16. average_neighbor_degree – Average Neighbor Degree" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->For each node, computes the average degree of its neighbors. Indicates whether a node is connected to high‑activity or low‑activity neighbors.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Assesses the quality of neighbors a node connects to</li>
+<li class="">Identifies “core‑attached” or “peripheral” nodes</li>
+<li class="">A useful local structural feature</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Auxiliary node influence assessment</li>
+<li class="">Social network neighbor quality analysis</li>
+<li class="">Fraud network peripheral node identification</li>
+<li class="">Transaction partner activity analysis</li>
+<li class="">Network hierarchical structure modelling</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Output: <code>dict[node → average_neighbor_degree]</code></li>
+<li class="">Can use <code>source</code>, <code>target</code>, <code>weight</code> parameters</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=17-average_degree_connectivity--average-degree-connectivity>17. average_degree_connectivity – Average Degree Connectivity<a href=#17-average_degree_connectivity--average-degree-connectivity class=hash-link aria-label="Direct link to 17. average_degree_connectivity – Average Degree Connectivity" title="Direct link to 17. average_degree_connectivity – Average Degree Connectivity" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Groups nodes by their degree and computes, for each degree value, the average degree of their neighbors. Shows what degrees nodes of a given degree tend to connect to.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Reveals mixing patterns between degree layers</li>
+<li class="">Indicates assortativity or disassortativity at the degree‑level</li>
+<li class="">Suitable for plotting degree connectivity curves</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Analysis of whether high‑degree nodes connect to high‑degree nodes</li>
+<li class="">Core‑periphery pattern identification</li>
+<li class="">Network hierarchical structure analysis</li>
+<li class="">Activity connection preference in social networks</li>
+<li class="">Degree‑related patterns in biological networks</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Output: <code>dict[degree → average_neighbor_degree]</code></li>
+<li class="">Often interpreted together with assortativity coefficients</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=18-attribute_mixing_matrix--attribute-mixing-matrix>18. attribute_mixing_matrix – Attribute Mixing Matrix<a href=#18-attribute_mixing_matrix--attribute-mixing-matrix class=hash-link aria-label="Direct link to 18. attribute_mixing_matrix – Attribute Mixing Matrix" title="Direct link to 18. attribute_mixing_matrix – Attribute Mixing Matrix" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Constructs a matrix where rows and columns correspond to attribute values, and entries count (or proportion) of edges between attribute classes.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Converts attribute connection preference into a matrix</li>
+<li class="">Supports quantitative analysis of inter‑class connection frequencies</li>
+<li class="">Foundational for assortativity and homophily analysis</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Inter‑department collaboration matrix</li>
+<li class="">Risk level connection matrix</li>
+<li class="">User type interaction matrix</li>
+<li class="">Industry transaction relation matrix</li>
+<li class="">Community connection preference analysis</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Required parameter: <code>attribute</code></li>
+<li class="">Output: matrix (list of lists or numpy array)</li>
+<li class="">Can be normalized</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=19-degree_mixing_matrix--degree-mixing-matrix>19. degree_mixing_matrix – Degree Mixing Matrix<a href=#19-degree_mixing_matrix--degree-mixing-matrix class=hash-link aria-label="Direct link to 19. degree_mixing_matrix – Degree Mixing Matrix" title="Direct link to 19. degree_mixing_matrix – Degree Mixing Matrix" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Constructs a matrix where rows and columns correspond to degree values, and entries count (or proportion) of edges between nodes of those degrees.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Shows connection patterns across degree layers</li>
+<li class="">Supports assortativity and core‑periphery analysis</li>
+<li class="">Useful for statistical modelling of network structure</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">High‑degree node connection preference analysis</li>
+<li class="">Core‑periphery connectivity pattern analysis</li>
+<li class="">Visualisation of assortativity/disassortativity</li>
+<li class="">Hierarchical degree structure modelling</li>
+<li class="">Topology comparison</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Output: matrix</li>
+<li class="">For directed graphs, can specify <code>x</code> and <code>y</code> degree types</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=20-attribute_mixing_dict--attribute-mixing-dictionary>20. attribute_mixing_dict – Attribute Mixing Dictionary<a href=#20-attribute_mixing_dict--attribute-mixing-dictionary class=hash-link aria-label="Direct link to 20. attribute_mixing_dict – Attribute Mixing Dictionary" title="Direct link to 20. attribute_mixing_dict – Attribute Mixing Dictionary" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Dictionary representation of attribute mixing, with keys as <code>(attr_u, attr_v)</code> and values as counts or proportions. Sparse version of the mixing matrix.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Easy inspection of specific attribute pair connections</li>
+<li class="">Suitable for sparse categories or rule extraction</li>
+<li class="">Lightweight alternative to mixing matrix</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Category connection frequency counting</li>
+<li class="">Department‑department connection lookup</li>
+<li class="">Risk type interaction analysis</li>
+<li class="">Multi‑label node relation analysis</li>
+<li class="">Attribute preference rule extraction</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Required parameter: <code>attribute</code></li>
+<li class="">Output: nested dictionary</li>
+<li class="">Can be normalized</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=21-degree_mixing_dict--degree-mixing-dictionary>21. degree_mixing_dict – Degree Mixing Dictionary<a href=#21-degree_mixing_dict--degree-mixing-dictionary class=hash-link aria-label="Direct link to 21. degree_mixing_dict – Degree Mixing Dictionary" title="Direct link to 21. degree_mixing_dict – Degree Mixing Dictionary" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Dictionary representation of degree mixing, keys as <code>(deg_u, deg_v)</code> with counts or proportions.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Direct view of degree‑pair connection distribution</li>
+<li class="">Supports assortativity, disassortativity, and hierarchical analysis</li>
+<li class="">Convenient for custom statistics or rule extraction</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Degree‑layer connection statistics</li>
+<li class="">High‑low degree connection analysis</li>
+<li class="">Core‑periphery structural interpretation</li>
+<li class="">Network generation model parameter analysis</li>
+<li class="">Topological connection preference modelling</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Output: nested dictionary</li>
+<li class="">For directed graphs, can specify degree types for source/target</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=22-mixing_dict--generic-mixing-dictionary>22. mixing_dict – Generic Mixing Dictionary<a href=#22-mixing_dict--generic-mixing-dictionary class=hash-link aria-label="Direct link to 22. mixing_dict – Generic Mixing Dictionary" title="Direct link to 22. mixing_dict – Generic Mixing Dictionary" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Given a sequence of endpoint value pairs (generated from edges), builds a mixing dictionary. A generic tool underlying attribute and degree mixing.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Supports custom mixing statistics beyond attributes/degrees</li>
+<li class="">Extensible for other node properties</li>
+<li class="">Builds custom structural indicators</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Custom category mixing statistics</li>
+<li class="">Edge endpoint label pair counting</li>
+<li class="">Connection preference rule generation</li>
+<li class="">Graph feature engineering</li>
+<li class="">Relational pattern modelling</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Input: Iterable of <code>(value_u, value_v)</code> pairs</li>
+<li class="">Output: mixing dictionary</li>
+<li class="">Optional normalisation</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=23-node_attribute_xy--node-attribute-xy-generator>23. node_attribute_xy – Node Attribute XY Generator<a href=#23-node_attribute_xy--node-attribute-xy-generator class=hash-link aria-label="Direct link to 23. node_attribute_xy – Node Attribute XY Generator" title="Direct link to 23. node_attribute_xy – Node Attribute XY Generator" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Generates, for each edge, the pair of attribute values of its two endpoints. Used as input for attribute mixing matrix/dictionary or custom assortativity calculations.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Provides attribute pairing data for further analysis</li>
+<li class="">Supports custom connection preference analysis</li>
+<li class="">Data preparation step for downstream statistics</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Generating department‑department pairs</li>
+<li class="">Risk level edge pairs</li>
+<li class="">User type interaction pairs</li>
+<li class="">Custom attribute assortativity computation</li>
+<li class="">Preprocessing for mixing matrix construction</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Required parameter: <code>attribute</code></li>
+<li class="">Output: iterator of <code>(attr_u, attr_v)</code> pairs</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=24-node_degree_xy--node-degree-xy-generator>24. node_degree_xy – Node Degree XY Generator<a href=#24-node_degree_xy--node-degree-xy-generator class=hash-link aria-label="Direct link to 24. node_degree_xy – Node Degree XY Generator" title="Direct link to 24. node_degree_xy – Node Degree XY Generator" translate=no>​</a></h3>
+<p><strong>Description</strong><br/>
+<!-- -->Generates, for each edge, the pair of degrees of its two endpoints. Used as input for degree mixing matrix/dictionary or custom degree correlation analysis.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Provides degree pairing data for analysis</li>
+<li class="">Supports custom degree‑based statistics</li>
+<li class="">Foundation for degree mixing and assortativity</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">High‑degree node connection pattern analysis</li>
+<li class="">Custom degree assortativity calculation</li>
+<li class="">Degree mixing matrix construction</li>
+<li class="">Core‑periphery structure analysis</li>
+<li class="">Graph statistical feature engineering</li>
+</ul>
+<p><strong>Applicability & Characteristics</strong></p>
+<ul>
+<li class="">Graph type: Directed / Undirected</li>
+<li class="">Output: iterator of <code>(deg_u, deg_v)</code> pairs</li>
+<li class="">For directed graphs, can specify <code>x</code> and <code>y</code> degree types</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=v-recommended-usage-guide>V. Recommended Usage Guide<a href=#v-recommended-usage-guide class=hash-link aria-label="Direct link to V. Recommended Usage Guide" title="Direct link to V. Recommended Usage Guide" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-distance-and-span-analysis>1. Distance and Span Analysis<a href=#1-distance-and-span-analysis class=hash-link aria-label="Direct link to 1. Distance and Span Analysis" title="Direct link to 1. Distance and Span Analysis" translate=no>​</a></h3>
+<ul>
+<li class="">Node farthest distance: <code>eccentricity</code></li>
+<li class="">Maximum network span: <code>diameter</code></li>
+<li class="">Best‑center worst‑case distance: <code>radius</code></li>
+<li class="">Structural center nodes: <code>center</code></li>
+<li class="">Structural periphery nodes: <code>periphery</code></li>
+<li class="">Overall distance cost: <code>wiener_index</code></li>
+<li class="">Robust effective distance: <code>harmonic_diameter</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-centrality-and-overall-cost>2. Centrality and Overall Cost<a href=#2-centrality-and-overall-cost class=hash-link aria-label="Direct link to 2. Centrality and Overall Cost" title="Direct link to 2. Centrality and Overall Cost" translate=no>​</a></h3>
+<ul>
+<li class="">Nodes with smallest total distance: <code>barycenter</code></li>
+<li class="">Nodes with smallest worst‑case distance: <code>center</code></li>
+<li class="">Compare global distance cost: <code>wiener_index</code></li>
+<li class="">Average‑sense reachability efficiency: <code>harmonic_diameter</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-graph-resistance-and-random-walk>3. Graph Resistance and Random Walk<a href=#3-graph-resistance-and-random-walk class=hash-link aria-label="Direct link to 3. Graph Resistance and Random Walk" title="Direct link to 3. Graph Resistance and Random Walk" translate=no>​</a></h3>
+<ul>
+<li class="">Pairwise resistance distance: <code>resistance_distance</code></li>
+<li class="">Global effective resistance: <code>effective_graph_resistance</code></li>
+<li class="">Random‑walk mixing efficiency: <code>kemeny_constant</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=4-assortativity-and-connection-preference>4. Assortativity and Connection Preference<a href=#4-assortativity-and-connection-preference class=hash-link aria-label="Direct link to 4. Assortativity and Connection Preference" title="Direct link to 4. Assortativity and Connection Preference" translate=no>​</a></h3>
+<ul>
+<li class="">High‑degree clustering: <code>degree_assortativity_coefficient</code></li>
+<li class="">Degree Pearson correlation: <code>degree_pearson_correlation_coefficient</code></li>
+<li class="">Categorical homophily: <code>attribute_assortativity_coefficient</code></li>
+<li class="">Numeric attribute correlation: <code>numeric_assortativity_coefficient</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=5-neighbor-degree-structure>5. Neighbor Degree Structure<a href=#5-neighbor-degree-structure class=hash-link aria-label="Direct link to 5. Neighbor Degree Structure" title="Direct link to 5. Neighbor Degree Structure" translate=no>​</a></h3>
+<ul>
+<li class="">Node‑level average neighbor degree: <code>average_neighbor_degree</code></li>
+<li class="">Degree‑level average neighbor degree: <code>average_degree_connectivity</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=6-mixing-matrices-and-dictionaries>6. Mixing Matrices and Dictionaries<a href=#6-mixing-matrices-and-dictionaries class=hash-link aria-label="Direct link to 6. Mixing Matrices and Dictionaries" title="Direct link to 6. Mixing Matrices and Dictionaries" translate=no>​</a></h3>
+<ul>
+<li class="">Attribute mixing matrix: <code>attribute_mixing_matrix</code></li>
+<li class="">Degree mixing matrix: <code>degree_mixing_matrix</code></li>
+<li class="">Attribute mixing dictionary: <code>attribute_mixing_dict</code></li>
+<li class="">Degree mixing dictionary: <code>degree_mixing_dict</code></li>
+<li class="">Custom mixing: <code>mixing_dict</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=7-edge-endpoint-pair-generation>7. Edge Endpoint Pair Generation<a href=#7-edge-endpoint-pair-generation class=hash-link aria-label="Direct link to 7. Edge Endpoint Pair Generation" title="Direct link to 7. Edge Endpoint Pair Generation" translate=no>​</a></h3>
+<ul>
+<li class="">Attribute value pairs: <code>node_attribute_xy</code></li>
+<li class="">Degree value pairs: <code>node_degree_xy</code></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=vi-typical-questions-that-can-be-directly-answered>VI. Typical Questions That Can Be Directly Answered<a href=#vi-typical-questions-that-can-be-directly-answered class=hash-link aria-label="Direct link to VI. Typical Questions That Can Be Directly Answered" title="Direct link to VI. Typical Questions That Can Be Directly Answered" translate=no>​</a></h2>
+<ul>
+<li class="">“What is the maximum span of this network?”</li>
+<li class="">“Which nodes are at the network center?”</li>
+<li class="">“Which nodes are most remote and hardest to cover?”</li>
+<li class="">“From the optimal center, what is the worst case distance?”</li>
+<li class="">“What is the total distance cost of the whole network?”</li>
+<li class="">“Which node has the smallest sum of distances to all others?”</li>
+<li class="">“Is this network compact?”</li>
+<li class="">“What is the resistance distance between two nodes?”</li>
+<li class="">“Is the effective graph resistance high or low?”</li>
+<li class="">“How efficient is random walk mixing on this graph?”</li>
+<li class="">“Do high‑degree nodes tend to connect to high‑degree nodes?”</li>
+<li class="">“Does the network exhibit core‑periphery structure?”</li>
+<li class="">“Do nodes of the same department/type/risk level connect more?”</li>
+<li class="">“Are nodes with similar numeric attributes more likely to connect?”</li>
+<li class="">“What is the average neighbor degree for each node?”</li>
+<li class="">“What degrees do nodes of a given degree connect to?”</li>
+<li class="">“What is the mixing matrix between attribute classes?”</li>
+<li class="">“What is the mixing matrix between degree layers?”</li>
+<li class="">“For each edge, how are the attribute values paired?”</li>
+<li class="">“For each edge, how are the degrees paired?”</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=vii-engineering-and-usage-notes>VII. Engineering and Usage Notes<a href=#vii-engineering-and-usage-notes class=hash-link aria-label="Direct link to VII. Engineering and Usage Notes" title="Direct link to VII. Engineering and Usage Notes" translate=no>​</a></h2>
+<ol>
+<li class="">
+<p><strong>Connectivity Requirements</strong>
+Distance metrics (<code>eccentricity</code>, <code>radius</code>, <code>diameter</code>, <code>center</code>, <code>periphery</code>, <code>barycenter</code>, <code>wiener_index</code>) require careful interpretation for disconnected graphs.</p>
+<ul>
+<li class="">Undirected: compute per connected component or take the largest component.</li>
+<li class="">Directed: consider strongly connected components or interpret within reachable subgraphs.</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Weighted Distance Semantics</strong>
+<code>weight</code> should represent distance, cost, time, or impedance. If edge weights represent capacity, similarity, or strength (larger = better), transform them appropriately (e.g., reciprocal or negative log, ensuring positivity).</p>
+</li>
+<li class="">
+<p><strong>Interpreting Assortativity</strong>
+Assortativity coefficients show correlation, not causation.</p>
+<ul>
+<li class=""><code>r > 0</code>: like connects to like.</li>
+<li class=""><code>r &lt; 0</code>: opposite connects.</li>
+<li class=""><code>r ≈ 0</code>: no linear preference.</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Mixing Matrices and Dictionaries</strong></p>
+<ul>
+<li class="">Matrices are good for visualisation and numerical computations.</li>
+<li class="">Dictionaries are good for sparse categories, rule extraction, and direct lookup.</li>
+<li class="">Normalisation changes interpretation (frequency vs. probability).</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Performance Recommendations</strong></p>
+<ul>
+<li class="">When computing <code>eccentricity</code>, <code>radius</code>, <code>diameter</code>, <code>center</code>, <code>periphery</code> together, pre‑compute and reuse <code>eccentricity</code>.</li>
+<li class="">All‑pairs shortest‑path based metrics are expensive on large graphs; consider sampling, component analysis, or approximation.</li>
+<li class="">Assortativity and mixing measures are generally much lighter.</li>
+</ul>
+</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=viii-operator-list>VIII. Operator List<a href=#viii-operator-list class=hash-link aria-label="Direct link to VIII. Operator List" title="Direct link to VIII. Operator List" translate=no>​</a></h2>
+<table><thead><tr><th>No.<th>Operator Name<th>Description<tbody><tr><td>1<td><code>eccentricity</code><td>Compute node eccentricity<tr><td>2<td><code>radius</code><td>Compute graph radius<tr><td>3<td><code>diameter</code><td>Compute graph diameter<tr><td>4<td><code>center</code><td>Get graph center nodes<tr><td>5<td><code>periphery</code><td>Get graph periphery nodes<tr><td>6<td><code>barycenter</code><td>Get graph barycenter nodes<tr><td>7<td><code>harmonic_diameter</code><td>Compute harmonic diameter<tr><td>8<td><code>wiener_index</code><td>Compute Wiener index<tr><td>9<td><code>resistance_distance</code><td>Compute resistance distance between nodes<tr><td>10<td><code>effective_graph_resistance</code><td>Compute effective graph resistance<tr><td>11<td><code>kemeny_constant</code><td>Compute Kemeny constant<tr><td>12<td><code>degree_assortativity_coefficient</code><td>Compute degree assortativity coefficient<tr><td>13<td><code>degree_pearson_correlation_coefficient</code><td>Compute degree Pearson correlation<tr><td>14<td><code>attribute_assortativity_coefficient</code><td>Compute attribute assortativity coefficient<tr><td>15<td><code>numeric_assortativity_coefficient</code><td>Compute numeric assortativity coefficient<tr><td>16<td><code>average_neighbor_degree</code><td>Compute average neighbor degree<tr><td>17<td><code>average_degree_connectivity</code><td>Compute average degree connectivity<tr><td>18<td><code>attribute_mixing_matrix</code><td>Build attribute mixing matrix<tr><td>19<td><code>degree_mixing_matrix</code><td>Build degree mixing matrix<tr><td>20<td><code>attribute_mixing_dict</code><td>Build attribute mixing dictionary<tr><td>21<td><code>degree_mixing_dict</code><td>Build degree mixing dictionary<tr><td>22<td><code>mixing_dict</code><td>Build generic mixing dictionary<tr><td>23<td><code>node_attribute_xy</code><td>Generate node attribute XY pairs<tr><td>24<td><code>node_degree_xy</code><td>Generate node degree XY pairs</table></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/iDC-NEU/YiGraphDocs/tree/main/docs-site/docs/tutorial-algorithm/distance.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/YiGraphDocs/en/docs/tutorial-algorithm/cliques_cores><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Cliques & Cores Operator Set</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/YiGraphDocs/en/docs/tutorial-algorithm/graph_query><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Graph Query Operator Set</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#i-operator-set-overview class="table-of-contents__link toc-highlight">I. Operator Set Overview</a><li><a href=#ii-operator-capability-classification class="table-of-contents__link toc-highlight">II. Operator Capability Classification</a><li><a href=#iii-general-inputoutput-conventions class="table-of-contents__link toc-highlight">III. General Input/Output Conventions</a><li><a href=#iv-detailed-operator-descriptions class="table-of-contents__link toc-highlight">IV. Detailed Operator Descriptions</a><ul><li><a href=#1-eccentricity--eccentricity class="table-of-contents__link toc-highlight">1. eccentricity – Eccentricity</a><li><a href=#2-radius--graph-radius class="table-of-contents__link toc-highlight">2. radius – Graph Radius</a><li><a href=#3-diameter--graph-diameter class="table-of-contents__link toc-highlight">3. diameter – Graph Diameter</a><li><a href=#4-center--graph-center class="table-of-contents__link toc-highlight">4. center – Graph Center</a><li><a href=#5-periphery--graph-periphery class="table-of-contents__link toc-highlight">5. periphery – Graph Periphery</a><li><a href=#6-barycenter--graph-barycenter class="table-of-contents__link toc-highlight">6. barycenter – Graph Barycenter</a><li><a href=#7-harmonic_diameter--harmonic-diameter class="table-of-contents__link toc-highlight">7. harmonic_diameter – Harmonic Diameter</a><li><a href=#8-wiener_index--wiener-index class="table-of-contents__link toc-highlight">8. wiener_index – Wiener Index</a><li><a href=#9-resistance_distance--resistance-distance class="table-of-contents__link toc-highlight">9. resistance_distance – Resistance Distance</a><li><a href=#10-effective_graph_resistance--effective-graph-resistance class="table-of-contents__link toc-highlight">10. effective_graph_resistance – Effective Graph Resistance</a><li><a href=#11-kemeny_constant--kemeny-constant class="table-of-contents__link toc-highlight">11. kemeny_constant – Kemeny Constant</a><li><a href=#12-degree_assortativity_coefficient--degree-assortativity-coefficient class="table-of-contents__link toc-highlight">12. degree_assortativity_coefficient – Degree Assortativity Coefficient</a><li><a href=#13-degree_pearson_correlation_coefficient--degree-pearson-correlation-coefficient class="table-of-contents__link toc-highlight">13. degree_pearson_correlation_coefficient – Degree Pearson Correlation Coefficient</a><li><a href=#14-attribute_assortativity_coefficient--attribute-assortativity-coefficient class="table-of-contents__link toc-highlight">14. attribute_assortativity_coefficient – Attribute Assortativity Coefficient</a><li><a href=#15-numeric_assortativity_coefficient--numeric-assortativity-coefficient class="table-of-contents__link toc-highlight">15. numeric_assortativity_coefficient – Numeric Assortativity Coefficient</a><li><a href=#16-average_neighbor_degree--average-neighbor-degree class="table-of-contents__link toc-highlight">16. average_neighbor_degree – Average Neighbor Degree</a><li><a href=#17-average_degree_connectivity--average-degree-connectivity class="table-of-contents__link toc-highlight">17. average_degree_connectivity – Average Degree Connectivity</a><li><a href=#18-attribute_mixing_matrix--attribute-mixing-matrix class="table-of-contents__link toc-highlight">18. attribute_mixing_matrix – Attribute Mixing Matrix</a><li><a href=#19-degree_mixing_matrix--degree-mixing-matrix class="table-of-contents__link toc-highlight">19. degree_mixing_matrix – Degree Mixing Matrix</a><li><a href=#20-attribute_mixing_dict--attribute-mixing-dictionary class="table-of-contents__link toc-highlight">20. attribute_mixing_dict – Attribute Mixing Dictionary</a><li><a href=#21-degree_mixing_dict--degree-mixing-dictionary class="table-of-contents__link toc-highlight">21. degree_mixing_dict – Degree Mixing Dictionary</a><li><a href=#22-mixing_dict--generic-mixing-dictionary class="table-of-contents__link toc-highlight">22. mixing_dict – Generic Mixing Dictionary</a><li><a href=#23-node_attribute_xy--node-attribute-xy-generator class="table-of-contents__link toc-highlight">23. node_attribute_xy – Node Attribute XY Generator</a><li><a href=#24-node_degree_xy--node-degree-xy-generator class="table-of-contents__link toc-highlight">24. node_degree_xy – Node Degree XY Generator</a></ul><li><a href=#v-recommended-usage-guide class="table-of-contents__link toc-highlight">V. Recommended Usage Guide</a><ul><li><a href=#1-distance-and-span-analysis class="table-of-contents__link toc-highlight">1. Distance and Span Analysis</a><li><a href=#2-centrality-and-overall-cost class="table-of-contents__link toc-highlight">2. Centrality and Overall Cost</a><li><a href=#3-graph-resistance-and-random-walk class="table-of-contents__link toc-highlight">3. Graph Resistance and Random Walk</a><li><a href=#4-assortativity-and-connection-preference class="table-of-contents__link toc-highlight">4. Assortativity and Connection Preference</a><li><a href=#5-neighbor-degree-structure class="table-of-contents__link toc-highlight">5. Neighbor Degree Structure</a><li><a href=#6-mixing-matrices-and-dictionaries class="table-of-contents__link toc-highlight">6. Mixing Matrices and Dictionaries</a><li><a href=#7-edge-endpoint-pair-generation class="table-of-contents__link toc-highlight">7. Edge Endpoint Pair Generation</a></ul><li><a href=#vi-typical-questions-that-can-be-directly-answered class="table-of-contents__link toc-highlight">VI. Typical Questions That Can Be Directly Answered</a><li><a href=#vii-engineering-and-usage-notes class="table-of-contents__link toc-highlight">VII. Engineering and Usage Notes</a><li><a href=#viii-operator-list class="table-of-contents__link toc-highlight">VIII. Operator List</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 AAG</div></div></div></footer></div></body>

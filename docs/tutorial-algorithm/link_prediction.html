@@ -1,175 +1,411 @@
-<!doctype html>
-<html lang="zh-CN" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-tutorial-algorithm/link_prediction" data-has-hydrated="false">
-<head>
-<meta charset="UTF-8">
-<meta name="generator" content="Docusaurus v3.9.2">
-<title data-rh="true">Link Prediction 链接预测算子集 | YiGraph Documentation</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/link_prediction"><meta data-rh="true" property="og:locale" content="zh_CN"><meta data-rh="true" property="og:locale:alternate" content="en_US"><meta data-rh="true" name="docusaurus_locale" content="zh-CN"><meta data-rh="true" name="docsearch:language" content="zh-CN"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Link Prediction 链接预测算子集 | YiGraph Documentation"><meta data-rh="true" name="description" content="算子类别：Link Prediction（链接预测）"><meta data-rh="true" property="og:description" content="算子类别：Link Prediction（链接预测）"><link data-rh="true" rel="icon" href="/YiGraphDocs/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/link_prediction"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/link_prediction" hreflang="zh-CN"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/link_prediction" hreflang="en-US"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/link_prediction" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Link Prediction 链接预测算子集","item":"https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/link_prediction"}]}</script><link rel="stylesheet" href="/YiGraphDocs/assets/css/styles.27c37220.css">
-<script src="/YiGraphDocs/assets/js/runtime~main.e92aff22.js" defer="defer"></script>
-<script src="/YiGraphDocs/assets/js/main.7c673358.js" defer="defer"></script>
-</head>
-<body class="navigation-with-keyboard">
-<svg style="display: none;"><defs>
-<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+<!doctype html><html lang=zh-CN dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-tutorial-algorithm/link_prediction" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Link Prediction 链接预测算子集 | YiGraph Documentation</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:url content=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/link_prediction /><meta data-rh=true property=og:locale content=zh_CN /><meta data-rh=true property=og:locale:alternate content=en_US /><meta data-rh=true name=docusaurus_locale content=zh-CN /><meta data-rh=true name=docsearch:language content=zh-CN /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Link Prediction 链接预测算子集 | YiGraph Documentation"/><meta data-rh=true name=description content="算子类别：Link Prediction（链接预测、潜在关系预测与相似度评估）"/><meta data-rh=true property=og:description content="算子类别：Link Prediction（链接预测、潜在关系预测与相似度评估）"/><link data-rh=true rel=icon href=/YiGraphDocs/img/favicon.ico /><link data-rh=true rel=canonical href=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/link_prediction /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/link_prediction hreflang=zh-CN /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/link_prediction hreflang=en-US /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/link_prediction hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/link_prediction","name":"Link Prediction 链接预测算子集","position":1}]}</script><link rel=stylesheet href=/YiGraphDocs/assets/css/styles.74348a64.css /><script src=/YiGraphDocs/assets/js/runtime~main.4d70087d.js defer></script><script src=/YiGraphDocs/assets/js/main.2e0cef14.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
 </defs></svg>
-<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="跳到主要内容"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">跳到主要内容</a></div><nav aria-label="主导航" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="切换导航栏" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/YiGraphDocs/"><b class="navbar__title text--truncate">YiGraph中文文档</b></a><a class="navbar__item navbar__link" href="/YiGraphDocs/docs/intro">开发者指南</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" class="iconLanguage_nlXk"><path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>简体中文</a><ul class="dropdown__menu"><li><a href="/YiGraphDocs/docs/tutorial-algorithm/link_prediction" target="_self" rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang="zh-CN">简体中文</a></li><li><a href="/YiGraphDocs/en/docs/tutorial-algorithm/link_prediction" target="_self" rel="noopener noreferrer" class="dropdown__link" lang="en-US">English</a></li></ul></div><a href="https://github.com/iDC-NEU/YiGraph" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="回到顶部" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="文档侧边栏" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/docs/intro"><span title="基本信息" class="categoryLinkLabel_W154">基本信息</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/intro"><span title="简介" class="linkLabel_WmDU">简介</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/docs/tutorial-basics/create-a-page"><span title="从这里开始" class="categoryLinkLabel_W154">从这里开始</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-basics/create-a-page"><span title="YiGraph 安装与使用指南" class="linkLabel_WmDU">YiGraph 安装与使用指南</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-basics/windows-deploy"><span title="YiGraph Windows 本地部署指南" class="linkLabel_WmDU">YiGraph Windows 本地部署指南</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/docs/tutorial-extras/getting-started-cases"><span title="上手案例" class="categoryLinkLabel_W154">上手案例</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/getting-started-cases"><span title="用户上手案例" class="linkLabel_WmDU">用户上手案例</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/normal-mode"><span title="案例1.normal-mode" class="linkLabel_WmDU">案例1.normal-mode</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/interact-mode"><span title="案例2.interact-mode" class="linkLabel_WmDU">案例2.interact-mode</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-extras/expert-mode"><span title="案例3.expert-mode" class="linkLabel_WmDU">案例3.expert-mode</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/YiGraphDocs/docs/tutorial-algorithm/basic"><span title="专用算子" class="categoryLinkLabel_W154">专用算子</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/basic"><span title="Basics 基础算子集" class="linkLabel_WmDU">Basics 基础算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/path"><span title="Path 路径算子集" class="linkLabel_WmDU">Path 路径算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/centrality"><span title="Centrality 中心性与关键性算子集" class="linkLabel_WmDU">Centrality 中心性与关键性算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/Connectivity_Components"><span title="Connectivity &amp; Components 连通性与组件算子集" class="linkLabel_WmDU">Connectivity &amp; Components 连通性与组件算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community"><span title="Clustering &amp; Community 聚类与社区算子集" class="linkLabel_WmDU">Clustering &amp; Community 聚类与社区算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/tree"><span title="Tree &amp; Spanning Tree 树与生成树算子集" class="linkLabel_WmDU">Tree &amp; Spanning Tree 树与生成树算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/flow"><span title="Flow &amp; Cut 流与割算子集" class="linkLabel_WmDU">Flow &amp; Cut 流与割算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/link_prediction"><span title="Link Prediction 链接预测算子集" class="linkLabel_WmDU">Link Prediction 链接预测算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/matching_coloring"><span title="Matching &amp; Coloring 匹配与着色算子集" class="linkLabel_WmDU">Matching &amp; Coloring 匹配与着色算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/cliques_cores"><span title="Cliques &amp; Cores 团与核算子集" class="linkLabel_WmDU">Cliques &amp; Cores 团与核算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/distance"><span title="Distance &amp; Measures 距离与结构度量算子集" class="linkLabel_WmDU">Distance &amp; Measures 距离与结构度量算子集</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/docs/tutorial-algorithm/graph_query"><span title="Graph Query 图查询算子集" class="linkLabel_WmDU">Graph Query 图查询算子集</span></a></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="页面路径"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="主页面" class="breadcrumbs__link" href="/YiGraphDocs/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">专用算子</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Link Prediction 链接预测算子集</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>Link Prediction 链接预测算子集</h1></header>
-<p><strong>算子类别</strong>：Link Prediction（链接预测）<br>
-<strong>描述</strong>：用于预测网络中“尚不存在但可能出现”的连接关系，或评估潜在边的形成概率。广泛应用于好友推荐、关系挖掘、反欺诈、推荐系统、科研合作预测等场景。</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="一算子集概述">一、算子集概述<a href="#一算子集概述" class="hash-link" aria-label="一、算子集概述的直接链接" title="一、算子集概述的直接链接" translate="no">​</a></h2>
-<p>Link Prediction 算子集主要解决这样一类问题：</p>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-ea2")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/YiGraphDocs/><b class="navbar__title text--truncate">YiGraph中文文档</b></a><a class="navbar__item navbar__link" href=/YiGraphDocs/docs/intro>开发者指南</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href=# aria-haspopup=true aria-expanded=false role=button class=navbar__link><svg viewBox="0 0 24 24" width=20 height=20 aria-hidden=true class=iconLanguage_nlXk><path fill=currentColor d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>简体中文</a><ul class=dropdown__menu><li><a href=/YiGraphDocs/docs/tutorial-algorithm/link_prediction target=_self rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang=zh-CN>简体中文</a><li><a href=/YiGraphDocs/en/docs/tutorial-algorithm/link_prediction target=_self rel="noopener noreferrer" class=dropdown__link lang=en-US>English</a></ul></div><a href=https://github.com/iDC-NEU/YiGraph target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/docs/intro><span title=基本信息 class=categoryLinkLabel_W154>基本信息</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/intro><span title=简介 class=linkLabel_WmDU>简介</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/docs/tutorial-basics/create-a-page><span title=从这里开始 class=categoryLinkLabel_W154>从这里开始</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-basics/create-a-page><span title="YiGraph 安装与使用指南" class=linkLabel_WmDU>YiGraph 安装与使用指南</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-basics/windows-deploy><span title="YiGraph Windows 本地部署指南" class=linkLabel_WmDU>YiGraph Windows 本地部署指南</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/docs/tutorial-extras/getting-started-cases><span title=上手案例 class=categoryLinkLabel_W154>上手案例</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-extras/getting-started-cases><span title=用户上手案例 class=linkLabel_WmDU>用户上手案例</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-extras/normal-mode><span title=案例1.normal-mode class=linkLabel_WmDU>案例1.normal-mode</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-extras/interact-mode><span title=案例2.interact-mode class=linkLabel_WmDU>案例2.interact-mode</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-extras/expert-mode><span title=案例3.expert-mode class=linkLabel_WmDU>案例3.expert-mode</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/YiGraphDocs/docs/tutorial-algorithm/basic><span title=专用算子 class=categoryLinkLabel_W154>专用算子</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/basic><span title="Basics 基础算子集" class=linkLabel_WmDU>Basics 基础算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/path><span title="Path 路径算子集" class=linkLabel_WmDU>Path 路径算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/centrality><span title="Centrality 中心性与关键性算子集" class=linkLabel_WmDU>Centrality 中心性与关键性算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/Connectivity_Components><span title="Connectivity & Components 连通性与组件算子集" class=linkLabel_WmDU>Connectivity & Components 连通性与组件算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/Clustering_Community><span title="Clustering & Community 聚类与社区算子集" class=linkLabel_WmDU>Clustering & Community 聚类与社区算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/tree><span title="Tree & Spanning Tree 树与生成树算子集" class=linkLabel_WmDU>Tree & Spanning Tree 树与生成树算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/Dominance><span title="Dominance 支配关系算子集" class=linkLabel_WmDU>Dominance 支配关系算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/flow><span title="Flow & Cut 流与割算子集" class=linkLabel_WmDU>Flow & Cut 流与割算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/link_prediction><span title="Link Prediction 链接预测算子集" class=linkLabel_WmDU>Link Prediction 链接预测算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/matching_coloring><span title=matching_coloring class=linkLabel_WmDU>matching_coloring</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/graph_matching><span title="Graph Matching 图结构匹配算子集" class=linkLabel_WmDU>Graph Matching 图结构匹配算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/graph_polynomials><span title="Graph Polynomials 图多项式算子集" class=linkLabel_WmDU>Graph Polynomials 图多项式算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/cliques_cores><span title="Cliques & Cores 团与核算子集" class=linkLabel_WmDU>Cliques & Cores 团与核算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/distance><span title="Distance & Measures 距离与结构度量算子集" class=linkLabel_WmDU>Distance & Measures 距离与结构度量算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/graph_query><span title="Graph Query 图查询算子集" class=linkLabel_WmDU>Graph Query 图查询算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/dag><span title="Directed Acyclic Graphs, DAG 有向无环图算子集" class=linkLabel_WmDU>Directed Acyclic Graphs, DAG 有向无环图算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/bipartite><span title="Bipartite 二分图算子集" class=linkLabel_WmDU>Bipartite 二分图算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/graph_hashing><span title="Graph Hashing 图哈希算子集" class=linkLabel_WmDU>Graph Hashing 图哈希算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/small_world><span title="Small-world 小世界网络分析算子集" class=linkLabel_WmDU>Small-world 小世界网络分析算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/sparsifiers><span title="Sparsifiers 稀疏化算子集" class=linkLabel_WmDU>Sparsifiers 稀疏化算子集</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/docs/tutorial-algorithm/gnn><span title="Graph Neural Networks 图神经网络卷积算子集" class=linkLabel_WmDU>Graph Neural Networks 图神经网络卷积算子集</span></a></ul></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/YiGraphDocs/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>专用算子</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Link Prediction 链接预测算子集</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>Link Prediction 链接预测算子集</h1></header>
+<p><strong>算子类别</strong>：Link Prediction（链接预测、潜在关系预测与相似度评估）</p>
+<p><strong>算法数量</strong>：11 个</p>
+<p><strong>适用阶段</strong>：潜在边预测、关系推荐、相似节点发现、隐藏关系挖掘、社区内关系增强、跨社区连接分析、结构相似度评估、关系强度评分、路径与流量辅助预测</p>
+<p><strong>产品定位</strong>：为“哪些节点未来可能连边 / 哪些关系值得推荐 / 哪些节点结构相似 / 哪些隐藏关系更强 / 社区结构如何影响潜在连接”提供链接预测与关系评分能力底座。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=一算子集概述>一、算子集概述<a href=#一算子集概述 class=hash-link aria-label=一、算子集概述的直接链接 title=一、算子集概述的直接链接 translate=no>​</a></h2>
+<p>Link Prediction 算子集聚焦于<strong>网络中潜在连接关系的预测、评分与排序</strong>，主要回答以下问题：</p>
+<ol>
+<li class="">
+<p><strong>潜在关系预测</strong></p>
 <ul>
-<li class="">哪些节点 <strong>更有可能在未来产生连接</strong>？</li>
-<li class="">在当前网络结构下，哪些“非边（non-edge）”最值得关注？</li>
-<li class="">如何结合 <strong>共同邻居、节点活跃度、社区结构</strong> 等因素，对潜在关系进行打分和排序？</li>
-</ul>
-<p>本算子集中的算法大多属于 <strong>基于局部结构的启发式方法</strong>，特点是：</p>
-<ul>
-<li class="">无需监督学习与历史标签</li>
-<li class="">计算高效、可解释性强</li>
-<li class="">非常适合作为推荐/风控/探索分析的第一层能力</li>
-</ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="二算子列表与能力分类">二、算子列表与能力分类<a href="#二算子列表与能力分类" class="hash-link" aria-label="二、算子列表与能力分类的直接链接" title="二、算子列表与能力分类的直接链接" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="21-基于共同邻居common-neighbors">2.1 基于共同邻居（Common Neighbors）<a href="#21-基于共同邻居common-neighbors" class="hash-link" aria-label="2.1 基于共同邻居（Common Neighbors）的直接链接" title="2.1 基于共同邻居（Common Neighbors）的直接链接" translate="no">​</a></h3>
-<table><thead><tr><th>算子</th><th>核心思想</th></tr></thead><tbody><tr><td><code>jaccard_coefficient</code></td><td>共同邻居占比（交集 / 并集）</td></tr><tr><td><code>adamic_adar_index</code></td><td>稀有共同邻居权重更高</td></tr><tr><td><code>resource_allocation_index</code></td><td>通过低度节点分配“资源”</td></tr><tr><td><code>preferential_attachment</code></td><td>高度节点更容易连边</td></tr></tbody></table>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="22-融合社区结构community-aware">2.2 融合社区结构（Community-aware）<a href="#22-融合社区结构community-aware" class="hash-link" aria-label="2.2 融合社区结构（Community-aware）的直接链接" title="2.2 融合社区结构（Community-aware）的直接链接" translate="no">​</a></h3>
-<table><thead><tr><th>算子</th><th>核心思想</th></tr></thead><tbody><tr><td><code>cn_soundarajan_hopcroft</code></td><td>同社区内的共同邻居更重要</td></tr><tr><td><code>ra_index_soundarajan_hopcroft</code></td><td>社区约束下的资源分配</td></tr><tr><td><code>within_inter_cluster</code></td><td>区分“社区内”与“跨社区”共同邻居</td></tr></tbody></table>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="三通用输入输出约定">三、通用输入输出约定<a href="#三通用输入输出约定" class="hash-link" aria-label="三、通用输入输出约定的直接链接" title="三、通用输入输出约定的直接链接" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="31-输入input">3.1 输入（Input）<a href="#31-输入input" class="hash-link" aria-label="3.1 输入（Input）的直接链接" title="3.1 输入（Input）的直接链接" translate="no">​</a></h3>
-<ul>
-<li class=""><strong>G</strong>：NetworkX 无向图（Undirected Graph）</li>
-<li class=""><strong>ebunch（可选）</strong>：指定需要计算分数的节点对 <code>(u, v)</code>
-<ul>
-<li class="">若为 <code>None</code>，则对所有 <strong>当前不存在的边</strong> 进行计算</li>
+<li class="">哪些当前尚未连接的节点，未来更可能产生连接？</li>
+<li class="">哪些“非边”最值得推荐或重点关注？</li>
+<li class="">哪些节点对具有较高的结构接近性？</li>
 </ul>
 </li>
-<li class=""><strong>community（部分算法）</strong>：节点属性名，表示社区标签</li>
+<li class="">
+<p><strong>共同邻居与局部结构</strong></p>
+<ul>
+<li class="">两个节点是否拥有足够多的共同邻居？</li>
+<li class="">共同邻居是普通节点，还是低度、高价值、强信号节点？</li>
+<li class="">高度节点是否更容易吸引新的连接？</li>
 </ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="32-输出output">3.2 输出（Output）<a href="#32-输出output" class="hash-link" aria-label="3.2 输出（Output）的直接链接" title="3.2 输出（Output）的直接链接" translate="no">​</a></h3>
+</li>
+<li class="">
+<p><strong>社区感知预测</strong></p>
 <ul>
-<li class=""><strong>iterator of (u, v, score)</strong>
+<li class="">两个节点是否处于同一社区？</li>
+<li class="">社区内部的共同邻居是否增强了连接可能性？</li>
+<li class="">潜在关系更偏向社区内聚，还是跨社区桥接？</li>
+</ul>
+</li>
+<li class="">
+<p><strong>全局相似度与随机游走</strong></p>
 <ul>
-<li class=""><code>u, v</code>：节点对</li>
-<li class=""><code>score</code>：链接预测得分（数值越大，越可能形成连接）</li>
+<li class="">两个节点是否在全局结构上相似？</li>
+<li class="">是否可以通过路径、随机游走或采样方式估计节点相似度？</li>
+<li class="">是否适合在大规模图上进行近似相似度计算？</li>
+</ul>
+</li>
+<li class="">
+<p><strong>关系强度与结构辅助判断</strong></p>
+<ul>
+<li class="">节点之间是否存在较强的可达能力或流量承载能力？</li>
+<li class="">两个节点之间的共同邻居是否具有更强的关系区分度？</li>
+<li class="">哪些潜在连接具有更高的解释价值？</li>
+</ul>
+</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=二算子能力分类>二、算子能力分类<a href=#二算子能力分类 class=hash-link aria-label=二、算子能力分类的直接链接 title=二、算子能力分类的直接链接 translate=no>​</a></h2>
+<table><thead><tr><th>能力类型<th>对应算子<th>功能描述<tbody><tr><td>共同邻居比例<td><code>jaccard_coefficient</code><td>基于邻居集合交并比衡量节点相似度<tr><td>稀有共同邻居加权<td><code>adamic_adar_index</code><td>稀有共同邻居贡献更高，用于发现高质量共同关系<tr><td>资源分配评分<td><code>resource_allocation_index</code><td>低度共同邻居分配更高权重，强化隐蔽强关系<tr><td>优先连接预测<td><code>preferential_attachment</code><td>基于节点度数乘积预测头部节点吸引力<tr><td>社区感知共同邻居<td><code>cn_soundarajan_hopcroft</code><td>同社区共同邻居对潜在连接贡献更高<tr><td>社区感知资源分配<td><code>ra_index_soundarajan_hopcroft</code><td>结合社区约束与资源分配思想进行评分<tr><td>社区内外连接分析<td><code>within_inter_cluster</code><td>区分社区内共同邻居与跨社区共同邻居<tr><td>全局结构相似度<td><code>simrank_similarity</code><td>基于“相似节点连接相似节点”的递归思想计算相似度<tr><td>最大流关系强度<td><code>maximum_flow</code><td>基于节点间最大可传输流量评估连接能力或关系强度<tr><td>采样式路径相似度<td><code>panther_similarity</code><td>通过随机路径采样估计节点之间的相似性<tr><td>共同邻居离散度<td><code>dispersion</code><td>衡量共同邻居之间的分散程度，用于识别更有意义的潜在关系</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=三通用输入输出约定>三、通用输入输出约定<a href=#三通用输入输出约定 class=hash-link aria-label=三、通用输入输出约定的直接链接 title=三、通用输入输出约定的直接链接 translate=no>​</a></h2>
+<ul>
+<li class="">
+<p><strong>输入 <code>G</code></strong>：NetworkX Graph / DiGraph</p>
+</li>
+<li class="">
+<p><strong>常见输入参数</strong>：</p>
+<ul>
+<li class=""><code>ebunch</code>：需要计算链接预测分数的节点对集合</li>
+<li class=""><code>community</code>：社区标签节点属性名，适用于社区感知类算法</li>
+<li class=""><code>source</code> / <code>target</code>：源节点与目标节点，适用于流量或相似度查询类算法</li>
+<li class=""><code>capacity</code>：边容量属性名，适用于最大流相关计算</li>
+</ul>
+</li>
+<li class="">
+<p><strong>常见输出类型</strong>：</p>
+<ul>
+<li class="">链接预测类：<code>iterator of (u, v, score)</code></li>
+<li class="">相似度类：相似度分数、节点相似度字典或矩阵</li>
+<li class="">流量类：最大流值及流分配结构</li>
+<li class="">判分结果：数值越大通常表示潜在连接可能性、结构相似度或关系强度越高</li>
 </ul>
 </li>
 </ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="四算子详细说明">四、算子详细说明<a href="#四算子详细说明" class="hash-link" aria-label="四、算子详细说明的直接链接" title="四、算子详细说明的直接链接" translate="no">​</a></h2>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="41-jaccard_coefficient--jaccard-系数">4.1 jaccard_coefficient —— Jaccard 系数<a href="#41-jaccard_coefficient--jaccard-系数" class="hash-link" aria-label="4.1 jaccard_coefficient —— Jaccard 系数的直接链接" title="4.1 jaccard_coefficient —— Jaccard 系数的直接链接" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="功能说明">功能说明<a href="#功能说明" class="hash-link" aria-label="功能说明的直接链接" title="功能说明的直接链接" translate="no">​</a></h3>
-<p>衡量两个节点邻居集合的 <strong>重叠比例</strong>：</p>
-<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">J(u,v) = |N(u) ∩ N(v)| / |N(u) ∪ N(v)|</span><br></span></code></pre></div></div>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="适用场景">适用场景<a href="#适用场景" class="hash-link" aria-label="适用场景的直接链接" title="适用场景的直接链接" translate="no">​</a></h3>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=四算子详细说明>四、算子详细说明<a href=#四算子详细说明 class=hash-link aria-label=四、算子详细说明的直接链接 title=四、算子详细说明的直接链接 translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-jaccard_coefficient--jaccard-系数>1. jaccard_coefficient —— Jaccard 系数<a href=#1-jaccard_coefficient--jaccard-系数 class=hash-link aria-label="1. jaccard_coefficient —— Jaccard 系数的直接链接" title="1. jaccard_coefficient —— Jaccard 系数的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong>
+衡量两个节点邻居集合的重叠比例，即共同邻居占全部邻居的比例。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">J(u, v) = |N(u) ∩ N(v)| / |N(u) ∪ N(v)|</span><br/></div></code></pre></div></div>
+<p><strong>产品价值</strong></p>
 <ul>
-<li class="">好友推荐中的“共同好友比例”</li>
-<li class="">项目/商品/内容的相似性评估</li>
-<li class="">强调 <strong>相似度比例</strong> 而非绝对数量</li>
+<li class="">提供简单、直观、可解释的相似度评分</li>
+<li class="">适合衡量两个节点的关系重叠程度</li>
+<li class="">对高度节点有一定抑制作用，避免仅因邻居多而得分过高</li>
 </ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="特点">特点<a href="#特点" class="hash-link" aria-label="特点的直接链接" title="特点的直接链接" translate="no">​</a></h3>
+<p><strong>典型场景</strong></p>
 <ul>
-<li class="">简单直观、易解释</li>
-<li class="">对高度节点有一定惩罚（并集变大）</li>
+<li class="">好友推荐</li>
+<li class="">商品相似推荐</li>
+<li class="">内容关联推荐</li>
+<li class="">用户兴趣相似度分析</li>
+<li class="">关系网络中的潜在边排序</li>
 </ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="42-adamic_adar_index--adamicadar-指数">4.2 adamic_adar_index —— Adamic–Adar 指数<a href="#42-adamic_adar_index--adamicadar-指数" class="hash-link" aria-label="4.2 adamic_adar_index —— Adamic–Adar 指数的直接链接" title="4.2 adamic_adar_index —— Adamic–Adar 指数的直接链接" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="功能说明-1">功能说明<a href="#功能说明-1" class="hash-link" aria-label="功能说明的直接链接" title="功能说明的直接链接" translate="no">​</a></h3>
-<p>对共同邻居进行加权：<br>
-<strong>度数越小（越“稀有”）的共同邻居，贡献越大</strong>。</p>
-<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">AA(u,v) = Σ(w ∈ CN(u,v)) 1/log(deg(w))</span><br></span></code></pre></div></div>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="适用场景-1">适用场景<a href="#适用场景-1" class="hash-link" aria-label="适用场景的直接链接" title="适用场景的直接链接" translate="no">​</a></h3>
+<p><strong>适用与特性</strong></p>
 <ul>
-<li class="">社交网络中的“高质量共同好友”</li>
-<li class="">反欺诈/AML 中的隐蔽中介关系</li>
-<li class="">协作网络中“小圈子内的强信号”</li>
+<li class="">图类型：通常用于无向图</li>
+<li class="">输出：<code>(u, v, score)</code></li>
+<li class="">特点：强调共同邻居比例，而不是共同邻居绝对数量</li>
 </ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="43-resource_allocation_index--资源分配指数ra">4.3 resource_allocation_index —— 资源分配指数（RA）<a href="#43-resource_allocation_index--资源分配指数ra" class="hash-link" aria-label="4.3 resource_allocation_index —— 资源分配指数（RA）的直接链接" title="4.3 resource_allocation_index —— 资源分配指数（RA）的直接链接" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="功能说明-2">功能说明<a href="#功能说明-2" class="hash-link" aria-label="功能说明的直接链接" title="功能说明的直接链接" translate="no">​</a></h3>
-<p>假设共同邻居向两端节点各“分配资源”，<br>
-<strong>度数越小，分到的资源越多</strong>：</p>
-<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">RA(u,v) = Σ(w ∈ CN(u,v)) 1/deg(w)</span><br></span></code></pre></div></div>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="适用场景-2">适用场景<a href="#适用场景-2" class="hash-link" aria-label="适用场景的直接链接" title="适用场景的直接链接" translate="no">​</a></h3>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-adamic_adar_index--adamic-adar-指数>2. adamic_adar_index —— Adamic-Adar 指数<a href=#2-adamic_adar_index--adamic-adar-指数 class=hash-link aria-label="2. adamic_adar_index —— Adamic-Adar 指数的直接链接" title="2. adamic_adar_index —— Adamic-Adar 指数的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong>
+对共同邻居进行加权，度数越小的共同邻居贡献越大。低度共同邻居通常代表更稀有、更有区分度的关系信号。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">AA(u, v) = Σ 1 / log(deg(w)), w ∈ CN(u, v)</span><br/></div></code></pre></div></div>
+<p><strong>产品价值</strong></p>
 <ul>
-<li class="">与 Adamic–Adar 类似，但惩罚高度节点更强</li>
-<li class="">适合寻找 <strong>隐蔽、低曝光但关系紧密</strong> 的潜在连接</li>
+<li class="">强化“稀有共同邻居”的预测价值</li>
+<li class="">比普通共同邻居数量更能体现关系质量</li>
+<li class="">适合发现小圈层、低曝光但强相关的潜在连接</li>
 </ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="44-preferential_attachment--优先连接">4.4 preferential_attachment —— 优先连接<a href="#44-preferential_attachment--优先连接" class="hash-link" aria-label="4.4 preferential_attachment —— 优先连接的直接链接" title="4.4 preferential_attachment —— 优先连接的直接链接" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="功能说明-3">功能说明<a href="#功能说明-3" class="hash-link" aria-label="功能说明的直接链接" title="功能说明的直接链接" translate="no">​</a></h3>
-<p>假设网络遵循“富者愈富”原则：</p>
-<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">PA(u,v) = deg(u) × deg(v)</span><br></span></code></pre></div></div>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="适用场景-3">适用场景<a href="#适用场景-3" class="hash-link" aria-label="适用场景的直接链接" title="适用场景的直接链接" translate="no">​</a></h3>
+<p><strong>典型场景</strong></p>
 <ul>
-<li class="">社交平台中，新用户更可能关注“大 V”</li>
-<li class="">引用网络、网页链接、交易网络中的“枢纽效应”</li>
+<li class="">社交网络中的高质量好友推荐</li>
+<li class="">反欺诈中的隐蔽中介关系发现</li>
+<li class="">科研合作预测</li>
+<li class="">小圈层关系挖掘</li>
+<li class="">用户兴趣深度匹配</li>
 </ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="特点-1">特点<a href="#特点-1" class="hash-link" aria-label="特点的直接链接" title="特点的直接链接" translate="no">​</a></h3>
+<p><strong>适用与特性</strong></p>
 <ul>
-<li class="">不依赖共同邻居</li>
-<li class="">更偏向 <strong>流量/影响力预测</strong>，而非相似性</li>
+<li class="">图类型：通常用于无向图</li>
+<li class="">输出：<code>(u, v, score)</code></li>
+<li class="">特点：对高度共同邻居进行惩罚，但惩罚力度相对温和</li>
 </ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="45-cn_soundarajan_hopcroft--社区感知共同邻居">4.5 cn_soundarajan_hopcroft —— 社区感知共同邻居<a href="#45-cn_soundarajan_hopcroft--社区感知共同邻居" class="hash-link" aria-label="4.5 cn_soundarajan_hopcroft —— 社区感知共同邻居的直接链接" title="4.5 cn_soundarajan_hopcroft —— 社区感知共同邻居的直接链接" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="功能说明-4">功能说明<a href="#功能说明-4" class="hash-link" aria-label="功能说明的直接链接" title="功能说明的直接链接" translate="no">​</a></h3>
-<p>在普通共同邻居基础上，引入 <strong>社区约束</strong>：</p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-preferential_attachment--优先连接>3. preferential_attachment —— 优先连接<a href=#3-preferential_attachment--优先连接 class=hash-link aria-label="3. preferential_attachment —— 优先连接的直接链接" title="3. preferential_attachment —— 优先连接的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong>
+基于“富者愈富”思想，认为度数越高的节点越容易产生新的连接。两个节点的得分通常由二者度数乘积决定。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">PA(u, v) = deg(u) × deg(v)</span><br/></div></code></pre></div></div>
+<p><strong>产品价值</strong></p>
 <ul>
-<li class="">同一社区内的共同邻居贡献更高</li>
-<li class="">跨社区连接被自然抑制</li>
+<li class="">捕捉头部节点、枢纽节点的吸引效应</li>
+<li class="">不依赖共同邻居，适合稀疏图中的连接预测</li>
+<li class="">可用于衡量节点影响力驱动下的潜在连接概率</li>
 </ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="适用场景-4">适用场景<a href="#适用场景-4" class="hash-link" aria-label="适用场景的直接链接" title="适用场景的直接链接" translate="no">​</a></h3>
+<p><strong>典型场景</strong></p>
 <ul>
-<li class="">部门/圈子/兴趣社区内部推荐</li>
-<li class="">“同圈层关系强化”的预测任务</li>
+<li class="">社交平台关注推荐</li>
+<li class="">大 V / 头部账号连接预测</li>
+<li class="">引用网络预测</li>
+<li class="">网页链接预测</li>
+<li class="">交易网络中的高活跃节点关系预测</li>
 </ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="46-ra_index_soundarajan_hopcroft--社区感知-ra-指数">4.6 ra_index_soundarajan_hopcroft —— 社区感知 RA 指数<a href="#46-ra_index_soundarajan_hopcroft--社区感知-ra-指数" class="hash-link" aria-label="4.6 ra_index_soundarajan_hopcroft —— 社区感知 RA 指数的直接链接" title="4.6 ra_index_soundarajan_hopcroft —— 社区感知 RA 指数的直接链接" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="功能说明-5">功能说明<a href="#功能说明-5" class="hash-link" aria-label="功能说明的直接链接" title="功能说明的直接链接" translate="no">​</a></h3>
-<p>将 <strong>资源分配思想</strong> 与 <strong>社区结构</strong> 结合：</p>
+<p><strong>适用与特性</strong></p>
 <ul>
-<li class="">低度共同邻居 + 同社区 → 最高贡献</li>
+<li class="">图类型：通常用于无向图</li>
+<li class="">输出：<code>(u, v, score)</code></li>
+<li class="">特点：偏向影响力和活跃度预测，而不是相似性预测</li>
 </ul>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="适用场景-5">适用场景<a href="#适用场景-5" class="hash-link" aria-label="适用场景的直接链接" title="适用场景的直接链接" translate="no">​</a></h3>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=4-resource_allocation_index--资源分配指数>4. resource_allocation_index —— 资源分配指数<a href=#4-resource_allocation_index--资源分配指数 class=hash-link aria-label="4. resource_allocation_index —— 资源分配指数的直接链接" title="4. resource_allocation_index —— 资源分配指数的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong>
+假设共同邻居向两端节点分配资源，度数越低的共同邻居能够分配给目标节点的资源越多。</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#393A34;--prism-background-color:#f6f8fa><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#393A34;background-color:#f6f8fa><code class=codeBlockLines_e6Vv><div class=token-line style=color:#393A34><span class="token plain">RA(u, v) = Σ 1 / deg(w), w ∈ CN(u, v)</span><br/></div></code></pre></div></div>
+<p><strong>产品价值</strong></p>
 <ul>
-<li class="">企业/团队内部的潜在协作关系</li>
-<li class="">社区内的隐性强关系挖掘</li>
+<li class="">强化低度共同邻居的贡献</li>
+<li class="">比 Adamic-Adar 对高度节点惩罚更强</li>
+<li class="">适合识别低曝光、强绑定、隐蔽型潜在关系</li>
 </ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="47-within_inter_cluster--wic社区内--跨社区">4.7 within_inter_cluster —— WIC（社区内 / 跨社区）<a href="#47-within_inter_cluster--wic社区内--跨社区" class="hash-link" aria-label="4.7 within_inter_cluster —— WIC（社区内 / 跨社区）的直接链接" title="4.7 within_inter_cluster —— WIC（社区内 / 跨社区）的直接链接" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="功能说明-6">功能说明<a href="#功能说明-6" class="hash-link" aria-label="功能说明的直接链接" title="功能说明的直接链接" translate="no">​</a></h3>
-<p>比较两类共同邻居：</p>
+<p><strong>典型场景</strong></p>
 <ul>
-<li class=""><strong>社区内共同邻居</strong></li>
-<li class=""><strong>跨社区共同邻居</strong></li>
+<li class="">隐藏关系发现</li>
+<li class="">反欺诈团伙关系挖掘</li>
+<li class="">小规模强关系推荐</li>
+<li class="">供应链隐性关联分析</li>
+<li class="">内部协作关系预测</li>
 </ul>
-<p>通过二者比例衡量“关系是内聚型还是桥接型”。</p>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="适用场景-6">适用场景<a href="#适用场景-6" class="hash-link" aria-label="适用场景的直接链接" title="适用场景的直接链接" translate="no">​</a></h3>
+<p><strong>适用与特性</strong></p>
 <ul>
-<li class="">跨部门 / 跨圈层协作发现</li>
-<li class="">鼓励“破圈”连接 vs 强化内部连接</li>
-<li class="">网络探索与结构多样性分析</li>
+<li class="">图类型：通常用于无向图</li>
+<li class="">输出：<code>(u, v, score)</code></li>
+<li class="">特点：更重视低度共同邻居，适合强调关系稀缺性的场景</li>
 </ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="五选型指南怎么选">五、选型指南（怎么选）<a href="#五选型指南怎么选" class="hash-link" aria-label="五、选型指南（怎么选）的直接链接" title="五、选型指南（怎么选）的直接链接" translate="no">​</a></h2>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=5-cn_soundarajan_hopcroft--社区感知共同邻居>5. cn_soundarajan_hopcroft —— 社区感知共同邻居<a href=#5-cn_soundarajan_hopcroft--社区感知共同邻居 class=hash-link aria-label="5. cn_soundarajan_hopcroft —— 社区感知共同邻居的直接链接" title="5. cn_soundarajan_hopcroft —— 社区感知共同邻居的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong>
+在共同邻居基础上引入社区信息。同一社区内的共同邻居会被认为更重要，从而提高同社区潜在连接的得分。</p>
+<p><strong>产品价值</strong></p>
 <ul>
-<li class=""><strong>想要简单相似度</strong>：<code>jaccard_coefficient</code></li>
-<li class=""><strong>强调稀有共同邻居</strong>：<code>adamic_adar_index</code></li>
-<li class=""><strong>更强惩罚高度节点</strong>：<code>resource_allocation_index</code></li>
-<li class=""><strong>关注头部/枢纽吸引力</strong>：<code>preferential_attachment</code></li>
+<li class="">将局部结构与社区结构结合</li>
+<li class="">强化社区内部关系推荐</li>
+<li class="">对圈层、组织、兴趣群体内的关系预测更友好</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">部门内部协作推荐</li>
+<li class="">兴趣社区好友推荐</li>
+<li class="">圈层内潜在关系发现</li>
+<li class="">企业组织内部关系增强</li>
+<li class="">社群运营中的关系补全</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：通常用于无向图</li>
+<li class="">输入依赖：节点需具备社区标签属性</li>
+<li class="">输出：<code>(u, v, score)</code></li>
+<li class="">特点：适合同社区关系强化，不适合无社区标签图直接使用</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=6-ra_index_soundarajan_hopcroft--社区感知资源分配指数>6. ra_index_soundarajan_hopcroft —— 社区感知资源分配指数<a href=#6-ra_index_soundarajan_hopcroft--社区感知资源分配指数 class=hash-link aria-label="6. ra_index_soundarajan_hopcroft —— 社区感知资源分配指数的直接链接" title="6. ra_index_soundarajan_hopcroft —— 社区感知资源分配指数的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong>
+将资源分配思想与社区结构结合。低度共同邻居本身贡献较高，如果共同邻居还处于相同社区，则进一步增强其预测价值。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">同时考虑共同邻居稀缺性与社区一致性</li>
+<li class="">适合发现社区内部的隐性强关系</li>
+<li class="">比普通资源分配指数更适合带有圈层结构的网络</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">企业内部潜在协作发现</li>
+<li class="">社区内强关系推荐</li>
+<li class="">组织关系补全</li>
+<li class="">兴趣小组成员推荐</li>
+<li class="">风控网络中的同团伙关系挖掘</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：通常用于无向图</li>
+<li class="">输入依赖：节点需具备社区标签属性</li>
+<li class="">输出：<code>(u, v, score)</code></li>
+<li class="">特点：低度共同邻居 + 同社区关系通常具有更高得分</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=7-within_inter_cluster--社区内--跨社区连接评分>7. within_inter_cluster —— 社区内 / 跨社区连接评分<a href=#7-within_inter_cluster--社区内--跨社区连接评分 class=hash-link aria-label="7. within_inter_cluster —— 社区内 / 跨社区连接评分的直接链接" title="7. within_inter_cluster —— 社区内 / 跨社区连接评分的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong>
+比较节点对的社区内共同邻居与跨社区共同邻居，衡量潜在连接更偏向社区内聚还是跨社区桥接。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">区分内部强化关系与跨圈连接关系</li>
+<li class="">适合分析关系是否具有“破圈”价值</li>
+<li class="">可辅助判断潜在连接的结构角色</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">跨部门协作发现</li>
+<li class="">跨兴趣圈层推荐</li>
+<li class="">社区桥接节点分析</li>
+<li class="">组织网络结构优化</li>
+<li class="">社交网络多样性推荐</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：通常用于无向图</li>
+<li class="">输入依赖：节点需具备社区标签属性</li>
+<li class="">输出：<code>(u, v, score)</code></li>
+<li class="">特点：适合同时关注社区内聚和跨社区连接的场景</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=8-simrank_similarity--simrank-相似度>8. simrank_similarity —— SimRank 相似度<a href=#8-simrank_similarity--simrank-相似度 class=hash-link aria-label="8. simrank_similarity —— SimRank 相似度的直接链接" title="8. simrank_similarity —— SimRank 相似度的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong>
+基于“两个节点如果被相似的节点连接，那么它们也相似”的递归思想，计算节点之间的全局结构相似度。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">不只依赖直接共同邻居，也考虑更深层的结构相似性</li>
+<li class="">适合发现“结构角色相似”的节点</li>
+<li class="">可用于推荐、实体匹配、图结构相似分析</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">用户相似度分析</li>
+<li class="">网页结构相似度计算</li>
+<li class="">知识图谱实体相似度</li>
+<li class="">引用网络相似论文发现</li>
+<li class="">推荐系统中的结构相似召回</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：有向图 / 无向图</li>
+<li class="">输出：节点相似度分数或相似度结果结构</li>
+<li class="">注意：通常计算成本高于局部启发式链接预测算法</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=9-maximum_flow--最大流>9. maximum_flow —— 最大流<a href=#9-maximum_flow--最大流 class=hash-link aria-label="9. maximum_flow —— 最大流的直接链接" title="9. maximum_flow —— 最大流的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong>
+计算从源节点到目标节点在容量约束下能够传输的最大流量，可用于衡量两个节点之间的连接承载能力或关系强度。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">从路径和容量角度评估节点之间的连接强度</li>
+<li class="">可辅助判断两个节点之间是否存在强可达关系</li>
+<li class="">适合带权、带容量网络中的关系能力分析</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">资金流关系强度分析</li>
+<li class="">供应链通路能力评估</li>
+<li class="">交通与物流网络承载分析</li>
+<li class="">通信网络容量分析</li>
+<li class="">风险传播通道能力评估</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：通常用于有向图，也可用于具备容量属性的网络</li>
+<li class="">关键参数：<code>source</code>、<code>target</code>、<code>capacity</code></li>
+<li class="">输出：最大流值及流分配结构</li>
+<li class="">特点：更偏向关系强度与通路能力评估，不是传统共同邻居类链接预测</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=10-panther_similarity--panther-相似度>10. panther_similarity —— Panther 相似度<a href=#10-panther_similarity--panther-相似度 class=hash-link aria-label="10. panther_similarity —— Panther 相似度的直接链接" title="10. panther_similarity —— Panther 相似度的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong>
+通过随机路径采样估计节点之间的相似性，适合在较大规模图上进行近似相似度计算。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">支持大规模图上的相似节点发现</li>
+<li class="">相比全量精确计算，更适合近似召回</li>
+<li class="">可作为推荐系统中的候选节点生成能力</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">大规模用户相似度召回</li>
+<li class="">内容相似推荐</li>
+<li class="">图数据库中的相似节点检索</li>
+<li class="">知识图谱近似相似实体发现</li>
+<li class="">大规模关系网络探索</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：通常用于无向图</li>
+<li class="">输出：相似节点或相似度结果</li>
+<li class="">特点：采样式方法，适合效率优先的大图场景</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=11-dispersion--离散度--分散度>11. dispersion —— 离散度 / 分散度<a href=#11-dispersion--离散度--分散度 class=hash-link aria-label="11. dispersion —— 离散度 / 分散度的直接链接" title="11. dispersion —— 离散度 / 分散度的直接链接" translate=no>​</a></h3>
+<p><strong>功能说明</strong>
+衡量两个节点共同邻居之间的分散程度。相比仅统计共同邻居数量，<code>dispersion</code> 更关注共同邻居之间是否彼此分离，从而判断潜在关系是否更有信息量。</p>
+<p><strong>产品价值</strong></p>
+<ul>
+<li class="">帮助识别更有意义的潜在连接</li>
+<li class="">可区分普通共同好友关系与更强的结构信号</li>
+<li class="">适合在社交网络中发现非显而易见但值得关注的关系</li>
+</ul>
+<p><strong>典型场景</strong></p>
+<ul>
+<li class="">社交网络好友推荐</li>
+<li class="">隐性强关系发现</li>
+<li class="">社区边界关系识别</li>
+<li class="">跨圈层弱连接分析</li>
+<li class="">关系推荐质量优化</li>
+</ul>
+<p><strong>适用与特性</strong></p>
+<ul>
+<li class="">图类型：通常用于无向图</li>
+<li class="">输出：节点对的离散度评分</li>
+<li class="">特点：关注共同邻居之间的结构分布，而非只看共同邻居数量</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=五推荐使用指南>五、推荐使用指南<a href=#五推荐使用指南 class=hash-link aria-label=五、推荐使用指南的直接链接 title=五、推荐使用指南的直接链接 translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-基于共同邻居的快速链接预测>1. 基于共同邻居的快速链接预测<a href=#1-基于共同邻居的快速链接预测 class=hash-link aria-label="1. 基于共同邻居的快速链接预测的直接链接" title="1. 基于共同邻居的快速链接预测的直接链接" translate=no>​</a></h3>
+<ul>
+<li class="">计算共同邻居比例：<code>jaccard_coefficient</code></li>
+<li class="">强调稀有共同邻居：<code>adamic_adar_index</code></li>
+<li class="">更强惩罚高度共同邻居：<code>resource_allocation_index</code></li>
+<li class="">关注头部节点吸引力：<code>preferential_attachment</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-社区感知链接预测>2. 社区感知链接预测<a href=#2-社区感知链接预测 class=hash-link aria-label="2. 社区感知链接预测的直接链接" title="2. 社区感知链接预测的直接链接" translate=no>​</a></h3>
+<ul>
+<li class="">强化同社区共同邻居：<code>cn_soundarajan_hopcroft</code></li>
+<li class="">结合社区与低度共同邻居：<code>ra_index_soundarajan_hopcroft</code></li>
+<li class="">区分社区内聚与跨社区桥接：<code>within_inter_cluster</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-全局相似度与近似相似度>3. 全局相似度与近似相似度<a href=#3-全局相似度与近似相似度 class=hash-link aria-label="3. 全局相似度与近似相似度的直接链接" title="3. 全局相似度与近似相似度的直接链接" translate=no>​</a></h3>
+<ul>
+<li class="">计算递归结构相似度：<code>simrank_similarity</code></li>
+<li class="">大规模近似相似节点发现：<code>panther_similarity</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=4-关系强度与路径能力分析>4. 关系强度与路径能力分析<a href=#4-关系强度与路径能力分析 class=hash-link aria-label="4. 关系强度与路径能力分析的直接链接" title="4. 关系强度与路径能力分析的直接链接" translate=no>​</a></h3>
+<ul>
+<li class="">基于容量和通路能力评估关系强度：<code>maximum_flow</code></li>
+<li class="">判断共同邻居结构是否更有区分度：<code>dispersion</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=5-场景化选型建议>5. 场景化选型建议<a href=#5-场景化选型建议 class=hash-link aria-label="5. 场景化选型建议的直接链接" title="5. 场景化选型建议的直接链接" translate=no>​</a></h3>
+<ul>
+<li class=""><strong>想要简单、可解释的推荐分数</strong>：<code>jaccard_coefficient</code></li>
+<li class=""><strong>想突出高质量共同好友</strong>：<code>adamic_adar_index</code></li>
+<li class=""><strong>想挖掘隐蔽、低曝光强关系</strong>：<code>resource_allocation_index</code></li>
+<li class=""><strong>想预测头部节点吸引连接的能力</strong>：<code>preferential_attachment</code></li>
 <li class=""><strong>已有社区标签，做圈内推荐</strong>：<code>cn_soundarajan_hopcroft</code></li>
-<li class=""><strong>社区 + 隐蔽强关系</strong>：<code>ra_index_soundarajan_hopcroft</code></li>
-<li class=""><strong>想区分“内聚 vs 跨圈”关系</strong>：<code>within_inter_cluster</code></li>
+<li class=""><strong>社区 + 隐性强关系挖掘</strong>：<code>ra_index_soundarajan_hopcroft</code></li>
+<li class=""><strong>想分析内聚关系还是跨圈连接</strong>：<code>within_inter_cluster</code></li>
+<li class=""><strong>想计算全局结构相似度</strong>：<code>simrank_similarity</code></li>
+<li class=""><strong>想从流量承载角度评估关系强度</strong>：<code>maximum_flow</code></li>
+<li class=""><strong>想在大图中高效查找相似节点</strong>：<code>panther_similarity</code></li>
+<li class=""><strong>想判断共同邻居结构是否具有更强关系信号</strong>：<code>dispersion</code></li>
 </ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="六可直接回答的典型问题">六、可直接回答的典型问题<a href="#六可直接回答的典型问题" class="hash-link" aria-label="六、可直接回答的典型问题的直接链接" title="六、可直接回答的典型问题的直接链接" translate="no">​</a></h2>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=六可直接回答的典型问题>六、可直接回答的典型问题<a href=#六可直接回答的典型问题 class=hash-link aria-label=六、可直接回答的典型问题的直接链接 title=六、可直接回答的典型问题的直接链接 translate=no>​</a></h2>
 <ul>
+<li class="">“哪些用户之间最可能产生新的关系？”</li>
 <li class="">“我最可能认识但还没认识的人是谁？”</li>
 <li class="">“哪些账号之间存在隐藏关系？”</li>
-<li class="">“哪些跨部门员工最有可能产生合作？”</li>
-<li class="">“哪些商品/内容之间存在潜在强关联？”</li>
-<li class="">“这个网络更倾向于内聚发展还是跨圈连接？”</li>
+<li class="">“哪些商品或内容之间存在潜在强关联？”</li>
+<li class="">“哪些节点虽然没有直接连接，但结构上很相似？”</li>
+<li class="">“共同好友中哪些关系信号更有价值？”</li>
+<li class="">“哪些潜在连接属于同社区内部强化关系？”</li>
+<li class="">“哪些潜在连接可能是跨社区桥接关系？”</li>
+<li class="">“哪些节点之间的通路能力或承载能力最强？”</li>
+<li class="">“在大规模图中，哪些节点最相似？”</li>
+<li class="">“哪些共同邻居结构更分散、更能说明潜在强关系？”</li>
 </ul>
-<hr></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/iDC-NEU/YiGraphDocs/tree/main/docs-site/docs/tutorial-algorithm/link_prediction.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="文件选项卡"><a class="pagination-nav__link pagination-nav__link--prev" href="/YiGraphDocs/docs/tutorial-algorithm/flow"><div class="pagination-nav__sublabel">上一页</div><div class="pagination-nav__label">Flow &amp; Cut 流与割算子集</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/YiGraphDocs/docs/tutorial-algorithm/matching_coloring"><div class="pagination-nav__sublabel">下一页</div><div class="pagination-nav__label">Matching &amp; Coloring 匹配与着色算子集</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#一算子集概述" class="table-of-contents__link toc-highlight">一、算子集概述</a></li><li><a href="#二算子列表与能力分类" class="table-of-contents__link toc-highlight">二、算子列表与能力分类</a><ul><li><a href="#21-基于共同邻居common-neighbors" class="table-of-contents__link toc-highlight">2.1 基于共同邻居（Common Neighbors）</a></li><li><a href="#22-融合社区结构community-aware" class="table-of-contents__link toc-highlight">2.2 融合社区结构（Community-aware）</a></li></ul></li><li><a href="#三通用输入输出约定" class="table-of-contents__link toc-highlight">三、通用输入输出约定</a><ul><li><a href="#31-输入input" class="table-of-contents__link toc-highlight">3.1 输入（Input）</a></li><li><a href="#32-输出output" class="table-of-contents__link toc-highlight">3.2 输出（Output）</a></li></ul></li><li><a href="#四算子详细说明" class="table-of-contents__link toc-highlight">四、算子详细说明</a></li><li><a href="#41-jaccard_coefficient--jaccard-系数" class="table-of-contents__link toc-highlight">4.1 jaccard_coefficient —— Jaccard 系数</a><ul><li><a href="#功能说明" class="table-of-contents__link toc-highlight">功能说明</a></li><li><a href="#适用场景" class="table-of-contents__link toc-highlight">适用场景</a></li><li><a href="#特点" class="table-of-contents__link toc-highlight">特点</a></li></ul></li><li><a href="#42-adamic_adar_index--adamicadar-指数" class="table-of-contents__link toc-highlight">4.2 adamic_adar_index —— Adamic–Adar 指数</a><ul><li><a href="#功能说明-1" class="table-of-contents__link toc-highlight">功能说明</a></li><li><a href="#适用场景-1" class="table-of-contents__link toc-highlight">适用场景</a></li></ul></li><li><a href="#43-resource_allocation_index--资源分配指数ra" class="table-of-contents__link toc-highlight">4.3 resource_allocation_index —— 资源分配指数（RA）</a><ul><li><a href="#功能说明-2" class="table-of-contents__link toc-highlight">功能说明</a></li><li><a href="#适用场景-2" class="table-of-contents__link toc-highlight">适用场景</a></li></ul></li><li><a href="#44-preferential_attachment--优先连接" class="table-of-contents__link toc-highlight">4.4 preferential_attachment —— 优先连接</a><ul><li><a href="#功能说明-3" class="table-of-contents__link toc-highlight">功能说明</a></li><li><a href="#适用场景-3" class="table-of-contents__link toc-highlight">适用场景</a></li><li><a href="#特点-1" class="table-of-contents__link toc-highlight">特点</a></li></ul></li><li><a href="#45-cn_soundarajan_hopcroft--社区感知共同邻居" class="table-of-contents__link toc-highlight">4.5 cn_soundarajan_hopcroft —— 社区感知共同邻居</a><ul><li><a href="#功能说明-4" class="table-of-contents__link toc-highlight">功能说明</a></li><li><a href="#适用场景-4" class="table-of-contents__link toc-highlight">适用场景</a></li></ul></li><li><a href="#46-ra_index_soundarajan_hopcroft--社区感知-ra-指数" class="table-of-contents__link toc-highlight">4.6 ra_index_soundarajan_hopcroft —— 社区感知 RA 指数</a><ul><li><a href="#功能说明-5" class="table-of-contents__link toc-highlight">功能说明</a></li><li><a href="#适用场景-5" class="table-of-contents__link toc-highlight">适用场景</a></li></ul></li><li><a href="#47-within_inter_cluster--wic社区内--跨社区" class="table-of-contents__link toc-highlight">4.7 within_inter_cluster —— WIC（社区内 / 跨社区）</a><ul><li><a href="#功能说明-6" class="table-of-contents__link toc-highlight">功能说明</a></li><li><a href="#适用场景-6" class="table-of-contents__link toc-highlight">适用场景</a></li></ul></li><li><a href="#五选型指南怎么选" class="table-of-contents__link toc-highlight">五、选型指南（怎么选）</a></li><li><a href="#六可直接回答的典型问题" class="table-of-contents__link toc-highlight">六、可直接回答的典型问题</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">版权所有 © 2026 AAG</div></div></div></footer></div>
-</body>
-</html>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=七算子清单>七、算子清单<a href=#七算子清单 class=hash-link aria-label=七、算子清单的直接链接 title=七、算子清单的直接链接 translate=no>​</a></h2>
+<table><thead><tr><th style=text-align:right>序号<th>算子名称<th>中文说明<tbody><tr><td style=text-align:right>1<td><code>jaccard_coefficient</code><td>Jaccard 共同邻居相似系数<tr><td style=text-align:right>2<td><code>adamic_adar_index</code><td>Adamic-Adar 稀有共同邻居加权指数<tr><td style=text-align:right>3<td><code>preferential_attachment</code><td>优先连接得分<tr><td style=text-align:right>4<td><code>resource_allocation_index</code><td>资源分配指数<tr><td style=text-align:right>5<td><code>cn_soundarajan_hopcroft</code><td>社区感知共同邻居指数<tr><td style=text-align:right>6<td><code>ra_index_soundarajan_hopcroft</code><td>社区感知资源分配指数<tr><td style=text-align:right>7<td><code>within_inter_cluster</code><td>社区内 / 跨社区共同邻居评分<tr><td style=text-align:right>8<td><code>simrank_similarity</code><td>SimRank 全局结构相似度<tr><td style=text-align:right>9<td><code>maximum_flow</code><td>最大流关系强度评估<tr><td style=text-align:right>10<td><code>panther_similarity</code><td>Panther 随机路径采样相似度<tr><td style=text-align:right>11<td><code>dispersion</code><td>共同邻居离散度评分</table></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/iDC-NEU/YiGraphDocs/tree/main/docs-site/docs/tutorial-algorithm/link_prediction.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>编辑此页</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/YiGraphDocs/docs/tutorial-algorithm/flow><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>Flow & Cut 流与割算子集</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/YiGraphDocs/docs/tutorial-algorithm/matching_coloring><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>matching_coloring</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#一算子集概述 class="table-of-contents__link toc-highlight">一、算子集概述</a><li><a href=#二算子能力分类 class="table-of-contents__link toc-highlight">二、算子能力分类</a><li><a href=#三通用输入输出约定 class="table-of-contents__link toc-highlight">三、通用输入输出约定</a><li><a href=#四算子详细说明 class="table-of-contents__link toc-highlight">四、算子详细说明</a><ul><li><a href=#1-jaccard_coefficient--jaccard-系数 class="table-of-contents__link toc-highlight">1. jaccard_coefficient —— Jaccard 系数</a><li><a href=#2-adamic_adar_index--adamic-adar-指数 class="table-of-contents__link toc-highlight">2. adamic_adar_index —— Adamic-Adar 指数</a><li><a href=#3-preferential_attachment--优先连接 class="table-of-contents__link toc-highlight">3. preferential_attachment —— 优先连接</a><li><a href=#4-resource_allocation_index--资源分配指数 class="table-of-contents__link toc-highlight">4. resource_allocation_index —— 资源分配指数</a><li><a href=#5-cn_soundarajan_hopcroft--社区感知共同邻居 class="table-of-contents__link toc-highlight">5. cn_soundarajan_hopcroft —— 社区感知共同邻居</a><li><a href=#6-ra_index_soundarajan_hopcroft--社区感知资源分配指数 class="table-of-contents__link toc-highlight">6. ra_index_soundarajan_hopcroft —— 社区感知资源分配指数</a><li><a href=#7-within_inter_cluster--社区内--跨社区连接评分 class="table-of-contents__link toc-highlight">7. within_inter_cluster —— 社区内 / 跨社区连接评分</a><li><a href=#8-simrank_similarity--simrank-相似度 class="table-of-contents__link toc-highlight">8. simrank_similarity —— SimRank 相似度</a><li><a href=#9-maximum_flow--最大流 class="table-of-contents__link toc-highlight">9. maximum_flow —— 最大流</a><li><a href=#10-panther_similarity--panther-相似度 class="table-of-contents__link toc-highlight">10. panther_similarity —— Panther 相似度</a><li><a href=#11-dispersion--离散度--分散度 class="table-of-contents__link toc-highlight">11. dispersion —— 离散度 / 分散度</a></ul><li><a href=#五推荐使用指南 class="table-of-contents__link toc-highlight">五、推荐使用指南</a><ul><li><a href=#1-基于共同邻居的快速链接预测 class="table-of-contents__link toc-highlight">1. 基于共同邻居的快速链接预测</a><li><a href=#2-社区感知链接预测 class="table-of-contents__link toc-highlight">2. 社区感知链接预测</a><li><a href=#3-全局相似度与近似相似度 class="table-of-contents__link toc-highlight">3. 全局相似度与近似相似度</a><li><a href=#4-关系强度与路径能力分析 class="table-of-contents__link toc-highlight">4. 关系强度与路径能力分析</a><li><a href=#5-场景化选型建议 class="table-of-contents__link toc-highlight">5. 场景化选型建议</a></ul><li><a href=#六可直接回答的典型问题 class="table-of-contents__link toc-highlight">六、可直接回答的典型问题</a><li><a href=#七算子清单 class="table-of-contents__link toc-highlight">七、算子清单</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class=footer__copyright>版权所有 © 2026 AAG</div></div></div></footer></div></body>

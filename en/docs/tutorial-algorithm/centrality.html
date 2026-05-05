@@ -1,354 +1,815 @@
-<!doctype html>
-<html lang="en-US" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-tutorial-algorithm/centrality" data-has-hydrated="false">
-<head>
-<meta charset="UTF-8">
-<meta name="generator" content="Docusaurus v3.9.2">
-<title data-rh="true">Centrality and Key Operator Set | YiGraph Documentation</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/centrality"><meta data-rh="true" property="og:locale" content="en_US"><meta data-rh="true" property="og:locale:alternate" content="zh_CN"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Centrality and Key Operator Set | YiGraph Documentation"><meta data-rh="true" name="description" content="Operator Category: Centrality (Node/Edge Importance Measurement)"><meta data-rh="true" property="og:description" content="Operator Category: Centrality (Node/Edge Importance Measurement)"><link data-rh="true" rel="icon" href="/YiGraphDocs/en/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/centrality"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/centrality" hreflang="zh-CN"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/centrality" hreflang="en-US"><link data-rh="true" rel="alternate" href="https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/centrality" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Centrality and Key Operator Set","item":"https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/centrality"}]}</script><link rel="stylesheet" href="/YiGraphDocs/en/assets/css/styles.27c37220.css">
-<script src="/YiGraphDocs/en/assets/js/runtime~main.aa7893ac.js" defer="defer"></script>
-<script src="/YiGraphDocs/en/assets/js/main.d3bc8723.js" defer="defer"></script>
-</head>
-<body class="navigation-with-keyboard">
-<svg style="display: none;"><defs>
-<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+<!doctype html><html lang=en-US dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-tutorial-algorithm/centrality" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Centrality and Criticality Operator Set | YiGraph Documentation</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:url content=https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/centrality /><meta data-rh=true property=og:locale content=en_US /><meta data-rh=true property=og:locale:alternate content=zh_CN /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Centrality and Criticality Operator Set | YiGraph Documentation"/><meta data-rh=true name=description content="Operator Category: Centrality (Node/Edge Importance Measurement)"/><meta data-rh=true property=og:description content="Operator Category: Centrality (Node/Edge Importance Measurement)"/><link data-rh=true rel=icon href=/YiGraphDocs/en/img/favicon.ico /><link data-rh=true rel=canonical href=https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/centrality /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/centrality hreflang=zh-CN /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/centrality hreflang=en-US /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/centrality hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/centrality","name":"Centrality and Criticality Operator Set","position":1}]}</script><link rel=stylesheet href=/YiGraphDocs/en/assets/css/styles.74348a64.css /><script src=/YiGraphDocs/en/assets/js/runtime~main.86e25217.js defer></script><script src=/YiGraphDocs/en/assets/js/main.ce8df468.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
 </defs></svg>
-<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/YiGraphDocs/en/"><b class="navbar__title text--truncate">YiGraph Documentation</b></a><a class="navbar__item navbar__link" href="/YiGraphDocs/en/docs/intro">开发者指南</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" class="iconLanguage_nlXk"><path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>English</a><ul class="dropdown__menu"><li><a href="/YiGraphDocs/docs/tutorial-algorithm/centrality" target="_self" rel="noopener noreferrer" class="dropdown__link" lang="zh-CN">简体中文</a></li><li><a href="/YiGraphDocs/en/docs/tutorial-algorithm/centrality" target="_self" rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang="en-US">English</a></li></ul></div><a href="https://github.com/iDC-NEU/YiGraph" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/en/docs/intro"><span title="Basic Information" class="categoryLinkLabel_W154">Basic Information</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/intro"><span title="Introduction" class="linkLabel_WmDU">Introduction</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/en/docs/tutorial-basics/create-a-page"><span title="Getting Started" class="categoryLinkLabel_W154">Getting Started</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-basics/create-a-page"><span title="YiGraph Installation and Usage Guide" class="linkLabel_WmDU">YiGraph Installation and Usage Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-basics/windows-deploy"><span title="YiGraph Windows Local Deployment Guide" class="linkLabel_WmDU">YiGraph Windows Local Deployment Guide</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/YiGraphDocs/en/docs/tutorial-extras/getting-started-cases"><span title="Tutorials" class="categoryLinkLabel_W154">Tutorials</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-extras/getting-started-cases"><span title="User Onboarding Guide" class="linkLabel_WmDU">User Onboarding Guide</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-extras/normal-mode"><span title="Case 1. Normal Mode" class="linkLabel_WmDU">Case 1. Normal Mode</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-extras/interact-mode"><span title="Case 2. Interact Mode" class="linkLabel_WmDU">Case 2. Interact Mode</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-extras/expert-mode"><span title="Case 3. Expert Mode" class="linkLabel_WmDU">Case 3. Expert Mode</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/YiGraphDocs/en/docs/tutorial-algorithm/basic"><span title="Algorithms" class="categoryLinkLabel_W154">Algorithms</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/basic"><span title="Basics Operator Set" class="linkLabel_WmDU">Basics Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/path"><span title="Path Operator Set" class="linkLabel_WmDU">Path Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/centrality"><span title="Centrality and Key Operator Set" class="linkLabel_WmDU">Centrality and Key Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/Connectivity_Components"><span title="Connectivity &amp; Components Operator Set" class="linkLabel_WmDU">Connectivity &amp; Components Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/Clustering_Community"><span title="Clustering &amp; Community Operator Set" class="linkLabel_WmDU">Clustering &amp; Community Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/tree"><span title="Tree &amp; Spanning Tree Operator Set" class="linkLabel_WmDU">Tree &amp; Spanning Tree Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/flow"><span title="Flow &amp; Cut Operator Set" class="linkLabel_WmDU">Flow &amp; Cut Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/link_prediction"><span title="Link Prediction Operator Set" class="linkLabel_WmDU">Link Prediction Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/matching_coloring"><span title="Matching &amp; Coloring Operator Set" class="linkLabel_WmDU">Matching &amp; Coloring Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/cliques_cores"><span title="Cliques &amp; Cores Operator Set" class="linkLabel_WmDU">Cliques &amp; Cores Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/distance"><span title="Distance &amp; Measures Operator Set" class="linkLabel_WmDU">Distance &amp; Measures Operator Set</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/YiGraphDocs/en/docs/tutorial-algorithm/graph_query"><span title="Graph Query Operator Set" class="linkLabel_WmDU">Graph Query Operator Set</span></a></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/YiGraphDocs/en/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Algorithms</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Centrality and Key Operator Set</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Centrality and Key Operator Set</h1></header>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-cad")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/YiGraphDocs/en/><b class="navbar__title text--truncate">YiGraph Documentation</b></a><a class="navbar__item navbar__link" href=/YiGraphDocs/en/docs/intro>开发者指南</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href=# aria-haspopup=true aria-expanded=false role=button class=navbar__link><svg viewBox="0 0 24 24" width=20 height=20 aria-hidden=true class=iconLanguage_nlXk><path fill=currentColor d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>English</a><ul class=dropdown__menu><li><a href=/YiGraphDocs/docs/tutorial-algorithm/centrality target=_self rel="noopener noreferrer" class=dropdown__link lang=zh-CN>简体中文</a><li><a href=/YiGraphDocs/en/docs/tutorial-algorithm/centrality target=_self rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang=en-US>English</a></ul></div><a href=https://github.com/iDC-NEU/YiGraph target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/en/docs/intro><span title="Basic Information" class=categoryLinkLabel_W154>Basic Information</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/intro><span title=Introduction class=linkLabel_WmDU>Introduction</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/en/docs/tutorial-basics/create-a-page><span title="Getting Started" class=categoryLinkLabel_W154>Getting Started</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-basics/create-a-page><span title="YiGraph Installation and Usage Guide" class=linkLabel_WmDU>YiGraph Installation and Usage Guide</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-basics/windows-deploy><span title="YiGraph Windows Local Deployment Guide" class=linkLabel_WmDU>YiGraph Windows Local Deployment Guide</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/en/docs/tutorial-extras/getting-started-cases><span title=Tutorials class=categoryLinkLabel_W154>Tutorials</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-extras/getting-started-cases><span title="User Onboarding Guide" class=linkLabel_WmDU>User Onboarding Guide</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-extras/normal-mode><span title="Case 1. Normal Mode" class=linkLabel_WmDU>Case 1. Normal Mode</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-extras/interact-mode><span title="Case 2. Interact Mode" class=linkLabel_WmDU>Case 2. Interact Mode</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-extras/expert-mode><span title="Case 3. Expert Mode" class=linkLabel_WmDU>Case 3. Expert Mode</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/YiGraphDocs/en/docs/tutorial-algorithm/basic><span title=Algorithms class=categoryLinkLabel_W154>Algorithms</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/basic><span title="Basics Operator Set" class=linkLabel_WmDU>Basics Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/path><span title="Path Operator Set" class=linkLabel_WmDU>Path Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/centrality><span title="Centrality and Criticality Operator Set" class=linkLabel_WmDU>Centrality and Criticality Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/Connectivity_Components><span title="Connectivity & Components Operator Set" class=linkLabel_WmDU>Connectivity & Components Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/Clustering_Community><span title="Clustering & Community Operators" class=linkLabel_WmDU>Clustering & Community Operators</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/tree><span title="Tree & Spanning Tree Operators" class=linkLabel_WmDU>Tree & Spanning Tree Operators</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/Dominance><span title="Dominance Operator Set" class=linkLabel_WmDU>Dominance Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/flow><span title="Flow & Cut Operators" class=linkLabel_WmDU>Flow & Cut Operators</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/link_prediction><span title="Link Prediction Operator Set" class=linkLabel_WmDU>Link Prediction Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/matching_coloring><span title="Matching & Coloring Operator Set" class=linkLabel_WmDU>Matching & Coloring Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/graph_matching><span title="Graph Matching Operator Set" class=linkLabel_WmDU>Graph Matching Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/graph_polynomials><span title="Graph Polynomials Operator Set" class=linkLabel_WmDU>Graph Polynomials Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/cliques_cores><span title="Cliques & Cores Operator Set" class=linkLabel_WmDU>Cliques & Cores Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/distance><span title="Distance & Measures Operator Set" class=linkLabel_WmDU>Distance & Measures Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/graph_query><span title="Graph Query Operator Set" class=linkLabel_WmDU>Graph Query Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/dag><span title="Directed Acyclic Graphs (DAG) Operator Set" class=linkLabel_WmDU>Directed Acyclic Graphs (DAG) Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/bipartite><span title="Bipartite Operator Set" class=linkLabel_WmDU>Bipartite Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/graph_hashing><span title="Graph Hashing Operator Set" class=linkLabel_WmDU>Graph Hashing Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/small_world><span title="Small-world Operator Set" class=linkLabel_WmDU>Small-world Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/sparsifiers><span title="Sparsifiers Operator Set" class=linkLabel_WmDU>Sparsifiers Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/gnn><span title="Graph Neural Networks Operator Set" class=linkLabel_WmDU>Graph Neural Networks Operator Set</span></a></ul></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/YiGraphDocs/en/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Algorithms</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Centrality and Criticality Operator Set</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Centrality and Criticality Operator Set</h1></header>
 <p><strong>Operator Category</strong>: Centrality (Node/Edge Importance Measurement)</p>
-<p><strong>Applicable Stages</strong>: Key Node Identification, Influence Assessment, Bottleneck/Bridge Localization, Network Robustness Analysis</p>
-<p><strong>Product Positioning</strong>: Provide a unified centrality capability base for answering &quot;Who is the most important / Who is the key intermediary / Which edge is the most critical / How to accelerate information diffusion&quot;</p>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-operator-set-overview">1. Operator Set Overview<a href="#1-operator-set-overview" class="hash-link" aria-label="Direct link to 1. Operator Set Overview" title="Direct link to 1. Operator Set Overview" translate="no">​</a></h2>
-<p>The Centrality operator set provides systematic characterization capabilities for <strong>node and edge importance</strong> for various relational networks (social networks, transaction networks, citation networks, communication networks, transportation networks, dependency networks, etc.), mainly covering six types of issues:</p>
+<p><strong>Algorithm Count</strong>: 21</p>
+<p><strong>Applicable Stages</strong>: Key node identification, influence assessment, bottleneck/bridge localization, network robustness analysis, propagation capability assessment, hierarchical structure analysis, bipartite graph importance ranking</p>
+<p><strong>Product Positioning</strong>: Provides a unified centrality capability base for answering “who is most important / who is the critical intermediary / which edge is most critical / how information can spread faster / which nodes affect network robustness / what hierarchical position a node occupies”.</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-operator-set-overview>1. Operator Set Overview<a href=#1-operator-set-overview class=hash-link aria-label="Direct link to 1. Operator Set Overview" title="Direct link to 1. Operator Set Overview" translate=no>​</a></h2>
+<p>The Centrality operator set targets various relational networks, including social networks, transaction networks, citation networks, communication networks, transportation networks, dependency networks, biological networks, bipartite recommendation networks, and more. It provides systematic characterization capabilities for <strong>nodes, edges, hierarchical positions, and propagation roles</strong>, mainly covering the following problems:</p>
 <ol>
-<li class=""><strong>Connection-scale Influence</strong>: Who has the most connections and the most frequent direct interactions (e.g., Degree Centrality, In/Out-Degree Centrality)</li>
-<li class=""><strong>Shortest Path Bridges/Intermediaries</strong>: Who/which edge most frequently appears on the shortest paths and acts as the &quot;bridge&quot; and &quot;hub&quot; of the network (e.g., Betweenness Centrality, Edge Betweenness, Load Centrality)</li>
-<li class=""><strong>Global Structural Authority</strong>: Who is connected to &quot;important others&quot;, and who is more authoritative under random walk/link voting (e.g., Eigenvector Centrality, Katz, PageRank, HITS)</li>
-<li class=""><strong>Distance-reachable Efficiency</strong>: Who has a shorter average distance to others and higher reach efficiency (e.g., Closeness Centrality, Harmonic Centrality)</li>
-<li class=""><strong>Local Clique Structure Contribution</strong>: Who participates in more dense substructures (e.g., Subgraph Centrality)</li>
-<li class=""><strong>Propagation Seed Selection</strong>: Which nodes are more suitable as diffusion seeds (e.g., VoteRank)</li>
+<li class="">
+<p><strong>Connection-scale Influence</strong></p>
+<ul>
+<li class="">Who has the most connections?</li>
+<li class="">Who is pointed to by the most nodes?</li>
+<li class="">Who actively connects to the most nodes?</li>
+<li class="">Typical algorithms: <code>degree_centrality</code>, <code>in_degree_centrality</code>, <code>out_degree_centrality</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>Distance-based Reachability Efficiency</strong></p>
+<ul>
+<li class="">Who is, on average, closer to other nodes?</li>
+<li class="">Who still has strong reachability in disconnected networks?</li>
+<li class="">Typical algorithms: <code>closeness_centrality</code>, <code>harmonic_centrality</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>Shortest-path Bridges and Intermediary Roles</strong></p>
+<ul>
+<li class="">Who appears most often on shortest paths?</li>
+<li class="">Which edge is the most critical?</li>
+<li class="">Which nodes carry the most network flow or path load?</li>
+<li class="">Typical algorithms: <code>betweenness_centrality</code>, <code>edge_betweenness_centrality</code>, <code>load_centrality</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>Current Flow and Network Bottlenecks</strong></p>
+<ul>
+<li class="">If information flows like electrical current through the network, which nodes are most critical?</li>
+<li class="">Which nodes have greater impact on overall connectivity and circulation capability?</li>
+<li class="">Typical algorithm: <code>current_flow_betweenness_centrality</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>Global Authority and Spectral Centrality</strong></p>
+<ul>
+<li class="">Who is connected to other important nodes?</li>
+<li class="">Who is more authoritative under random-walk or link-voting mechanisms?</li>
+<li class="">Typical algorithms: <code>eigenvector_centrality</code>, <code>katz_centrality</code>, <code>pagerank</code>, <code>hits</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>Propagation, Percolation, and Diffusion Capability</strong></p>
+<ul>
+<li class="">Which nodes are suitable as diffusion seeds?</li>
+<li class="">When some nodes are already activated or in specific states, who is more critical to propagation?</li>
+<li class="">Typical algorithms: <code>voterank</code>, <code>percolation_centrality</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>Local Structure and Robustness Contribution</strong></p>
+<ul>
+<li class="">Who participates in more tightly knit substructures?</li>
+<li class="">How much would deleting a node affect the overall network structure?</li>
+<li class="">Typical algorithms: <code>subgraph_centrality</code>, <code>laplacian_centrality</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>Neighborhood Similarity and Local Centrality</strong></p>
+<ul>
+<li class="">Who is more important under common-neighbor relationships?</li>
+<li class="">Which nodes have higher connection value in local neighborhoods?</li>
+<li class="">Typical algorithm: <code>common_neighbor_centrality</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>Hierarchical Structure and Flow Position</strong></p>
+<ul>
+<li class="">Is a node upstream or downstream in the network?</li>
+<li class="">Does the network have a clear trophic, control, or hierarchical structure?</li>
+<li class="">Typical algorithm: <code>trophic_levels</code></li>
+</ul>
+</li>
+<li class="">
+<p><strong>Bipartite Graph Importance Ranking</strong></p>
+</li>
 </ol>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-operator-capability-classification">2. Operator Capability Classification<a href="#2-operator-capability-classification" class="hash-link" aria-label="Direct link to 2. Operator Capability Classification" title="Direct link to 2. Operator Capability Classification" translate="no">​</a></h2>
-<table><thead><tr><th>Capability Type</th><th>Corresponding Operator</th><th>Function Description</th></tr></thead><tbody><tr><td>Connection Scale (Unweighted)</td><td><code>degree_centrality</code></td><td>Measure node influence by the number of connections (directed/undirected)</td></tr><tr><td>Connection Scale (Directed)</td><td><code>in_degree_centrality</code>, <code>out_degree_centrality</code></td><td>Measure the influence of &quot;being pointed to/actively pointing to&quot; respectively</td></tr><tr><td>Distance Efficiency</td><td><code>closeness_centrality</code>, <code>harmonic_centrality</code></td><td>Characterize reach efficiency based on the distance to other nodes; Harmonic Centrality is more robust to unreachable nodes</td></tr><tr><td>Shortest Path Bridge (Node)</td><td><code>betweenness_centrality</code>, <code>load_centrality</code></td><td>Measure the degree of a node acting as an intermediary/bearing traffic</td></tr><tr><td>Shortest Path Bridge (Edge)</td><td><code>edge_betweenness_centrality</code></td><td>Measure the contribution of key connecting edges to the global network connectivity</td></tr><tr><td>Global Authority/Influence (Spectral/Iterative)</td><td><code>eigenvector_centrality</code>, <code>katz_centrality</code>, <code>pagerank</code>, <code>hits</code></td><td>&quot;Being connected to important nodes makes one more important&quot;; or from the perspective of random walk/Hub-Authority</td></tr><tr><td>Clique Structure Contribution (Spectral)</td><td><code>subgraph_centrality</code></td><td>The degree of a node participating in small cliques/substructures</td></tr><tr><td>Propagation Seed Selection</td><td><code>voterank</code></td><td>Select diffusion seeds through a &quot;voting-suppression&quot; mechanism to avoid excessive aggregation of seeds</td></tr></tbody></table>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-general-input-and-output-conventions">3. General Input and Output Conventions<a href="#3-general-input-and-output-conventions" class="hash-link" aria-label="Direct link to 3. General Input and Output Conventions" title="Direct link to 3. General Input and Output Conventions" translate="no">​</a></h2>
 <ul>
-<li class=""><strong>Input <code>G</code></strong>: NetworkX graph object (directed/undirected; some algorithms support weights, some do not)</li>
-<li class=""><strong>Output</strong>:<!-- -->
+<li class="">In bipartite graphs such as user-item, author-paper, and institution-project, how can we simultaneously evaluate the importance of nodes on both sides?</li>
+<li class="">Typical algorithm: <code>birank</code></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-operator-capability-classification>2. Operator Capability Classification<a href=#2-operator-capability-classification class=hash-link aria-label="Direct link to 2. Operator Capability Classification" title="Direct link to 2. Operator Capability Classification" translate=no>​</a></h2>
+<table><thead><tr><th>Capability Type<th>Corresponding Operators<th>Function Description<tbody><tr><td>Connection Scale (Unweighted)<td><code>degree_centrality</code><td>Measure direct node influence by the number of connections<tr><td>Connection Scale (Directed)<td><code>in_degree_centrality</code>, <code>out_degree_centrality</code><td>Measure the influence of being pointed to and actively pointing, respectively<tr><td>Distance Efficiency<td><code>closeness_centrality</code>, <code>harmonic_centrality</code><td>Characterize reachability efficiency based on distances to other nodes; harmonic centrality is more robust to unreachable nodes<tr><td>Shortest-path Bridge (Node)<td><code>betweenness_centrality</code>, <code>load_centrality</code><td>Measure the extent to which a node acts as an intermediary, bridge, or path-load carrier<tr><td>Shortest-path Bridge (Edge)<td><code>edge_betweenness_centrality</code><td>Measure the contribution of key connecting edges to global connectivity and shortest paths<tr><td>Current-flow Centrality<td><code>current_flow_betweenness_centrality</code><td>Measure node criticality in network circulation based on current-flow models<tr><td>Global Authority / Influence (Spectral / Iterative)<td><code>eigenvector_centrality</code>, <code>katz_centrality</code>, <code>pagerank</code>, <code>hits</code><td>Measure global influence from perspectives such as “being connected to important nodes makes you important,” random walks, and Hub-Authority roles<tr><td>Clique Structure Contribution (Spectral)<td><code>subgraph_centrality</code><td>Measure the extent to which a node participates in cycles, small cliques, and substructures<tr><td>Diffusion Seed Selection<td><code>voterank</code><td>Select dispersed seeds with strong coverage through voting and suppression mechanisms<tr><td>Percolation Propagation Centrality<td><code>percolation_centrality</code><td>Measure node criticality in percolation and diffusion when node states participate in propagation<tr><td>Second-order Centrality<td><code>second_order_centrality</code><td>Evaluate node stability and centrality based on return-time fluctuations in random walks<tr><td>Laplacian Centrality<td><code>laplacian_centrality</code><td>Measure node contribution to graph energy, structural robustness, and connectivity<tr><td>Common-neighbor Centrality<td><code>common_neighbor_centrality</code><td>Measure the importance of nodes or local links based on common-neighbor structure<tr><td>Hierarchy / Trophic Analysis<td><code>trophic_levels</code><td>Compute hierarchical positions or flow levels of nodes in directed networks<tr><td>Bipartite Ranking<td><code>birank</code><td>Simultaneously evaluate the importance and mutual reinforcement of two node types in bipartite graphs</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-general-input-and-output-conventions>3. General Input and Output Conventions<a href=#3-general-input-and-output-conventions class=hash-link aria-label="Direct link to 3. General Input and Output Conventions" title="Direct link to 3. General Input and Output Conventions" translate=no>​</a></h2>
 <ul>
-<li class="">Node Centrality: <code>{node: score}</code> dictionary</li>
-<li class="">Edge Centrality: <code>{(u,v): score}</code> dictionary</li>
+<li class="">
+<p><strong>Input <code>G</code></strong>: NetworkX graph object</p>
+<ul>
+<li class="">Can be an undirected graph <code>Graph</code></li>
+<li class="">Can be a directed graph <code>DiGraph</code></li>
+<li class="">Some algorithms support weighted graphs</li>
+<li class="">Some algorithms are designed for bipartite graphs or connected graphs</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Common Outputs</strong></p>
+<ul>
+<li class="">Node centrality: <code>{node: score}</code> dictionary</li>
+<li class="">Edge centrality: <code>{(u, v): score}</code> dictionary</li>
 <li class="">HITS: <code>(hubs_dict, authorities_dict)</code></li>
-<li class="">VoteRank: Node list sorted by influence</li>
+<li class="">VoteRank: node list ranked by influence</li>
+<li class="">BiRank: importance scores for nodes on both sides of a bipartite graph</li>
+<li class="">Hierarchical results: <code>{node: level}</code> or node hierarchy score dictionary</li>
 </ul>
 </li>
 </ul>
 <blockquote>
-<p>Note: Weighted algorithms usually interpret weights as <strong>distance</strong> (for shortest paths) or <strong>connection strength</strong> (for spectral/voting algorithms); subject to the definition of specific operator parameters <code>weight</code>/<code>distance</code>.</p>
+<p>Note: Different centrality algorithms interpret weights differently.<br/>
+<!-- -->Shortest-path-based centralities usually interpret weights as <strong>distance / cost / resistance</strong>; spectral centrality, PageRank, HITS, BiRank, and similar methods usually interpret weights as <strong>connection strength / transition probability / voting weight</strong>. In engineering practice, the semantic meaning of weight fields should be made explicit.</p>
 </blockquote>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-detailed-operator-descriptions">4. Detailed Operator Descriptions<a href="#4-detailed-operator-descriptions" class="hash-link" aria-label="Direct link to 4. Detailed Operator Descriptions" title="Direct link to 4. Detailed Operator Descriptions" translate="no">​</a></h2>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="41-degree_centrality--degree-centrality-connection-scale">4.1 degree_centrality —— Degree Centrality (Connection Scale)<a href="#41-degree_centrality--degree-centrality-connection-scale" class="hash-link" aria-label="Direct link to 4.1 degree_centrality —— Degree Centrality (Connection Scale)" title="Direct link to 4.1 degree_centrality —— Degree Centrality (Connection Scale)" translate="no">​</a></h3>
-<p><strong>Function Description</strong>
-Calculate the degree centrality of each node: the normalized result of the number of node connections in the global network scale, used to measure the &quot;direct relationship coverage&quot;.
-<strong>Product Value</strong></p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=4-detailed-operator-descriptions>4. Detailed Operator Descriptions<a href=#4-detailed-operator-descriptions class=hash-link aria-label="Direct link to 4. Detailed Operator Descriptions" title="Direct link to 4. Detailed Operator Descriptions" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-degree_centrality--degree-centrality-connection-scale>1. degree_centrality —— Degree Centrality (Connection Scale)<a href=#1-degree_centrality--degree-centrality-connection-scale class=hash-link aria-label="Direct link to 1. degree_centrality —— Degree Centrality (Connection Scale)" title="Direct link to 1. degree_centrality —— Degree Centrality (Connection Scale)" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Compute the degree centrality of each node: the normalized result of the node’s number of connections at the scale of the whole network, used to measure the breadth of direct relationship coverage.</p>
+<p><strong>Product Value</strong></p>
 <ul>
-<li class="">Intuitive and fast calculation, suitable for rapid screening of large graphs</li>
-<li class="">Identify &quot;high-connection accounts/high-interaction users/high-dependency components&quot;, etc.
-<strong>Typical Scenarios</strong></li>
-<li class="">Social Networks: Find users with the most friends/most interactions</li>
-<li class="">Transaction Networks: Find accounts with the most transaction counterparties</li>
-<li class="">Dependency Networks: Find service modules with the most dependencies/being depended on<br>
-<strong>Applicability and Characteristics</strong></li>
-<li class="">Graph Type: Directed/Undirected (equivalent to total degree for directed graphs)</li>
-<li class="">Weight: Not supported (treated as unweighted)</li>
+<li class="">Intuitive and fast, suitable for rapid screening on large graphs</li>
+<li class="">Identifies highly connected accounts, highly interactive users, and highly dependent components</li>
+<li class="">Can serve as a baseline ranking indicator before more complex centrality algorithms</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Social networks: find users with the most friends or interactions</li>
+<li class="">Transaction networks: find accounts with the most counterparties</li>
+<li class="">Dependency networks: find service modules with the most dependencies or dependents</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Directed / Undirected graph</li>
+<li class="">Weight: Usually not used</li>
+<li class="">Output: <code>{node: score}</code></li>
 <li class="">Complexity: <code>O(V + E)</code></li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="42-in_degree_centrality--in-degree-centrality-being-followedcredited">4.2 in_degree_centrality —— In-Degree Centrality (Being Followed/Credited)<a href="#42-in_degree_centrality--in-degree-centrality-being-followedcredited" class="hash-link" aria-label="Direct link to 4.2 in_degree_centrality —— In-Degree Centrality (Being Followed/Credited)" title="Direct link to 4.2 in_degree_centrality —— In-Degree Centrality (Being Followed/Credited)" translate="no">​</a></h3>
-<p><strong>Function Description</strong>
-Calculate the degree to which each node is pointed to in a directed graph, reflecting the popularity or authority (at the connection level) of &quot;being cited/followed/called&quot;.
-<strong>Product Value</strong></p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-in_degree_centrality--in-degree-centrality-attention--being-called>2. in_degree_centrality —— In-degree Centrality (Attention / Being Called)<a href=#2-in_degree_centrality--in-degree-centrality-attention--being-called class=hash-link aria-label="Direct link to 2. in_degree_centrality —— In-degree Centrality (Attention / Being Called)" title="Direct link to 2. in_degree_centrality —— In-degree Centrality (Attention / Being Called)" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->In directed graphs, compute the extent to which each node is pointed to, reflecting its connection-level influence in terms of being cited, followed, or called.</p>
+<p><strong>Product Value</strong></p>
 <ul>
-<li class="">Suitable for characterizing &quot;passive influence&quot;: who is pointed to by many others</li>
-<li class="">Sensitive to the direction of citation/follow/call
-<strong>Typical Scenarios</strong></li>
-<li class="">Citation Networks: Papers with the most citations</li>
-<li class="">Follower Networks: Accounts with the most followers</li>
-<li class="">Call Dependency: Core services with the most calls<br>
-<strong>Applicability and Characteristics</strong></li>
-<li class="">Graph Type: Directed only</li>
-<li class="">Weight: Not supported</li>
+<li class="">Suitable for characterizing passive influence</li>
+<li class="">Can identify core nodes depended on, cited, or followed by many others</li>
+<li class="">Combined with out-degree centrality, it helps distinguish authoritative nodes from active nodes</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Citation networks: most-cited papers</li>
+<li class="">Follower networks: accounts with the most followers</li>
+<li class="">Call dependencies: core services with the highest call frequency</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Directed graph</li>
+<li class="">Weight: Usually not used</li>
+<li class="">Output: <code>{node: score}</code></li>
 <li class="">Complexity: <code>O(V + E)</code></li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="43-out_degree_centrality--out-degree-centrality-active-diffusioninitiative-call">4.3 out_degree_centrality —— Out-Degree Centrality (Active Diffusion/Initiative Call)<a href="#43-out_degree_centrality--out-degree-centrality-active-diffusioninitiative-call" class="hash-link" aria-label="Direct link to 4.3 out_degree_centrality —— Out-Degree Centrality (Active Diffusion/Initiative Call)" title="Direct link to 4.3 out_degree_centrality —— Out-Degree Centrality (Active Diffusion/Initiative Call)" translate="no">​</a></h3>
-<p><strong>Function Description</strong>
-Calculate the degree to which each node actively points to others in a directed graph, reflecting the activity or extroversion of &quot;active connection/active propagation/active call&quot;.
-<strong>Product Value</strong></p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-out_degree_centrality--out-degree-centrality-active-diffusion--active-calling>3. out_degree_centrality —— Out-degree Centrality (Active Diffusion / Active Calling)<a href=#3-out_degree_centrality--out-degree-centrality-active-diffusion--active-calling class=hash-link aria-label="Direct link to 3. out_degree_centrality —— Out-degree Centrality (Active Diffusion / Active Calling)" title="Direct link to 3. out_degree_centrality —— Out-degree Centrality (Active Diffusion / Active Calling)" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->In directed graphs, compute the extent to which each node actively points to other nodes, reflecting the activity of active linking, active propagation, and active invocation.</p>
+<p><strong>Product Value</strong></p>
 <ul>
-<li class="">Identify &quot;broadcasters/active reachers&quot;</li>
-<li class="">Complementary to in-degree centrality, easy to distinguish between &quot;popular vs active&quot;
-<strong>Typical Scenarios</strong></li>
-<li class="">Social Networks: Active accounts that follow many others</li>
-<li class="">Citation Networks: Review papers that cite many literatures</li>
-<li class="">Dependency Networks: Upstream entry services that call many downstream modules<br>
-<strong>Applicability and Characteristics</strong></li>
-<li class="">Graph Type: Directed only</li>
-<li class="">Weight: Not supported</li>
+<li class="">Identifies active spreaders, broadcasters, or invocation entry points</li>
+<li class="">Complements in-degree centrality and helps distinguish popularity from activeness</li>
+<li class="">Suitable for analyzing outward-facing nodes and upstream initiating nodes</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Social networks: active accounts following many others</li>
+<li class="">Citation networks: survey papers citing many references</li>
+<li class="">Dependency networks: entry services calling many downstream modules</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Directed graph</li>
+<li class="">Weight: Usually not used</li>
+<li class="">Output: <code>{node: score}</code></li>
 <li class="">Complexity: <code>O(V + E)</code></li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="44-closeness_centrality--closeness-centrality-shortest-average-distance">4.4 closeness_centrality —— Closeness Centrality (Shortest Average Distance)<a href="#44-closeness_centrality--closeness-centrality-shortest-average-distance" class="hash-link" aria-label="Direct link to 4.4 closeness_centrality —— Closeness Centrality (Shortest Average Distance)" title="Direct link to 4.4 closeness_centrality —— Closeness Centrality (Shortest Average Distance)" translate="no">​</a></h3>
-<p><strong>Function Description</strong>
-Calculate the reciprocal of the sum of the shortest path distances from each node to other nodes (Wasserman-Faust improvement optional). The smaller the distance, the more &quot;central to the network&quot; the node is.
-<strong>Product Value</strong></p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=4-closeness_centrality--closeness-centrality-shortest-average-distance>4. closeness_centrality —— Closeness Centrality (Shortest Average Distance)<a href=#4-closeness_centrality--closeness-centrality-shortest-average-distance class=hash-link aria-label="Direct link to 4. closeness_centrality —— Closeness Centrality (Shortest Average Distance)" title="Direct link to 4. closeness_centrality —— Closeness Centrality (Shortest Average Distance)" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Compute the reciprocal of the sum of shortest-path distances from a node to other nodes. The shorter the distances, the closer the node is to the network center and the higher its reachability efficiency.</p>
+<p><strong>Product Value</strong></p>
 <ul>
-<li class="">Identify nodes that &quot;reach the entire network faster&quot;: suitable for information distribution and resource scheduling</li>
-<li class="">Can be combined with edge distance (<code>distance</code>) to represent road network mileage/delay
-<strong>Typical Scenarios</strong></li>
-<li class="">Transportation Networks: Hub stations with the shortest average arrival time</li>
-<li class="">Communication Networks: Relay nodes with the minimum average hop count/delay</li>
-<li class="">Organizational Networks: Team members who can reach most people the fastest<br>
-<strong>Key Parameters (Tuning)</strong></li>
-<li class=""><code>u</code>: Calculate only a single node (for online query/local analysis)</li>
-<li class=""><code>distance</code>: Edge distance attribute key (weighted shortest path)</li>
-<li class=""><code>wf_improved</code>: Whether to scale by the reachable ratio (more friendly to disconnected graphs)
-<strong>Applicability and Characteristics</strong></li>
-<li class="">Graph Type: Directed/Undirected (reachable distance is calculated by direction for directed graphs)</li>
-<li class="">Weight: Supported (as distance)</li>
-<li class="">Complexity: <code>O(V*(V+E))</code> (usually a shortest path calculation for each node)</li>
+<li class="">Identifies nodes that can reach the whole network fastest</li>
+<li class="">Suitable for information distribution, resource scheduling, and network efficiency analysis</li>
+<li class="">Can combine edge distances representing road mileage, communication latency, or business cost</li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="45-harmonic_centrality--harmonic-centrality-more-robust-to-unreachability">4.5 harmonic_centrality —— Harmonic Centrality (More Robust to Unreachability)<a href="#45-harmonic_centrality--harmonic-centrality-more-robust-to-unreachability" class="hash-link" aria-label="Direct link to 4.5 harmonic_centrality —— Harmonic Centrality (More Robust to Unreachability)" title="Direct link to 4.5 harmonic_centrality —— Harmonic Centrality (More Robust to Unreachability)" translate="no">​</a></h3>
-<p><strong>Function Description</strong>
-Sum of the reciprocals of the distances to other nodes: <code>Σ 1/d(u,v)</code>. Unreachable nodes (infinite distance) contribute 0, so it is more stable than Closeness Centrality in disconnected graphs.
-<strong>Product Value</strong></p>
+<p><strong>Typical Scenarios</strong></p>
 <ul>
-<li class="">Can still give a usable ranking in networks with isolated islands/weak connectivity</li>
-<li class="">Balances global and local reach efficiency
-<strong>Typical Scenarios</strong></li>
-<li class="">Knowledge Graphs/Citation Networks: Identify cross-community high-reach nodes when multiple communities exist</li>
-<li class="">Transportation/Communication Networks: Evaluate key nodes in scenarios of local disconnection or failure<br>
-<strong>Key Parameters (Tuning)</strong></li>
-<li class=""><code>nbunch</code>: Calculate only part of the nodes (improve performance)</li>
-<li class=""><code>sources</code>: Specify the source set for calculating the reciprocal of distance (calculate &quot;centrality relative to a certain group&quot;)</li>
-<li class=""><code>distance</code>: Edge distance attribute key
-<strong>Applicability and Characteristics</strong></li>
-<li class="">Graph Type: Directed/Undirected</li>
-<li class="">Weight: Supported (as distance)</li>
-<li class="">Complexity: <code>O(V*(V+E))</code></li>
+<li class="">Transportation networks: hub stations with shortest average arrival times</li>
+<li class="">Communication networks: relay nodes with minimum average hops or latency</li>
+<li class="">Organizational networks: team members who can reach most people fastest</li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="46-betweenness_centrality--betweenness-centrality-key-intermediarybridge">4.6 betweenness_centrality —— Betweenness Centrality (Key Intermediary/Bridge)<a href="#46-betweenness_centrality--betweenness-centrality-key-intermediarybridge" class="hash-link" aria-label="Direct link to 4.6 betweenness_centrality —— Betweenness Centrality (Key Intermediary/Bridge)" title="Direct link to 4.6 betweenness_centrality —— Betweenness Centrality (Key Intermediary/Bridge)" translate="no">​</a></h3>
-<p><strong>Function Description</strong>
-Measure the degree to which a node lies on the shortest paths between other node pairs: the more shortest paths pass through the node, the more the node acts as a &quot;bridge/gate/intermediary&quot;.
-<strong>Product Value</strong></p>
+<p><strong>Key Parameters</strong></p>
 <ul>
-<li class="">Locate structural holes and cross-community connectors</li>
-<li class="">Identify &quot;single point of failure risk&quot;: deleting this node may significantly fragment the network
-<strong>Typical Scenarios</strong></li>
-<li class="">Social Networks: Cross-circle &quot;relationship intermediaries&quot;</li>
-<li class="">Transaction Networks: Key transition accounts on the fund/transaction chain</li>
-<li class="">Transportation Networks: Key hubs/mandatory intersections (weighted by distance/duration)<br>
-<strong>Key Parameters (Tuning)</strong></li>
-<li class=""><code>k</code>: Sampling approximation (the larger <code>k</code> is, the more accurate; the smaller, the faster), suitable for large graphs</li>
-<li class=""><code>weight</code>: Edge weight attribute key (as distance)</li>
-<li class=""><code>normalized</code>: Whether to normalize (facilitate cross-graph comparison)</li>
-<li class=""><code>endpoints</code>: Whether to count endpoints in the shortest path count</li>
-<li class=""><code>seed</code>: Random seed for sampling (reproduce experiments)
-<strong>Applicability and Characteristics</strong></li>
-<li class="">Graph Type: Directed/Undirected</li>
-<li class="">Weight: Supported (as distance)</li>
-<li class="">Complexity: Exact calculation is usually about <code>O(V*E)</code> (NetworkX implementation is based on Brandes); approximation depends on <code>k</code></li>
+<li class=""><code>u</code>: compute only a single node</li>
+<li class=""><code>distance</code>: edge distance attribute</li>
+<li class=""><code>wf_improved</code>: whether to scale by reachable proportion, useful for disconnected graphs</li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="47-edge_betweenness_centrality--edge-betweenness-centrality-key-connecting-edge">4.7 edge_betweenness_centrality —— Edge Betweenness Centrality (Key Connecting Edge)<a href="#47-edge_betweenness_centrality--edge-betweenness-centrality-key-connecting-edge" class="hash-link" aria-label="Direct link to 4.7 edge_betweenness_centrality —— Edge Betweenness Centrality (Key Connecting Edge)" title="Direct link to 4.7 edge_betweenness_centrality —— Edge Betweenness Centrality (Key Connecting Edge)" translate="no">​</a></h3>
-<p><strong>Function Description</strong>
-Measure the number of node pairs for which an edge lies on their shortest path. Edges with high edge betweenness are often &quot;bridge edges&quot; across communities and key connections near network cut edges.
-<strong>Product Value</strong></p>
+<p><strong>Applicability and Characteristics</strong></p>
 <ul>
-<li class="">Find key links where &quot;disconnecting which edge has the greatest impact&quot;</li>
-<li class="">Commonly used for community detection, vulnerability analysis and network reinforcement
-<strong>Typical Scenarios</strong></li>
-<li class="">Transportation Networks: The most critical road sections/bridges</li>
-<li class="">Communication Networks: The most critical links/fiber optic sections</li>
-<li class="">Supply Chains: Key transportation/supply connections across regions<br>
-<strong>Key Parameters (Tuning)</strong></li>
-<li class=""><code>k</code>: Sampling approximation (speed up for large graphs)</li>
-<li class=""><code>weight</code>: Edge weight attribute key (as distance)</li>
-<li class=""><code>normalized</code>: Whether to normalize</li>
-<li class=""><code>seed</code>: Random seed for sampling
-<strong>Applicability and Characteristics</strong></li>
-<li class="">Graph Type: Directed/Undirected</li>
-<li class="">Weight: Supported (as distance)</li>
-<li class="">Complexity: Usually about <code>O(V*E)</code> (approximation depends on <code>k</code>)</li>
+<li class="">Graph Type: Directed / Undirected graph</li>
+<li class="">Weight: Supported, usually interpreted as distance</li>
+<li class="">Output: <code>{node: score}</code> or single-node score</li>
+<li class="">Complexity: Usually <code>O(V * (V + E))</code></li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="48-load_centrality--load-centrality-traffic-bearing-intermediary">4.8 load_centrality —— Load Centrality (Traffic-Bearing Intermediary)<a href="#48-load_centrality--load-centrality-traffic-bearing-intermediary" class="hash-link" aria-label="Direct link to 4.8 load_centrality —— Load Centrality (Traffic-Bearing Intermediary)" title="Direct link to 4.8 load_centrality —— Load Centrality (Traffic-Bearing Intermediary)" translate="no">​</a></h3>
-<p><strong>Function Description</strong>
-Similar to Betweenness Centrality, it measures the bearing degree of a node in the sense of &quot;load/traffic sharing&quot; on the shortest path, and can be used for key node analysis that is closer to &quot;flow volume&quot;.
-<strong>Product Value</strong></p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=5-betweenness_centrality--betweenness-centrality-critical-intermediary--bridge>5. betweenness_centrality —— Betweenness Centrality (Critical Intermediary / Bridge)<a href=#5-betweenness_centrality--betweenness-centrality-critical-intermediary--bridge class=hash-link aria-label="Direct link to 5. betweenness_centrality —— Betweenness Centrality (Critical Intermediary / Bridge)" title="Direct link to 5. betweenness_centrality —— Betweenness Centrality (Critical Intermediary / Bridge)" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Measure the extent to which a node lies on shortest paths between other pairs of nodes. The more shortest paths pass through the node, the more it acts like a bridge, gateway, or intermediary in the network.</p>
+<p><strong>Product Value</strong></p>
 <ul>
-<li class="">More inclined to the interpretation of &quot;network flow bearing&quot;, suitable for transportation/communication load assessment</li>
-<li class="">Can limit the path length (<code>cutoff</code>) to focus on local impact
-<strong>Typical Scenarios</strong></li>
-<li class="">Communication Networks: Nodes bearing the most relay load</li>
-<li class="">Transportation Networks: Hubs bearing the most commuting flow</li>
-<li class="">System Dependency: Gateway modules bearing the most forwarding/aggregation in the call chain<br>
-<strong>Key Parameters (Tuning)</strong></li>
-<li class=""><code>cutoff</code>: Only consider paths with length not exceeding cutoff (reduce calculation and focus on local)</li>
-<li class=""><code>weight</code>: Edge weight attribute key (as distance)</li>
-<li class=""><code>normalized</code>: Whether to normalize
-<strong>Applicability and Characteristics</strong></li>
-<li class="">Graph Type: Directed/Undirected</li>
-<li class="">Weight: Supported (as distance)</li>
-<li class="">Complexity: Usually about <code>O(V*E)</code></li>
+<li class="">Locates structural holes and cross-community connectors</li>
+<li class="">Identifies single-point failure risks</li>
+<li class="">Suitable for network robustness, bottleneck analysis, and critical node identification</li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="49-eigenvector_centrality--eigenvector-centrality-being-connected-to-important-nodes-makes-one-more-important">4.9 eigenvector_centrality —— Eigenvector Centrality (Being Connected to Important Nodes Makes One More Important)<a href="#49-eigenvector_centrality--eigenvector-centrality-being-connected-to-important-nodes-makes-one-more-important" class="hash-link" aria-label="Direct link to 4.9 eigenvector_centrality —— Eigenvector Centrality (Being Connected to Important Nodes Makes One More Important)" title="Direct link to 4.9 eigenvector_centrality —— Eigenvector Centrality (Being Connected to Important Nodes Makes One More Important)" translate="no">​</a></h3>
-<p><strong>Function Description</strong>
-Based on the principal eigenvector of the adjacency matrix, score nodes: being connected to high-score nodes will increase their own score, reflecting &quot;mutual reinforcement of authority&quot;.
-<strong>Product Value</strong></p>
+<p><strong>Typical Scenarios</strong></p>
 <ul>
-<li class="">Can reflect &quot;high-quality connections&quot; better than Degree Centrality</li>
-<li class="">Suitable for finding core nodes in the core circle
-<strong>Typical Scenarios</strong></li>
-<li class="">Social Networks: Key influencers in the core community</li>
-<li class="">Citation Networks: Papers connected/cited by high-impact papers</li>
-<li class="">Organizational Networks: Members who collaborate closely with key positions<br>
-<strong>Key Parameters (Tuning)</strong></li>
-<li class=""><code>max_iter</code>: Maximum number of iterations (can be increased when non-convergent)</li>
-<li class=""><code>tol</code>: Convergence error threshold (the smaller, the more accurate but slower)</li>
-<li class=""><code>nstart</code>: Initial vector (all 1s is usually safe by default)</li>
-<li class=""><code>weight</code>: Edge weight (usually interpreted as connection strength in this algorithm)
-<strong>Applicability and Characteristics</strong></li>
-<li class="">Graph Type: Directed/Undirected (need to pay attention to the interpretation direction for directed graphs)</li>
-<li class="">Weight: Supported (connection strength)</li>
-<li class="">Complexity: <code>O(k*(V+E))</code> (k is the number of iterations)</li>
+<li class="">Social networks: intermediaries across social circles</li>
+<li class="">Transaction networks: key transitional accounts in fund chains</li>
+<li class="">Transportation networks: critical hubs or unavoidable intersections</li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="410-katz_centrality--katz-centrality-attenuated-accumulation-considering-multi-hop-influence">4.10 katz_centrality —— Katz Centrality (Attenuated Accumulation Considering Multi-hop Influence)<a href="#410-katz_centrality--katz-centrality-attenuated-accumulation-considering-multi-hop-influence" class="hash-link" aria-label="Direct link to 4.10 katz_centrality —— Katz Centrality (Attenuated Accumulation Considering Multi-hop Influence)" title="Direct link to 4.10 katz_centrality —— Katz Centrality (Attenuated Accumulation Considering Multi-hop Influence)" translate="no">​</a></h3>
-<p><strong>Function Description</strong>
-On the basis of Eigenvector Centrality, consider the contribution of all length paths and decrease by the attenuation factor <code>alpha</code>; introduce baseline influence with <code>beta</code> at the same time.
-<strong>Product Value</strong></p>
+<p><strong>Key Parameters</strong></p>
 <ul>
-<li class="">Balances direct and indirect influence, suitable for businesses where &quot;influence propagates with attenuation along the link&quot;</li>
-<li class="">Nodes with 0 in-degree can also be given a non-zero baseline (depending on beta)
-<strong>Typical Scenarios</strong></li>
-<li class="">Risk Control Conduction: Influence assessment of risk propagation with attenuation along the transaction chain</li>
-<li class="">Citation Networks: Indirect influence of multi-hop citations</li>
-<li class="">Organizational Networks: Indirect influence of cross-level collaboration<br>
-<strong>Key Parameters (Tuning)</strong></li>
-<li class=""><code>alpha</code>: Attenuation coefficient (the larger, the more attention to long-distance connections; convergence conditions must be met)</li>
-<li class=""><code>beta</code>: Neighborhood baseline (can be a constant or customized by node)</li>
-<li class=""><code>max_iter</code>, <code>tol</code>, <code>nstart</code>: Iterative solution control</li>
-<li class=""><code>normalized</code>: Whether to normalize</li>
-<li class=""><code>weight</code>: Connection strength weight
-<strong>Applicability and Characteristics</strong></li>
-<li class="">Graph Type: Directed/Undirected</li>
-<li class="">Weight: Supported (connection strength)</li>
-<li class="">Complexity: <code>O(k*(V+E))</code></li>
+<li class=""><code>k</code>: sampling approximation, suitable for large graphs</li>
+<li class=""><code>weight</code>: edge weight attribute, usually interpreted as distance</li>
+<li class=""><code>normalized</code>: whether to normalize</li>
+<li class=""><code>endpoints</code>: whether to include endpoints in shortest-path counting</li>
+<li class=""><code>seed</code>: random seed for sampling</li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="411-pagerank--pagerank-global-importance-of-random-walk">4.11 pagerank —— PageRank (Global Importance of Random Walk)<a href="#411-pagerank--pagerank-global-importance-of-random-walk" class="hash-link" aria-label="Direct link to 4.11 pagerank —— PageRank (Global Importance of Random Walk)" title="Direct link to 4.11 pagerank —— PageRank (Global Importance of Random Walk)" translate="no">​</a></h3>
-<p><strong>Function Description</strong>
-Treat the graph as a random walk process: the importance of a node is accumulated from &quot;pointing from important nodes&quot;, and the random jump is controlled by the damping coefficient <code>alpha</code>.
-<strong>Product Value</strong></p>
+<p><strong>Applicability and Characteristics</strong></p>
 <ul>
-<li class="">Suitable for stable ranking of large-scale networks: web pages, citations, transaction relationships, etc.</li>
-<li class="">Supports personalization (<code>personalization</code>) to achieve influence &quot;centered on a certain group&quot;
-<strong>Typical Scenarios</strong></li>
-<li class="">Link Networks: Authority ranking of pages/resources</li>
-<li class="">Citation Networks: Influence ranking of papers/patents</li>
-<li class="">Email/Communication Networks: Priority of key contacts<br>
-<strong>Key Parameters (Tuning)</strong></li>
-<li class=""><code>alpha</code>: Damping coefficient (0.85 is commonly used); the larger, the more dependent on the link structure</li>
-<li class=""><code>personalization</code>: Personalization vector (bias to a specific node set)</li>
-<li class=""><code>dangling</code>: Out-edge allocation strategy for dangling nodes (nodes with no out-edges)</li>
-<li class=""><code>max_iter</code>, <code>tol</code>, <code>nstart</code>: Iterative solution control</li>
-<li class=""><code>weight</code>: Edge weight (usually represents transition weight in PageRank)
-<strong>Applicability and Characteristics</strong></li>
-<li class="">Graph Type: Mainly directed; undirected graphs will be converted to bidirectional directed graphs</li>
-<li class="">Weight: Supported (transition weight)</li>
-<li class="">Complexity: <code>O(k*(V+E))</code></li>
+<li class="">Graph Type: Directed / Undirected graph</li>
+<li class="">Weight: Supported, usually interpreted as distance</li>
+<li class="">Output: <code>{node: score}</code></li>
+<li class="">Complexity: Exact computation is usually expensive; sampling approximation is recommended for large graphs</li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="412-hits--hits-hubauthority-dual-roles">4.12 hits —— HITS (Hub/Authority Dual Roles)<a href="#412-hits--hits-hubauthority-dual-roles" class="hash-link" aria-label="Direct link to 4.12 hits —— HITS (Hub/Authority Dual Roles)" title="Direct link to 4.12 hits —— HITS (Hub/Authority Dual Roles)" translate="no">​</a></h3>
-<p><strong>Function Description</strong>
-Calculate two types of scores for each node:</p>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=6-edge_betweenness_centrality--edge-betweenness-centrality-critical-connecting-edge>6. edge_betweenness_centrality —— Edge Betweenness Centrality (Critical Connecting Edge)<a href=#6-edge_betweenness_centrality--edge-betweenness-centrality-critical-connecting-edge class=hash-link aria-label="Direct link to 6. edge_betweenness_centrality —— Edge Betweenness Centrality (Critical Connecting Edge)" title="Direct link to 6. edge_betweenness_centrality —— Edge Betweenness Centrality (Critical Connecting Edge)" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Measure how many shortest paths between node pairs pass through an edge. Edges with high edge betweenness are often inter-community links, bridge edges, or critical links.</p>
+<p><strong>Product Value</strong></p>
 <ul>
-<li class=""><strong>Authority</strong>: The degree of being pointed to by high Hubs (content authority)</li>
-<li class=""><strong>Hub</strong>: The degree of pointing to high Authorities (information hub)
-<strong>Product Value</strong></li>
-<li class="">Distinguish between &quot;resource authority&quot; and &quot;aggregation entry&quot; in &quot;citation/link&quot; scenarios</li>
-<li class="">More suitable for explaining &quot;directory/navigation sites (Hub)&quot; and &quot;content sites (Authority)&quot;
-<strong>Typical Scenarios</strong></li>
-<li class="">Site Links: Identification of navigation sites (Hub) and content sites (Authority)</li>
-<li class="">Citation Networks: Review papers (Hub) and widely recognized key papers (Authority)</li>
-<li class="">Dependency Networks: Call aggregation entries (Hub) and core base modules (Authority)<br>
-<strong>Key Parameters (Tuning)</strong></li>
-<li class=""><code>max_iter</code>, <code>tol</code>, <code>nstart</code>: Iterative solution control</li>
-<li class=""><code>normalized</code>: Whether to normalize by sum
-<strong>Applicability and Characteristics</strong></li>
-<li class="">Graph Type: Mainly directed (undirected is possible but with weak interpretation)</li>
-<li class="">Weight: Not supported (NetworkX HITS version is usually unweighted)</li>
-<li class="">Complexity: <code>O(k*(V+E))</code></li>
+<li class="">Identifies critical edges whose removal causes the greatest impact</li>
+<li class="">Supports link reinforcement, community partitioning, and network vulnerability analysis</li>
+<li class="">Can be used to locate bottleneck connections</li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="413-subgraph_centrality--subgraph-centrality-small-clique-structure-participation">4.13 subgraph_centrality —— Subgraph Centrality (Small Clique Structure Participation)<a href="#413-subgraph_centrality--subgraph-centrality-small-clique-structure-participation" class="hash-link" aria-label="Direct link to 4.13 subgraph_centrality —— Subgraph Centrality (Small Clique Structure Participation)" title="Direct link to 4.13 subgraph_centrality —— Subgraph Centrality (Small Clique Structure Participation)" translate="no">​</a></h3>
-<p><strong>Function Description</strong>
-Measure the degree of a node participating in various closed loops/substructures (such as triangles, quadrangles, etc.) through spectral methods, emphasizing nodes &quot;at the center of dense clique structures&quot;.
-<strong>Product Value</strong></p>
+<p><strong>Typical Scenarios</strong></p>
 <ul>
-<li class="">Identify key nodes of the &quot;core small group&quot;</li>
-<li class="">More sensitive to &quot;collaboration/gang/close cooperation&quot; structures
-<strong>Typical Scenarios</strong></li>
-<li class="">Social Networks: Core figures in close friend circles</li>
-<li class="">Biological Networks: Genes/proteins participating in key functional modules</li>
-<li class="">Collaboration Networks: Authors/teams participating in dense collaboration groups<br>
-<strong>Applicability and Characteristics</strong></li>
-<li class="">Graph Type: Usually used for undirected graphs</li>
-<li class="">Weight: Not supported</li>
-<li class="">Complexity: Related to spectral decomposition, commonly <code>O(V^3)</code> (more suitable for small and medium scales)</li>
+<li class="">Transportation networks: critical road segments, bridges, tunnels</li>
+<li class="">Communication networks: critical links, optical fiber segments</li>
+<li class="">Supply chain networks: key cross-region supply connections</li>
 </ul>
-<hr>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="414-voterank--voterank-propagation-seed-selection">4.14 voterank —— VoteRank (Propagation Seed Selection)<a href="#414-voterank--voterank-propagation-seed-selection" class="hash-link" aria-label="Direct link to 4.14 voterank —— VoteRank (Propagation Seed Selection)" title="Direct link to 4.14 voterank —— VoteRank (Propagation Seed Selection)" translate="no">​</a></h3>
-<p><strong>Function Description</strong>
-Iteratively select a set of influential seed nodes through a mechanism of &quot;node voting + suppressing the voting ability of neighbors after being selected&quot;, making the seeds more dispersed and covering a larger area on the graph.
-<strong>Product Value</strong></p>
+<p><strong>Key Parameters</strong></p>
 <ul>
-<li class="">Less likely to cluster than simply selecting the nodes with the highest degree, suitable for seed selection for influence maximization</li>
-<li class="">Can output the top K candidate seeds (<code>number_of_nodes</code>)
-<strong>Typical Scenarios</strong></li>
-<li class="">Marketing Communication: Select more dispersed seed users for fission propagation</li>
-<li class="">Security Alert: Select key nodes as priority monitoring points</li>
-<li class="">Caching/Content Distribution: Select representative nodes for content delivery<br>
-<strong>Key Parameters (Tuning)</strong></li>
-<li class=""><code>number_of_nodes</code>: Number of seed nodes to return (retain only positive vote nodes as many as possible by default)
-<strong>Applicability and Characteristics</strong></li>
-<li class="">Graph Type: Directed/Undirected</li>
-<li class="">Weight: Not supported</li>
-<li class="">Complexity: Usually nearly linear <code>O(k*(V+E))</code> (k is the number of output nodes)</li>
+<li class=""><code>k</code>: sampling approximation</li>
+<li class=""><code>weight</code>: edge weight attribute, usually interpreted as distance</li>
+<li class=""><code>normalized</code>: whether to normalize</li>
+<li class=""><code>seed</code>: sampling random seed</li>
 </ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="5-recommended-usage-guide-practical-suggestions">5. Recommended Usage Guide (Practical Suggestions)<a href="#5-recommended-usage-guide-practical-suggestions" class="hash-link" aria-label="Direct link to 5. Recommended Usage Guide (Practical Suggestions)" title="Direct link to 5. Recommended Usage Guide (Practical Suggestions)" translate="no">​</a></h2>
+<p><strong>Applicability and Characteristics</strong></p>
 <ul>
-<li class=""><strong>Quickly find large accounts/active nodes</strong>: <code>degree_centrality</code> / <code>in_degree_centrality</code> / <code>out_degree_centrality</code></li>
-<li class=""><strong>Find bridges and structural holes</strong>: <code>betweenness_centrality</code> (nodes) + <code>edge_betweenness_centrality</code> (edges)</li>
-<li class=""><strong>Find nodes &quot;close to everyone&quot;</strong>: <code>closeness_centrality</code>; use <code>harmonic_centrality</code> first if the graph is disconnected</li>
-<li class=""><strong>Find authority and core circles</strong>: <code>pagerank</code> (global authority) / <code>eigenvector_centrality</code> (spectral authority) / <code>katz_centrality</code> (multi-hop attenuation)</li>
-<li class=""><strong>Distinguish between entry and authoritative content</strong>: <code>hits</code> (Hub vs Authority)</li>
-<li class=""><strong>Find core nodes of close groups</strong>: <code>subgraph_centrality</code></li>
-<li class=""><strong>Select propagation seeds</strong>: <code>voterank</code></li>
+<li class="">Graph Type: Directed / Undirected graph</li>
+<li class="">Weight: Supported</li>
+<li class="">Output: <code>{(u, v): score}</code></li>
+<li class="">Complexity: Exact computation is usually expensive; approximation is recommended for large graphs</li>
 </ul>
-<hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="6-typical-answerable-questions-examples">6. Typical Answerable Questions (Examples)<a href="#6-typical-answerable-questions-examples" class="hash-link" aria-label="Direct link to 6. Typical Answerable Questions (Examples)" title="Direct link to 6. Typical Answerable Questions (Examples)" translate="no">​</a></h2>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=7-eigenvector_centrality--eigenvector-centrality-connected-to-important-nodes>7. eigenvector_centrality —— Eigenvector Centrality (Connected to Important Nodes)<a href=#7-eigenvector_centrality--eigenvector-centrality-connected-to-important-nodes class=hash-link aria-label="Direct link to 7. eigenvector_centrality —— Eigenvector Centrality (Connected to Important Nodes)" title="Direct link to 7. eigenvector_centrality —— Eigenvector Centrality (Connected to Important Nodes)" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Score nodes based on the principal eigenvector of the adjacency matrix. A node is important not only because it has many connections, but also because it is connected to important nodes.</p>
+<p><strong>Product Value</strong></p>
 <ul>
-<li class="">&quot;Output the top 20 nodes with the highest betweenness centrality for identifying key intermediaries.&quot;</li>
-<li class="">&quot;Calculate the edge betweenness centrality of all edges and output the top 50 key edges in descending order.&quot;</li>
-<li class="">&quot;In the current email communication network, who is the contact with the highest PageRank?&quot;</li>
-<li class="">&quot;In a disconnected social graph, what is the list of the top 20 users with the highest harmonic centrality?&quot;</li>
-<li class="">&quot;Use VoteRank to select 30 diffusion seed nodes for marketing reach.&quot;</li>
-</ul></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href="https://github.com/iDC-NEU/YiGraphDocs/tree/main/docs-site/docs/tutorial-algorithm/centrality.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/YiGraphDocs/en/docs/tutorial-algorithm/path"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Path Operator Set</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/YiGraphDocs/en/docs/tutorial-algorithm/Connectivity_Components"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Connectivity &amp; Components Operator Set</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#1-operator-set-overview" class="table-of-contents__link toc-highlight">1. Operator Set Overview</a></li><li><a href="#2-operator-capability-classification" class="table-of-contents__link toc-highlight">2. Operator Capability Classification</a></li><li><a href="#3-general-input-and-output-conventions" class="table-of-contents__link toc-highlight">3. General Input and Output Conventions</a></li><li><a href="#4-detailed-operator-descriptions" class="table-of-contents__link toc-highlight">4. Detailed Operator Descriptions</a><ul><li><a href="#41-degree_centrality--degree-centrality-connection-scale" class="table-of-contents__link toc-highlight">4.1 degree_centrality —— Degree Centrality (Connection Scale)</a></li><li><a href="#42-in_degree_centrality--in-degree-centrality-being-followedcredited" class="table-of-contents__link toc-highlight">4.2 in_degree_centrality —— In-Degree Centrality (Being Followed/Credited)</a></li><li><a href="#43-out_degree_centrality--out-degree-centrality-active-diffusioninitiative-call" class="table-of-contents__link toc-highlight">4.3 out_degree_centrality —— Out-Degree Centrality (Active Diffusion/Initiative Call)</a></li><li><a href="#44-closeness_centrality--closeness-centrality-shortest-average-distance" class="table-of-contents__link toc-highlight">4.4 closeness_centrality —— Closeness Centrality (Shortest Average Distance)</a></li><li><a href="#45-harmonic_centrality--harmonic-centrality-more-robust-to-unreachability" class="table-of-contents__link toc-highlight">4.5 harmonic_centrality —— Harmonic Centrality (More Robust to Unreachability)</a></li><li><a href="#46-betweenness_centrality--betweenness-centrality-key-intermediarybridge" class="table-of-contents__link toc-highlight">4.6 betweenness_centrality —— Betweenness Centrality (Key Intermediary/Bridge)</a></li><li><a href="#47-edge_betweenness_centrality--edge-betweenness-centrality-key-connecting-edge" class="table-of-contents__link toc-highlight">4.7 edge_betweenness_centrality —— Edge Betweenness Centrality (Key Connecting Edge)</a></li><li><a href="#48-load_centrality--load-centrality-traffic-bearing-intermediary" class="table-of-contents__link toc-highlight">4.8 load_centrality —— Load Centrality (Traffic-Bearing Intermediary)</a></li><li><a href="#49-eigenvector_centrality--eigenvector-centrality-being-connected-to-important-nodes-makes-one-more-important" class="table-of-contents__link toc-highlight">4.9 eigenvector_centrality —— Eigenvector Centrality (Being Connected to Important Nodes Makes One More Important)</a></li><li><a href="#410-katz_centrality--katz-centrality-attenuated-accumulation-considering-multi-hop-influence" class="table-of-contents__link toc-highlight">4.10 katz_centrality —— Katz Centrality (Attenuated Accumulation Considering Multi-hop Influence)</a></li><li><a href="#411-pagerank--pagerank-global-importance-of-random-walk" class="table-of-contents__link toc-highlight">4.11 pagerank —— PageRank (Global Importance of Random Walk)</a></li><li><a href="#412-hits--hits-hubauthority-dual-roles" class="table-of-contents__link toc-highlight">4.12 hits —— HITS (Hub/Authority Dual Roles)</a></li><li><a href="#413-subgraph_centrality--subgraph-centrality-small-clique-structure-participation" class="table-of-contents__link toc-highlight">4.13 subgraph_centrality —— Subgraph Centrality (Small Clique Structure Participation)</a></li><li><a href="#414-voterank--voterank-propagation-seed-selection" class="table-of-contents__link toc-highlight">4.14 voterank —— VoteRank (Propagation Seed Selection)</a></li></ul></li><li><a href="#5-recommended-usage-guide-practical-suggestions" class="table-of-contents__link toc-highlight">5. Recommended Usage Guide (Practical Suggestions)</a></li><li><a href="#6-typical-answerable-questions-examples" class="table-of-contents__link toc-highlight">6. Typical Answerable Questions (Examples)</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 AAG</div></div></div></footer></div>
-</body>
-</html>
+<li class="">Emphasizes high-quality connections more than degree centrality</li>
+<li class="">Suitable for discovering core nodes within core circles</li>
+<li class="">Captures reinforcement structures where important nodes support each other</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Social networks: key influencers in core communities</li>
+<li class="">Citation networks: papers connected to high-impact nodes</li>
+<li class="">Organizational networks: members working closely with critical positions</li>
+</ul>
+<p><strong>Key Parameters</strong></p>
+<ul>
+<li class=""><code>max_iter</code>: maximum number of iterations</li>
+<li class=""><code>tol</code>: convergence tolerance</li>
+<li class=""><code>nstart</code>: initial vector</li>
+<li class=""><code>weight</code>: connection strength weight</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Directed / Undirected graph</li>
+<li class="">Weight: Supported, usually interpreted as connection strength</li>
+<li class="">Output: <code>{node: score}</code></li>
+<li class="">Complexity: <code>O(k * (V + E))</code>, where <code>k</code> is the number of iterations</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=8-katz_centrality--katz-centrality-accumulated-multi-hop-influence-with-decay>8. katz_centrality —— Katz Centrality (Accumulated Multi-hop Influence with Decay)<a href=#8-katz_centrality--katz-centrality-accumulated-multi-hop-influence-with-decay class=hash-link aria-label="Direct link to 8. katz_centrality —— Katz Centrality (Accumulated Multi-hop Influence with Decay)" title="Direct link to 8. katz_centrality —— Katz Centrality (Accumulated Multi-hop Influence with Decay)" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Based on eigenvector centrality, consider contributions from paths of all lengths, and control the influence of long-distance connections through a decay factor.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Considers both direct and indirect influence</li>
+<li class="">Suitable for business scenarios where influence decays along chains</li>
+<li class="">Can assign scores to nodes with zero in-degree or few connections via a baseline term</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Risk control propagation: risk decays along transaction chains</li>
+<li class="">Citation networks: multi-hop citation influence analysis</li>
+<li class="">Organizational networks: cross-level collaboration influence assessment</li>
+</ul>
+<p><strong>Key Parameters</strong></p>
+<ul>
+<li class=""><code>alpha</code>: decay coefficient</li>
+<li class=""><code>beta</code>: baseline influence</li>
+<li class=""><code>max_iter</code>: maximum number of iterations</li>
+<li class=""><code>tol</code>: convergence tolerance</li>
+<li class=""><code>normalized</code>: whether to normalize</li>
+<li class=""><code>weight</code>: connection strength weight</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Directed / Undirected graph</li>
+<li class="">Weight: Supported, usually interpreted as connection strength</li>
+<li class="">Output: <code>{node: score}</code></li>
+<li class="">Complexity: <code>O(k * (V + E))</code></li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=9-pagerank--pagerank-global-importance-via-random-walk>9. pagerank —— PageRank (Global Importance via Random Walk)<a href=#9-pagerank--pagerank-global-importance-via-random-walk class=hash-link aria-label="Direct link to 9. pagerank —— PageRank (Global Importance via Random Walk)" title="Direct link to 9. pagerank —— PageRank (Global Importance via Random Walk)" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Treat the graph as a random-walk process. A node’s importance accumulates from incoming links from other important nodes, while random jumps are controlled by a damping factor.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Suitable for stable importance ranking in large-scale networks</li>
+<li class="">Personalized vectors can support ranking for specific topics or groups</li>
+<li class="">Highly interpretable for web, citation, recommendation, transaction, and other link-based networks</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Link networks: authority ranking of pages or resources</li>
+<li class="">Citation networks: ranking papers or patents by influence</li>
+<li class="">Email/communication networks: prioritizing key contacts</li>
+<li class="">Transaction networks: identifying important accounts</li>
+</ul>
+<p><strong>Key Parameters</strong></p>
+<ul>
+<li class=""><code>alpha</code>: damping factor</li>
+<li class=""><code>personalization</code>: personalization vector</li>
+<li class=""><code>dangling</code>: dangling-node handling strategy</li>
+<li class=""><code>max_iter</code>: maximum number of iterations</li>
+<li class=""><code>tol</code>: convergence tolerance</li>
+<li class=""><code>weight</code>: transition weight</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Mainly directed graphs; undirected graphs can be treated as bidirectional directed graphs</li>
+<li class="">Weight: Supported, usually interpreted as transition weight</li>
+<li class="">Output: <code>{node: score}</code></li>
+<li class="">Complexity: <code>O(k * (V + E))</code></li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=10-hits--hits-dual-roles-of-hub--authority>10. hits —— HITS (Dual Roles of Hub / Authority)<a href=#10-hits--hits-dual-roles-of-hub--authority class=hash-link aria-label="Direct link to 10. hits —— HITS (Dual Roles of Hub / Authority)" title="Direct link to 10. hits —— HITS (Dual Roles of Hub / Authority)" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Compute two scores for each node:</p>
+<ul>
+<li class=""><strong>Hub</strong>: the extent to which the node points to high-authority nodes</li>
+<li class=""><strong>Authority</strong>: the extent to which the node is pointed to by high-hub nodes</li>
+</ul>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Distinguishes resource-entry roles from content-authority roles</li>
+<li class="">Suitable for highly directional networks such as citation, linking, and dependency graphs</li>
+<li class="">More suitable than a single centrality measure for explaining dual-role structures</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Website links: identifying navigation sites and content sites</li>
+<li class="">Citation networks: identifying survey papers and authoritative papers</li>
+<li class="">Dependency networks: identifying call entry points and core modules</li>
+</ul>
+<p><strong>Key Parameters</strong></p>
+<ul>
+<li class=""><code>max_iter</code>: maximum number of iterations</li>
+<li class=""><code>tol</code>: convergence tolerance</li>
+<li class=""><code>nstart</code>: initial vector</li>
+<li class=""><code>normalized</code>: whether to normalize</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Mainly directed graphs</li>
+<li class="">Weight: Usually not used</li>
+<li class="">Output: <code>(hubs_dict, authorities_dict)</code></li>
+<li class="">Complexity: <code>O(k * (V + E))</code></li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=11-harmonic_centrality--harmonic-centrality-more-robust-to-unreachability>11. harmonic_centrality —— Harmonic Centrality (More Robust to Unreachability)<a href=#11-harmonic_centrality--harmonic-centrality-more-robust-to-unreachability class=hash-link aria-label="Direct link to 11. harmonic_centrality —— Harmonic Centrality (More Robust to Unreachability)" title="Direct link to 11. harmonic_centrality —— Harmonic Centrality (More Robust to Unreachability)" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Sum the reciprocals of distances to other nodes. Unreachable nodes contribute 0, making it more stable than closeness centrality in disconnected graphs.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Provides usable ranking even in disconnected networks</li>
+<li class="">Balances global reachability and local access efficiency</li>
+<li class="">Suitable for graphs with islands, weak connectivity, or broken structure</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Knowledge graphs: identifying highly reachable nodes across multiple communities</li>
+<li class="">Citation networks: analyzing cross-domain reachability</li>
+<li class="">Transportation/communication networks: evaluating critical nodes under failures or disconnections</li>
+</ul>
+<p><strong>Key Parameters</strong></p>
+<ul>
+<li class=""><code>nbunch</code>: compute only a subset of nodes</li>
+<li class=""><code>sources</code>: specify a source set</li>
+<li class=""><code>distance</code>: edge distance attribute</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Directed / Undirected graph</li>
+<li class="">Weight: Supported, usually interpreted as distance</li>
+<li class="">Output: <code>{node: score}</code></li>
+<li class="">Complexity: Usually <code>O(V * (V + E))</code></li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=12-load_centrality--load-centrality-traffic-bearing-intermediary>12. load_centrality —— Load Centrality (Traffic-bearing Intermediary)<a href=#12-load_centrality--load-centrality-traffic-bearing-intermediary class=hash-link aria-label="Direct link to 12. load_centrality —— Load Centrality (Traffic-bearing Intermediary)" title="Direct link to 12. load_centrality —— Load Centrality (Traffic-bearing Intermediary)" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Measure how much load a node carries under shortest-path traffic splitting. Similar to betweenness centrality, but emphasizes interpretation in terms of flow load through the network.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Suitable for analyzing traffic load and relay pressure</li>
+<li class="">Can be used in transportation, communication, and system dependency networks</li>
+<li class="">Supports identifying nodes likely to become bottlenecks</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Communication networks: nodes carrying the most relay load</li>
+<li class="">Transportation networks: hubs carrying the most commuting flow</li>
+<li class="">System dependencies: gateway modules carrying the most forwarding or aggregation</li>
+</ul>
+<p><strong>Key Parameters</strong></p>
+<ul>
+<li class=""><code>cutoff</code>: consider only paths within a certain length</li>
+<li class=""><code>weight</code>: edge weight attribute</li>
+<li class=""><code>normalized</code>: whether to normalize</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Directed / Undirected graph</li>
+<li class="">Weight: Supported, usually interpreted as distance</li>
+<li class="">Output: <code>{node: score}</code></li>
+<li class="">Complexity: Usually expensive; for large graphs, combine with cutoff or approximation strategies</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=13-subgraph_centrality--subgraph-centrality-participation-in-tight-substructures>13. subgraph_centrality —— Subgraph Centrality (Participation in Tight Substructures)<a href=#13-subgraph_centrality--subgraph-centrality-participation-in-tight-substructures class=hash-link aria-label="Direct link to 13. subgraph_centrality —— Subgraph Centrality (Participation in Tight Substructures)" title="Direct link to 13. subgraph_centrality —— Subgraph Centrality (Participation in Tight Substructures)" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Use spectral methods to measure the extent to which a node participates in cycles, small cliques, and substructures. The more tight structures a node participates in, the higher its subgraph centrality.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Identifies core nodes in tightly connected groups</li>
+<li class="">Sensitive to collaboration, gang, and cyclic structures</li>
+<li class="">Suitable for deep structural analysis in small to medium-sized networks</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Social networks: core people in tightly knit friend circles</li>
+<li class="">Biological networks: genes or proteins participating in key functional modules</li>
+<li class="">Collaboration networks: authors or teams participating in dense collaboration groups</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Usually undirected graphs</li>
+<li class="">Weight: Usually not used</li>
+<li class="">Output: <code>{node: score}</code></li>
+<li class="">Complexity: Related to spectral decomposition; usually better for small to medium-sized graphs</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=14-voterank--voterank-diffusion-seed-selection>14. voterank —— VoteRank (Diffusion Seed Selection)<a href=#14-voterank--voterank-diffusion-seed-selection class=hash-link aria-label="Direct link to 14. voterank —— VoteRank (Diffusion Seed Selection)" title="Direct link to 14. voterank —— VoteRank (Diffusion Seed Selection)" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Through a mechanism of “node voting + suppressing neighbor voting ability after selection,” iteratively choose a set of influential seed nodes so that the seeds are more dispersed and have broader coverage.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Less likely to cluster than simply choosing highest-degree nodes</li>
+<li class="">Suitable for influence maximization, marketing reach, and monitoring point selection</li>
+<li class="">Can output a set of candidate nodes with strong coverage capability</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Marketing propagation: choose more dispersed seed users</li>
+<li class="">Security alerts: choose critical nodes for priority monitoring</li>
+<li class="">Caching/content distribution: choose representative nodes for content delivery</li>
+</ul>
+<p><strong>Key Parameters</strong></p>
+<ul>
+<li class=""><code>number_of_nodes</code>: number of seed nodes to return</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Directed / Undirected graph</li>
+<li class="">Weight: Usually not used</li>
+<li class="">Output: node list</li>
+<li class="">Complexity: Usually near linear, depending on the number of selected seeds</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=15-current_flow_betweenness_centrality--current-flow-betweenness-centrality>15. current_flow_betweenness_centrality —— Current-flow Betweenness Centrality<a href=#15-current_flow_betweenness_centrality--current-flow-betweenness-centrality class=hash-link aria-label="Direct link to 15. current_flow_betweenness_centrality —— Current-flow Betweenness Centrality" title="Direct link to 15. current_flow_betweenness_centrality —— Current-flow Betweenness Centrality" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Compute node centrality based on an electrical current network model. Unlike ordinary betweenness centrality, which only focuses on shortest paths, current-flow betweenness considers flow contributions across all possible paths.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Better suited to characterizing intermediary roles under real multi-path diversion</li>
+<li class="">Can identify nodes that play a critical role in the overall circulation structure</li>
+<li class="">More interpretable for network robustness and redundant-path analysis</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Power networks: identifying key transmission nodes</li>
+<li class="">Communication networks: key relays under multi-path transmission</li>
+<li class="">Transportation networks: bottleneck analysis when multiple alternative routes exist</li>
+<li class="">Biological networks: key relay nodes in signal pathways</li>
+</ul>
+<p><strong>Key Parameters</strong></p>
+<ul>
+<li class=""><code>weight</code>: edge weight attribute</li>
+<li class=""><code>normalized</code>: whether to normalize</li>
+<li class=""><code>solver</code>: linear-system solving method</li>
+<li class=""><code>dtype</code>: numeric precision type</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Usually connected undirected graphs</li>
+<li class="">Weight: Supported</li>
+<li class="">Output: <code>{node: score}</code></li>
+<li class="">Complexity: Involves linear algebra solving; usually suitable for small to medium-sized graphs or sparse-optimization scenarios</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=16-percolation_centrality--percolation-centrality>16. percolation_centrality —— Percolation Centrality<a href=#16-percolation_centrality--percolation-centrality class=hash-link aria-label="Direct link to 16. percolation_centrality —— Percolation Centrality" title="Direct link to 16. percolation_centrality —— Percolation Centrality" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->When nodes have state values or activation levels, measure the extent to which a node is critical in network percolation, propagation, or diffusion processes.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Incorporates node states into centrality computation</li>
+<li class="">Suitable for dynamic propagation, risk diffusion, epidemic spreading, and similar scenarios</li>
+<li class="">Can identify the most critical intermediary nodes under the current propagation state</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Risk propagation: influence analysis of infected or high-risk accounts</li>
+<li class="">Epidemic networks: key spreaders in disease diffusion</li>
+<li class="">Public opinion networks: key users in hotspot information diffusion</li>
+<li class="">Fault propagation: transmission analysis of abnormal states in systems</li>
+</ul>
+<p><strong>Key Parameters</strong></p>
+<ul>
+<li class=""><code>states</code>: node states or percolation states</li>
+<li class=""><code>weight</code>: edge weight attribute</li>
+<li class=""><code>attribute</code>: node-state attribute field</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Directed / Undirected graph</li>
+<li class="">Weight: Supported</li>
+<li class="">Output: <code>{node: score}</code></li>
+<li class="">Suitable for analysis combined with time slices, state values, or propagation stages</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=17-second_order_centrality--second-order-centrality>17. second_order_centrality —— Second-order Centrality<a href=#17-second_order_centrality--second-order-centrality class=hash-link aria-label="Direct link to 17. second_order_centrality —— Second-order Centrality" title="Direct link to 17. second_order_centrality —— Second-order Centrality" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Measure node centrality based on the standard deviation of random-walk return times. The more stably a node is returned to or visited, the more structurally central it usually is.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Measures node importance from the perspective of random-walk stability</li>
+<li class="">Can complement standard metrics such as PageRank and closeness centrality</li>
+<li class="">Suitable for analyzing stable centers and structurally balanced positions in networks</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Social networks: identifying users in stable core positions</li>
+<li class="">Communication networks: stably reachable relay nodes</li>
+<li class="">Recommendation networks: objects more stably reached under random walks</li>
+<li class="">Complex networks: evaluating node access stability</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Usually connected undirected graphs</li>
+<li class="">Weight: Depends on implementation support</li>
+<li class="">Output: <code>{node: score}</code></li>
+<li class="">Note: Computation usually involves random-walk-related matrices and can be expensive at larger scales</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=18-laplacian_centrality--laplacian-centrality>18. laplacian_centrality —— Laplacian Centrality<a href=#18-laplacian_centrality--laplacian-centrality class=hash-link aria-label="Direct link to 18. laplacian_centrality —— Laplacian Centrality" title="Direct link to 18. laplacian_centrality —— Laplacian Centrality" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Evaluate the impact of a node on the overall network structure, connectivity, and robustness by measuring its contribution to graph Laplacian energy.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Emphasizes the effect of node deletion or change on the overall network structure</li>
+<li class="">Suitable for network robustness and vulnerability analysis</li>
+<li class="">Can identify important nodes for maintaining graph structural integrity</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Infrastructure networks: identifying critical facility nodes</li>
+<li class="">Communication networks: nodes affecting overall connectivity quality</li>
+<li class="">Supply chain networks: companies or warehouses affecting system stability</li>
+<li class="">Risk-control networks: critical accounts whose removal damages structural stability</li>
+</ul>
+<p><strong>Key Parameters</strong></p>
+<ul>
+<li class=""><code>weight</code>: edge weight attribute</li>
+<li class=""><code>normalized</code>: whether to normalize</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Usually undirected graphs</li>
+<li class="">Weight: Supported</li>
+<li class="">Output: <code>{node: score}</code></li>
+<li class="">Suitable for network robustness, vulnerability, and node-removal impact analysis</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=19-common_neighbor_centrality--common-neighbor-centrality>19. common_neighbor_centrality —— Common-neighbor Centrality<a href=#19-common_neighbor_centrality--common-neighbor-centrality class=hash-link aria-label="Direct link to 19. common_neighbor_centrality —— Common-neighbor Centrality" title="Direct link to 19. common_neighbor_centrality —— Common-neighbor Centrality" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Measure the importance of nodes or local links based on common-neighbor structure. The more common neighbors there are, the more likely the nodes lie in a tighter local relationship structure.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Suitable for characterizing connection value in local structures</li>
+<li class="">Useful for similarity, potential relationship, and local influence analysis</li>
+<li class="">Can assist link prediction, community analysis, and local core identification</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Social networks: potentially key users with many mutual friends</li>
+<li class="">Recommendation systems: local user-interest relationship analysis</li>
+<li class="">Collaboration networks: common collaborator structure analysis</li>
+<li class="">Risk-control networks: identifying common counterparties or common related persons</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Usually undirected graphs</li>
+<li class="">Weight: Usually not used</li>
+<li class="">Output: centrality scores or candidate relationship scores</li>
+<li class="">Suitable for local structure analysis and neighborhood similarity analysis</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=20-trophic_levels--trophic-levels--hierarchical-position>20. trophic_levels —— Trophic Levels / Hierarchical Position<a href=#20-trophic_levels--trophic-levels--hierarchical-position class=hash-link aria-label="Direct link to 20. trophic_levels —— Trophic Levels / Hierarchical Position" title="Direct link to 20. trophic_levels —— Trophic Levels / Hierarchical Position" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Compute hierarchical positions of nodes in directed networks. This algorithm is often used in networks with directional flow relationships to characterize whether nodes are upstream, midstream, or downstream.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Identifies hierarchical structure in networks</li>
+<li class="">Suitable for graphs with clear flow direction, dependency direction, or control direction</li>
+<li class="">Can be used to determine whether a system has clear upstream-downstream relationships</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Ecological networks: trophic-level analysis of species</li>
+<li class="">Supply chain networks: hierarchy of upstream suppliers and downstream customers</li>
+<li class="">Dependency networks: identifying low-level modules, intermediate modules, and upper-level applications</li>
+<li class="">Fund-flow networks: analyzing fund source, relay, and terminal positions</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Directed graph</li>
+<li class="">Weight: Can be combined with edge strength or flow</li>
+<li class="">Output: <code>{node: level}</code></li>
+<li class="">Suitable for hierarchical structure, directional flow, and upstream-downstream position analysis</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=21-birank--birank-bipartite-ranking>21. birank —— BiRank Bipartite Ranking<a href=#21-birank--birank-bipartite-ranking class=hash-link aria-label="Direct link to 21. birank —— BiRank Bipartite Ranking" title="Direct link to 21. birank —— BiRank Bipartite Ranking" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->BiRank is a ranking algorithm for bipartite graphs. Through mutual reinforcement between the two sides, it simultaneously computes importance scores for both types of nodes.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Suitable for bipartite relation networks such as user-item, author-paper, and institution-project</li>
+<li class="">Can simultaneously evaluate the importance of nodes on both sides</li>
+<li class="">Useful for recommendation, ranking, resource prioritization, and influence assessment</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Recommendation systems: two-sided importance ranking of users and items</li>
+<li class="">Academic networks: joint evaluation of author and paper influence</li>
+<li class="">Recruitment networks: importance of candidate-position matching</li>
+<li class="">Enterprise networks: analysis of institution-project and supplier-product relations</li>
+</ul>
+<p><strong>Key Parameters</strong></p>
+<ul>
+<li class="">Two-side node sets of the bipartite graph</li>
+<li class="">Edge weights: interaction strength, rating, count, or association strength</li>
+<li class="">Iterative convergence parameters: maximum iterations, convergence threshold, etc.</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Bipartite graph</li>
+<li class="">Weight: Supported, usually interpreted as interaction strength</li>
+<li class="">Output: score dictionaries for both sides</li>
+<li class="">Complexity: Usually iterative computation, approximately <code>O(k * E)</code></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=5-recommended-usage-guide-practical-suggestions>5. Recommended Usage Guide (Practical Suggestions)<a href=#5-recommended-usage-guide-practical-suggestions class=hash-link aria-label="Direct link to 5. Recommended Usage Guide (Practical Suggestions)" title="Direct link to 5. Recommended Usage Guide (Practical Suggestions)" translate=no>​</a></h2>
+<ul>
+<li class=""><strong>Quickly find large accounts / active nodes</strong>: <code>degree_centrality</code> / <code>in_degree_centrality</code> / <code>out_degree_centrality</code></li>
+<li class=""><strong>Find bridges and structural holes</strong>: <code>betweenness_centrality</code> / <code>edge_betweenness_centrality</code></li>
+<li class=""><strong>Find traffic-bearing nodes</strong>: <code>load_centrality</code></li>
+<li class=""><strong>Find key nodes under multi-path flow</strong>: <code>current_flow_betweenness_centrality</code></li>
+<li class=""><strong>Find nodes close to everyone</strong>: <code>closeness_centrality</code></li>
+<li class=""><strong>Evaluate reachability in disconnected graphs</strong>: <code>harmonic_centrality</code></li>
+<li class=""><strong>Find authorities and core circles</strong>: <code>pagerank</code> / <code>eigenvector_centrality</code> / <code>katz_centrality</code></li>
+<li class=""><strong>Distinguish entry points from authoritative content</strong>: <code>hits</code></li>
+<li class=""><strong>Find tight-group cores</strong>: <code>subgraph_centrality</code></li>
+<li class=""><strong>Select diffusion seeds</strong>: <code>voterank</code></li>
+<li class=""><strong>Identify critical nodes with known propagation states</strong>: <code>percolation_centrality</code></li>
+<li class=""><strong>Evaluate node contribution to network robustness</strong>: <code>laplacian_centrality</code></li>
+<li class=""><strong>Analyze local common-neighbor structure</strong>: <code>common_neighbor_centrality</code></li>
+<li class=""><strong>Analyze hierarchical positions in directed networks</strong>: <code>trophic_levels</code></li>
+<li class=""><strong>Two-sided ranking in bipartite graphs</strong>: <code>birank</code></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=6-typical-directly-answerable-questions-examples>6. Typical Directly Answerable Questions (Examples)<a href=#6-typical-directly-answerable-questions-examples class=hash-link aria-label="Direct link to 6. Typical Directly Answerable Questions (Examples)" title="Direct link to 6. Typical Directly Answerable Questions (Examples)" translate=no>​</a></h2>
+<ul>
+<li class="">“Output the Top-20 nodes with the highest degree centrality.”</li>
+<li class="">“Which nodes are pointed to by the most other nodes?”</li>
+<li class="">“Which nodes actively connect to the most downstream nodes?”</li>
+<li class="">“Output the Top-20 nodes with the highest betweenness centrality to identify key intermediaries.”</li>
+<li class="">“Compute edge betweenness centrality for all edges and output the Top-50 critical edges in descending order.”</li>
+<li class="">“Which nodes are most critical under a multi-path flow model?”</li>
+<li class="">“Which nodes carry the most load in the current network?”</li>
+<li class="">“Who has the highest PageRank in the current email communication network?”</li>
+<li class="">“What are the Top-20 users by harmonic centrality in a disconnected social graph?”</li>
+<li class="">“Use VoteRank to select 30 diffusion seed nodes for marketing reach.”</li>
+<li class="">“When propagation states are known, which nodes have the highest percolation centrality?”</li>
+<li class="">“Which nodes would have the greatest impact on the overall network structure if removed?”</li>
+<li class="">“In this directed network, which nodes are upstream and which are downstream?”</li>
+<li class="">“In a user-item bipartite graph, give importance rankings for both users and items.”</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=7-engineering-implementation-notes>7. Engineering Implementation Notes<a href=#7-engineering-implementation-notes class=hash-link aria-label="Direct link to 7. Engineering Implementation Notes" title="Direct link to 7. Engineering Implementation Notes" translate=no>​</a></h2>
+<ol>
+<li class="">
+<p><strong>Clarify the meaning of centrality first</strong></p>
+<ul>
+<li class="">Degree centrality emphasizes the number of direct connections.</li>
+<li class="">Closeness centrality emphasizes reachability efficiency.</li>
+<li class="">Betweenness centrality emphasizes bridge and intermediary roles.</li>
+<li class="">PageRank, eigenvector centrality, and Katz emphasize global authority and reinforcement among important nodes.</li>
+<li class="">Laplacian centrality emphasizes node contribution to overall structural stability.</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Unify weight semantics</strong></p>
+<ul>
+<li class="">In shortest-path-based centralities, weight usually represents distance, cost, or resistance; smaller means closer.</li>
+<li class="">In spectral and random-walk algorithms, weight usually represents connection strength, interaction frequency, or transition weight; larger means stronger.</li>
+<li class="">If a graph has multiple weight fields, clearly define which field each algorithm uses.</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Be careful with disconnected graphs</strong></p>
+<ul>
+<li class="">Closeness centrality may be affected by unreachable nodes in disconnected graphs.</li>
+<li class="">In disconnected graphs, prefer <code>harmonic_centrality</code>.</li>
+<li class="">Current-flow centralities usually require connected graphs; check connectivity before use.</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Pay attention to performance on large graphs</strong></p>
+<ul>
+<li class="">Exact betweenness centrality and edge betweenness centrality are computationally expensive.</li>
+<li class="">Use sampling, Top-K strategies, or offline batch processing when needed.</li>
+<li class="">Spectral-decomposition and current-flow algorithms are more suitable for small to medium-sized graphs or sparse-optimization scenarios.</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Propagation metrics should be combined with business state</strong></p>
+<ul>
+<li class=""><code>voterank</code> is suitable for state-free diffusion seed selection.</li>
+<li class=""><code>percolation_centrality</code> is suitable for propagation analysis when node states are known.</li>
+<li class="">Different propagation stages may produce different critical node rankings.</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Do not directly apply ordinary centrality to bipartite graphs</strong></p>
+<ul>
+<li class="">For bipartite graphs such as user-item, author-paper, and institution-project, prefer <code>birank</code>.</li>
+<li class="">BiRank can simultaneously characterize the mutual reinforcement of nodes on both sides.</li>
+<li class="">If directly projected into a one-side graph, original bipartite relation information may be lost.</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Interpret rankings together with business thresholds</strong></p>
+<ul>
+<li class="">High centrality does not necessarily mean “most important in business terms.”</li>
+<li class="">It is recommended to combine node attributes, edge weights, time windows, community structure, and anomaly rules for comprehensive judgment.</li>
+</ul>
+</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=8-operator-checklist>8. Operator Checklist<a href=#8-operator-checklist class=hash-link aria-label="Direct link to 8. Operator Checklist" title="Direct link to 8. Operator Checklist" translate=no>​</a></h2>
+<table><thead><tr><th style=text-align:right>No.<th>Operator Name<th>English Description<tbody><tr><td style=text-align:right>1<td><code>degree_centrality</code><td>Degree centrality<tr><td style=text-align:right>2<td><code>in_degree_centrality</code><td>In-degree centrality<tr><td style=text-align:right>3<td><code>out_degree_centrality</code><td>Out-degree centrality<tr><td style=text-align:right>4<td><code>closeness_centrality</code><td>Closeness centrality<tr><td style=text-align:right>5<td><code>betweenness_centrality</code><td>Betweenness centrality<tr><td style=text-align:right>6<td><code>edge_betweenness_centrality</code><td>Edge betweenness centrality<tr><td style=text-align:right>7<td><code>eigenvector_centrality</code><td>Eigenvector centrality<tr><td style=text-align:right>8<td><code>katz_centrality</code><td>Katz centrality<tr><td style=text-align:right>9<td><code>pagerank</code><td>PageRank centrality<tr><td style=text-align:right>10<td><code>hits</code><td>HITS Hub/Authority centrality<tr><td style=text-align:right>11<td><code>harmonic_centrality</code><td>Harmonic centrality<tr><td style=text-align:right>12<td><code>load_centrality</code><td>Load centrality<tr><td style=text-align:right>13<td><code>subgraph_centrality</code><td>Subgraph centrality<tr><td style=text-align:right>14<td><code>voterank</code><td>VoteRank diffusion seed selection<tr><td style=text-align:right>15<td><code>current_flow_betweenness_centrality</code><td>Current-flow betweenness centrality<tr><td style=text-align:right>16<td><code>percolation_centrality</code><td>Percolation centrality<tr><td style=text-align:right>17<td><code>second_order_centrality</code><td>Second-order centrality<tr><td style=text-align:right>18<td><code>laplacian_centrality</code><td>Laplacian centrality<tr><td style=text-align:right>19<td><code>common_neighbor_centrality</code><td>Common-neighbor centrality<tr><td style=text-align:right>20<td><code>trophic_levels</code><td>Trophic levels / hierarchical position<tr><td style=text-align:right>21<td><code>birank</code><td>BiRank bipartite ranking</table></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/iDC-NEU/YiGraphDocs/tree/main/docs-site/docs/tutorial-algorithm/centrality.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/YiGraphDocs/en/docs/tutorial-algorithm/path><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Path Operator Set</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/YiGraphDocs/en/docs/tutorial-algorithm/Connectivity_Components><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Connectivity & Components Operator Set</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#1-operator-set-overview class="table-of-contents__link toc-highlight">1. Operator Set Overview</a><li><a href=#2-operator-capability-classification class="table-of-contents__link toc-highlight">2. Operator Capability Classification</a><li><a href=#3-general-input-and-output-conventions class="table-of-contents__link toc-highlight">3. General Input and Output Conventions</a><li><a href=#4-detailed-operator-descriptions class="table-of-contents__link toc-highlight">4. Detailed Operator Descriptions</a><ul><li><a href=#1-degree_centrality--degree-centrality-connection-scale class="table-of-contents__link toc-highlight">1. degree_centrality —— Degree Centrality (Connection Scale)</a><li><a href=#2-in_degree_centrality--in-degree-centrality-attention--being-called class="table-of-contents__link toc-highlight">2. in_degree_centrality —— In-degree Centrality (Attention / Being Called)</a><li><a href=#3-out_degree_centrality--out-degree-centrality-active-diffusion--active-calling class="table-of-contents__link toc-highlight">3. out_degree_centrality —— Out-degree Centrality (Active Diffusion / Active Calling)</a><li><a href=#4-closeness_centrality--closeness-centrality-shortest-average-distance class="table-of-contents__link toc-highlight">4. closeness_centrality —— Closeness Centrality (Shortest Average Distance)</a><li><a href=#5-betweenness_centrality--betweenness-centrality-critical-intermediary--bridge class="table-of-contents__link toc-highlight">5. betweenness_centrality —— Betweenness Centrality (Critical Intermediary / Bridge)</a><li><a href=#6-edge_betweenness_centrality--edge-betweenness-centrality-critical-connecting-edge class="table-of-contents__link toc-highlight">6. edge_betweenness_centrality —— Edge Betweenness Centrality (Critical Connecting Edge)</a><li><a href=#7-eigenvector_centrality--eigenvector-centrality-connected-to-important-nodes class="table-of-contents__link toc-highlight">7. eigenvector_centrality —— Eigenvector Centrality (Connected to Important Nodes)</a><li><a href=#8-katz_centrality--katz-centrality-accumulated-multi-hop-influence-with-decay class="table-of-contents__link toc-highlight">8. katz_centrality —— Katz Centrality (Accumulated Multi-hop Influence with Decay)</a><li><a href=#9-pagerank--pagerank-global-importance-via-random-walk class="table-of-contents__link toc-highlight">9. pagerank —— PageRank (Global Importance via Random Walk)</a><li><a href=#10-hits--hits-dual-roles-of-hub--authority class="table-of-contents__link toc-highlight">10. hits —— HITS (Dual Roles of Hub / Authority)</a><li><a href=#11-harmonic_centrality--harmonic-centrality-more-robust-to-unreachability class="table-of-contents__link toc-highlight">11. harmonic_centrality —— Harmonic Centrality (More Robust to Unreachability)</a><li><a href=#12-load_centrality--load-centrality-traffic-bearing-intermediary class="table-of-contents__link toc-highlight">12. load_centrality —— Load Centrality (Traffic-bearing Intermediary)</a><li><a href=#13-subgraph_centrality--subgraph-centrality-participation-in-tight-substructures class="table-of-contents__link toc-highlight">13. subgraph_centrality —— Subgraph Centrality (Participation in Tight Substructures)</a><li><a href=#14-voterank--voterank-diffusion-seed-selection class="table-of-contents__link toc-highlight">14. voterank —— VoteRank (Diffusion Seed Selection)</a><li><a href=#15-current_flow_betweenness_centrality--current-flow-betweenness-centrality class="table-of-contents__link toc-highlight">15. current_flow_betweenness_centrality —— Current-flow Betweenness Centrality</a><li><a href=#16-percolation_centrality--percolation-centrality class="table-of-contents__link toc-highlight">16. percolation_centrality —— Percolation Centrality</a><li><a href=#17-second_order_centrality--second-order-centrality class="table-of-contents__link toc-highlight">17. second_order_centrality —— Second-order Centrality</a><li><a href=#18-laplacian_centrality--laplacian-centrality class="table-of-contents__link toc-highlight">18. laplacian_centrality —— Laplacian Centrality</a><li><a href=#19-common_neighbor_centrality--common-neighbor-centrality class="table-of-contents__link toc-highlight">19. common_neighbor_centrality —— Common-neighbor Centrality</a><li><a href=#20-trophic_levels--trophic-levels--hierarchical-position class="table-of-contents__link toc-highlight">20. trophic_levels —— Trophic Levels / Hierarchical Position</a><li><a href=#21-birank--birank-bipartite-ranking class="table-of-contents__link toc-highlight">21. birank —— BiRank Bipartite Ranking</a></ul><li><a href=#5-recommended-usage-guide-practical-suggestions class="table-of-contents__link toc-highlight">5. Recommended Usage Guide (Practical Suggestions)</a><li><a href=#6-typical-directly-answerable-questions-examples class="table-of-contents__link toc-highlight">6. Typical Directly Answerable Questions (Examples)</a><li><a href=#7-engineering-implementation-notes class="table-of-contents__link toc-highlight">7. Engineering Implementation Notes</a><li><a href=#8-operator-checklist class="table-of-contents__link toc-highlight">8. Operator Checklist</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 AAG</div></div></div></footer></div></body>

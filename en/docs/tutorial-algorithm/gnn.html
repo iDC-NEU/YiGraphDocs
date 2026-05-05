@@ -1,0 +1,652 @@
+<!doctype html><html lang=en-US dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-tutorial-algorithm/gnn" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Graph Neural Networks Operator Set | YiGraph Documentation</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:url content=https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/gnn /><meta data-rh=true property=og:locale content=en_US /><meta data-rh=true property=og:locale:alternate content=zh_CN /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Graph Neural Networks Operator Set | YiGraph Documentation"/><meta data-rh=true name=description content="Operator Category: Graph Neural Networks (Graph neural network convolution layers and representation learning operators)"/><meta data-rh=true property=og:description content="Operator Category: Graph Neural Networks (Graph neural network convolution layers and representation learning operators)"/><link data-rh=true rel=icon href=/YiGraphDocs/en/img/favicon.ico /><link data-rh=true rel=canonical href=https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/gnn /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/gnn hreflang=zh-CN /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/gnn hreflang=en-US /><link data-rh=true rel=alternate href=https://iDC-NEU.github.io/YiGraphDocs/docs/tutorial-algorithm/gnn hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://iDC-NEU.github.io/YiGraphDocs/en/docs/tutorial-algorithm/gnn","name":"Graph Neural Networks Operator Set","position":1}]}</script><link rel=stylesheet href=/YiGraphDocs/en/assets/css/styles.74348a64.css /><script src=/YiGraphDocs/en/assets/js/runtime~main.86e25217.js defer></script><script src=/YiGraphDocs/en/assets/js/main.ce8df468.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-cad")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/YiGraphDocs/en/><b class="navbar__title text--truncate">YiGraph Documentation</b></a><a class="navbar__item navbar__link" href=/YiGraphDocs/en/docs/intro>开发者指南</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href=# aria-haspopup=true aria-expanded=false role=button class=navbar__link><svg viewBox="0 0 24 24" width=20 height=20 aria-hidden=true class=iconLanguage_nlXk><path fill=currentColor d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>English</a><ul class=dropdown__menu><li><a href=/YiGraphDocs/docs/tutorial-algorithm/gnn target=_self rel="noopener noreferrer" class=dropdown__link lang=zh-CN>简体中文</a><li><a href=/YiGraphDocs/en/docs/tutorial-algorithm/gnn target=_self rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang=en-US>English</a></ul></div><a href=https://github.com/iDC-NEU/YiGraph target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/en/docs/intro><span title="Basic Information" class=categoryLinkLabel_W154>Basic Information</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/intro><span title=Introduction class=linkLabel_WmDU>Introduction</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/en/docs/tutorial-basics/create-a-page><span title="Getting Started" class=categoryLinkLabel_W154>Getting Started</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-basics/create-a-page><span title="YiGraph Installation and Usage Guide" class=linkLabel_WmDU>YiGraph Installation and Usage Guide</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-basics/windows-deploy><span title="YiGraph Windows Local Deployment Guide" class=linkLabel_WmDU>YiGraph Windows Local Deployment Guide</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role=button aria-expanded=true href=/YiGraphDocs/en/docs/tutorial-extras/getting-started-cases><span title=Tutorials class=categoryLinkLabel_W154>Tutorials</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-extras/getting-started-cases><span title="User Onboarding Guide" class=linkLabel_WmDU>User Onboarding Guide</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-extras/normal-mode><span title="Case 1. Normal Mode" class=linkLabel_WmDU>Case 1. Normal Mode</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-extras/interact-mode><span title="Case 2. Interact Mode" class=linkLabel_WmDU>Case 2. Interact Mode</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-extras/expert-mode><span title="Case 3. Expert Mode" class=linkLabel_WmDU>Case 3. Expert Mode</span></a></ul><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role=button aria-expanded=true href=/YiGraphDocs/en/docs/tutorial-algorithm/basic><span title=Algorithms class=categoryLinkLabel_W154>Algorithms</span></a></div><ul class=menu__list><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/basic><span title="Basics Operator Set" class=linkLabel_WmDU>Basics Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/path><span title="Path Operator Set" class=linkLabel_WmDU>Path Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/centrality><span title="Centrality and Criticality Operator Set" class=linkLabel_WmDU>Centrality and Criticality Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/Connectivity_Components><span title="Connectivity & Components Operator Set" class=linkLabel_WmDU>Connectivity & Components Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/Clustering_Community><span title="Clustering & Community Operators" class=linkLabel_WmDU>Clustering & Community Operators</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/tree><span title="Tree & Spanning Tree Operators" class=linkLabel_WmDU>Tree & Spanning Tree Operators</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/Dominance><span title="Dominance Operator Set" class=linkLabel_WmDU>Dominance Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/flow><span title="Flow & Cut Operators" class=linkLabel_WmDU>Flow & Cut Operators</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/link_prediction><span title="Link Prediction Operator Set" class=linkLabel_WmDU>Link Prediction Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/matching_coloring><span title="Matching & Coloring Operator Set" class=linkLabel_WmDU>Matching & Coloring Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/graph_matching><span title="Graph Matching Operator Set" class=linkLabel_WmDU>Graph Matching Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/graph_polynomials><span title="Graph Polynomials Operator Set" class=linkLabel_WmDU>Graph Polynomials Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/cliques_cores><span title="Cliques & Cores Operator Set" class=linkLabel_WmDU>Cliques & Cores Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/distance><span title="Distance & Measures Operator Set" class=linkLabel_WmDU>Distance & Measures Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/graph_query><span title="Graph Query Operator Set" class=linkLabel_WmDU>Graph Query Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/dag><span title="Directed Acyclic Graphs (DAG) Operator Set" class=linkLabel_WmDU>Directed Acyclic Graphs (DAG) Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/bipartite><span title="Bipartite Operator Set" class=linkLabel_WmDU>Bipartite Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/graph_hashing><span title="Graph Hashing Operator Set" class=linkLabel_WmDU>Graph Hashing Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/small_world><span title="Small-world Operator Set" class=linkLabel_WmDU>Small-world Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class=menu__link tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/sparsifiers><span title="Sparsifiers Operator Set" class=linkLabel_WmDU>Sparsifiers Operator Set</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current=page tabindex=0 href=/YiGraphDocs/en/docs/tutorial-algorithm/gnn><span title="Graph Neural Networks Operator Set" class=linkLabel_WmDU>Graph Neural Networks Operator Set</span></a></ul></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/YiGraphDocs/en/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class=breadcrumbs__item><span class=breadcrumbs__link>Algorithms</span><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Graph Neural Networks Operator Set</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Graph Neural Networks Operator Set</h1></header>
+<p><strong>Operator Category</strong>: Graph Neural Networks (Graph neural network convolution layers and representation learning operators)</p>
+<p><strong>Algorithm Count</strong>: 25</p>
+<p><strong>Applicable Stages</strong>: Graph representation learning, node classification/regression, link prediction, graph classification, feature extraction and dimensionality reduction, end-to-end graph neural network model construction</p>
+<p><strong>Product Positioning</strong>: Provides a rich and immediately usable library of convolution operators for answering “how to automatically learn low-dimensional vector representations of nodes or graphs through graph convolution, attention, message passing, and related mechanisms, so as to support downstream tasks such as classification, prediction, and clustering.”</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-operator-set-overview>1. Operator Set Overview<a href=#1-operator-set-overview class=hash-link aria-label="Direct link to 1. Operator Set Overview" title="Direct link to 1. Operator Set Overview" translate=no>​</a></h2>
+<p>The Graph Neural Networks operator set focuses on <strong>message-passing-based graph representation learning layers</strong>, combining traditional graph algorithms with deep learning to mainly answer the following questions:</p>
+<ol>
+<li class="">
+<p><strong>Node Representation Learning</strong></p>
+<ul>
+<li class="">How can we learn dense vector representations for each node from graph topology and node features?</li>
+<li class="">How should convolution kernels be designed to better aggregate neighborhood information?</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Feature Transformation and Aggregation</strong></p>
+<ul>
+<li class="">Should neighbors be aggregated by mean, sum, max, or an attention mechanism?</li>
+<li class="">Should edge features, gating, or skip connections be introduced to enhance expressiveness?</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Higher-order and Multi-scale Structure</strong></p>
+<ul>
+<li class="">How can multi-hop neighborhood information be captured without causing oversmoothing?</li>
+<li class="">How can hierarchical representations be achieved using polynomial filters or mixed-scale modules?</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Heterogeneous and Complex Graphs</strong></p>
+<ul>
+<li class="">How can heterogeneous graphs with different node/edge types be handled?</li>
+<li class="">How can convolution be defined on special structures such as point clouds and hypergraphs?</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Model Building and Layer Selection</strong></p>
+<ul>
+<li class="">Which convolution layer should be chosen for which task?</li>
+<li class="">How can these operators be combined to build a complete graph neural network?</li>
+</ul>
+</li>
+</ol>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-operator-capability-classification>2. Operator Capability Classification<a href=#2-operator-capability-classification class=hash-link aria-label="Direct link to 2. Operator Capability Classification" title="Direct link to 2. Operator Capability Classification" translate=no>​</a></h2>
+<table><thead><tr><th>Capability Type<th>Corresponding Operators<th>Function Description<tbody><tr><td>Spectral Graph Convolution<td><code>pyg_gcnconv</code><td>First-order Chebyshev-style spectral convolution that aggregates neighbors uniformly<tr><td>Spatial General Aggregation<td><code>pyg_sageconv</code><td>Samples and aggregates neighbors using mean/LSTM/pooling and similar strategies<tr><td>Graph Attention Mechanism<td><code>pyg_gatconv</code>, <code>pyg_gatv2conv</code>, <code>pyg_supergatconv</code><td>Assigns learnable attention weights to neighbors and supports multi-head mechanisms<tr><td>Transformer-style<td><code>pyg_transformerconv</code><td>Combines self-attention with edge features and can incorporate positional encoding<tr><td>Residual Gated Convolution<td><code>pyg_resgatedgraphconv</code><td>Graph convolution with residual connections and gating mechanisms<tr><td>Edge-feature Fusion Convolution<td><code>pyg_egconv</code>, <code>pyg_genconv</code>, <code>pyg_filmconv</code><td>Incorporates edge features into message passing for feature modulation or deep aggregation<tr><td>General / Heterogeneous Convolution<td><code>pyg_generalconv</code>, <code>pyg_heteroconv</code><td>The former provides configurable aggregation/message functions; the latter supports multi-relation convolution on heterogeneous graphs<tr><td>Point-cloud and Geometric Convolution<td><code>pyg_gravnetconv</code>, <code>pyg_pointtransformerconv</code>, <code>pyg_pdnconv</code><td>Convolution designed for point clouds, physical space, or geometric features<tr><td>Higher-order Polynomial Convolution<td><code>pyg_armaconv</code>, <code>pyg_sgconv</code>, <code>pyg_tagconv</code><td>Uses higher-order neighborhood polynomial expansion to enlarge receptive fields and mitigate oversmoothing<tr><td>Multi-scale Hybrid Convolution<td><code>pyg_mixhopconv</code><td>Mixes features from neighbors of different orders to capture multi-granularity structure<tr><td>Oversmoothing Suppression<td><code>pyg_ssgconv</code><td>Uses structure-aware gating to suppress irrelevant information propagation<tr><td>Clustering / Coarsening Convolution<td><code>pyg_clustergcnconv</code><td>Performs convolution based on graph clustering and is suitable for large-scale graphs<tr><td>Hypergraph Convolution<td><code>pyg_hypergraphconv</code><td>Defines convolution on hypergraph structures to support higher-order relations<tr><td>Local Extremum Convolution<td><code>pyg_leconv</code><td>Selects extremum features from local neighbors to enhance structural sensitivity<tr><td>Multi-frequency Convolution<td><code>pyg_mfconv</code><td>Uses multi-frequency filters to capture structural information across different frequency bands<tr><td>Feature-similarity Convolution<td><code>pyg_feastconv</code><td>Dynamically aggregates neighbors based on feature similarity and is suitable for heterophilous graphs</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-general-input-and-output-conventions>3. General Input and Output Conventions<a href=#3-general-input-and-output-conventions class=hash-link aria-label="Direct link to 3. General Input and Output Conventions" title="Direct link to 3. General Input and Output Conventions" translate=no>​</a></h2>
+<ul>
+<li class=""><strong>Input <code>G</code></strong>: Usually a PyTorch Geometric (PyG) <code>Data</code> object containing:<!-- -->
+<ul>
+<li class=""><code>x</code>: node feature tensor with shape <code>[N, in_channels]</code></li>
+<li class=""><code>edge_index</code>: edge index tensor with shape <code>[2, E]</code> (COO format)</li>
+<li class=""><code>edge_attr</code>: (optional) edge feature tensor with shape <code>[E, edge_dim]</code></li>
+</ul>
+</li>
+<li class=""><strong>Common Output Types</strong>:<!-- -->
+<ul>
+<li class="">Updated node feature tensor <code>[N, out_channels]</code></li>
+<li class="">Some operators return intermediate attention weights or gate values (for example, attention layers)</li>
+</ul>
+</li>
+<li class=""><strong>Hyperparameters</strong>:<!-- -->
+<ul>
+<li class=""><code>in_channels</code> / <code>out_channels</code>: input/output feature dimensions</li>
+<li class=""><code>heads</code>: number of attention heads (attention-based layers)</li>
+<li class=""><code>K</code>: polynomial order or hop count (higher-order convolution)</li>
+<li class=""><code>dropout</code> / <code>bias</code> / <code>improved</code> and others</li>
+</ul>
+</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=4-detailed-operator-descriptions>4. Detailed Operator Descriptions<a href=#4-detailed-operator-descriptions class=hash-link aria-label="Direct link to 4. Detailed Operator Descriptions" title="Direct link to 4. Detailed Operator Descriptions" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-pyg_gcnconv--graph-convolutional-network-layer>1. pyg_gcnconv —— Graph Convolutional Network Layer<a href=#1-pyg_gcnconv--graph-convolutional-network-layer class=hash-link aria-label="Direct link to 1. pyg_gcnconv —— Graph Convolutional Network Layer" title="Direct link to 1. pyg_gcnconv —— Graph Convolutional Network Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Implements the classic spectral graph convolution (GCN) by performing a first-order approximation of the normalized adjacency matrix and aggregating neighbor features uniformly.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">The most fundamental graph convolution unit; easy to use and stable, suitable as a model baseline</li>
+<li class="">Provides an entry-level solution for node representation learning</li>
+<li class="">Performs well in tasks such as semi-supervised node classification</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Node classification in academic citation networks</li>
+<li class="">User attribute prediction in social networks</li>
+<li class="">Entity classification in knowledge graphs</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Undirected / directed homogeneous graphs</li>
+<li class="">Aggregation Method: Normalized summation</li>
+<li class="">Can add self-loops and supports unweighted edges</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-pyg_sageconv--graph-sample-and-aggregate-layer>2. pyg_sageconv —— Graph Sample-and-Aggregate Layer<a href=#2-pyg_sageconv--graph-sample-and-aggregate-layer class=hash-link aria-label="Direct link to 2. pyg_sageconv —— Graph Sample-and-Aggregate Layer" title="Direct link to 2. pyg_sageconv —— Graph Sample-and-Aggregate Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->A GraphSAGE layer that samples neighbors and uses a specified aggregation function such as mean, LSTM, or pooling to generate the representation of the target node.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Supports inductive learning and can generalize to unseen nodes</li>
+<li class="">Scales to large graphs through sampling mechanisms</li>
+<li class="">Flexible aggregation functions adapt to different data characteristics</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">User/item embedding in large-scale recommendation systems</li>
+<li class="">Fast representation of new nodes in dynamic graphs</li>
+<li class="">Protein function prediction</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Homogeneous graphs</li>
+<li class="">Main Parameters: <code>aggr</code> (aggregation method), <code>normalize</code></li>
+<li class="">Fixed-size neighbor sampling can be specified during computation</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-pyg_gatconv--graph-attention-network-layer>3. pyg_gatconv —— Graph Attention Network Layer<a href=#3-pyg_gatconv--graph-attention-network-layer class=hash-link aria-label="Direct link to 3. pyg_gatconv —— Graph Attention Network Layer" title="Direct link to 3. pyg_gatconv —— Graph Attention Network Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->A graph attention layer (GAT) that assigns different weights to different neighbors through a self-attention mechanism and performs weighted aggregation.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Captures different importance levels of neighbors and improves model discriminative power</li>
+<li class="">Multi-head attention can stabilize training and improve robustness</li>
+<li class="">Does not require prior knowledge of the global graph structure</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Important paper identification in citation networks</li>
+<li class="">Molecular property prediction</li>
+<li class="">Traffic-flow node influence assessment</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Homogeneous graphs</li>
+<li class="">Parameters: <code>heads</code> (number of heads), <code>concat</code>, <code>dropout</code></li>
+<li class="">Supports multi-head concatenation or averaging</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=4-pyg_gatv2conv--graph-attention-network-layer-v2>4. pyg_gatv2conv —— Graph Attention Network Layer V2<a href=#4-pyg_gatv2conv--graph-attention-network-layer-v2 class=hash-link aria-label="Direct link to 4. pyg_gatv2conv —— Graph Attention Network Layer V2" title="Direct link to 4. pyg_gatv2conv —— Graph Attention Network Layer V2" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->An improved GATv2 layer that adopts a dynamic attention computation order, making the ranking ability of attention weights more expressive.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Solves the issue of limited attention expressiveness of standard GAT on certain graphs</li>
+<li class="">Can effectively model heterophilous edge structures</li>
+<li class="">Provides stronger theoretical robustness</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Node classification on heterophilous graphs (such as web links)</li>
+<li class="">Scenarios with large graph-structure noise</li>
+<li class="">Tasks requiring fine-grained modeling of edge differences</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Homogeneous graphs</li>
+<li class="">Similar parameters to GATConv, with a more general attention computation scheme</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=5-pyg_transformerconv--graph-transformer-convolution-layer>5. pyg_transformerconv —— Graph Transformer Convolution Layer<a href=#5-pyg_transformerconv--graph-transformer-convolution-layer class=hash-link aria-label="Direct link to 5. pyg_transformerconv —— Graph Transformer Convolution Layer" title="Direct link to 5. pyg_transformerconv —— Graph Transformer Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Introduces the Transformer self-attention mechanism into graphs, using neighboring nodes as key-value pairs and supporting edge features as positional encoding.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Suitable for long-range dependencies and cases where edge attributes should modulate attention</li>
+<li class="">Combines Transformer expressiveness with graph-structural inductive bias</li>
+<li class="">Can be seamlessly connected with large-model pretraining paradigms</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Molecular graph property prediction (where edges are chemical bonds)</li>
+<li class="">Joint modeling of text graphs</li>
+<li class="">Knowledge graph link prediction</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Homogeneous graphs, supports <code>edge_attr</code></li>
+<li class="">Parameters: <code>heads</code>, <code>dropout</code>, <code>edge_dim</code></li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=6-pyg_resgatedgraphconv--residual-gated-graph-convolution-layer>6. pyg_resgatedgraphconv —— Residual Gated Graph Convolution Layer<a href=#6-pyg_resgatedgraphconv--residual-gated-graph-convolution-layer class=hash-link aria-label="Direct link to 6. pyg_resgatedgraphconv —— Residual Gated Graph Convolution Layer" title="Direct link to 6. pyg_resgatedgraphconv —— Residual Gated Graph Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->A graph convolution layer with residual connections and gating mechanisms, using gate signals to regulate information retention and forgetting, which is beneficial for training deep graph networks.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Effectively alleviates oversmoothing and vanishing gradients in deep graph networks</li>
+<li class="">Gating mechanisms provide adaptive information-flow control</li>
+<li class="">Suitable for deep architectures requiring dozens of convolution layers</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Deep feature extraction on large-scale graphs</li>
+<li class="">Molecular generation requiring complex nonlinear transformations</li>
+<li class="">Deep social network analysis</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Homogeneous graphs</li>
+<li class="">Core Structure: Residual + gating, similar to GRU</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=7-pyg_gravnetconv--gravnet-convolution-layer>7. pyg_gravnetconv —— GravNet Convolution Layer<a href=#7-pyg_gravnetconv--gravnet-convolution-layer class=hash-link aria-label="Direct link to 7. pyg_gravnetconv —— GravNet Convolution Layer" title="Direct link to 7. pyg_gravnetconv —— GravNet Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->A convolution layer inspired by physical gravity, which weights message passing by computing “gravitational attraction” between node pairs, often used in point-cloud processing.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Suitable for geometric data where spatial distance matters</li>
+<li class="">Does not require fixed topology; dynamically constructs edges based on distances in feature space</li>
+<li class="">Adapts well to irregular point clouds</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">High-energy physics particle jet classification</li>
+<li class="">3D point-cloud segmentation</li>
+<li class="">Particle systems in physical simulation</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Geometric structures on dynamic graphs</li>
+<li class="">Parameters: spatial dimensionality, distance metric</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=8-pyg_supergatconv--supergat-convolution-layer>8. pyg_supergatconv —— SuperGAT Convolution Layer<a href=#8-pyg_supergatconv--supergat-convolution-layer class=hash-link aria-label="Direct link to 8. pyg_supergatconv —— SuperGAT Convolution Layer" title="Direct link to 8. pyg_supergatconv —— SuperGAT Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Introduces self-supervised signals into graph attention and combines edge prediction tasks so that attention weights can simultaneously perform neighborhood aggregation and edge-existence prediction.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Improves the quality and interpretability of attention weights through multitask learning</li>
+<li class="">Has some ability to distinguish noisy edges</li>
+<li class="">Performs strongly on link prediction tasks</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Joint training of edge prediction and node classification</li>
+<li class="">Learning on relation graphs with noisy edges</li>
+<li class="">Friend recommendation in social networks</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Homogeneous graphs</li>
+<li class="">Supports <code>att_dropout</code> and <code>is_super_gat</code> modes</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=9-pyg_egconv--edge-conditioned-convolution-layer>9. pyg_egconv —— Edge-conditioned Convolution Layer<a href=#9-pyg_egconv--edge-conditioned-convolution-layer class=hash-link aria-label="Direct link to 9. pyg_egconv —— Edge-conditioned Convolution Layer" title="Direct link to 9. pyg_egconv —— Edge-conditioned Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->A convolution layer that efficiently uses edge features by dynamically computing message transformation matrices or weights from edge features, enabling edge-attribute-driven aggregation.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Enriches the use of edge features such as relation type and strength</li>
+<li class="">Essential in molecular graphs (bond types) and physical interactions</li>
+<li class="">Can learn interactions over edge features to improve model flexibility</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Molecular fingerprint prediction</li>
+<li class="">Traffic speed prediction in road networks (where edges represent road properties)</li>
+<li class="">Modeling rating edges in recommendation systems</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Graphs with edge features</li>
+<li class="">Parameter: <code>nn</code> as the edge-feature transformation network</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=10-pyg_pdnconv--path-defined-network-convolution-layer>10. pyg_pdnconv —— Path-defined Network Convolution Layer<a href=#10-pyg_pdnconv--path-defined-network-convolution-layer class=hash-link aria-label="Direct link to 10. pyg_pdnconv —— Path-defined Network Convolution Layer" title="Direct link to 10. pyg_pdnconv —— Path-defined Network Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->A convolution based on path-defined networks that aggregates information through combined transformations of multiple transition matrices and is suitable for modeling multi-step relations.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Explicitly encodes path information beyond one-hop neighbors</li>
+<li class="">Can be used to control the distance and direction of information propagation</li>
+<li class="">Especially useful in relation-rich data such as knowledge graphs</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Multi-hop reasoning in knowledge graphs</li>
+<li class="">Multi-step reachability analysis in transportation systems</li>
+<li class="">Biological pathway modeling</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Directed / undirected graphs</li>
+<li class="">Parameter: edge-type matrices</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=11-pyg_generalconv--general-graph-convolution-layer>11. pyg_generalconv —— General Graph Convolution Layer<a href=#11-pyg_generalconv--general-graph-convolution-layer class=hash-link aria-label="Direct link to 11. pyg_generalconv —— General Graph Convolution Layer" title="Direct link to 11. pyg_generalconv —— General Graph Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->A highly configurable graph convolution layer that allows users to customize the message function, aggregation function, and update function, providing a flexible convolution framework.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Enables rapid experimentation with new convolution variants without implementing message passing from scratch</li>
+<li class="">A useful tool for teaching and prototyping</li>
+<li class="">Covers many existing GNN layers by combining different functions</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">GNN algorithm research</li>
+<li class="">Custom message-passing rules</li>
+<li class="">Fast testing of new aggregation methods</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Arbitrary, depending on user configuration</li>
+<li class="">Parameters: <code>in_channels</code>, <code>out_channels</code>, <code>aggr</code>, <code>message_func</code>, and others</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=12-pyg_hypergraphconv--hypergraph-convolution-layer>12. pyg_hypergraphconv —— Hypergraph Convolution Layer<a href=#12-pyg_hypergraphconv--hypergraph-convolution-layer class=hash-link aria-label="Direct link to 12. pyg_hypergraphconv —— Hypergraph Convolution Layer" title="Direct link to 12. pyg_hypergraphconv —— Hypergraph Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Defines convolution on hypergraphs, where hyperedges can connect multiple nodes, for modeling higher-order group relationships.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Breaks through the limitations of traditional binary edges and directly models multi-party interactions such as groups or meetings</li>
+<li class="">Preserves Laplacian smoothing properties under hypergraph structures</li>
+<li class="">Suitable for cooperative networks, recommendation systems, and similar scenarios</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Co-authorship networks (author-paper)</li>
+<li class="">Conference participation networks</li>
+<li class="">Group recommendation and bundled-product recommendation</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Hypergraphs, requiring <code>hyperedge_index</code></li>
+<li class="">Parameter: optional attention through <code>use_attention</code></li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=13-pyg_leconv--local-extremum-convolution-layer>13. pyg_leconv —— Local Extremum Convolution Layer<a href=#13-pyg_leconv--local-extremum-convolution-layer class=hash-link aria-label="Direct link to 13. pyg_leconv —— Local Extremum Convolution Layer" title="Direct link to 13. pyg_leconv —— Local Extremum Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->A convolution layer that captures structural change boundaries by selecting extremum features such as local maxima or minima from neighborhood features.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Sensitive to signal changes such as image gradients and point-cloud boundaries</li>
+<li class="">Good at discovering local structural mutations, improving tasks such as segmentation</li>
+<li class="">Lightweight computation with no parameter learning</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Boundary detection in mesh / point-cloud segmentation</li>
+<li class="">Anomaly detection in sensor networks</li>
+<li class="">Shape analysis</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Homogeneous graphs</li>
+<li class="">Operation: local extremum aggregation, usually without learnable weights</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=14-pyg_clustergcnconv--cluster-gcn-convolution-layer>14. pyg_clustergcnconv —— Cluster GCN Convolution Layer<a href=#14-pyg_clustergcnconv--cluster-gcn-convolution-layer class=hash-link aria-label="Direct link to 14. pyg_clustergcnconv —— Cluster GCN Convolution Layer" title="Direct link to 14. pyg_clustergcnconv —— Cluster GCN Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->A convolution layer based on graph clustering algorithms: the graph is first partitioned into clusters, then convolution is performed within clusters, significantly reducing computation and memory cost on large-scale graphs.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Allows deep learning to scale to million-level or even larger graphs</li>
+<li class="">Preserves locally dense connectivity through graph clustering, improving computational efficiency</li>
+<li class="">Can be stacked with other layers to build deep large-scale GNNs</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Node classification on ultra-large social networks</li>
+<li class="">E-commerce graph recommendation</li>
+<li class="">Full-database analysis of citation networks</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Large-scale homogeneous graphs</li>
+<li class="">Requires support from clustering partition algorithms, usually combined with <code>ClusterData</code></li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=15-pyg_genconv--generalized-edge-convolution-layer>15. pyg_genconv —— Generalized Edge Convolution Layer<a href=#15-pyg_genconv--generalized-edge-convolution-layer class=hash-link aria-label="Direct link to 15. pyg_genconv —— Generalized Edge Convolution Layer" title="Direct link to 15. pyg_genconv —— Generalized Edge Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->A deep convolution layer used in Deep Graph Convolutional Generative Networks, supporting multiple message-construction and normalization methods and excelling at building deep generative models.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Suitable for graph generation tasks and widely used in deep learning tasks such as molecular generation</li>
+<li class="">Supports deep-network stabilization techniques such as residual connections and batch normalization</li>
+<li class="">Allows more than 10 layers and even deeper architectures</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Molecular graph generation</li>
+<li class="">Graph autoencoders</li>
+<li class="">Graph structure reconstruction</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Homogeneous graphs, supports edge features</li>
+<li class="">Parameters: <code>aggr</code>, <code>msg_norm</code>, <code>learn_msg_scale</code>, and others</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=16-pyg_filmconv--film-convolution-layer>16. pyg_filmconv —— FiLM Convolution Layer<a href=#16-pyg_filmconv--film-convolution-layer class=hash-link aria-label="Direct link to 16. pyg_filmconv —— FiLM Convolution Layer" title="Direct link to 16. pyg_filmconv —— FiLM Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Uses Feature-wise Linear Modulation (FiLM) to generate transformation parameters from the center node and neighbor features, scaling and shifting messages accordingly.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Provides more flexible node-level transformation than ordinary attention and gating</li>
+<li class="">Particularly suitable for knowledge graphs with rich relation types</li>
+<li class="">Performs strongly on relation prediction tasks</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Knowledge graph completion</li>
+<li class="">Multi-relation social networks</li>
+<li class="">Node classification in heterogeneous information networks</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Supports relation types (<code>edge_type</code>)</li>
+<li class="">Parameter: <code>num_relations</code>, with modulation generated by a neural network</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=17-pyg_mfconv--multi-frequency-convolution-layer>17. pyg_mfconv —— Multi-frequency Convolution Layer<a href=#17-pyg_mfconv--multi-frequency-convolution-layer class=hash-link aria-label="Direct link to 17. pyg_mfconv —— Multi-frequency Convolution Layer" title="Direct link to 17. pyg_mfconv —— Multi-frequency Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Uses multiple frequency filters to aggregate information from different spectral perspectives, preserving both low-frequency and high-frequency signals and alleviating oversmoothing.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Breaks through the limitation of traditional GNNs that mainly preserve low-frequency signals</li>
+<li class="">Performs excellently on heterophilous graphs</li>
+<li class="">Multi-frequency information can complement each other and improve representation richness</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Fraud detection (where anomalous signals are often high-frequency)</li>
+<li class="">Webpage classification (heterophilous links)</li>
+<li class="">Network alignment</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Homogeneous graphs</li>
+<li class="">Parameters: <code>max_degree</code>, <code>num_filters</code></li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=18-pyg_feastconv--feature-steered-attention-convolution-layer>18. pyg_feastconv —— Feature-steered Attention Convolution Layer<a href=#18-pyg_feastconv--feature-steered-attention-convolution-layer class=hash-link aria-label="Direct link to 18. pyg_feastconv —— Feature-steered Attention Convolution Layer" title="Direct link to 18. pyg_feastconv —— Feature-steered Attention Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Dynamically chooses which neighbors to aggregate based on feature similarity rather than fixed topology-defined neighborhoods, making it suitable for scenarios where feature space determines connection importance.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Robust in scenarios where node features dominate and graph structure is inaccurate</li>
+<li class="">Can be viewed as “soft” attention-based neighborhood selection</li>
+<li class="">Suitable for point-cloud and vision graph tasks</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">3D point-cloud classification and segmentation</li>
+<li class="">Superpixel graph modeling in images</li>
+<li class="">Feature-driven community discovery</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Homogeneous graphs, with <code>heads</code> attention heads</li>
+<li class="">Core Idea: neighborhood reconstruction based on feature-attention coefficients</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=19-pyg_pointtransformerconv--point-transformer-convolution-layer>19. pyg_pointtransformerconv —— Point Transformer Convolution Layer<a href=#19-pyg_pointtransformerconv--point-transformer-convolution-layer class=hash-link aria-label="Direct link to 19. pyg_pointtransformerconv —— Point Transformer Convolution Layer" title="Direct link to 19. pyg_pointtransformerconv —— Point Transformer Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->A Transformer convolution designed specifically for point clouds, integrating positional encoding and feature transformation for unordered point sets.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Combines the global receptive field of Transformers with local point-cloud geometry</li>
+<li class="">Achieves state-of-the-art performance on many 3D understanding tasks</li>
+<li class="">Supports vector attention and preserves directional information</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">LiDAR point-cloud segmentation for autonomous driving</li>
+<li class="">Indoor scene understanding</li>
+<li class="">3D object classification</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Graphs built from point clouds (with positions)</li>
+<li class="">Parameters: <code>pos_nn</code>, <code>attn_nn</code>, and others</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=20-pyg_heteroconv--heterogeneous-graph-convolution-wrapper>20. pyg_heteroconv —— Heterogeneous Graph Convolution Wrapper<a href=#20-pyg_heteroconv--heterogeneous-graph-convolution-wrapper class=hash-link aria-label="Direct link to 20. pyg_heteroconv —— Heterogeneous Graph Convolution Wrapper" title="Direct link to 20. pyg_heteroconv —— Heterogeneous Graph Convolution Wrapper" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->A wrapper that applies different convolution layers to different relation types in heterogeneous graphs and supports defining convolution operations separately for each edge type.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Naturally handles heterogeneous graphs with multiple node and edge types</li>
+<li class="">Can flexibly combine any existing convolution layers</li>
+<li class="">The most general component for implementing heterogeneous graph neural networks</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Academic networks (author-paper-conference)</li>
+<li class="">Movie recommendation (user-movie-actor)</li>
+<li class="">Multimodal knowledge graphs</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Heterogeneous graphs (<code>HeteroData</code>)</li>
+<li class="">Parameter: a dictionary mapping edge types to convolution modules</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=21-pyg_mixhopconv--mixhop-convolution-layer>21. pyg_mixhopconv —— MixHop Convolution Layer<a href=#21-pyg_mixhopconv--mixhop-convolution-layer class=hash-link aria-label="Direct link to 21. pyg_mixhopconv —— MixHop Convolution Layer" title="Direct link to 21. pyg_mixhopconv —— MixHop Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Captures multi-scale graph structure by mixing representations from neighbors of different orders (different powers of the adjacency matrix).</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Obtains higher-order information without explicit multi-hop neighbor sampling</li>
+<li class="">Mitigates oversmoothing by mixing low-order and high-order features to preserve discrimination</li>
+<li class="">Simple, effective, and computationally efficient</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Node classification requiring multi-hop context</li>
+<li class="">Multi-order influence modeling in social networks</li>
+<li class="">Graph-level property prediction</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Homogeneous graphs</li>
+<li class="">Parameter: <code>powers</code>, specifying the list of adjacency-matrix powers to mix</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=22-pyg_ssgconv--self-gated-simplified-convolution-layer>22. pyg_ssgconv —— Self-gated Simplified Convolution Layer<a href=#22-pyg_ssgconv--self-gated-simplified-convolution-layer class=hash-link aria-label="Direct link to 22. pyg_ssgconv —— Self-gated Simplified Convolution Layer" title="Direct link to 22. pyg_ssgconv —— Self-gated Simplified Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->A variant of Simple Spectral Graph Convolution that suppresses noisy signal propagation through a structure-aware gating mechanism.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Adds gating to simplified SGC, improving flexibility</li>
+<li class="">Suppresses the impact of irrelevant or erroneous edges</li>
+<li class="">Uses few parameters and runs efficiently, making it suitable for baseline enhancement</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Graph learning with noisy edges</li>
+<li class="">Fast node classification</li>
+<li class="">Baselines for ablation studies</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Homogeneous graphs</li>
+<li class="">Parameters: <code>alpha</code>, <code>K</code> hop count</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=23-pyg_armaconv--arma-convolution-layer>23. pyg_armaconv —— ARMA Convolution Layer<a href=#23-pyg_armaconv--arma-convolution-layer class=hash-link aria-label="Direct link to 23. pyg_armaconv —— ARMA Convolution Layer" title="Direct link to 23. pyg_armaconv —— ARMA Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->An autoregressive moving average graph convolution that approximates arbitrary rational spectral filters by stacking multiple parallel ARMA filters, improving noise robustness.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Captures complex frequency-domain responses better than traditional polynomial convolution</li>
+<li class="">Allows stacking multiple filters to improve robustness</li>
+<li class="">More friendly to heterophilous graphs</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Node classification in heterophilous networks</li>
+<li class="">Noise-robust graph representation learning</li>
+<li class="">Anomaly detection in financial networks</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Homogeneous graphs</li>
+<li class="">Parameters: <code>num_stacks</code>, <code>num_layers</code>, <code>dropout</code></li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=24-pyg_sgconv--simplified-graph-convolution-layer>24. pyg_sgconv —— Simplified Graph Convolution Layer<a href=#24-pyg_sgconv--simplified-graph-convolution-layer class=hash-link aria-label="Direct link to 24. pyg_sgconv —— Simplified Graph Convolution Layer" title="Direct link to 24. pyg_sgconv —— Simplified Graph Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->A simplified convolution layer (SGC) that removes intermediate nonlinear transformations and makes multi-layer graph convolution equivalent to applying the <code>K</code>-th power of the adjacency matrix followed by a linear transformation.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Extremely efficient and can be viewed as logistic regression over diffused features</li>
+<li class="">Performs well in small-sample or low-label scenarios</li>
+<li class="">Easy to interpret and deploy</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Fast baseline models</li>
+<li class="">Resource-constrained environments (edge side)</li>
+<li class="">Precomputation of feature diffusion</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Homogeneous graphs</li>
+<li class="">Parameter: <code>K</code> propagation steps</li>
+<li class="">No intermediate activation; diffused features can be precomputed</li>
+</ul>
+<hr/>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=25-pyg_tagconv--topology-adaptive-graph-convolution-layer>25. pyg_tagconv —— Topology Adaptive Graph Convolution Layer<a href=#25-pyg_tagconv--topology-adaptive-graph-convolution-layer class=hash-link aria-label="Direct link to 25. pyg_tagconv —— Topology Adaptive Graph Convolution Layer" title="Direct link to 25. pyg_tagconv —— Topology Adaptive Graph Convolution Layer" translate=no>​</a></h3>
+<p><strong>Function Description</strong><br/>
+<!-- -->Topology Adaptive Graph Convolution uses a weighted sum of adjacency matrices of different orders to aggregate neighbors, with weights controlled by learnable coefficients.</p>
+<p><strong>Product Value</strong></p>
+<ul>
+<li class="">Adaptively determines the importance of neighbors at different hop distances</li>
+<li class="">Maintains linear complexity while achieving multi-hop receptive fields</li>
+<li class="">Has higher capacity than GCN and is suitable for structurally complex graphs</li>
+</ul>
+<p><strong>Typical Scenarios</strong></p>
+<ul>
+<li class="">Node classification requiring adaptive receptive fields</li>
+<li class="">Datasets with highly variable graph structures</li>
+<li class="">Pooling backbone layers for graph classification</li>
+</ul>
+<p><strong>Applicability and Characteristics</strong></p>
+<ul>
+<li class="">Graph Type: Homogeneous graphs</li>
+<li class="">Parameters: <code>K</code> maximum hop count, learnable aggregation weights <code>alpha</code></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=5-recommended-usage-guide>5. Recommended Usage Guide<a href=#5-recommended-usage-guide class=hash-link aria-label="Direct link to 5. Recommended Usage Guide" title="Direct link to 5. Recommended Usage Guide" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-quick-start-and-baselines>1. Quick Start and Baselines<a href=#1-quick-start-and-baselines class=hash-link aria-label="Direct link to 1. Quick Start and Baselines" title="Direct link to 1. Quick Start and Baselines" translate=no>​</a></h3>
+<ul>
+<li class="">Simplest spectral convolution: <code>pyg_gcnconv</code> or <code>pyg_sgconv</code></li>
+<li class="">First choice for inductive tasks: <code>pyg_sageconv</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-heterogeneous-and-multi-relation-graphs>2. Heterogeneous and Multi-relation Graphs<a href=#2-heterogeneous-and-multi-relation-graphs class=hash-link aria-label="Direct link to 2. Heterogeneous and Multi-relation Graphs" title="Direct link to 2. Heterogeneous and Multi-relation Graphs" translate=no>​</a></h3>
+<ul>
+<li class="">General heterogeneous graph solution: <code>pyg_heteroconv</code> with base convolutions embedded for each edge type</li>
+<li class="">Relation-rich graphs: <code>pyg_filmconv</code> or <code>pyg_generalconv</code> combined with edge types</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-deep-networks-and-oversmoothing-suppression>3. Deep Networks and Oversmoothing Suppression<a href=#3-deep-networks-and-oversmoothing-suppression class=hash-link aria-label="Direct link to 3. Deep Networks and Oversmoothing Suppression" title="Direct link to 3. Deep Networks and Oversmoothing Suppression" translate=no>​</a></h3>
+<ul>
+<li class="">Use residual gating: <code>pyg_resgatedgraphconv</code></li>
+<li class="">Multi-frequency / mixed-order methods: <code>pyg_mfconv</code>, <code>pyg_mixhopconv</code>, <code>pyg_armaconv</code></li>
+<li class="">Adaptive weighted propagation: <code>pyg_tagconv</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=4-attention-and-edge-features>4. Attention and Edge Features<a href=#4-attention-and-edge-features class=hash-link aria-label="Direct link to 4. Attention and Edge Features" title="Direct link to 4. Attention and Edge Features" translate=no>​</a></h3>
+<ul>
+<li class="">Standard attention: <code>pyg_gatconv</code> / <code>pyg_gatv2conv</code></li>
+<li class="">Edge-feature integration: <code>pyg_egconv</code>, <code>pyg_genconv</code>, <code>pyg_transformerconv</code></li>
+<li class="">Self-supervised enhancement: <code>pyg_supergatconv</code></li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=5-geometry-and-point-clouds>5. Geometry and Point Clouds<a href=#5-geometry-and-point-clouds class=hash-link aria-label="Direct link to 5. Geometry and Point Clouds" title="Direct link to 5. Geometry and Point Clouds" translate=no>​</a></h3>
+<ul>
+<li class="">Point-cloud specific: <code>pyg_pointtransformerconv</code>, <code>pyg_gravnetconv</code></li>
+<li class="">Dynamically edge-defined: <code>pyg_feastconv</code>, <code>pyg_leconv</code></li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=6-typical-directly-answerable-questions>6. Typical Directly Answerable Questions<a href=#6-typical-directly-answerable-questions class=hash-link aria-label="Direct link to 6. Typical Directly Answerable Questions" title="Direct link to 6. Typical Directly Answerable Questions" translate=no>​</a></h2>
+<ul>
+<li class="">“Which convolution layer is suitable for node classification on my citation network?”</li>
+<li class="">“How can I define a graph neural network on a heterogeneous graph such as user-product-brand?”</li>
+<li class="">“In scenarios where edge features are very important, such as relation type or strength, which convolution should I choose?”</li>
+<li class="">“How can deep graph networks avoid oversmoothing?”</li>
+<li class="">“Which layer should I use to apply GNNs on point clouds?”</li>
+<li class="">“Is there a simplified version of GCN for quickly building a baseline?”</li>
+<li class="">“How should I choose convolution operators for training on large-scale graphs?”</li>
+<li class="">“Can Transformer-style graph convolution layers handle edge features?”</li>
+<li class="">“What is the difference between GAT and GATv2 attention layers, and when should I upgrade?”</li>
+<li class="">“How can I combine the strengths of different convolutions in one model?”</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=7-operator-checklist>7. Operator Checklist<a href=#7-operator-checklist class=hash-link aria-label="Direct link to 7. Operator Checklist" title="Direct link to 7. Operator Checklist" translate=no>​</a></h2>
+<table><thead><tr><th style=text-align:right>No.<th>Operator Name<th>English Description<tbody><tr><td style=text-align:right>1<td><code>pyg_gcnconv</code><td>Standard graph convolutional network layer (first-order spectral approximation)<tr><td style=text-align:right>2<td><code>pyg_sageconv</code><td>Sample-and-aggregate graph convolution layer (GraphSAGE)<tr><td style=text-align:right>3<td><code>pyg_gatconv</code><td>Graph attention network layer (GAT)<tr><td style=text-align:right>4<td><code>pyg_gatv2conv</code><td>Improved graph attention layer (GATv2)<tr><td style=text-align:right>5<td><code>pyg_transformerconv</code><td>Graph Transformer convolution layer<tr><td style=text-align:right>6<td><code>pyg_resgatedgraphconv</code><td>Residual gated graph convolution layer<tr><td style=text-align:right>7<td><code>pyg_gravnetconv</code><td>GravNet convolution layer (point cloud)<tr><td style=text-align:right>8<td><code>pyg_supergatconv</code><td>Self-supervised enhanced attention graph convolution<tr><td style=text-align:right>9<td><code>pyg_egconv</code><td>Edge-conditioned convolution layer<tr><td style=text-align:right>10<td><code>pyg_pdnconv</code><td>Path-defined network convolution layer<tr><td style=text-align:right>11<td><code>pyg_generalconv</code><td>General configurable graph convolution layer<tr><td style=text-align:right>12<td><code>pyg_hypergraphconv</code><td>Hypergraph convolution layer<tr><td style=text-align:right>13<td><code>pyg_leconv</code><td>Local extremum convolution layer<tr><td style=text-align:right>14<td><code>pyg_clustergcnconv</code><td>Cluster GCN convolution layer (large-scale)<tr><td style=text-align:right>15<td><code>pyg_genconv</code><td>Generalized deep edge convolution layer (generative models)<tr><td style=text-align:right>16<td><code>pyg_filmconv</code><td>Feature-wise linear modulation convolution layer (relation modeling)<tr><td style=text-align:right>17<td><code>pyg_mfconv</code><td>Multi-frequency convolution layer (preferred for heterophilous graphs)<tr><td style=text-align:right>18<td><code>pyg_feastconv</code><td>Feature-similarity attention convolution layer<tr><td style=text-align:right>19<td><code>pyg_pointtransformerconv</code><td>Point-cloud Transformer convolution layer<tr><td style=text-align:right>20<td><code>pyg_heteroconv</code><td>Heterogeneous graph convolution wrapper<tr><td style=text-align:right>21<td><code>pyg_mixhopconv</code><td>Mixed-order convolution layer<tr><td style=text-align:right>22<td><code>pyg_ssgconv</code><td>Self-gated simplified graph convolution layer<tr><td style=text-align:right>23<td><code>pyg_armaconv</code><td>ARMA graph convolution layer (adaptive filtering)<tr><td style=text-align:right>24<td><code>pyg_sgconv</code><td>Simplified graph convolution layer (SGC)<tr><td style=text-align:right>25<td><code>pyg_tagconv</code><td>Topology adaptive graph convolution layer (TAG)</table></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/iDC-NEU/YiGraphDocs/tree/main/docs-site/docs/tutorial-algorithm/gnn.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/YiGraphDocs/en/docs/tutorial-algorithm/sparsifiers><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Sparsifiers Operator Set</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#1-operator-set-overview class="table-of-contents__link toc-highlight">1. Operator Set Overview</a><li><a href=#2-operator-capability-classification class="table-of-contents__link toc-highlight">2. Operator Capability Classification</a><li><a href=#3-general-input-and-output-conventions class="table-of-contents__link toc-highlight">3. General Input and Output Conventions</a><li><a href=#4-detailed-operator-descriptions class="table-of-contents__link toc-highlight">4. Detailed Operator Descriptions</a><ul><li><a href=#1-pyg_gcnconv--graph-convolutional-network-layer class="table-of-contents__link toc-highlight">1. pyg_gcnconv —— Graph Convolutional Network Layer</a><li><a href=#2-pyg_sageconv--graph-sample-and-aggregate-layer class="table-of-contents__link toc-highlight">2. pyg_sageconv —— Graph Sample-and-Aggregate Layer</a><li><a href=#3-pyg_gatconv--graph-attention-network-layer class="table-of-contents__link toc-highlight">3. pyg_gatconv —— Graph Attention Network Layer</a><li><a href=#4-pyg_gatv2conv--graph-attention-network-layer-v2 class="table-of-contents__link toc-highlight">4. pyg_gatv2conv —— Graph Attention Network Layer V2</a><li><a href=#5-pyg_transformerconv--graph-transformer-convolution-layer class="table-of-contents__link toc-highlight">5. pyg_transformerconv —— Graph Transformer Convolution Layer</a><li><a href=#6-pyg_resgatedgraphconv--residual-gated-graph-convolution-layer class="table-of-contents__link toc-highlight">6. pyg_resgatedgraphconv —— Residual Gated Graph Convolution Layer</a><li><a href=#7-pyg_gravnetconv--gravnet-convolution-layer class="table-of-contents__link toc-highlight">7. pyg_gravnetconv —— GravNet Convolution Layer</a><li><a href=#8-pyg_supergatconv--supergat-convolution-layer class="table-of-contents__link toc-highlight">8. pyg_supergatconv —— SuperGAT Convolution Layer</a><li><a href=#9-pyg_egconv--edge-conditioned-convolution-layer class="table-of-contents__link toc-highlight">9. pyg_egconv —— Edge-conditioned Convolution Layer</a><li><a href=#10-pyg_pdnconv--path-defined-network-convolution-layer class="table-of-contents__link toc-highlight">10. pyg_pdnconv —— Path-defined Network Convolution Layer</a><li><a href=#11-pyg_generalconv--general-graph-convolution-layer class="table-of-contents__link toc-highlight">11. pyg_generalconv —— General Graph Convolution Layer</a><li><a href=#12-pyg_hypergraphconv--hypergraph-convolution-layer class="table-of-contents__link toc-highlight">12. pyg_hypergraphconv —— Hypergraph Convolution Layer</a><li><a href=#13-pyg_leconv--local-extremum-convolution-layer class="table-of-contents__link toc-highlight">13. pyg_leconv —— Local Extremum Convolution Layer</a><li><a href=#14-pyg_clustergcnconv--cluster-gcn-convolution-layer class="table-of-contents__link toc-highlight">14. pyg_clustergcnconv —— Cluster GCN Convolution Layer</a><li><a href=#15-pyg_genconv--generalized-edge-convolution-layer class="table-of-contents__link toc-highlight">15. pyg_genconv —— Generalized Edge Convolution Layer</a><li><a href=#16-pyg_filmconv--film-convolution-layer class="table-of-contents__link toc-highlight">16. pyg_filmconv —— FiLM Convolution Layer</a><li><a href=#17-pyg_mfconv--multi-frequency-convolution-layer class="table-of-contents__link toc-highlight">17. pyg_mfconv —— Multi-frequency Convolution Layer</a><li><a href=#18-pyg_feastconv--feature-steered-attention-convolution-layer class="table-of-contents__link toc-highlight">18. pyg_feastconv —— Feature-steered Attention Convolution Layer</a><li><a href=#19-pyg_pointtransformerconv--point-transformer-convolution-layer class="table-of-contents__link toc-highlight">19. pyg_pointtransformerconv —— Point Transformer Convolution Layer</a><li><a href=#20-pyg_heteroconv--heterogeneous-graph-convolution-wrapper class="table-of-contents__link toc-highlight">20. pyg_heteroconv —— Heterogeneous Graph Convolution Wrapper</a><li><a href=#21-pyg_mixhopconv--mixhop-convolution-layer class="table-of-contents__link toc-highlight">21. pyg_mixhopconv —— MixHop Convolution Layer</a><li><a href=#22-pyg_ssgconv--self-gated-simplified-convolution-layer class="table-of-contents__link toc-highlight">22. pyg_ssgconv —— Self-gated Simplified Convolution Layer</a><li><a href=#23-pyg_armaconv--arma-convolution-layer class="table-of-contents__link toc-highlight">23. pyg_armaconv —— ARMA Convolution Layer</a><li><a href=#24-pyg_sgconv--simplified-graph-convolution-layer class="table-of-contents__link toc-highlight">24. pyg_sgconv —— Simplified Graph Convolution Layer</a><li><a href=#25-pyg_tagconv--topology-adaptive-graph-convolution-layer class="table-of-contents__link toc-highlight">25. pyg_tagconv —— Topology Adaptive Graph Convolution Layer</a></ul><li><a href=#5-recommended-usage-guide class="table-of-contents__link toc-highlight">5. Recommended Usage Guide</a><ul><li><a href=#1-quick-start-and-baselines class="table-of-contents__link toc-highlight">1. Quick Start and Baselines</a><li><a href=#2-heterogeneous-and-multi-relation-graphs class="table-of-contents__link toc-highlight">2. Heterogeneous and Multi-relation Graphs</a><li><a href=#3-deep-networks-and-oversmoothing-suppression class="table-of-contents__link toc-highlight">3. Deep Networks and Oversmoothing Suppression</a><li><a href=#4-attention-and-edge-features class="table-of-contents__link toc-highlight">4. Attention and Edge Features</a><li><a href=#5-geometry-and-point-clouds class="table-of-contents__link toc-highlight">5. Geometry and Point Clouds</a></ul><li><a href=#6-typical-directly-answerable-questions class="table-of-contents__link toc-highlight">6. Typical Directly Answerable Questions</a><li><a href=#7-operator-checklist class="table-of-contents__link toc-highlight">7. Operator Checklist</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 AAG</div></div></div></footer></div></body>
