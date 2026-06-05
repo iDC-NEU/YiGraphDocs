@@ -150,27 +150,41 @@ It compresses a large amount of combinatorial structural information in a graph 
 
 ### 3. Graph Theory Research and Teaching
 
-* Verify graph theory theorems and properties: `tutte_polynomial`
-* Analyze structural complexity of small-scale graphs: `tutte_polynomial`
-* Provide theoretical basis for graph classification: `tutte_polynomial`
+* Need to symbolically express graph structure: `tutte_polynomial`
+* Need to demonstrate the relationship between graph polynomials and graph properties: `tutte_polynomial`
+* Need to perform theoretical verification on small-scale graphs: `tutte_polynomial`
+
+### 4. Relationship with Other Operator Sets
+
+* Unlike `Graph Matching`:
+
+  * Graph Matching focuses on whether structures match or contain specific patterns
+  * Graph Polynomials focuses on symbolic expression of overall combinatorial properties
+
+* Unlike `Matching & Coloring`:
+
+  * Matching & Coloring outputs specific matching, covering, or coloring schemes
+  * Graph Polynomials outputs polynomials that can be used for combinatorial property derivation
 
 ---
 
 ## 6. Typical Directly Answerable Questions
 
 * "What is the Tutte polynomial of this graph?"
-* "Can I use a polynomial to characterize the structure of this graph?"
-* "How many spanning trees does this graph have?"
-* "What is the relationship between the Tutte polynomial and the chromatic polynomial?"
-* "Can I use the Tutte polynomial to compare the structural properties of two graphs?"
-* "How can I analyze the reliability of a network using the Tutte polynomial?"
-* "What combinatorial information is encoded in the Tutte polynomial?"
-* "Can the Tutte polynomial help me understand the structure of this graph?"
+* "How can a polynomial characterize the combinatorial structure of this graph?"
+* "What spanning tree, forest, or connectivity-related structural features does this graph have?"
+* "Can the structural complexity of the graph be represented by a single symbolic expression?"
+* "Are the combinatorial structure invariants of two graphs consistent?"
+* "What properties can be derived from the Tutte polynomial of this small graph?"
+* "How can network reliability be analyzed from a graph polynomial perspective?"
+* "Is the structure of this graph suitable for combinatorial property research?"
+* "Can graph coloring, flow, spanning tree, and other properties be uniformly expressed?"
+* "How to generate a polynomial summary for theoretical analysis of graph structure?"
 
 ---
 
 ## 7. Operator Checklist
 
-| No. | Operator Name | English Description |
+| No. | Operator Name | Description |
 | ---: | --- | --- |
 | 1 | `tutte_polynomial` | Compute the Tutte polynomial of a graph |

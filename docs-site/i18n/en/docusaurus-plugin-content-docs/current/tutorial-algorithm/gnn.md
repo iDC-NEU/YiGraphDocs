@@ -659,7 +659,7 @@ Topology Adaptive Graph Convolution uses a weighted sum of adjacency matrices of
 
 ## 7. Operator Checklist
 
-| No. | Operator Name | English Description |
+| No. | Operator Name | Description |
 |---:|---|---|
 | 1 | `pyg_gcnconv` | Standard graph convolutional network layer (first-order spectral approximation) |
 | 2 | `pyg_sageconv` | Sample-and-aggregate graph convolution layer (GraphSAGE) |

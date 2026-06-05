@@ -108,6 +108,6 @@ Randomly rewire the graph through double-edge swaps while strictly preserving th
 
 ## 7. Operator Checklist
 
-| No. | Operator Name | English Description |
+| No. | Operator Name | Description |
 |---:|---|---|
 | 1 | `random_reference` | Generate a random reference graph with the same node set and degree sequence as the given graph while preserving connectivity |

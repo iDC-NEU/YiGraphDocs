@@ -187,6 +187,6 @@ Based on Weisfeiler-Lehman color refinement ideas, generate a structural hash va
 
 ## 8. Operator Checklist
 
-| No. | Operator Name | English Description |
+| No. | Operator Name | Description |
 |---:|---|---|
 | 1 | `weisfeiler_lehman_graph_hash` | Weisfeiler-Lehman Graph Structural Hashing |

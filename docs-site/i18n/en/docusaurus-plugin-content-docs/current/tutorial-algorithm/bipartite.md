@@ -166,6 +166,6 @@ Determine if a graph is bipartite. A bipartite graph requires that nodes in the 
 
 ## 8. Operator List
 
-| No. | Operator Name | Chinese Description |
+| No. | Operator Name | Description |
 |---|---|---|
 | 1 | `is_bipartite` | Determine if graph is bipartite |

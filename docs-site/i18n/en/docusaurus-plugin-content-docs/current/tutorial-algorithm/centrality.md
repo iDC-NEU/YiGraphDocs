@@ -770,7 +770,7 @@ BiRank is a ranking algorithm for bipartite graphs. Through mutual reinforcement
 
 ## 8. Operator Checklist
 
-| No. | Operator Name | English Description |
+| No. | Operator Name | Description |
 |---:|---|---|
 | 1 | `degree_centrality` | Degree centrality |
 | 2 | `in_degree_centrality` | In-degree centrality |

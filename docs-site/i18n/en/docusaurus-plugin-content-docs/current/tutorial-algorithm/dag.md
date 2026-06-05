@@ -246,5 +246,4 @@ Identify v-structures in a DAG, typically in the form `u → v ← w`, where `u`
 | 1 | `is_aperiodic` | Determine whether a directed graph is aperiodic |
 | 2 | `antichains` | Enumerate antichains in a DAG |
 | 3 | `colliders` | Identify collider structures |
-| 3 | `colliders` | Identify collider structures |
 | 4 | `v_structures` | Identify v-structures |

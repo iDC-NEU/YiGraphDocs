@@ -112,6 +112,6 @@ Given a stretch factor `t`, construct a sparse spanner subgraph of the original 
 
 ## 7. Operator Checklist
 
-| No. | Operator Name | English Description |
+| No. | Operator Name | Description |
 |---:|---|---|
 | 1 | `spanner` | Generate a sparse subgraph under a given stretch factor while preserving approximate shortest-path distance properties |

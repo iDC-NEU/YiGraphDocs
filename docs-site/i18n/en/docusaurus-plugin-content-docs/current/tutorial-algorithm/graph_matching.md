@@ -211,7 +211,7 @@ For example:
 
 ## 7. Operator Checklist
 
-| No. | Operator Name | English Description |
+| No. | Operator Name | Description |
 | ---: | --- | --- |
 | 1 | `subgraph_is_monomorphic` | Subgraph Monomorphism Testing |
 | 2 | `tree_isomorphism` | Tree Isomorphism Testing |

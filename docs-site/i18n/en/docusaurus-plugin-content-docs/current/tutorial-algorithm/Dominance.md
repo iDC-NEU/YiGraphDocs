@@ -207,7 +207,7 @@ More intuitively, if `u` dominates certain predecessor nodes on some paths but d
 
 ## 8. Operator Checklist
 
-| No. | Operator Name | English Description |
+| No. | Operator Name | Description |
 |---:|---|---|
 | 1 | `immediate_dominators` | Immediate Dominator Node Calculation |
 | 2 | `dominance_frontiers` | Dominance Frontier Calculation |

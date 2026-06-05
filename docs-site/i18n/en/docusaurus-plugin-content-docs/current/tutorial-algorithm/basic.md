@@ -497,7 +497,7 @@ Calculate the score sequence of each node in a tournament, usually corresponding
 
 ## 7. Operator List
 
-| No. | Operator Name | Chinese Description |
+| No. | Operator Name | Description |
 |---|---|---|
 | 1 | `is_tree` | Determine if tree structure |
 | 2 | `is_forest` | Determine if forest structure |

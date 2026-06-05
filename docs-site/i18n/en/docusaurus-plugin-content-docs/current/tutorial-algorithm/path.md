@@ -745,7 +745,7 @@ Find a path passing through each node in graph exactly once. Unlike Eulerian pat
 
 ## 8. Operator Checklist
 
-| No. | Operator Name | English Description |
+| No. | Operator Name | Description |
 |---:|---|---|
 | 1 | `find_cycle` | Find a cycle in the graph |
 | 2 | `shortest_path` | General shortest path |

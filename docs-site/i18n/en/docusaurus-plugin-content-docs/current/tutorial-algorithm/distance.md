@@ -53,32 +53,32 @@ The Distance & Measures operator set focuses on **global distance structure, cen
 
 ## II. Operator Capability Classification
 
-| Capability Type                     | Corresponding Operator                           | Description                                                        |
-|-------------------------------------|--------------------------------------------------|--------------------------------------------------------------------|
-| Node farthest distance              | `eccentricity`                                   | Distance to farthest reachable node                                 |
-| Graph radius                        | `radius`                                         | Minimum eccentricity in the graph                                   |
-| Graph diameter                      | `diameter`                                       | Maximum eccentricity in the graph                                   |
-| Graph center                        | `center`                                         | Set of nodes with minimum eccentricity                              |
-| Graph periphery                     | `periphery`                                      | Set of nodes with eccentricity equal to diameter                    |
-| Graph barycenter                    | `barycenter`                                     | Set of nodes with minimum sum of shortest‑path distances            |
-| Harmonic diameter                   | `harmonic_diameter`                              | Effective distance scale using harmonic mean                        |
-| Wiener index                        | `wiener_index`                                   | Sum of all‑pairs shortest‑path distances                            |
-| Resistance distance                 | `resistance_distance`                            | Resistance distance between node pairs                              |
-| Effective graph resistance          | `effective_graph_resistance`                     | Global effective resistance of the graph                            |
-| Kemeny constant                     | `kemeny_constant`                                | Mean hitting time to stationarity for random walks                  |
-| Degree assortativity coefficient    | `degree_assortativity_coefficient`               | Correlation of degrees between connected nodes                      |
-| Degree Pearson correlation          | `degree_pearson_correlation_coefficient`         | Pearson correlation of degrees across edges                         |
-| Attribute assortativity coefficient | `attribute_assortativity_coefficient`            | Homophily/heterophily for categorical attributes                    |
-| Numeric assortativity coefficient   | `numeric_assortativity_coefficient`              | Correlation of numeric attributes across edges                      |
-| Average neighbor degree             | `average_neighbor_degree`                        | Average degree of neighbors for each node                           |
-| Average degree connectivity         | `average_degree_connectivity`                    | For each degree, average neighbor degree                            |
-| Attribute mixing matrix             | `attribute_mixing_matrix`                        | Matrix of connections between attribute classes                     |
-| Degree mixing matrix                | `degree_mixing_matrix`                           | Matrix of connections between degree values                         |
-| Attribute mixing dictionary         | `attribute_mixing_dict`                          | Dictionary version of attribute mixing                              |
-| Degree mixing dictionary            | `degree_mixing_dict`                             | Dictionary version of degree mixing                                 |
-| Generic mixing dictionary           | `mixing_dict`                                    | Build mixing dictionary from arbitrary endpoint value pairs         |
-| Node attribute XY generator         | `node_attribute_xy`                              | Generate (attribute value, attribute value) pairs for each edge     |
-| Node degree XY generator            | `node_degree_xy`                                 | Generate (degree, degree) pairs for each edge                       |
+| Capability | Operator | Description |
+| --- | --- | --- |
+| Graph diameter | `diameter` | Compute maximum eccentricity |
+| Graph radius | `radius` | Compute minimum eccentricity |
+| Graph center | `center` | Return center nodes with minimum eccentricity |
+| Graph periphery | `periphery` | Return peripheral nodes with eccentricity equal to diameter |
+| Node farthest distance | `eccentricity` | Compute distance to farthest reachable node |
+| Wiener index | `wiener_index` | Compute sum of all-pairs shortest path distances |
+| Degree assortativity | `degree_assortativity_coefficient` | Measure correlation of degrees across edges |
+| Attribute assortativity | `attribute_assortativity_coefficient` | Measure tendency of same-category nodes to connect |
+| Efficiency | `efficiency` | Compute inverse of shortest path distance between node pairs |
+| Average neighbor degree | `average_neighbor_degree` | Compute average degree of each node's neighbors |
+| Average degree connectivity | `average_degree_connectivity` | Compute average neighbor degree by degree group |
+| Communicability | `communicability` | Quantify communication strength considering all walks |
+| Node redundancy | `node_redundancy` | Measure indirect interconnection of a node's neighbors in bipartite graphs |
+| Closeness vitality | `closeness_vitality` | Evaluate node contribution to global compactness |
+| Non-randomness | `non_randomness` | Quantify structural deviation from random graphs |
+| Rich-club coefficient | `rich_club_coefficient` | Measure edge density among high-degree nodes |
+| Reciprocity | `reciprocity` | Measure tendency toward mutual connections in directed graphs |
+| Resistance distance | `resistance_distance` | Compute resistance distance between node pairs |
+| Flow hierarchy | `flow_hierarchy` | Measure hierarchical degree of directed networks |
+| Graph barycenter | `barycenter` | Return nodes minimizing total shortest-path distance |
+| Estrada index | `estrada_index` | Scalar spectral measure of global compactness |
+| Girth | `girth` | Return length of shortest cycle |
+| Harmonic diameter | `harmonic_diameter` | Measure effective distance scale using harmonic mean |
+| Kemeny constant | `kemeny_constant` | Measure average access characteristics of random walk to steady state |
 
 ---
 
@@ -106,27 +106,31 @@ The Distance & Measures operator set focuses on **global distance structure, cen
 
 ## IV. Detailed Operator Descriptions
 
-### 1. eccentricity – Eccentricity
+### 1. diameter – Graph Diameter
 
 **Description**  
-For each node, computes the maximum shortest‑path distance to any reachable node. A larger eccentricity means the node is more peripheral.
+The maximum eccentricity among all nodes. It is the longest shortest‑path distance between any two nodes.
 
 **Product Value**
-- Measures worst‑case reachability distance
-- Identifies remote nodes and coverage blind spots
-- Foundation for radius, diameter, center, periphery
+- Measures the maximum span of the network
+- Indicates worst‑case propagation, tracking, or collaboration cost
+- Allows structural comparison across networks
 
 **Typical Scenarios**
-- Network coverage analysis
-- Service entry point selection
-- Tracking cost estimation
-- Remote node identification
+- Social network span analysis
+- Maximum detour distance in transportation
+- Maximum hierarchical distance in supply chains
+- Upper bound of communication latency
 - Topology health check
 
 **Applicability & Characteristics**
 - Graph type: Directed / Undirected
-- Output: `dict[node → eccentricity]` or single value
-- Note: For disconnected graphs, interpret per component or reachable subgraph
+- Output: numeric
+- Interpret carefully for disconnected graphs
+
+---
+
+
 
 ---
 
@@ -154,31 +158,11 @@ The minimum eccentricity among all nodes. It is the smallest possible worst‑ca
 
 ---
 
-### 3. diameter – Graph Diameter
 
-**Description**  
-The maximum eccentricity among all nodes. It is the longest shortest‑path distance between any two nodes.
-
-**Product Value**
-- Measures the maximum span of the network
-- Indicates worst‑case propagation, tracking, or collaboration cost
-- Allows structural comparison across networks
-
-**Typical Scenarios**
-- Social network span analysis
-- Maximum detour distance in transportation
-- Maximum hierarchical distance in supply chains
-- Upper bound of communication latency
-- Topology health check
-
-**Applicability & Characteristics**
-- Graph type: Directed / Undirected
-- Output: numeric
-- Interpret carefully for disconnected graphs
 
 ---
 
-### 4. center – Graph Center
+### 3. center – Graph Center
 
 **Description**  
 Returns the set of nodes whose eccentricity equals the graph radius. These are the structural centers.
@@ -202,7 +186,11 @@ Returns the set of nodes whose eccentricity equals the graph radius. These are t
 
 ---
 
-### 5. periphery – Graph Periphery
+
+
+---
+
+### 4. periphery – Graph Periphery
 
 **Description**  
 Returns the set of nodes whose eccentricity equals the graph diameter. These nodes lie on the structural boundary.
@@ -226,55 +214,39 @@ Returns the set of nodes whose eccentricity equals the graph diameter. These nod
 
 ---
 
-### 6. barycenter – Graph Barycenter
 
-**Description**  
-Returns the set of nodes that minimise the sum of shortest‑path distances to all other nodes. Unlike `center` (which minimises worst‑case distance), `barycenter` minimises total distance cost.
-
-**Product Value**
-- Selects nodes with smallest average access cost
-- Suitable for logistics hubs, coordination centres, or service placement
-- Complements `center` by considering total cost instead of worst case
-
-**Typical Scenarios**
-- Warehouse / logistics center location
-- Organisational coordination hub analysis
-- Network service node selection
-- Average access cost optimisation
-- Road network center identification
-
-**Applicability & Characteristics**
-- Graph type: Typically for connected graphs
-- Output: list of barycenter nodes
-- Can use `weight` for weighted shortest paths
 
 ---
 
-### 7. harmonic_diameter – Harmonic Diameter
+### 5. eccentricity – Eccentricity
 
 **Description**  
-Uses the harmonic mean of pairwise distances to measure the effective distance scale of the graph. More robust to extreme distances or disconnected components than ordinary diameter.
+For each node, computes the maximum shortest‑path distance to any reachable node. A larger eccentricity means the node is more peripheral.
 
 **Product Value**
-- Provides a robust global distance measure
-- Suitable for graphs that are not fully connected or have local fractures
-- Allows comparison of overall reachability efficiency
+- Measures worst‑case reachability distance
+- Identifies remote nodes and coverage blind spots
+- Foundation for radius, diameter, center, periphery
 
 **Typical Scenarios**
-- Large‑scale social network distance analysis
-- Effective distance in disconnected graphs
-- Compactness comparison before/after network evolution
-- Propagation efficiency assessment
-- Topology optimisation evaluation
+- Network coverage analysis
+- Service entry point selection
+- Tracking cost estimation
+- Remote node identification
+- Topology health check
 
 **Applicability & Characteristics**
 - Graph type: Directed / Undirected
-- Output: numeric
-- Focuses on overall effective distance rather than the single farthest pair
+- Output: `dict[node → eccentricity]` or single value
+- Note: For disconnected graphs, interpret per component or reachable subgraph
 
 ---
 
-### 8. wiener_index – Wiener Index
+
+
+---
+
+### 6. wiener_index – Wiener Index
 
 **Description**  
 Sum of shortest‑path distances over all unordered node pairs. Measures the global distance cost of the graph.
@@ -298,79 +270,11 @@ Sum of shortest‑path distances over all unordered node pairs. Measures the glo
 
 ---
 
-### 9. resistance_distance – Resistance Distance
 
-**Description**  
-Treats the graph as an electrical network and computes the equivalent resistance distance between two nodes. It accounts for multiple parallel paths (redundancy) in addition to the shortest path.
-
-**Product Value**
-- Measures global connection strength between nodes
-- Reflects path redundancy influence on proximity
-- More nuanced than simple shortest‑path distance
-
-**Typical Scenarios**
-- Robustness analysis
-- Power grid / communication network structure analysis
-- Node similarity measurement
-- Multi‑path redundancy assessment
-- Graph kernel feature construction
-
-**Applicability & Characteristics**
-- Graph type: Typically undirected, connected
-- Output: numeric resistance distance
-- Smaller distance means stronger overall connectivity
 
 ---
 
-### 10. effective_graph_resistance – Effective Graph Resistance
-
-**Description**  
-Computes the total effective resistance of the whole graph, a global measure of the graph’s resistance (inverse of robustness).
-
-**Product Value**
-- Measures overall connectivity resilience
-- Reflects path redundancy and structural tightness
-- Allows robustness comparison across networks
-
-**Typical Scenarios**
-- Power network resilience analysis
-- Communication network robustness assessment
-- Transportation network redundancy analysis
-- Graph structure optimisation comparison
-- Network vulnerability analysis
-
-**Applicability & Characteristics**
-- Graph type: Typically undirected, connected
-- Output: numeric
-- Lower values indicate tighter connectivity and stronger redundancy
-
----
-
-### 11. kemeny_constant – Kemeny Constant
-
-**Description**  
-The Kemeny constant of a random walk on the graph. It measures the expected time to reach stationarity, averaged over starting nodes.
-
-**Product Value**
-- Quantifies mixing efficiency of random walks
-- Supports diffusion, access, and convergence analysis
-- Serves as a global reachability and stability measure
-
-**Typical Scenarios**
-- Random walk model analysis
-- Web page access modelling
-- Random walk‑based recommendation recall
-- Diffusion process stability analysis
-- Markov chain network evaluation
-
-**Applicability & Characteristics**
-- Graph type: Typically connected graphs (or suitable directed graphs)
-- Output: numeric
-- Related to random walks, transition matrices, and stationary analysis
-
----
-
-### 12. degree_assortativity_coefficient – Degree Assortativity Coefficient
+### 7. degree_assortativity_coefficient – Degree Assortativity Coefficient
 
 **Description**  
 Measures the correlation of degrees between connected nodes.
@@ -397,31 +301,11 @@ Measures the correlation of degrees between connected nodes.
 
 ---
 
-### 13. degree_pearson_correlation_coefficient – Degree Pearson Correlation Coefficient
 
-**Description**  
-Pearson correlation of degrees across edges. Equivalent to degree assortativity in the undirected case.
-
-**Product Value**
-- Standard correlation view of degree mixing
-- Suitable for statistical analysis and cross‑network comparison
-- Can be cross‑checked with degree assortativity
-
-**Typical Scenarios**
-- Degree correlation analysis
-- Statistical modelling of network structure
-- High‑degree node connection preference
-- Core‑periphery identification
-- Assortativity comparison across networks
-
-**Applicability & Characteristics**
-- Graph type: Directed / Undirected
-- Output: float
-- Interpretation similar to degree assortativity coefficient
 
 ---
 
-### 14. attribute_assortativity_coefficient – Attribute Assortativity Coefficient
+### 8. attribute_assortativity_coefficient – Attribute Assortativity Coefficient
 
 **Description**  
 Measures whether nodes with the same categorical attribute value are more likely to be connected.
@@ -448,31 +332,39 @@ Measures whether nodes with the same categorical attribute value are more likely
 
 ---
 
-### 15. numeric_assortativity_coefficient – Numeric Assortativity Coefficient
 
-**Description**  
-Measures whether the numeric attribute values (e.g., age, score, risk level) of connected nodes are correlated (Pearson correlation).
-
-**Product Value**
-- Supports connection preference analysis for continuous or ordinal attributes
-- Determines whether similar numeric values tend to connect
-- Suitable for risk, grade, activity, size, etc.
-
-**Typical Scenarios**
-- Do accounts with similar risk scores connect?
-- Do users of similar ages follow each other?
-- Do nodes with similar activity levels cluster?
-- Do companies of similar size trade?
-- Node score vs connection preference analysis
-
-**Applicability & Characteristics**
-- Graph type: Directed / Undirected
-- Required parameter: `attribute`
-- Output: float correlation
 
 ---
 
-### 16. average_neighbor_degree – Average Neighbor Degree
+### 9. efficiency
+
+**Description**
+Compute the efficiency between pairs of nodes in a graph, defined as the multiplicative inverse of the shortest path distance. Higher efficiency means information or influence travels more easily between two nodes. If two nodes are unreachable, efficiency is 0.
+
+**Product Value**
+
+* Quantify how easily information propagates between nodes
+* Support local connectivity and fault-tolerance analysis
+* Enable cross-network reachability comparison
+
+**Typical Scenarios**
+
+* Social network information propagation efficiency
+* Biological network connection resilience assessment
+* Transportation network accessibility comparison
+* Infrastructure network redundancy analysis
+* Before/after network optimization evaluation
+
+**Applicability & Characteristics**
+
+* Graph type: undirected
+* Output: pairwise efficiency value or global average efficiency
+* Note: edge weights are ignored; all edges treated as equal
+
+
+---
+
+### 10. average_neighbor_degree – Average Neighbor Degree
 
 **Description**  
 For each node, computes the average degree of its neighbors. Indicates whether a node is connected to high‑activity or low‑activity neighbors.
@@ -496,7 +388,11 @@ For each node, computes the average degree of its neighbors. Indicates whether a
 
 ---
 
-### 17. average_degree_connectivity – Average Degree Connectivity
+
+
+---
+
+### 11. average_degree_connectivity – Average Degree Connectivity
 
 **Description**  
 Groups nodes by their degree and computes, for each degree value, the average degree of their neighbors. Shows what degrees nodes of a given degree tend to connect to.
@@ -520,299 +416,501 @@ Groups nodes by their degree and computes, for each degree value, the average de
 
 ---
 
-### 18. attribute_mixing_matrix – Attribute Mixing Matrix
 
-**Description**  
-Constructs a matrix where rows and columns correspond to attribute values, and entries count (or proportion) of edges between attribute classes.
+
+---
+
+### 12. communicability
+
+**Description**
+Quantify the communication strength between node pairs by considering all walks of different lengths, not just shortest paths. From a spectral perspective, communicability C(u, v) = sum_j [phi_j(u) * phi_j(v) * exp(lambda_j)], integrating contributions from walks of all lengths.
 
 **Product Value**
-- Converts attribute connection preference into a matrix
-- Supports quantitative analysis of inter‑class connection frequencies
-- Foundational for assortativity and homophily analysis
+
+* Provide a more comprehensive proximity measure than shortest paths
+* Capture latent interactions and indirect relationships
+* Suitable for propagation potential analysis in complex networks
 
 **Typical Scenarios**
-- Inter‑department collaboration matrix
-- Risk level connection matrix
-- User type interaction matrix
-- Industry transaction relation matrix
-- Community connection preference analysis
+
+* Social network latent interaction discovery
+* Biological network protein functional association
+* Transportation network overall accessibility
+* Complex system global information propagation
+* Node similarity and graph kernel methods
+
+**Applicability & Characteristics**
+
+* Graph type: simple undirected graph
+* Output: nested dictionary dict[u][v] -> communicability_value
+* Complexity: dominated by adjacency matrix spectral decomposition; suitable for small-to-medium networks
+
+
+---
+
+### 13. node_redundancy
+
+**Description**
+Compute the redundancy coefficient of nodes in a bipartite graph, measuring how much a node's neighbors are already interconnected through other nodes. A higher redundancy coefficient means the node's removal has less impact on connectivity.
+
+**Product Value**
+
+* Identify redundant nodes with minimal unique connectivity contribution
+* Support bottleneck detection and structural optimization
+* Enable recommendation diversity improvement
+
+**Typical Scenarios**
+
+* Recommendation system user preference overlap analysis
+* Co-authorship network repeated collaboration detection
+* Project network team resource optimization
+* Ecological network keystone species identification
+* Supply chain redundancy analysis
+
+**Applicability & Characteristics**
+
+* Graph type: bipartite graph
+* Output: dict[node -> redundancy_value], range [0, 1]
+* Complexity: O(sum_v deg(v)^2)
+
+
+---
+
+### 14. closeness_vitality
+
+**Description**
+Evaluate a node's structural importance by measuring how much the total pairwise distance in the network changes after removing that node. A larger vitality value indicates greater contribution to maintaining global compactness.
+
+**Product Value**
+
+* Identify nodes most critical for global distance efficiency
+* Support critical infrastructure and hub node assessment
+* Enable network vulnerability and resilience analysis
+
+**Typical Scenarios**
+
+* Transportation network critical station identification
+* Communication network core node assessment
+* Infrastructure network vulnerability analysis
+* Dependency graph critical module identification
+* Citation/collaboration network global reachability analysis
+
+**Applicability & Characteristics**
+
+* Graph type: strongly connected graph
+* Output: dict[node -> vitality_value] or single-node value
+* Note: removing a node may disconnect the graph, resulting in negative infinity
+* Can reuse pre-computed wiener_index for acceleration
+
+
+---
+
+### 15. non_randomness
+
+**Description**
+Quantify how much a graph's structure deviates from a random graph. Returns two values: total non-randomness and relative non-randomness. Relative non-randomness closer to 0 indicates the graph resembles a random graph; larger values indicate stronger structural regularity or community organization.
+
+**Product Value**
+
+* Determine whether a network exhibits meaningful structural organization
+* Support community structure strength assessment
+* Distinguish real networks from random connectivity
+
+**Typical Scenarios**
+
+* Social network community organization assessment
+* Network structural randomness comparison
+* Pre/post perturbation structural change analysis
+* Graph structural pattern recognition
+* Weighted edge impact on structural regularity analysis
+
+**Applicability & Characteristics**
+
+* Graph type: undirected, connected, no self-loops, non-empty
+* Output: (non-randomness, relative non-randomness) tuple
+* Optional community count k; auto-estimated if not specified
+
+
+---
+
+### 16. rich_club_coefficient
+
+**Description**
+Compute the edge density among nodes with degree greater than k for each threshold k. If high-degree nodes are unusually densely connected, a "rich club" phenomenon exists. Can be normalized against a random graph to assess statistical significance.
+
+**Product Value**
+
+* Determine whether core nodes form a tightly-knit group
+* Support hierarchical structure and elite core analysis
+* Enable identification of network structural backbone
+
+**Typical Scenarios**
+
+* Scientific collaboration network prolific author interconnection
+* Autonomous system network top-tier core assessment
+* Brain network hub region connectivity analysis
+* Airline network hub airport interconnection
+* Protein interaction network high-degree protein analysis
+
+**Applicability & Characteristics**
+
+* Graph type: undirected, no parallel edges or self-loops
+* Output: dict[k -> phi(k)]
+* Optional normalization (comparison with same-degree-distribution random graph)
+* Normalization uses Q * m double-edge swaps to generate null model
+
+
+---
+
+### 17. reciprocity
+
+**Description**
+Measure the tendency of node pairs in a directed network to form mutual connections. Global reciprocity is the fraction of edges that have a reciprocal counterpart. Node-level reciprocity measures the symmetry of incoming and outgoing edges.
+
+**Product Value**
+
+* Assess symmetry of relationships in directed networks
+* Support hierarchical vs. peer structure differentiation
+* Evaluate balance of social interactions
+
+**Typical Scenarios**
+
+* Social platform mutual follow analysis
+* Email/messaging network communication symmetry
+* International trade network bilateral relationship analysis
+* Trust/rating network reciprocity quantification
+* Ecological food web species mutual interaction analysis
+
+**Applicability & Characteristics**
+
+* Graph type: directed graph (non-multigraph)
+* Output: global float or node-level dict[node -> reciprocity]
+* Note: reciprocity is undefined for isolated nodes
+
+
+---
+
+### 18. resistance_distance – Resistance Distance
+
+**Description**  
+Treats the graph as an electrical network and computes the equivalent resistance distance between two nodes. It accounts for multiple parallel paths (redundancy) in addition to the shortest path.
+
+**Product Value**
+- Measures global connection strength between nodes
+- Reflects path redundancy influence on proximity
+- More nuanced than simple shortest‑path distance
+
+**Typical Scenarios**
+- Robustness analysis
+- Power grid / communication network structure analysis
+- Node similarity measurement
+- Multi‑path redundancy assessment
+- Graph kernel feature construction
+
+**Applicability & Characteristics**
+- Graph type: Typically undirected, connected
+- Output: numeric resistance distance
+- Smaller distance means stronger overall connectivity
+
+---
+
+
+
+---
+
+### 19. flow_hierarchy
+
+**Description**
+Compute the fraction of edges in a directed graph that do not participate in cycles, measuring the degree of hierarchical organization. Higher values indicate a structure closer to a strict DAG; lower values indicate more feedback loops.
+
+**Product Value**
+
+* Quantify hierarchical degree of directed networks
+* Assess whether dependencies approach DAG structure
+* Analyze command chains, citation chains, and hierarchical structures
+
+**Typical Scenarios**
+
+* Citation network hierarchical structure analysis
+* Command chain hierarchy assessment
+* Dependency graph cycle detection
+* Supply chain hierarchy analysis
+* Influence network feedback loop quantification
+
+**Applicability & Characteristics**
+
+* Graph type: directed graph / multi-directed graph
+* Output: float, range [0, 1]
+* Complexity: based on strongly connected components, approximately O(m)
+* Optional edge weight parameter
+
+
+---
+
+### 20. barycenter – Graph Barycenter
+
+**Description**  
+Returns the set of nodes that minimise the sum of shortest‑path distances to all other nodes. Unlike `center` (which minimises worst‑case distance), `barycenter` minimises total distance cost.
+
+**Product Value**
+- Selects nodes with smallest average access cost
+- Suitable for logistics hubs, coordination centres, or service placement
+- Complements `center` by considering total cost instead of worst case
+
+**Typical Scenarios**
+- Warehouse / logistics center location
+- Organisational coordination hub analysis
+- Network service node selection
+- Average access cost optimisation
+- Road network center identification
+
+**Applicability & Characteristics**
+- Graph type: Typically for connected graphs
+- Output: list of barycenter nodes
+- Can use `weight` for weighted shortest paths
+
+---
+
+
+
+---
+
+### 21. estrada_index
+
+**Description**
+Compute the Estrada index of a simple undirected graph by summing the exponentials of the adjacency matrix eigenvalues. It is a spectral descriptor reflecting global compactness, communicability, and structural folding.
+
+**Product Value**
+
+* Provide a single scalar measure of spectral compactness
+* Support cross-network global structure comparison
+* Commonly used in molecular graph analysis and network topology comparison
+
+**Typical Scenarios**
+
+* Molecular graph structural compactness comparison
+* Protein network global structure comparison
+* Infrastructure network reinforcement effect evaluation
+* Candidate graph structure ranking
+* Network evolution trend tracking
+
+**Applicability & Characteristics**
+
+* Graph type: simple undirected graph
+* Output: float
+* Complexity: O(n^3), dominated by matrix eigendecomposition
+
+
+---
+
+### 22. girth
+
+**Description**
+Return the length of the shortest cycle in the graph. If the graph is acyclic (e.g., a tree or forest), the result is infinity. Girth measures the minimum scale of cyclic dependency in a graph.
+
+**Product Value**
+
+* Determine whether short cycles exist in a graph
+* Support tree-like vs. cyclic graph differentiation
+* Enable local cyclic structure comparison across networks
+
+**Typical Scenarios**
+
+* Fraud transaction network shortest suspicious loop detection
+* Power grid topology shortest loop analysis
+* Social rumor network short cycle acceleration assessment
+* Graph local cycle comparison
+* Dependency graph cyclic dependency shortest path analysis
+
+**Applicability & Characteristics**
+
+* Graph type: undirected graph
+* Output: integer or math.inf
+* Complexity: O(nm)
+
+
+---
+
+### 23. harmonic_diameter – Harmonic Diameter
+
+**Description**  
+Uses the harmonic mean of pairwise distances to measure the effective distance scale of the graph. More robust to extreme distances or disconnected components than ordinary diameter.
+
+**Product Value**
+- Provides a robust global distance measure
+- Suitable for graphs that are not fully connected or have local fractures
+- Allows comparison of overall reachability efficiency
+
+**Typical Scenarios**
+- Large‑scale social network distance analysis
+- Effective distance in disconnected graphs
+- Compactness comparison before/after network evolution
+- Propagation efficiency assessment
+- Topology optimisation evaluation
 
 **Applicability & Characteristics**
 - Graph type: Directed / Undirected
-- Required parameter: `attribute`
-- Output: matrix (list of lists or numpy array)
-- Can be normalized
+- Output: numeric
+- Focuses on overall effective distance rather than the single farthest pair
 
 ---
 
-### 19. degree_mixing_matrix – Degree Mixing Matrix
+
+
+---
+
+### 24. kemeny_constant – Kemeny Constant
 
 **Description**  
-Constructs a matrix where rows and columns correspond to degree values, and entries count (or proportion) of edges between nodes of those degrees.
+The Kemeny constant of a random walk on the graph. It measures the expected time to reach stationarity, averaged over starting nodes.
 
 **Product Value**
-- Shows connection patterns across degree layers
-- Supports assortativity and core‑periphery analysis
-- Useful for statistical modelling of network structure
+- Quantifies mixing efficiency of random walks
+- Supports diffusion, access, and convergence analysis
+- Serves as a global reachability and stability measure
 
 **Typical Scenarios**
-- High‑degree node connection preference analysis
-- Core‑periphery connectivity pattern analysis
-- Visualisation of assortativity/disassortativity
-- Hierarchical degree structure modelling
-- Topology comparison
+- Random walk model analysis
+- Web page access modelling
+- Random walk‑based recommendation recall
+- Diffusion process stability analysis
+- Markov chain network evaluation
 
 **Applicability & Characteristics**
-- Graph type: Directed / Undirected
-- Output: matrix
-- For directed graphs, can specify `x` and `y` degree types
+- Graph type: Typically connected graphs (or suitable directed graphs)
+- Output: numeric
+- Related to random walks, transition matrices, and stationary analysis
 
 ---
 
-### 20. attribute_mixing_dict – Attribute Mixing Dictionary
 
-**Description**  
-Dictionary representation of attribute mixing, with keys as `(attr_u, attr_v)` and values as counts or proportions. Sparse version of the mixing matrix.
-
-**Product Value**
-- Easy inspection of specific attribute pair connections
-- Suitable for sparse categories or rule extraction
-- Lightweight alternative to mixing matrix
-
-**Typical Scenarios**
-- Category connection frequency counting
-- Department‑department connection lookup
-- Risk type interaction analysis
-- Multi‑label node relation analysis
-- Attribute preference rule extraction
-
-**Applicability & Characteristics**
-- Graph type: Directed / Undirected
-- Required parameter: `attribute`
-- Output: nested dictionary
-- Can be normalized
 
 ---
-
-### 21. degree_mixing_dict – Degree Mixing Dictionary
-
-**Description**  
-Dictionary representation of degree mixing, keys as `(deg_u, deg_v)` with counts or proportions.
-
-**Product Value**
-- Direct view of degree‑pair connection distribution
-- Supports assortativity, disassortativity, and hierarchical analysis
-- Convenient for custom statistics or rule extraction
-
-**Typical Scenarios**
-- Degree‑layer connection statistics
-- High‑low degree connection analysis
-- Core‑periphery structural interpretation
-- Network generation model parameter analysis
-- Topological connection preference modelling
-
-**Applicability & Characteristics**
-- Graph type: Directed / Undirected
-- Output: nested dictionary
-- For directed graphs, can specify degree types for source/target
-
----
-
-### 22. mixing_dict – Generic Mixing Dictionary
-
-**Description**  
-Given a sequence of endpoint value pairs (generated from edges), builds a mixing dictionary. A generic tool underlying attribute and degree mixing.
-
-**Product Value**
-- Supports custom mixing statistics beyond attributes/degrees
-- Extensible for other node properties
-- Builds custom structural indicators
-
-**Typical Scenarios**
-- Custom category mixing statistics
-- Edge endpoint label pair counting
-- Connection preference rule generation
-- Graph feature engineering
-- Relational pattern modelling
-
-**Applicability & Characteristics**
-- Input: Iterable of `(value_u, value_v)` pairs
-- Output: mixing dictionary
-- Optional normalisation
-
----
-
-### 23. node_attribute_xy – Node Attribute XY Generator
-
-**Description**  
-Generates, for each edge, the pair of attribute values of its two endpoints. Used as input for attribute mixing matrix/dictionary or custom assortativity calculations.
-
-**Product Value**
-- Provides attribute pairing data for further analysis
-- Supports custom connection preference analysis
-- Data preparation step for downstream statistics
-
-**Typical Scenarios**
-- Generating department‑department pairs
-- Risk level edge pairs
-- User type interaction pairs
-- Custom attribute assortativity computation
-- Preprocessing for mixing matrix construction
-
-**Applicability & Characteristics**
-- Graph type: Directed / Undirected
-- Required parameter: `attribute`
-- Output: iterator of `(attr_u, attr_v)` pairs
-
----
-
-### 24. node_degree_xy – Node Degree XY Generator
-
-**Description**  
-Generates, for each edge, the pair of degrees of its two endpoints. Used as input for degree mixing matrix/dictionary or custom degree correlation analysis.
-
-**Product Value**
-- Provides degree pairing data for analysis
-- Supports custom degree‑based statistics
-- Foundation for degree mixing and assortativity
-
-**Typical Scenarios**
-- High‑degree node connection pattern analysis
-- Custom degree assortativity calculation
-- Degree mixing matrix construction
-- Core‑periphery structure analysis
-- Graph statistical feature engineering
-
-**Applicability & Characteristics**
-- Graph type: Directed / Undirected
-- Output: iterator of `(deg_u, deg_v)` pairs
-- For directed graphs, can specify `x` and `y` degree types
-
----
-
 ## V. Recommended Usage Guide
 
 ### 1. Distance and Span Analysis
-- Node farthest distance: `eccentricity`
-- Maximum network span: `diameter`
-- Best‑center worst‑case distance: `radius`
-- Structural center nodes: `center`
-- Structural periphery nodes: `periphery`
-- Overall distance cost: `wiener_index`
-- Robust effective distance: `harmonic_diameter`
 
-### 2. Centrality and Overall Cost
-- Nodes with smallest total distance: `barycenter`
-- Nodes with smallest worst‑case distance: `center`
-- Compare global distance cost: `wiener_index`
-- Average‑sense reachability efficiency: `harmonic_diameter`
+* Compute node farthest distance: `eccentricity`
+* Compute network maximum span: `diameter`
+* Compute optimal center's worst-case distance: `radius`
+* Find structural center nodes: `center`
+* Find structural peripheral nodes: `periphery`
+* Measure overall distance cost: `wiener_index`
+* Use a more robust effective distance scale: `harmonic_diameter`
 
-### 3. Graph Resistance and Random Walk
-- Pairwise resistance distance: `resistance_distance`
-- Global effective resistance: `effective_graph_resistance`
-- Random‑walk mixing efficiency: `kemeny_constant`
+### 2. Efficiency and Communicability Analysis
 
-### 4. Assortativity and Connection Preference
-- High‑degree clustering: `degree_assortativity_coefficient`
-- Degree Pearson correlation: `degree_pearson_correlation_coefficient`
-- Categorical homophily: `attribute_assortativity_coefficient`
-- Numeric attribute correlation: `numeric_assortativity_coefficient`
+* Compute pairwise efficiency: `efficiency`
+* Quantify comprehensive communication strength: `communicability`
+* Compute resistance distance between nodes: `resistance_distance`
 
-### 5. Neighbor Degree Structure
-- Node‑level average neighbor degree: `average_neighbor_degree`
-- Degree‑level average neighbor degree: `average_degree_connectivity`
+### 3. Center Position and Global Importance
 
-### 6. Mixing Matrices and Dictionaries
-- Attribute mixing matrix: `attribute_mixing_matrix`
-- Degree mixing matrix: `degree_mixing_matrix`
-- Attribute mixing dictionary: `attribute_mixing_dict`
-- Degree mixing dictionary: `degree_mixing_dict`
-- Custom mixing: `mixing_dict`
+* Find minimum total distance node: `barycenter`
+* Evaluate node contribution to global compactness: `closeness_vitality`
+* Compute global spectral compactness: `estrada_index`
 
-### 7. Edge Endpoint Pair Generation
-- Attribute value pairs: `node_attribute_xy`
-- Degree value pairs: `node_degree_xy`
+### 4. Assortativity and Connection Preference Analysis
+
+* Determine whether high-degree nodes interconnect: `degree_assortativity_coefficient`
+* Determine whether same-category nodes homophilically connect: `attribute_assortativity_coefficient`
+* View average degree of each node's neighbors: `average_neighbor_degree`
+* View average neighbor degree by degree group: `average_degree_connectivity`
+
+### 5. Structural Regularity and Hierarchy Analysis
+
+* Determine deviation from random graph structure: `non_randomness`
+* Determine whether high-degree nodes form a tight group: `rich_club_coefficient`
+* Measure hierarchical degree of directed networks: `flow_hierarchy`
+* Measure tendency toward mutual connections: `reciprocity`
+
+### 6. Cycle and Redundancy Analysis
+
+* Find shortest cycle length: `girth`
+* Analyze indirect neighbor interconnection in bipartite graphs: `node_redundancy`
+
+### 7. Random Walk and Steady-State Analysis
+
+* Analyze random walk steady-state access characteristics: `kemeny_constant`
 
 ---
 
-## VI. Typical Questions That Can Be Directly Answered
+## VI. Typical Directly Answerable Questions
 
-- “What is the maximum span of this network?”
-- “Which nodes are at the network center?”
-- “Which nodes are most remote and hardest to cover?”
-- “From the optimal center, what is the worst case distance?”
-- “What is the total distance cost of the whole network?”
-- “Which node has the smallest sum of distances to all others?”
-- “Is this network compact?”
-- “What is the resistance distance between two nodes?”
-- “Is the effective graph resistance high or low?”
-- “How efficient is random walk mixing on this graph?”
-- “Do high‑degree nodes tend to connect to high‑degree nodes?”
-- “Does the network exhibit core‑periphery structure?”
-- “Do nodes of the same department/type/risk level connect more?”
-- “Are nodes with similar numeric attributes more likely to connect?”
-- “What is the average neighbor degree for each node?”
-- “What degrees do nodes of a given degree connect to?”
-- “What is the mixing matrix between attribute classes?”
-- “What is the mixing matrix between degree layers?”
-- “For each edge, how are the attribute values paired?”
-- “For each edge, how are the degrees paired?”
+* "What is the maximum span of this network?"
+* "Which nodes are at the network center?"
+* "Which nodes are most remote and hardest to reach?"
+* "What is the overall distance cost of the network?"
+* "Which node has the minimum total distance to all others?"
+* "Is this network compact?"
+* "What is the resistance distance between two nodes?"
+* "How efficient is the random walk on this network overall?"
+* "Do high-degree nodes preferentially connect to other high-degree nodes?"
+* "Do high-degree nodes form a tightly connected group (rich club)?"
+* "Is this graph structure meaningfully organized or close to random?"
+* "What fraction of edges in the directed network avoid cycles (hierarchy level)?"
+* "What is the proportion of bidirectional connections in the directed network?"
+* "How long is the shortest cycle in the graph?"
+* "What is the global spectral compactness (Estrada index) of this graph?"
+* "How much does total pairwise distance change after removing a node?"
+* "How indirectly interconnected are a node's neighbors in the bipartite graph?"
+* "What is the comprehensive communication strength between node pairs (beyond shortest paths)?"
+* "What is the efficiency (inverse shortest path) between node pairs?"
 
 ---
 
 ## VII. Engineering and Usage Notes
 
 1. **Connectivity Requirements**
-   Distance metrics (`eccentricity`, `radius`, `diameter`, `center`, `periphery`, `barycenter`, `wiener_index`) require careful interpretation for disconnected graphs.
-   - Undirected: compute per connected component or take the largest component.
-   - Directed: consider strongly connected components or interpret within reachable subgraphs.
+   Distance metrics such as `eccentricity`, `radius`, `diameter`, `center`, `periphery`, `barycenter`, `wiener_index`, and `closeness_vitality` should be interpreted carefully in disconnected graphs.
+
+   * Undirected graphs: compute per connected component or use the largest component
+   * Directed graphs: use strongly connected components or reachability scope
 
 2. **Weighted Distance Semantics**
-   `weight` should represent distance, cost, time, or impedance. If edge weights represent capacity, similarity, or strength (larger = better), transform them appropriately (e.g., reciprocal or negative log, ensuring positivity).
+   `weight` typically represents distance, cost, time, or impedance.
+   If edge weights represent capacity, similarity, or strength (higher is better), they should not be used directly as distances.
 
-3. **Interpreting Assortativity**
-   Assortativity coefficients show correlation, not causation.
-   - `r > 0`: like connects to like.
-   - `r < 0`: opposite connects.
-   - `r ≈ 0`: no linear preference.
+3. **Performance Recommendations**
 
-4. **Mixing Matrices and Dictionaries**
-   - Matrices are good for visualisation and numerical computations.
-   - Dictionaries are good for sparse categories, rule extraction, and direct lookup.
-   - Normalisation changes interpretation (frequency vs. probability).
+   * When computing `eccentricity`, `radius`, `diameter`, `center`, `periphery` together, pre-compute and reuse `eccentricity`
+   * `communicability`, `non_randomness`, `estrada_index` involve matrix spectral decomposition; use cautiously on large graphs
+   * `rich_club_coefficient` normalized mode requires generating a random null model at higher computational cost
+   * `closeness_vitality` requires multiple shortest-path computations; pre-compute `wiener_index` to accelerate
 
-5. **Performance Recommendations**
-   - When computing `eccentricity`, `radius`, `diameter`, `center`, `periphery` together, pre‑compute and reuse `eccentricity`.
-   - All‑pairs shortest‑path based metrics are expensive on large graphs; consider sampling, component analysis, or approximation.
-   - Assortativity and mixing measures are generally much lighter.
+4. **Directed Graph Operators**
+   `reciprocity` and `flow_hierarchy` apply only to directed graphs; calling them on undirected graphs is not meaningful.
+
+5. **Bipartite Graph Operators**
+   `node_redundancy` is designed for bipartite graphs; note semantic implications when used on general graphs.
 
 ---
 
 ## VIII. Operator List
 
-| No. | Operator Name                                   | Description                                   |
-|-----|-------------------------------------------------|-----------------------------------------------|
-| 1   | `eccentricity`                                  | Compute node eccentricity                     |
-| 2   | `radius`                                        | Compute graph radius                          |
-| 3   | `diameter`                                      | Compute graph diameter                        |
-| 4   | `center`                                        | Get graph center nodes                        |
-| 5   | `periphery`                                     | Get graph periphery nodes                     |
-| 6   | `barycenter`                                    | Get graph barycenter nodes                    |
-| 7   | `harmonic_diameter`                             | Compute harmonic diameter                     |
-| 8   | `wiener_index`                                  | Compute Wiener index                          |
-| 9   | `resistance_distance`                           | Compute resistance distance between nodes     |
-| 10  | `effective_graph_resistance`                    | Compute effective graph resistance            |
-| 11  | `kemeny_constant`                               | Compute Kemeny constant                       |
-| 12  | `degree_assortativity_coefficient`              | Compute degree assortativity coefficient      |
-| 13  | `degree_pearson_correlation_coefficient`        | Compute degree Pearson correlation            |
-| 14  | `attribute_assortativity_coefficient`           | Compute attribute assortativity coefficient   |
-| 15  | `numeric_assortativity_coefficient`             | Compute numeric assortativity coefficient     |
-| 16  | `average_neighbor_degree`                       | Compute average neighbor degree               |
-| 17  | `average_degree_connectivity`                   | Compute average degree connectivity           |
-| 18  | `attribute_mixing_matrix`                       | Build attribute mixing matrix                 |
-| 19  | `degree_mixing_matrix`                          | Build degree mixing matrix                    |
-| 20  | `attribute_mixing_dict`                         | Build attribute mixing dictionary             |
-| 21  | `degree_mixing_dict`                            | Build degree mixing dictionary                |
-| 22  | `mixing_dict`                                   | Build generic mixing dictionary               |
-| 23  | `node_attribute_xy`                             | Generate node attribute XY pairs              |
-| 24  | `node_degree_xy`                                | Generate node degree XY pairs                 |
+| No. | Operator Name | Description |
+| ---:| --- | --- |
+| 1 | `diameter` | Compute graph diameter |
+| 2 | `radius` | Compute graph radius |
+| 3 | `center` | Get graph center node set |
+| 4 | `periphery` | Get graph periphery node set |
+| 5 | `eccentricity` | Compute node eccentricity |
+| 6 | `wiener_index` | Compute Wiener index |
+| 7 | `degree_assortativity_coefficient` | Compute degree assortativity coefficient |
+| 8 | `attribute_assortativity_coefficient` | Compute attribute assortativity coefficient |
+| 9 | `efficiency` | Compute pairwise efficiency |
+| 10 | `average_neighbor_degree` | Compute average neighbor degree |
+| 11 | `average_degree_connectivity` | Compute average degree connectivity |
+| 12 | `communicability` | Compute communicability |
+| 13 | `node_redundancy` | Compute node redundancy |
+| 14 | `closeness_vitality` | Compute closeness vitality |
+| 15 | `non_randomness` | Compute non-randomness |
+| 16 | `rich_club_coefficient` | Compute rich-club coefficient |
+| 17 | `reciprocity` | Compute reciprocity |
+| 18 | `resistance_distance` | Compute resistance distance |
+| 19 | `flow_hierarchy` | Compute flow hierarchy |
+| 20 | `barycenter` | Get graph barycenter node set |
+| 21 | `estrada_index` | Compute Estrada index |
+| 22 | `girth` | Compute girth |
+| 23 | `harmonic_diameter` | Compute harmonic diameter |
+| 24 | `kemeny_constant` | Compute Kemeny constant |
